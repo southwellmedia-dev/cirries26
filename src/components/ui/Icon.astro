@@ -1,0 +1,44 @@
+---
+interface Props {
+  name: string;
+  size?: number;
+  class?: string;
+}
+
+const {
+  name,
+  size = 24,
+  class: className = ''
+} = Astro.props;
+
+// Map icon names to their paths
+const iconPaths: Record<string, string> = {
+  'anomaly-detection': '/src/assets/icons/anomoly-detection.svg',
+  'cost-effective': '/src/assets/icons/cost-effective.svg',
+  'infrastructure': '/src/assets/icons/infrastructure.svg',
+  'scalability': '/src/assets/icons/scalability.svg',
+  // Add more icons as needed
+};
+
+const src = iconPaths[name] || '';
+const alt = name.replace(/-/g, ' ');
+---
+
+{src && (
+  <img
+    src={src}
+    alt={alt}
+    width={size}
+    height={size}
+    class:list={['icon', className]}
+    loading="lazy"
+  />
+)}
+
+<style>
+  .icon {
+    display: inline-block;
+    flex-shrink: 0;
+    object-fit: contain;
+  }
+</style>

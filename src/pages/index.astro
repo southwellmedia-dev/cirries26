@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/navigation/Footer.astro';
+import Hero from '../components/sections/Hero.astro';
+import StatsBar from '../components/sections/StatsBar.astro';
+import FeatureBento from '../components/sections/FeatureBento.astro';
+import PartnerLogos from '../components/sections/PartnerLogos.astro';
+import DartAISection from '../components/sections/DartAISection.astro';
+import UseCaseCards from '../components/sections/UseCaseCards.astro';
+
+const pageTitle = 'Cirries - Network Visibility and Control Platform';
+const pageDescription = 'Experience unparalleled network visibility and control with Cirries. Enterprise-grade network management powered by DART AI for real-time insights and intelligent automation.';
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header />
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <Hero
+      headlineTop="Experience Unparalleled"
+      headlineBottom="Network Visibility and Control"
+      subtitle="Transform your network infrastructure with AI-powered analytics, real-time monitoring, and intelligent automation. Gain complete visibility across your entire network ecosystem."
+      primaryCta={{ label: 'Explore Network Solutions', href: '/solutions' }}
+      secondaryCta={{ label: 'Explore Use Cases', href: '/use-cases' }}
+    />
+
+    <!-- Stats Bar -->
+    <StatsBar
+      stats={[
+        {
+          value: '99.9%',
+          numericValue: 99.9,
+          suffix: '%',
+          badge: 'Network Uptime',
+          description: 'Ensure near-perfect reliability, keeping your operations running smoothly.'
+        },
+        {
+          value: '30%',
+          numericValue: 30,
+          suffix: '%',
+          badge: 'Reduction in Downtime',
+          description: 'Minimize disruptions and maximize productivity with proven efficiency.'
+        },
+        {
+          value: '2x',
+          numericValue: 2,
+          suffix: 'x',
+          badge: 'Faster Threat Detection',
+          description: 'Rapidly identify and neutralize threats, doubling your security response.'
+        },
+        {
+          value: '24/7',
+          badge: 'Network Monitoring',
+          description: 'Continuous vigilance for uninterrupted network health and security.'
+        }
+      ]}
+    />
+
+    <!-- Feature Bento Grid -->
+    <FeatureBento />
+
+    <!-- Partner Logos -->
+    <PartnerLogos title="Trusted by industry leaders" />
+
+    <!-- DART AI Section -->
+    <DartAISection />
+
+    <!-- Use Case Cards -->
+    <UseCaseCards />
+  </main>
+
+  <Footer />
+</BaseLayout>

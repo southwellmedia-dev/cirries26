@@ -1,0 +1,152 @@
+/* ==========================================================================
+   MODERN CSS RESET - Cirries Enterprise
+   Based on Josh Comeau's Modern CSS Reset with custom additions
+   ========================================================================== */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Prevent font size inflation */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+/* Remove default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove list styles */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Set shorter line heights on headings and interactive elements */
+h1, h2, h3, h4, h5, h6,
+button, input, label {
+  line-height: 1.1;
+}
+
+/* Balance text wrapping on headings */
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
+}
+
+/* Make images easier to work with */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* Remove default button styles */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 5ex;
+}
+
+/* Remove all animations and transitions for people who prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Remove default fieldset styles */
+fieldset {
+  border: none;
+}
+
+/* Remove default table spacing */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Improve link focus styles */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Remove tap highlight on touch devices */
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Improve consistency of default fonts */
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono, monospace);
+}
+
+/* Remove font style of address */
+address {
+  font-style: normal;
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--color-primary);
+  color: white;
+}

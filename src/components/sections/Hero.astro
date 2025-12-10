@@ -1,0 +1,366 @@
+---
+import Container from "../ui/Container.astro";
+import Button from "../ui/Button.astro";
+import LogoMeshNetwork from "../three/LogoMeshNetwork";
+
+interface Props {
+  headlineTop?: string;
+  headlineBottom?: string;
+  subtitle?: string;
+  primaryCta?: {
+    label: string;
+    href: string;
+  };
+  secondaryCta?: {
+    label: string;
+    href: string;
+  };
+}
+
+const {
+  headlineTop = "Experience Unparalleled",
+  headlineBottom = "Network Visibility and Control",
+  subtitle = "Transform your network infrastructure with AI-powered analytics, real-time monitoring, and intelligent automation. Gain complete visibility across your entire network ecosystem.",
+  primaryCta = { label: "Get Started", href: "/contact" },
+  secondaryCta = { label: "Learn More", href: "/solutions" },
+} = Astro.props;
+---
+
+<section class="hero">
+  <!-- Three.js Logo Mesh Network Background -->
+  <div class="hero__background hero__background--three">
+    <div class="hero__three-gradient"></div>
+    <div class="hero__three-canvas">
+      <LogoMeshNetwork client:load />
+    </div>
+    <div class="hero__three-overlay"></div>
+    <div class="hero__three-noise"></div>
+    <!-- Animated grid lines -->
+    <div class="hero__three-grid"></div>
+  </div>
+
+  <!-- Content -->
+  <Container size="xl" class="hero__container">
+    <div class="hero__content">
+      <h1 class="hero__headline">
+        <span class="hero__headline-top">{headlineTop}</span>
+        <span class="hero__headline-bottom">{headlineBottom}</span>
+      </h1>
+
+      <p class="hero__subtitle">{subtitle}</p>
+
+      <div class="hero__actions">
+        <Button href={primaryCta.href} variant="primary" size="lg">
+          {primaryCta.label}
+        </Button>
+        <Button href={secondaryCta.href} variant="outline" size="lg">
+          {secondaryCta.label}
+        </Button>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="hero__scroll-indicator" aria-hidden="true">
+      <div class="hero__scroll-mouse">
+        <div class="hero__scroll-wheel"></div>
+      </div>
+      <span class="hero__scroll-text">Scroll to explore</span>
+    </div>
+  </Container>
+
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 85vh;
+    min-height: 85dvh;
+    overflow: hidden;
+  }
+
+  /* Background Container */
+  .hero__background {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  /* Three.js Background - Clean solid dark */
+  .hero__background--three {
+    background: #0a0a0a;
+  }
+
+  .hero__three-gradient {
+    display: none;
+  }
+
+  .hero__three-canvas {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    opacity: 0.85;
+    /* Ensure pointer events work for interactivity */
+    pointer-events: auto;
+  }
+
+  .hero__three-overlay {
+    display: none;
+  }
+
+  .hero__three-noise {
+    display: none;
+  }
+
+  /* Faded grid lines */
+  .hero__three-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+    /* Radial fade - visible at bottom/center, fades to edges and top */
+    mask-image: radial-gradient(
+      ellipse 80% 70% at 50% 80%,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.3) 40%,
+      transparent 70%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 70% at 50% 80%,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.3) 40%,
+      transparent 70%
+    );
+  }
+
+  /* Video - kept for fallback */
+  .hero__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Fallback Image */
+  .hero__fallback {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  /* Overlay Layers */
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero__overlay--gradient {
+    background: linear-gradient(
+      180deg,
+      rgba(10, 10, 10, 0.3) 0%,
+      rgba(10, 10, 10, 0.5) 40%,
+      rgba(10, 10, 10, 0.85) 100%
+    );
+  }
+
+  .hero__overlay--radial {
+    background: radial-gradient(
+      ellipse 100% 60% at 50% 120%,
+      rgba(229, 57, 53, 0.25) 0%,
+      transparent 60%
+    );
+  }
+
+  .hero__overlay--vignette {
+    background: radial-gradient(
+      ellipse 80% 80% at 50% 50%,
+      transparent 0%,
+      rgba(10, 10, 10, 0.4) 100%
+    );
+  }
+
+  /* Container */
+  .hero :global(.hero__container) {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 85vh;
+    min-height: 85dvh;
+    padding-top: 100px;
+    padding-bottom: var(--space-12);
+    pointer-events: none;
+  }
+
+  /* Content */
+  .hero__content {
+    text-align: center;
+    max-width: 1000px;
+    animation: fadeInUp var(--duration-reveal) var(--ease-out) forwards;
+    pointer-events: none;
+  }
+
+  /* Re-enable pointer events only on interactive elements */
+  .hero__actions {
+    pointer-events: auto;
+  }
+
+  /* Headline */
+  .hero__headline {
+    font-family: var(--font-display);
+    font-size: var(--text-6xl);
+    font-weight: var(--font-bold);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-6);
+  }
+
+  .hero__headline-top,
+  .hero__headline-bottom {
+    display: block;
+  }
+
+  .hero__headline-bottom {
+    color: var(--color-primary);
+  }
+
+  /* Subtitle */
+  .hero__subtitle {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    max-width: 800px;
+    margin: 0 auto var(--space-10);
+  }
+
+  /* Actions */
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+  }
+
+  /* Scroll Indicator */
+  .hero__scroll-indicator {
+    position: absolute;
+    bottom: var(--space-8);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    opacity: 0;
+    animation: fadeIn var(--duration-slow) var(--ease-out) 1.5s forwards;
+  }
+
+  .hero__scroll-mouse {
+    width: 24px;
+    height: 40px;
+    border: 2px solid var(--color-text-muted);
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .hero__scroll-wheel {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 8px;
+    background: var(--color-primary);
+    border-radius: var(--radius-full);
+    animation: scrollWheel 2s var(--ease-in-out) infinite;
+  }
+
+  @keyframes scrollWheel {
+    0%,
+    100% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    50% {
+      opacity: 0.3;
+      transform: translateX(-50%) translateY(8px);
+    }
+  }
+
+  .hero__scroll-text {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+    color: var(--color-text-muted);
+  }
+
+  /* Responsive */
+  @media (max-width: 1200px) {
+    .hero__three-canvas {
+      transform: scale(0.85);
+    }
+  }
+
+  @media (max-width: 992px) {
+    .hero__three-canvas {
+      transform: scale(0.7);
+      opacity: 0.7;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero__headline {
+      font-size: var(--text-4xl);
+    }
+
+    .hero__subtitle {
+      font-size: var(--text-base);
+    }
+
+    .hero__actions {
+      flex-direction: column;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .hero__scroll-indicator {
+      display: none;
+    }
+
+    .hero__three-canvas {
+      transform: scale(0.55);
+      opacity: 0.6;
+    }
+
+    .hero__three-grid {
+      background-size: 50px 50px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero__headline {
+      font-size: var(--text-3xl);
+    }
+
+    .hero__three-canvas {
+      transform: scale(0.45);
+      opacity: 0.5;
+    }
+  }
+</style>

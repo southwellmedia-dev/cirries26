@@ -1,0 +1,455 @@
+---
+import { Image } from 'astro:assets';
+import Container from '../ui/Container.astro';
+import Badge from '../ui/Badge.astro';
+
+// Import all bento images
+import intelligentNetworkImg from '../../assets/intelligent-network-management.png';
+import connectivityPerformanceImg from '../../assets/connectivity-performance.png';
+import hyperscalersImg from '../../assets/hyperscalers.jpg';
+import embeddedImg from '../../assets/embedded.jpg';
+import coreFeaturesImg from '../../assets/core-features.jpg';
+import useCasesImg from '../../assets/use-cases.jpg';
+
+import type { ImageMetadata } from 'astro';
+
+interface LargeFeature {
+  image: ImageMetadata;
+  title: string;
+  description: string;
+  href: string;
+}
+
+interface SmallFeature {
+  image: ImageMetadata;
+  badge?: string;
+  title: string;
+  description: string;
+  href: string;
+}
+
+interface Props {
+  largeFeatures?: LargeFeature[];
+  smallFeatures?: SmallFeature[];
+  sideFeatures?: SmallFeature[];
+}
+
+const {
+  largeFeatures = [
+    {
+      image: intelligentNetworkImg,
+      title: 'Intelligent Network Management',
+      description: 'Explore cutting-edge AI and sensor technologies that power intelligent network management, delivering AI-driven insights to optimize with smart technology.',
+      href: '/solutions/intelligent-network-management'
+    },
+    {
+      image: connectivityPerformanceImg,
+      title: 'Connectivity & Performance',
+      description: 'Discover essential features ensuring network reliability, security, and optimal performance, boosting network efficiency with seamless, secure links.',
+      href: '/solutions/connectivity-performance'
+    }
+  ],
+  smallFeatures = [
+    {
+      image: hyperscalersImg,
+      badge: 'Connectivity & Performance',
+      title: 'Hyperscalers',
+      description: 'Optimize hyperscale networks. DART AI will detect & eliminate performance risks for your network.',
+      href: '/solutions/hyperscalers'
+    },
+    {
+      image: embeddedImg,
+      badge: 'Connectivity & Performance',
+      title: 'Embedded',
+      description: 'See real-world examples of our solutions in action, demonstrating how we address network challenges.',
+      href: '/solutions/embedded'
+    }
+  ],
+  sideFeatures = [
+    {
+      image: coreFeaturesImg,
+      title: 'Core Features',
+      description: 'Essential tools for control and reliability, security built-in to ensure optimal network performance.',
+      href: '/solutions/core-features'
+    },
+    {
+      image: useCasesImg,
+      title: 'Use Cases',
+      description: 'See real-world examples of our solutions in action, demonstrating how we address network challenges.',
+      href: '/use-cases'
+    }
+  ]
+} = Astro.props;
+---
+
+<section class="bento">
+  <Container size="xl">
+    <!-- Row 1: Two Large Feature Cards -->
+    <div class="bento__row bento__row--large">
+      {largeFeatures.map((feature, index) => (
+        <a
+          href={feature.href}
+          class="bento__card bento__card--large animate-on-scroll"
+          style={`--stagger-delay: ${index * 150}ms`}
+        >
+          <div class="bento__card-image">
+            <Image
+              src={feature.image}
+              alt={feature.title}
+              loading="lazy"
+              quality={80}
+            />
+            <div class="bento__card-tint" aria-hidden="true"></div>
+            <div class="bento__card-overlay"></div>
+          </div>
+
+          <div class="bento__card-content">
+            <h3 class="bento__card-title">{feature.title}</h3>
+            <p class="bento__card-description">{feature.description}</p>
+          </div>
+
+          <div class="bento__card-shine" aria-hidden="true"></div>
+        </a>
+      ))}
+    </div>
+
+    <!-- Row 2: Small Cards + Side Stack -->
+    <div class="bento__row bento__row--mixed">
+      <!-- Left: Two Medium Cards -->
+      <div class="bento__column bento__column--medium">
+        {smallFeatures.map((feature, index) => (
+          <a
+            href={feature.href}
+            class="bento__card bento__card--medium animate-on-scroll"
+            style={`--stagger-delay: ${(index + 2) * 150}ms`}
+          >
+            <div class="bento__card-image">
+              <Image
+                src={feature.image}
+                alt={feature.title}
+                loading="lazy"
+                quality={80}
+              />
+              <div class="bento__card-tint" aria-hidden="true"></div>
+              <div class="bento__card-overlay"></div>
+            </div>
+
+            <div class="bento__card-content">
+              {feature.badge && (
+                <Badge variant="primary" size="sm">{feature.badge}</Badge>
+              )}
+              <h3 class="bento__card-title">{feature.title}</h3>
+              <p class="bento__card-description">{feature.description}</p>
+            </div>
+
+            <div class="bento__card-shine" aria-hidden="true"></div>
+          </a>
+        ))}
+      </div>
+
+      <!-- Right: Two Stacked Small Cards -->
+      <div class="bento__column bento__column--side">
+        {sideFeatures.map((feature, index) => (
+          <a
+            href={feature.href}
+            class="bento__card bento__card--side animate-on-scroll"
+            style={`--stagger-delay: ${(index + 4) * 150}ms`}
+          >
+            <div class="bento__card-image">
+              <Image
+                src={feature.image}
+                alt={feature.title}
+                loading="lazy"
+                quality={80}
+              />
+              <div class="bento__card-tint" aria-hidden="true"></div>
+              <div class="bento__card-overlay"></div>
+            </div>
+
+            <div class="bento__card-content">
+              <h3 class="bento__card-title">{feature.title}</h3>
+              <p class="bento__card-description">{feature.description}</p>
+            </div>
+
+            <div class="bento__card-shine" aria-hidden="true"></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .bento {
+    padding: var(--section-padding-lg) 0;
+    background-color: var(--color-bg-primary);
+  }
+
+  /* Rows */
+  .bento__row {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .bento__row--large {
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: var(--space-5);
+  }
+
+  .bento__row--mixed {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  /* Columns */
+  .bento__column {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .bento__column--medium {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bento__column--side {
+    grid-template-columns: 1fr;
+  }
+
+  /* Card Base */
+  .bento__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    text-decoration: none;
+    transition:
+      transform var(--duration-normal) var(--ease-out),
+      border-color var(--duration-normal) var(--ease-out),
+      box-shadow var(--duration-normal) var(--ease-out);
+  }
+
+  .bento__card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-border-hover);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  /* Large Cards */
+  .bento__card--large {
+    min-height: 380px;
+  }
+
+  .bento__card--large .bento__card-image {
+    position: absolute;
+    inset: 0;
+  }
+
+  .bento__card--large .bento__card-content {
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+    padding: var(--space-8);
+  }
+
+  .bento__card--large .bento__card-title {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-3);
+  }
+
+  .bento__card--large .bento__card-description {
+    font-size: var(--text-sm);
+    max-width: 400px;
+  }
+
+  /* Medium Cards */
+  .bento__card--medium {
+    min-height: 320px;
+  }
+
+  .bento__card--medium .bento__card-image {
+    position: absolute;
+    inset: 0;
+  }
+
+  .bento__card--medium .bento__card-content {
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+    padding: var(--space-6);
+  }
+
+  .bento__card--medium .bento__card-title {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-2);
+  }
+
+  .bento__card--medium .bento__card-description {
+    font-size: var(--text-xs);
+  }
+
+  /* Side Cards */
+  .bento__card--side {
+    min-height: 150px;
+  }
+
+  .bento__card--side .bento__card-image {
+    position: absolute;
+    inset: 0;
+  }
+
+  .bento__card--side .bento__card-content {
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+    padding: var(--space-5);
+  }
+
+  .bento__card--side .bento__card-title {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-1);
+  }
+
+  .bento__card--side .bento__card-description {
+    font-size: var(--text-xs);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Card Image */
+  .bento__card-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .bento__card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition:
+      transform var(--duration-slow) var(--ease-out),
+      filter var(--duration-normal) var(--ease-out);
+  }
+
+  .bento__card:hover .bento__card-image img {
+    transform: scale(1.05);
+    filter: grayscale(0%);
+  }
+
+  /* Red tint overlay on hover */
+  .bento__card-tint {
+    position: absolute;
+    inset: 0;
+    background: var(--color-primary);
+    mix-blend-mode: multiply;
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-out);
+    pointer-events: none;
+  }
+
+  .bento__card:hover .bento__card-tint {
+    opacity: 0.3;
+  }
+
+  /* Card Overlay - Gradient mask for text */
+  .bento__card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 30%,
+      rgba(10, 10, 10, 0.6) 50%,
+      rgba(10, 10, 10, 0.95) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* Card Content */
+  .bento__card-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bento__card-content :global(.badge) {
+    margin-bottom: var(--space-3);
+    align-self: flex-start;
+  }
+
+  .bento__card-title {
+    font-family: var(--font-display);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    line-height: var(--leading-snug);
+  }
+
+  .bento__card-description {
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Shine Effect */
+  .bento__card-shine {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      120deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.08) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform var(--duration-slow) var(--ease-out);
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .bento__card:hover .bento__card-shine {
+    transform: translateX(100%);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .bento__row--large {
+      grid-template-columns: 1fr;
+    }
+
+    .bento__row--mixed {
+      grid-template-columns: 1fr;
+    }
+
+    .bento__column--medium {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .bento__column--side {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .bento__column--medium {
+      grid-template-columns: 1fr;
+    }
+
+    .bento__column--side {
+      grid-template-columns: 1fr;
+    }
+
+    .bento__card--large {
+      min-height: 300px;
+    }
+
+    .bento__card--medium {
+      min-height: 280px;
+    }
+
+    .bento__card--side {
+      min-height: 180px;
+    }
+  }
+</style>

@@ -1,0 +1,602 @@
+---
+import { Image } from "astro:assets";
+import Container from "../ui/Container.astro";
+import Button from "../ui/Button.astro";
+
+// Import images
+import dartLogo from "../../assets/logos/dart-darkmode.svg";
+import aiHandImg from "../../assets/ai-hand.png";
+
+// Import icons
+import anomalyIcon from "../../assets/icons/anomoly-detection.svg";
+import scalabilityIcon from "../../assets/icons/scalability.svg";
+import infrastructureIcon from "../../assets/icons/infrastructure.svg";
+import costEffectiveIcon from "../../assets/icons/cost-effective.svg";
+
+interface Feature {
+  icon: ImageMetadata;
+  title: string;
+  description?: string;
+}
+
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  headline?: string;
+  highlightText?: string;
+  description?: string;
+  features?: Feature[];
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const {
+  headline = "Real-Time Network Insights",
+  highlightText = "Immediate Action.",
+  description = "Cirries is revolutionizing network management with DART AI, a suite of next-generation tools designed to optimize user experiences. We enable you to monitor, secure, and empower your network in real-time, ensuring peak performance and optimal. DART AI's software-driven architecture scales effortlessly and evolves continuously, providing a future-proof solution for your network.",
+  features = [
+    {
+      icon: anomalyIcon,
+      title: "AI-Powered Anomaly Detection",
+      description:
+        "AI algorithms pinpoint network issues in real time, ensuring swift, precise responses.",
+    },
+    {
+      icon: scalabilityIcon,
+      title: "Scalability & Flexibility",
+      description:
+        "Adapt to any network size, from small businesses to large-scale providers, with seamless scalability.",
+    },
+    {
+      icon: infrastructureIcon,
+      title: "Easy Infrastructure Integration",
+      description:
+        "Integrate DART AI effortlessly into existing infrastructure for rapid deployment and minimal disruption.",
+    },
+    {
+      icon: costEffectiveIcon,
+      title: "Cost-Effective Solutions",
+      description:
+        "Automate network observability to significantly reduce operational costs and boost network reliability.",
+    },
+  ],
+  ctaLabel = "Explore DART AI By Cirries",
+  ctaHref = "/solutions/dart-ai",
+} = Astro.props;
+---
+
+<section class="dart-ai" aria-labelledby="dart-ai-headline">
+  <!-- Atmospheric Background Effects -->
+  <div class="dart-ai__atmosphere" aria-hidden="true">
+    <div class="dart-ai__gradient-orb dart-ai__gradient-orb--1"></div>
+    <div class="dart-ai__gradient-orb dart-ai__gradient-orb--2"></div>
+  </div>
+
+  <div class="dart-ai__wrapper">
+    <Container size="xl">
+      <div class="dart-ai__grid">
+        <!-- Left Column: Logo, Description, Features -->
+        <div class="dart-ai__left">
+          <!-- Introducing Badge -->
+          <div class="dart-ai__intro animate-on-scroll">
+            <span class="dart-ai__intro-label">INTRODUCING</span>
+          </div>
+
+          <!-- DART AI Logo -->
+          <div
+            class="dart-ai__logo animate-on-scroll"
+            style="--stagger-delay: 100ms"
+          >
+            <Image
+              src={dartLogo}
+              alt="DART AI"
+              class="dart-ai__logo-img"
+              width={400}
+              height={76}
+            />
+          </div>
+
+          <!-- Tagline -->
+          <p
+            class="dart-ai__tagline animate-on-scroll"
+            style="--stagger-delay: 200ms"
+          >
+            Cirries' AI Network Observability, powered by DART AI, provides
+            unmatched accuracy and reliability in anomaly detection and
+            resolution. We proactively identify missed KPIs and network
+            anomalies, triggering automated diagnostics and forensic data
+            collection. Our advanced AI models deliver detailed analysis and
+            remediation steps in seconds, dramatically reducing MTTR and
+            ensuring seamless network operations.
+          </p>
+
+          <!-- Features Section -->
+          <div
+            class="dart-ai__features-intro animate-on-scroll"
+            style="--stagger-delay: 300ms"
+          >
+            <p class="dart-ai__features-text">
+              Discover the essential features that ensure network reliability,
+              security, and optimal performance. We deliver seamless
+              connectivity and enhance network efficiency, providing a robust
+              foundation for your operations.
+            </p>
+          </div>
+
+          <!-- Feature Cards Grid -->
+          <div class="dart-ai__features">
+            {
+              features.map((feature, index) => (
+                <div
+                  class="dart-ai__feature animate-on-scroll"
+                  style={`--stagger-delay: ${400 + index * 100}ms`}
+                >
+                  <div class="dart-ai__feature-icon">
+                    <Image
+                      src={feature.icon}
+                      alt=""
+                      width={28}
+                      height={28}
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="dart-ai__feature-content">
+                    <h3 class="dart-ai__feature-title">{feature.title}</h3>
+                    {feature.description && (
+                      <p class="dart-ai__feature-description">
+                        {feature.description}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Right Column: Headline + Description + CTA -->
+        <div class="dart-ai__right">
+          <!-- Headline -->
+          <div
+            class="dart-ai__headline-wrapper animate-on-scroll"
+            style="--stagger-delay: 150ms"
+          >
+            <h2 class="dart-ai__headline" id="dart-ai-headline">
+              {headline}
+              <span class="dart-ai__headline-highlight">{highlightText}</span>
+            </h2>
+          </div>
+
+          <!-- Description -->
+          <p
+            class="dart-ai__description animate-on-scroll"
+            style="--stagger-delay: 250ms"
+          >
+            {description}
+          </p>
+
+          <!-- CTA Button -->
+          <div
+            class="dart-ai__cta animate-on-scroll"
+            style="--stagger-delay: 350ms"
+          >
+            <Button href={ctaHref} variant="primary" size="lg">
+              {ctaLabel}
+              <svg
+                class="dart-ai__cta-arrow"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </Container>
+
+    <!-- Hero Image - Bleeds from right edge -->
+    <div
+      class="dart-ai__image-wrapper animate-on-scroll"
+      style="--stagger-delay: 200ms"
+    >
+      <Image
+        src={aiHandImg}
+        alt="DART AI robotic hand representing advanced network intelligence"
+        class="dart-ai__image"
+        loading="lazy"
+        quality={85}
+      />
+      <div class="dart-ai__image-glow" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .dart-ai {
+    position: relative;
+    padding: var(--section-padding-lg) 0;
+    background-color: var(--color-bg-primary);
+    overflow: hidden;
+  }
+
+  /* Atmospheric Background */
+  .dart-ai__atmosphere {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .dart-ai__gradient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.35;
+  }
+
+  .dart-ai__gradient-orb--1 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(
+      circle,
+      var(--color-primary-glow) 0%,
+      transparent 70%
+    );
+    top: -150px;
+    left: -150px;
+    animation: float 20s var(--ease-in-out) infinite;
+  }
+
+  .dart-ai__gradient-orb--2 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(
+      circle,
+      rgba(234, 36, 43, 0.15) 0%,
+      transparent 70%
+    );
+    bottom: -200px;
+    right: -100px;
+    animation: float 25s var(--ease-in-out) infinite reverse;
+  }
+
+  /* Wrapper for positioning context */
+  .dart-ai__wrapper {
+    position: relative;
+  }
+
+  /* Main Grid Layout */
+  .dart-ai__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: end;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Left Column */
+  .dart-ai__left {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Intro Badge */
+  .dart-ai__intro {
+    margin-bottom: var(--space-4);
+  }
+
+  .dart-ai__intro-label {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-primary);
+    padding: var(--space-1-5) var(--space-4);
+    background: var(--color-primary-subtle);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-full);
+  }
+
+  /* Logo */
+  .dart-ai__logo {
+    margin-bottom: var(--space-6);
+  }
+
+  .dart-ai__logo-img {
+    width: auto;
+    height: auto;
+    max-width: 380px;
+    display: block;
+  }
+
+  /* Tagline */
+  .dart-ai__tagline {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+    max-width: 520px;
+  }
+
+  /* Features Intro */
+  .dart-ai__features-intro {
+    margin-bottom: var(--space-5);
+  }
+
+  .dart-ai__features-text {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-muted);
+    border-left: 2px solid var(--color-primary);
+    padding-left: var(--space-4);
+  }
+
+  /* Feature Cards Grid */
+  .dart-ai__features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .dart-ai__feature {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(8px);
+    transition:
+      transform var(--duration-normal) var(--ease-out),
+      border-color var(--duration-normal) var(--ease-out),
+      box-shadow var(--duration-normal) var(--ease-out);
+  }
+
+  .dart-ai__feature:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-border-hover);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .dart-ai__feature-icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary-subtle);
+    border: 1px solid var(--color-primary-glow);
+    border-radius: var(--radius-md);
+  }
+
+  .dart-ai__feature-icon img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+  }
+
+  .dart-ai__feature-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .dart-ai__feature-title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+    line-height: var(--leading-snug);
+  }
+
+  .dart-ai__feature-description {
+    font-size: var(--text-xs);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-muted);
+  }
+
+  /* Right Column */
+  .dart-ai__right {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 2;
+  }
+
+  /* Headline */
+  .dart-ai__headline-wrapper {
+    margin-bottom: var(--space-5);
+  }
+
+  .dart-ai__headline {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    line-height: var(--leading-snug);
+    color: var(--color-text-primary);
+  }
+
+  .dart-ai__headline-highlight {
+    display: block;
+    color: var(--color-primary);
+  }
+
+  /* Description */
+  .dart-ai__description {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+  }
+
+  /* CTA */
+  .dart-ai__cta {
+    display: flex;
+  }
+
+  .dart-ai__cta :global(.btn) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .dart-ai__cta-arrow {
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .dart-ai__cta :global(.btn:hover) .dart-ai__cta-arrow {
+    transform: translateX(4px);
+  }
+
+  /* Image - Bleeds from right edge */
+  .dart-ai__image-wrapper {
+    position: absolute;
+    top: -140px;
+    right: -180px;
+    width: 75%;
+    max-width: 1100px;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .dart-ai__image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 60px rgba(0, 0, 0, 0.5));
+  }
+
+  .dart-ai__image-glow {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(
+      circle,
+      rgba(234, 36, 43, 0.15) 0%,
+      transparent 70%
+    );
+    filter: blur(60px);
+    pointer-events: none;
+  }
+
+  /* Animation State Classes */
+  .dart-ai .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity var(--duration-reveal) var(--ease-out),
+      transform var(--duration-reveal) var(--ease-out);
+    transition-delay: var(--stagger-delay, 0ms);
+  }
+
+  .dart-ai .animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1280px) {
+    .dart-ai__image-wrapper {
+      width: 65%;
+      right: -100px;
+      top: -80px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .dart-ai__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+      align-items: start;
+    }
+
+    .dart-ai__image-wrapper {
+      position: relative;
+      top: 0;
+      right: 0;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto var(--space-8);
+      order: -1;
+    }
+
+    .dart-ai__logo-img {
+      max-width: 320px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .dart-ai {
+      padding: var(--section-padding-sm) 0;
+    }
+
+    .dart-ai__features {
+      grid-template-columns: 1fr;
+    }
+
+    .dart-ai__headline {
+      font-size: var(--text-2xl);
+    }
+
+    .dart-ai__logo-img {
+      max-width: 280px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .dart-ai__logo-img {
+      max-width: 220px;
+    }
+
+    .dart-ai__feature {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .dart-ai__feature-icon {
+      margin: 0 auto;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px",
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll(".dart-ai .animate-on-scroll").forEach((el) => {
+    observer.observe(el);
+  });
+
+  // Cleanup on page navigation
+  document.addEventListener("astro:before-swap", () => {
+    observer.disconnect();
+  });
+</script>

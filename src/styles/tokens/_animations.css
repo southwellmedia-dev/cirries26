@@ -1,0 +1,240 @@
+/* ==========================================================================
+   ANIMATION TOKENS - Cirries Enterprise Design System
+   ========================================================================== */
+
+:root {
+  /* --------------------------------
+     TIMING FUNCTIONS
+     -------------------------------- */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /* --------------------------------
+     DURATION SCALE
+     -------------------------------- */
+  --duration-instant: 0ms;
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --duration-moderate: 300ms;
+  --duration-slow: 400ms;
+  --duration-slower: 500ms;
+  --duration-slowest: 700ms;
+  --duration-reveal: 800ms;
+  --duration-dramatic: 1000ms;
+}
+
+/* ==========================================================================
+   KEYFRAME ANIMATIONS
+   ========================================================================== */
+
+/* Fade In */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Fade In Up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade In Down */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade In Scale */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Slide In Left */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Slide In Right */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Float Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Pulse Glow */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--color-primary-glow);
+  }
+  50% {
+    box-shadow: 0 0 40px var(--color-primary-glow);
+  }
+}
+
+/* Shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Counter Roll */
+@keyframes counterRoll {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Red Line Scan */
+@keyframes redLineScan {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Gradient Shift */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ==========================================================================
+   ANIMATION UTILITY CLASSES
+   ========================================================================== */
+
+.animate-fade-in {
+  animation: fadeIn var(--duration-moderate) var(--ease-out) forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp var(--duration-reveal) var(--ease-out) forwards;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown var(--duration-reveal) var(--ease-out) forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale var(--duration-moderate) var(--ease-spring) forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft var(--duration-reveal) var(--ease-out) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight var(--duration-reveal) var(--ease-out) forwards;
+}
+
+.animate-float {
+  animation: float 4s var(--ease-in-out) infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s var(--ease-in-out) infinite;
+}
+
+/* Animation States for Intersection Observer */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--duration-reveal) var(--ease-out),
+    transform var(--duration-reveal) var(--ease-out);
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger Delays */
+.stagger-1 { animation-delay: 0ms; }
+.stagger-2 { animation-delay: 100ms; }
+.stagger-3 { animation-delay: 200ms; }
+.stagger-4 { animation-delay: 300ms; }
+.stagger-5 { animation-delay: 400ms; }
+.stagger-6 { animation-delay: 500ms; }
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

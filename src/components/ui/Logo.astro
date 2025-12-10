@@ -1,0 +1,53 @@
+---
+interface Props {
+  type?: 'cirries' | 'dart';
+  variant?: 'dark' | 'light';
+  width?: number;
+  class?: string;
+}
+
+const {
+  type = 'cirries',
+  variant = 'dark',
+  width = 120,
+  class: className = ''
+} = Astro.props;
+
+const logoSources = {
+  cirries: {
+    dark: '/src/assets/logos/cirries-logo-darkmode.svg',
+    light: '/src/assets/logos/cirries-logo-lightmode.svg'
+  },
+  dart: {
+    dark: '/src/assets/logos/dart-darkmode.svg',
+    light: '/src/assets/logos/dart-lightmode.svg'
+  }
+};
+
+const src = logoSources[type][variant];
+const alt = type === 'cirries' ? 'Cirries Logo' : 'DART AI Logo';
+---
+
+<img
+  src={src}
+  alt={alt}
+  width={width}
+  class:list={['logo', `logo--${type}`, className]}
+  loading="eager"
+/>
+
+<style>
+  .logo {
+    display: block;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .logo--cirries {
+    /* Specific cirries logo adjustments if needed */
+  }
+
+  .logo--dart {
+    /* DART logo tends to be larger in the design */
+  }
+</style>

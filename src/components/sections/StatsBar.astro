@@ -1,0 +1,274 @@
+---
+import Container from '../ui/Container.astro';
+
+interface Stat {
+  value: string;
+  numericValue?: number;
+  suffix?: string;
+  badge: string;
+  description: string;
+}
+
+interface Props {
+  stats?: Stat[];
+}
+
+const { stats = [
+  {
+    value: '99.9%',
+    numericValue: 99.9,
+    suffix: '%',
+    badge: 'Network Uptime',
+    description: 'Ensure near-perfect reliability, keeping your operations running smoothly.'
+  },
+  {
+    value: '30%',
+    numericValue: 30,
+    suffix: '%',
+    badge: 'Reduction in Downtime',
+    description: 'Minimize disruptions and maximize productivity with proven efficiency.'
+  },
+  {
+    value: '2x',
+    numericValue: 2,
+    suffix: 'x',
+    badge: 'Faster Threat Detection',
+    description: 'Rapidly identify and neutralize threats, doubling your security response.'
+  },
+  {
+    value: '24/7',
+    badge: 'Network Monitoring',
+    description: 'Continuous vigilance for uninterrupted network health and security.'
+  }
+]} = Astro.props;
+---
+
+<section class="stats-bar">
+  <div class="stats-bar__accent" aria-hidden="true"></div>
+
+  <Container size="xl" class="stats-bar__container">
+    <ul class="stats-bar__list">
+      {stats.map((stat, index) => (
+        <li
+          class="stats-bar__item"
+          style={`--stagger-delay: ${index * 100}ms`}
+        >
+          <div
+            class="stats-bar__value"
+            data-value={stat.numericValue}
+            data-suffix={stat.suffix || ''}
+            data-static={!stat.numericValue ? stat.value : undefined}
+          >
+            {stat.numericValue ? '0' : stat.value}
+            {stat.suffix && stat.numericValue && <span class="stats-bar__suffix">{stat.suffix}</span>}
+          </div>
+          <div class="stats-bar__badge">{stat.badge}</div>
+          <p class="stats-bar__description">{stat.description}</p>
+        </li>
+      ))}
+    </ul>
+  </Container>
+</section>
+
+<script>
+  // Counter Animation
+  function animateCounter(element: HTMLElement) {
+    const value = parseFloat(element.dataset.value || '0');
+    const suffix = element.dataset.suffix || '';
+    const staticValue = element.dataset.static;
+
+    if (staticValue) {
+      element.textContent = staticValue;
+      return;
+    }
+
+    const duration = 2000;
+    const frameDuration = 1000 / 60;
+    const totalFrames = Math.round(duration / frameDuration);
+    let frame = 0;
+
+    const easeOutQuart = (t: number): number => 1 - Math.pow(1 - t, 4);
+
+    const counter = setInterval(() => {
+      frame++;
+      const progress = easeOutQuart(frame / totalFrames);
+      const currentValue = value * progress;
+
+      if (value % 1 !== 0) {
+        // Decimal number
+        element.innerHTML = currentValue.toFixed(1) + `<span class="stats-bar__suffix">${suffix}</span>`;
+      } else {
+        // Integer
+        element.innerHTML = Math.round(currentValue) + `<span class="stats-bar__suffix">${suffix}</span>`;
+      }
+
+      if (frame === totalFrames) {
+        clearInterval(counter);
+        if (value % 1 !== 0) {
+          element.innerHTML = value.toFixed(1) + `<span class="stats-bar__suffix">${suffix}</span>`;
+        } else {
+          element.innerHTML = value + `<span class="stats-bar__suffix">${suffix}</span>`;
+        }
+      }
+    }, frameDuration);
+  }
+
+  // Intersection Observer for triggering animation
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.3
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const statsBar = entry.target;
+        const valueElements = statsBar.querySelectorAll('.stats-bar__value');
+
+        valueElements.forEach((el, index) => {
+          setTimeout(() => {
+            animateCounter(el as HTMLElement);
+          }, index * 150);
+        });
+
+        observer.unobserve(statsBar);
+      }
+    });
+  }, observerOptions);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const statsBar = document.querySelector('.stats-bar');
+    if (statsBar) {
+      observer.observe(statsBar);
+    }
+  });
+
+  // Cleanup on page navigation (for SPAs/view transitions)
+  document.addEventListener('astro:before-swap', () => {
+    observer.disconnect();
+  });
+</script>
+
+<style>
+  .stats-bar {
+    position: relative;
+    background-color: var(--color-bg-secondary);
+  }
+
+  /* Red Accent Line */
+  .stats-bar__accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-stats-bar);
+    background-size: 200% 100%;
+    animation: gradientShift 3s ease infinite;
+  }
+
+  .stats-bar :global(.stats-bar__container) {
+    padding-top: var(--space-10);
+    padding-bottom: var(--space-10);
+  }
+
+  .stats-bar__list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+    text-align: center;
+  }
+
+  .stats-bar__item {
+    position: relative;
+    padding: var(--space-4);
+    animation: fadeInUp var(--duration-reveal) var(--ease-out) forwards;
+    animation-delay: var(--stagger-delay);
+    opacity: 0;
+  }
+
+  /* Divider lines between items */
+  .stats-bar__item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 60%;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      var(--color-border) 50%,
+      transparent 100%
+    );
+  }
+
+  .stats-bar__value {
+    font-family: var(--font-display);
+    font-size: var(--text-5xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    line-height: 1;
+    margin-bottom: var(--space-4);
+  }
+
+  .stats-bar__value :global(.stats-bar__suffix) {
+    font-size: 0.65em;
+    color: var(--color-primary);
+    margin-left: 2px;
+  }
+
+  .stats-bar__badge {
+    display: inline-block;
+    padding: var(--space-1-5) var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    color: white;
+    background-color: var(--color-primary);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-4);
+  }
+
+  .stats-bar__description {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .stats-bar__list {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-8);
+    }
+
+    .stats-bar__item:nth-child(2)::after {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .stats-bar__list {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+
+    .stats-bar__item::after {
+      display: none;
+    }
+
+    .stats-bar__value {
+      font-size: var(--text-4xl);
+    }
+
+    .stats-bar :global(.stats-bar__container) {
+      padding-top: var(--space-8);
+      padding-bottom: var(--space-8);
+    }
+  }
+</style>

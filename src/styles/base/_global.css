@@ -1,0 +1,412 @@
+/* ==========================================================================
+   GLOBAL STYLES - Cirries Enterprise
+   ========================================================================== */
+
+/* --------------------------------
+   ROOT ELEMENT
+   -------------------------------- */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+/* --------------------------------
+   BODY
+   -------------------------------- */
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  overflow-x: hidden;
+}
+
+/* --------------------------------
+   TYPOGRAPHY
+   -------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-primary);
+}
+
+h1 {
+  font-size: var(--text-6xl);
+}
+
+h2 {
+  font-size: var(--text-5xl);
+}
+
+h3 {
+  font-size: var(--text-4xl);
+}
+
+h4 {
+  font-size: var(--text-3xl);
+}
+
+h5 {
+  font-size: var(--text-2xl);
+}
+
+h6 {
+  font-size: var(--text-xl);
+}
+
+p {
+  color: var(--color-text-secondary);
+  max-width: 65ch;
+}
+
+/* --------------------------------
+   LINKS
+   -------------------------------- */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+/* --------------------------------
+   STRONG & EMPHASIS
+   -------------------------------- */
+strong,
+b {
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+}
+
+em,
+i {
+  font-style: italic;
+}
+
+/* --------------------------------
+   HIGHLIGHT TEXT (Red accent)
+   -------------------------------- */
+.text-accent {
+  color: var(--color-primary);
+}
+
+.text-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-primary-hover) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* --------------------------------
+   UNDERLINE EFFECTS
+   -------------------------------- */
+.underline-accent {
+  position: relative;
+  display: inline-block;
+}
+
+.underline-accent::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+/* --------------------------------
+   SECTION STYLING
+   -------------------------------- */
+section {
+  position: relative;
+}
+
+.section-dark {
+  background-color: var(--color-bg-primary);
+}
+
+.section-darker {
+  background-color: var(--color-bg-secondary);
+}
+
+/* --------------------------------
+   LAYOUT UTILITIES
+   -------------------------------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.full-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+/* --------------------------------
+   SCROLLBAR STYLING
+   -------------------------------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-hover);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) var(--color-bg-secondary);
+}
+
+/* --------------------------------
+   FOCUS STATES
+   -------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+/* --------------------------------
+   IMAGE DEFAULTS
+   -------------------------------- */
+img {
+  object-fit: cover;
+}
+
+/* --------------------------------
+   VIDEO DEFAULTS
+   -------------------------------- */
+video {
+  object-fit: cover;
+}
+
+/* --------------------------------
+   SKIP LINK (Accessibility)
+   -------------------------------- */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-primary);
+  color: white;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-md);
+  z-index: var(--z-maximum);
+  transition: top var(--duration-fast) var(--ease-out);
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* --------------------------------
+   GRID TEXTURE BACKGROUNDS
+   -------------------------------- */
+.bg-grid-dark {
+  position: relative;
+}
+
+.bg-grid-dark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/bg/grid-dark.svg');
+  background-repeat: repeat;
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-grid-light {
+  position: relative;
+}
+
+.bg-grid-light::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/bg/grid-light.svg');
+  background-repeat: repeat;
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Grid with fade effect */
+.bg-grid-dark-fade {
+  position: relative;
+}
+
+.bg-grid-dark-fade::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/bg/grid-dark.svg');
+  background-repeat: repeat;
+  background-size: 60px 60px;
+  mask-image: linear-gradient(180deg, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 20%, black 80%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-grid-light-fade {
+  position: relative;
+}
+
+.bg-grid-light-fade::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/bg/grid-light.svg');
+  background-repeat: repeat;
+  background-size: 60px 60px;
+  mask-image: linear-gradient(180deg, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 20%, black 80%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure content sits above grid */
+.bg-grid-dark > *,
+.bg-grid-light > *,
+.bg-grid-dark-fade > *,
+.bg-grid-light-fade > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* --------------------------------
+   LOGO MARQUEE
+   -------------------------------- */
+.logo-marquee {
+  position: relative;
+  width: 100%;
+  overflow: clip;
+  overflow-clip-margin: 20px;
+}
+
+.logo-marquee__fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 150px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.logo-marquee__fade--left {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    var(--color-bg-secondary) 0%,
+    transparent 100%
+  );
+}
+
+.logo-marquee__fade--right {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    var(--color-bg-secondary) 0%,
+    transparent 100%
+  );
+}
+
+.logo-marquee__track {
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+  width: max-content;
+  animation: marquee-scroll linear infinite;
+}
+
+.logo-marquee__item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.25;
+  filter: grayscale(100%) brightness(1.5);
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    filter var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
+}
+
+.logo-marquee__item:hover {
+  opacity: 1;
+  filter: grayscale(0%) brightness(1);
+  transform: scale(1.1);
+}
+
+.logo-marquee__item a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-marquee__item img {
+  height: 40px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+/* Responsive marquee */
+@media (max-width: 768px) {
+  .logo-marquee__fade {
+    width: 80px;
+  }
+
+  .logo-marquee__track {
+    gap: var(--space-12);
+  }
+
+  .logo-marquee__item img {
+    height: 32px;
+    max-width: 120px;
+  }
+}
