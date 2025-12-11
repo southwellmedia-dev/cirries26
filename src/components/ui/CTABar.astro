@@ -1,0 +1,149 @@
+---
+/**
+ * CTABar - Persistent CTA bar above the footer
+ *
+ * A site-wide call-to-action bar that links to the demo page.
+ * Can be included in layouts to appear on all pages.
+ */
+
+interface Props {
+  headline?: string;
+  subtext?: string;
+  buttonLabel?: string;
+  buttonHref?: string;
+}
+
+const {
+  headline = "Ready to See the Future of Network Intelligence?",
+  subtext = "Join industry leaders already transforming their operations with DART AI",
+  buttonLabel = "Get Your Free Demo",
+  buttonHref = "/demo"
+} = Astro.props;
+---
+
+<div class="cta-bar">
+  <div class="cta-bar__content">
+    <div class="cta-bar__text">
+      <span class="cta-bar__headline">{headline}</span>
+      <span class="cta-bar__subtext">{subtext}</span>
+    </div>
+    <a href={buttonHref} class="cta-bar__button">
+      {buttonLabel}
+      <svg
+        class="cta-bar__icon"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.5"
+        aria-hidden="true"
+      >
+        <path d="M5 12h14M12 5l7 7-7 7"></path>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<style>
+  .cta-bar {
+    position: relative;
+    background: var(--color-bg-secondary);
+    z-index: 100;
+    padding: var(--space-5) 0;
+  }
+
+  .cta-bar__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    gap: var(--space-6);
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+  }
+
+  @media (min-width: 1024px) {
+    .cta-bar__content {
+      padding-left: var(--container-padding-lg);
+      padding-right: var(--container-padding-lg);
+    }
+  }
+
+  .cta-bar__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .cta-bar__headline {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    color: #ffffff;
+    line-height: 1.2;
+  }
+
+  .cta-bar__subtext {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.4;
+  }
+
+  .cta-bar__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: 0.875rem 1.75rem;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: #ffffff;
+    background: var(--color-primary);
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(234, 36, 43, 0.3);
+  }
+
+  .cta-bar__button:hover {
+    background: var(--color-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(234, 36, 43, 0.4);
+  }
+
+  .cta-bar__icon {
+    transition: transform 0.3s ease;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .cta-bar {
+      padding: var(--space-4) 0;
+    }
+
+    .cta-bar__content {
+      flex-direction: column;
+      text-align: center;
+      gap: var(--space-4);
+    }
+
+    .cta-bar__headline {
+      font-size: var(--text-base);
+    }
+
+    .cta-bar__subtext {
+      font-size: var(--text-xs);
+    }
+
+    .cta-bar__button {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+</style>

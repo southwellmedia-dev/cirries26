@@ -1,0 +1,100 @@
+---
+import Container from '../ui/Container.astro';
+
+interface Props {
+  theme?: 'light' | 'dark';
+  background?: 'default' | 'subtle' | 'gradient';
+  padding?: 'default' | 'large' | 'small';
+  class?: string;
+}
+
+const {
+  theme = 'light',
+  background = 'default',
+  padding = 'default',
+  class: className = ''
+} = Astro.props;
+---
+
+<section
+  class:list={[
+    "content-section",
+    `content-section--${theme}`,
+    `content-section--bg-${background}`,
+    `content-section--padding-${padding}`,
+    className
+  ]}
+  data-theme={theme}
+>
+  <Container size="xl" class="content-section__container">
+    <slot />
+  </Container>
+</section>
+
+<style>
+  .content-section {
+    position: relative;
+  }
+
+  /* Padding variants */
+  .content-section--padding-default {
+    padding: var(--space-20) 0;
+  }
+
+  .content-section--padding-large {
+    padding: var(--space-24) 0;
+  }
+
+  .content-section--padding-small {
+    padding: var(--space-12) 0;
+  }
+
+  /* Light theme (default for subpages) */
+  .content-section--light {
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+  }
+
+  .content-section--light.content-section--bg-subtle {
+    background: var(--color-bg-secondary);
+  }
+
+  .content-section--light.content-section--bg-gradient {
+    background:
+      linear-gradient(
+        180deg,
+        var(--color-bg-primary) 0%,
+        var(--color-bg-secondary) 100%
+      );
+  }
+
+  /* Dark theme */
+  .content-section--dark {
+    background: #0a0a0a;
+    color: #ffffff;
+  }
+
+  .content-section--dark.content-section--bg-subtle {
+    background: #0f0f0f;
+  }
+
+  .content-section :global(.content-section__container) {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .content-section--padding-default {
+      padding: var(--space-12) 0;
+    }
+
+    .content-section--padding-large {
+      padding: var(--space-16) 0;
+    }
+
+    .content-section--padding-small {
+      padding: var(--space-8) 0;
+    }
+  }
+</style>

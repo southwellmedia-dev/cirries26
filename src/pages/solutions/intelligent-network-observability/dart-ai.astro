@@ -1,0 +1,42 @@
+---
+/**
+ * DART AI Product Page
+ *
+ * AI-Powered Network Observability solution page featuring:
+ * - Meet DART AI section with neural network visualization
+ * - Proactive Intelligence workflow demonstration
+ * - Environment/scalability bento grid
+ * - CTA section (provided by layout via CTABar)
+ */
+import SubpageLayout from "../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../components/sections/SubpageHero.astro";
+
+// Import extracted section components
+import MeetDartSection from "../../../components/sections/dart-ai/MeetDartSection.astro";
+import ProactiveSection from "../../../components/sections/dart-ai/ProactiveSection.astro";
+import EnvironmentSection from "../../../components/sections/dart-ai/EnvironmentSection.astro";
+---
+
+<SubpageLayout
+  title="DART AI - AI-Powered Network Observability"
+  description="DART AI provides unmatched accuracy and reliability in anomaly detection and resolution for your network infrastructure."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="DART AI"
+      subtitle="The Intelligence Engine for Network Observability"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet DART AI Section -->
+  <MeetDartSection />
+
+  <!-- Proactive Intelligence Section -->
+  <ProactiveSection />
+
+  <!-- Engineered for Your Environment Section -->
+  <EnvironmentSection />
+
+  <!-- CTA Section is now provided by the layout via CTABar -->
+</SubpageLayout>

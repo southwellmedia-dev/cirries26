@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:docs.astro.build)",
+      "mcp__sequential-thinking__sequentialthinking",
+      "Skill(frontend-design:frontend-design)",
+      "Bash(dir:*)",
+      "Bash(npm install:*)",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__list_console_messages",
+      "mcp__chrome-devtools__take_screenshot",
+      "mcp__chrome-devtools__evaluate_script",
+      "mcp__chrome-devtools__get_console_message",
+      "mcp__chrome-devtools__take_snapshot",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_evaluate",
+      "Bash(git add:*)"
+    ]
+  }
+}

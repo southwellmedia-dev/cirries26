@@ -1,0 +1,120 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  align?: 'left' | 'center';
+  theme?: 'light' | 'dark';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  align = 'left',
+  theme = 'light',
+  class: className = ''
+} = Astro.props;
+---
+
+<header class:list={["section-header", `section-header--${align}`, `section-header--${theme}`, className]}>
+  {eyebrow && (
+    <span class="section-header__eyebrow">{eyebrow}</span>
+  )}
+
+  <h2 class="section-header__title">
+    <Fragment set:html={title} />
+  </h2>
+
+  {description && (
+    <p class="section-header__description">{description}</p>
+  )}
+
+  <slot />
+</header>
+
+<style>
+  .section-header {
+    margin-bottom: var(--space-12);
+  }
+
+  .section-header--center {
+    text-align: center;
+  }
+
+  .section-header__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+    color: var(--color-primary);
+  }
+
+  .section-header__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    margin-bottom: var(--space-4);
+  }
+
+  /* Light theme title */
+  .section-header--light .section-header__title {
+    color: #111111;
+  }
+
+  .section-header--light .section-header__title :global(span),
+  .section-header--light .section-header__title :global(em) {
+    color: var(--color-primary);
+    font-style: normal;
+  }
+
+  /* Dark theme title */
+  .section-header--dark .section-header__title {
+    color: #ffffff;
+  }
+
+  .section-header--dark .section-header__title :global(span),
+  .section-header--dark .section-header__title :global(em) {
+    color: var(--color-primary);
+    font-style: normal;
+  }
+
+  .section-header__description {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    max-width: 700px;
+  }
+
+  .section-header--light .section-header__description {
+    color: #555555;
+  }
+
+  .section-header--dark .section-header__description {
+    color: #a0a0a0;
+  }
+
+  .section-header--center .section-header__description {
+    margin: 0 auto;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .section-header {
+      margin-bottom: var(--space-8);
+    }
+
+    .section-header__title {
+      font-size: clamp(1.75rem, 6vw, 2rem);
+    }
+
+    .section-header__description {
+      font-size: var(--text-base);
+    }
+  }
+</style>

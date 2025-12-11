@@ -1,0 +1,369 @@
+---
+/**
+ * DartCTASection - CTA section with stats and demo request form
+ *
+ * Two-column layout with value proposition stats on the left
+ * and a demo request form card on the right.
+ */
+import { Image } from "astro:assets";
+import Container from "../../ui/Container.astro";
+import Button from "../../ui/Button.astro";
+
+import cirriesLogo from "../../../assets/logos/cirries-logo-darkmode.svg";
+
+interface Stat {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  titleHighlight?: string;
+  description?: string;
+  stats?: Stat[];
+  formTagline?: string;
+  formAction?: string;
+  formSubmitLabel?: string;
+  contactLabel?: string;
+  contactHref?: string;
+}
+
+const {
+  eyebrow = "Ready to Transform Your Network?",
+  title = "Experience the Power of",
+  titleHighlight = "Intelligent Observability",
+  description = "Join leading enterprises who have moved beyond reactive monitoring. See how DART AI can reduce your Mean Time to Repair by 90% while giving your team the insights they need in any point of concern.",
+  stats = [
+    { value: "90%+", label: "MTTR Reduction" },
+    { value: "24/7", label: "Autonomous Monitoring" },
+    { value: "Zero", label: "Manual Intervention" }
+  ],
+  formTagline = "See DART AI in action with your network data",
+  formAction = "/contact",
+  formSubmitLabel = "Request Your Demo",
+  contactLabel = "Contact Sales",
+  contactHref = "/contact"
+} = Astro.props;
+---
+
+<section class="cta-section" data-theme="light" id="dart-cta-section">
+  <div class="cta-section__bg">
+    <div class="cta-section__grid"></div>
+    <div class="cta-section__noise"></div>
+  </div>
+  <Container size="xl">
+    <div class="cta-layout">
+      <!-- Left Content -->
+      <div class="cta-content">
+        <span class="cta-content__eyebrow">{eyebrow}</span>
+        <h2 class="cta-content__title">
+          {title}<br />
+          <em>{titleHighlight}</em>
+        </h2>
+        <p class="cta-content__description">{description}</p>
+
+        <!-- Stats -->
+        <div class="cta-stats">
+          {stats.map((stat) => (
+            <div class="cta-stat">
+              <span class="cta-stat__value">{stat.value}</span>
+              <span class="cta-stat__label">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Right Form Card -->
+      <div class="cta-form-card">
+        <div class="cta-form-card__logo">
+          <Image src={cirriesLogo} alt="Cirries" width={120} height={32} />
+        </div>
+        <p class="cta-form-card__tagline">{formTagline}</p>
+
+        <form class="cta-form" action={formAction} method="get">
+          <div class="cta-form__field">
+            <input type="text" name="name" placeholder="Name" required />
+          </div>
+          <div class="cta-form__field">
+            <input
+              type="email"
+              name="email"
+              placeholder="Email address"
+              required
+            />
+          </div>
+          <div class="cta-form__field">
+            <input type="text" name="company" placeholder="Company name" />
+          </div>
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            class="cta-form__submit"
+          >
+            {formSubmitLabel}
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </Button>
+        </form>
+
+        <p class="cta-form-card__privacy">
+          Or speak directly with our team. <a href={contactHref}>{contactLabel}</a>
+        </p>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     CTA SECTION - Collapsible
+     ======================================== */
+  .cta-section {
+    position: relative;
+    background-color: var(--color-bg-primary);
+    overflow: hidden;
+
+    /* Collapsible accordion styles */
+    max-height: 0;
+    opacity: 0;
+    transition:
+      max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.4s ease,
+      padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0;
+  }
+
+  .cta-section.is-open {
+    opacity: 1;
+    padding: var(--space-20) 0;
+  }
+
+  .cta-section__bg {
+    display: none;
+  }
+
+  .cta-section :global(.container) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-layout {
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  /* CTA Content */
+  .cta-content {
+    max-width: 600px;
+  }
+
+  .cta-content__eyebrow {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+    margin-bottom: var(--space-4);
+    position: relative;
+    padding-left: var(--space-6);
+  }
+
+  .cta-content__eyebrow::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 1px;
+    background: var(--color-primary);
+  }
+
+  .cta-content__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-5);
+  }
+
+  .cta-content__title em {
+    color: var(--color-primary);
+    font-style: normal;
+  }
+
+  .cta-content__description {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+  }
+
+  /* CTA Stats */
+  .cta-stats {
+    display: flex;
+    gap: var(--space-8);
+  }
+
+  .cta-stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .cta-stat__value {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    line-height: 1;
+  }
+
+  .cta-stat__label {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+  }
+
+  /* CTA Form Card */
+  .cta-form-card {
+    position: relative;
+    padding: var(--space-8);
+    background: linear-gradient(
+      145deg,
+      var(--color-bg-secondary) 0%,
+      var(--color-bg-card) 100%
+    );
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+
+  .cta-form-card__logo {
+    margin-bottom: var(--space-2);
+  }
+
+  .cta-form-card__logo img {
+    height: 32px;
+    width: auto;
+  }
+
+  .cta-form-card__tagline {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
+  }
+
+  /* Form Styles */
+  .cta-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .cta-form__field input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+  }
+
+  .cta-form__field input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .cta-form__field input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: var(--color-bg-elevated);
+  }
+
+  .cta-form :global(.cta-form__submit) {
+    width: 100%;
+    margin-top: var(--space-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+  }
+
+  .cta-form-card__privacy {
+    margin-top: var(--space-4);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  .cta-form-card__privacy a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .cta-form-card__privacy a:hover {
+    color: var(--color-primary-hover);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .cta-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+    }
+
+    .cta-form-card {
+      max-width: 450px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cta-section {
+      padding: var(--space-12) 0;
+    }
+
+    .cta-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+
+    .cta-content__title {
+      font-size: var(--text-2xl);
+    }
+
+    .cta-stats {
+      flex-wrap: wrap;
+      gap: var(--space-6);
+    }
+
+    .cta-form-card {
+      padding: var(--space-6);
+    }
+  }
+</style>

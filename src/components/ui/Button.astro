@@ -1,6 +1,6 @@
 ---
 interface Props {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'outline';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'outline' | 'outline-dark';
   size?: 'sm' | 'md' | 'lg';
   href?: string;
   class?: string;
@@ -150,6 +150,27 @@ const baseProps = href ? { href } : { type, disabled };
   .btn--ghost:hover {
     background-color: rgba(255, 255, 255, 0.05);
     color: var(--color-primary);
+  }
+
+  /* Outline Dark - for light backgrounds */
+  .btn--outline-dark {
+    background-color: transparent;
+    color: #111111;
+    border: 2px solid #111111;
+  }
+
+  .btn--outline-dark:hover {
+    background-color: #111111;
+    color: #ffffff;
+  }
+
+  .btn--outline-dark .btn__shine {
+    background: linear-gradient(
+      120deg,
+      transparent 30%,
+      rgba(0, 0, 0, 0.1) 50%,
+      transparent 70%
+    );
   }
 
   /* Full width */

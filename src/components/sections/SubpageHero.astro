@@ -1,0 +1,157 @@
+---
+import Container from '../ui/Container.astro';
+import Badge from '../ui/Badge.astro';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  badge?: string;
+  align?: 'left' | 'center';
+  size?: 'default' | 'compact';
+}
+
+const {
+  title,
+  subtitle,
+  badge,
+  align = 'left',
+  size = 'default'
+} = Astro.props;
+---
+
+<section class:list={["subpage-hero", `subpage-hero--${align}`, `subpage-hero--${size}`]}>
+  <div class="subpage-hero__background">
+    <div class="subpage-hero__gradient"></div>
+    <div class="subpage-hero__grid"></div>
+    <div class="subpage-hero__noise"></div>
+  </div>
+
+  <Container size="xl" class="subpage-hero__container">
+    <div class="subpage-hero__content">
+      {badge && (
+        <Badge variant="outline" class="subpage-hero__badge">{badge}</Badge>
+      )}
+
+      <h1 class="subpage-hero__title">
+        <Fragment set:html={title} />
+      </h1>
+
+      {subtitle && (
+        <p class="subpage-hero__subtitle">{subtitle}</p>
+      )}
+
+      <slot />
+    </div>
+  </Container>
+</section>
+
+<style>
+  .subpage-hero {
+    position: relative;
+    padding-top: 140px;
+    padding-bottom: var(--space-16);
+    background: var(--color-bg-primary);
+    overflow: hidden;
+  }
+
+  .subpage-hero--compact {
+    padding-bottom: var(--space-12);
+  }
+
+  .subpage-hero__background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .subpage-hero__gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 80% 60% at 20% 20%,
+        rgba(30, 30, 30, 0.5) 0%,
+        transparent 50%
+      );
+  }
+
+  .subpage-hero__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px, 60px 60px;
+    mask-image: radial-gradient(ellipse 90% 80% at 30% 50%, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 80% at 30% 50%, black 20%, transparent 70%);
+  }
+
+  .subpage-hero__noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
+  .subpage-hero :global(.subpage-hero__container) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .subpage-hero__content {
+    max-width: 800px;
+  }
+
+  .subpage-hero--center .subpage-hero__content {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .subpage-hero__badge {
+    margin-bottom: var(--space-4);
+  }
+
+  .subpage-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: var(--font-bold);
+    line-height: 1.1;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .subpage-hero__title :global(span),
+  .subpage-hero__title :global(em) {
+    color: var(--color-primary);
+    font-style: normal;
+  }
+
+  .subpage-hero__subtitle {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    max-width: 600px;
+  }
+
+  .subpage-hero--center .subpage-hero__subtitle {
+    margin: 0 auto;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .subpage-hero {
+      padding-top: 120px;
+      padding-bottom: var(--space-12);
+    }
+
+    .subpage-hero__title {
+      font-size: clamp(2rem, 8vw, 2.5rem);
+    }
+
+    .subpage-hero__subtitle {
+      font-size: var(--text-base);
+    }
+  }
+</style>

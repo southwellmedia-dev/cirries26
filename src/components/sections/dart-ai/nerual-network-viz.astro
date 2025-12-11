@@ -1,0 +1,122 @@
+---
+/**
+ * NeuralNetworkViz - Interactive neural network visualization
+ *
+ * A reusable component that displays stats as nodes orbiting around
+ * a central logo with animated connections.
+ */
+
+interface Stat {
+  value: string;
+  label: string;
+  icon: string;
+}
+
+interface Props {
+  stats: Stat[];
+  logoSrc: string;
+  logoAlt?: string;
+}
+
+const { stats, logoSrc, logoAlt = "Logo" } = Astro.props;
+---
+
+<div class="neural-viz-container">
+  <div class="neural-network" id="neural-network">
+    <!-- SVG Canvas for connections -->
+    <svg
+      class="neural-connections"
+      id="neural-svg"
+      width="100%"
+      height="100%"
+      preserveAspectRatio="none"
+    >
+      <defs>
+        <linearGradient
+          id="connectionGradient"
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="0%"
+        >
+          <stop offset="0%" stop-color="rgba(220, 38, 38, 0)"></stop>
+          <stop offset="50%" stop-color="rgba(220, 38, 38, 0.6)"></stop>
+          <stop offset="100%" stop-color="rgba(220, 38, 38, 0)"></stop>
+        </linearGradient>
+        <filter id="nodeGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="3" result="blur"></feGaussianBlur>
+          <feMerge>
+            <feMergeNode in="blur"></feMergeNode>
+            <feMergeNode in="SourceGraphic"></feMergeNode>
+          </feMerge>
+        </filter>
+        <filter id="coreGlow" x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur stdDeviation="8" result="blur"></feGaussianBlur>
+          <feMerge>
+            <feMergeNode in="blur"></feMergeNode>
+            <feMergeNode in="blur"></feMergeNode>
+            <feMergeNode in="SourceGraphic"></feMergeNode>
+          </feMerge>
+        </filter>
+      </defs>
+      <!-- Dynamic connections drawn by JS -->
+    </svg>
+
+    <!-- Central AI Core -->
+    <div class="neural-core" id="neural-core">
+      <div class="core-pulse"></div>
+      <div class="core-ring core-ring-1"></div>
+      <div class="core-ring core-ring-2"></div>
+      <div class="core-logo">
+        <img src={logoSrc} alt={logoAlt} />
+      </div>
+    </div>
+
+    <!-- Stat Nodes - positioned by JS -->
+    {
+      stats.map((stat, index) => (
+        <div
+          class="stat-node"
+          data-node-index={index}
+          data-stat-value={stat.value}
+          data-stat-label={stat.label}
+        >
+          <div class="node-connector" />
+          <div class="node-content">
+            <div class="node-icon">
+              <i class={`${stat.icon}`} />
+            </div>
+            <div class="node-data">
+              <span class="node-value">{stat.value}</span>
+              <span class="node-label">{stat.label}</span>
+            </div>
+          </div>
+          <div class="node-glow" />
+        </div>
+      ))
+    }
+
+    <!-- Floating data particles -->
+    <div class="data-particles" id="data-particles"></div>
+  </div>
+</div>
+
+<script>
+  import { initNeuralNetwork } from "../../scripts/neural-network";
+
+  // Initialize when DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(initNeuralNetwork, 150);
+    });
+  } else {
+    setTimeout(initNeuralNetwork, 150);
+  }
+
+  // Reinitialize on resize
+  let neuralResizeTimeout: ReturnType<typeof setTimeout>;
+  window.addEventListener("resize", () => {
+    clearTimeout(neuralResizeTimeout);
+    neuralResizeTimeout = setTimeout(initNeuralNetwork, 250);
+  });
+</script>

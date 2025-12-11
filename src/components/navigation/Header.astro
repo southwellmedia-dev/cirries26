@@ -3,15 +3,23 @@ import { Image } from 'astro:assets';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
 import { mainNavigation } from '../../data/navigation';
-import cirriesLogo from '../../assets/logos/cirries-logo-darkmode.svg';
+import cirriesLogoDark from '../../assets/logos/cirries-logo-darkmode.svg';
+import cirriesLogoLight from '../../assets/logos/cirries-logo-lightmode.svg';
+
+interface Props {
+  variant?: 'dark' | 'light';
+}
+
+const { variant = 'dark' } = Astro.props;
+const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
 ---
 
-<header class="header" id="header">
+<header class:list={["header", { "header--light": variant === "light" }]} id="header" data-variant={variant}>
   <Container size="xl" class="header__container">
     <!-- Logo -->
     <a href="/" class="header__logo" aria-label="Cirries Home">
       <Image
-        src={cirriesLogo}
+        src={logo}
         alt="Cirries"
         width={120}
         height={32}
@@ -212,12 +220,26 @@ import cirriesLogo from '../../assets/logos/cirries-logo-darkmode.svg';
   // Desktop dropdown/megamenu hover
   const navItems = document.querySelectorAll('.header__nav-item[data-type="dropdown"], .header__nav-item[data-type="megamenu"]');
 
+  // Calculate megamenu top position to align with dropdowns
+  const updateMegamenuPosition = () => {
+    const firstTrigger = document.querySelector('.header__nav-trigger');
+    if (firstTrigger) {
+      const rect = firstTrigger.getBoundingClientRect();
+      const topPosition = rect.bottom;
+      document.documentElement.style.setProperty('--megamenu-top', `${topPosition}px`);
+    }
+  };
+
+  updateMegamenuPosition();
+  window.addEventListener('resize', updateMegamenuPosition);
+
   navItems.forEach((item) => {
     const trigger = item.querySelector('.header__nav-trigger');
     const dropdown = item.querySelector('.header__dropdown, .header__megamenu');
 
     if (trigger && dropdown) {
       item.addEventListener('mouseenter', () => {
+        updateMegamenuPosition(); // Update position on hover
         trigger.setAttribute('aria-expanded', 'true');
         dropdown.classList.add('is-open');
       });
@@ -432,28 +454,32 @@ import cirriesLogo from '../../assets/logos/cirries-logo-darkmode.svg';
 
   /* --------------------------------
      Mega Menu - Clean Grid Layout
+     Same vertical position as dropdown, centered on viewport
      -------------------------------- */
   .header__megamenu {
     position: fixed;
-    top: 80px;
-    left: 0;
-    right: 0;
+    top: var(--megamenu-top, 60px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    width: calc(100vw - 2rem);
+    max-width: 1200px;
     padding-top: var(--space-2);
     opacity: 0;
     visibility: hidden;
     transition:
-      opacity var(--duration-normal) var(--ease-out),
-      visibility var(--duration-normal);
+      opacity var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out),
+      visibility var(--duration-fast);
   }
 
   .header__megamenu.is-open {
     opacity: 1;
     visibility: visible;
+    transform: translateX(-50%) translateY(0);
   }
 
   .header__megamenu-inner {
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
     padding: var(--space-8) var(--space-10);
     background: #141414;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -751,5 +777,98 @@ import cirriesLogo from '../../assets/logos/cirries-logo-darkmode.svg';
       grid-template-columns: repeat(2, 1fr);
       gap: var(--space-6);
     }
+  }
+
+  /* --------------------------------
+     Light Mode Header Variant
+     -------------------------------- */
+  .header--light {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .header--light.header--scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .header--light .header__nav-link,
+  .header--light .header__nav-trigger {
+    color: #555555;
+  }
+
+  .header--light .header__nav-link:hover,
+  .header--light .header__nav-trigger:hover,
+  .header--light .header__nav-trigger[aria-expanded="true"] {
+    color: #111111;
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  .header--light .header__dropdown-inner,
+  .header--light .header__megamenu-inner {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.12),
+      0 0 0 1px rgba(0, 0, 0, 0.03);
+  }
+
+  .header--light .header__dropdown-link:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+
+  .header--light .header__dropdown-label,
+  .header--light .header__megamenu-title {
+    color: #111111;
+  }
+
+  .header--light .header__dropdown-desc {
+    color: #888888;
+  }
+
+  .header--light .header__megamenu-header {
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .header--light .header__megamenu-link {
+    color: #555555;
+  }
+
+  .header--light .header__megamenu-link:hover {
+    color: #111111;
+  }
+
+  .header--light .header__hamburger span {
+    background: #111111;
+  }
+
+  .header--light .header__mobile-menu {
+    background: #FFFFFF;
+  }
+
+  .header--light .header__mobile-link,
+  .header--light .header__mobile-accordion {
+    color: #111111;
+  }
+
+  .header--light .header__mobile-section {
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .header--light .header__mobile-group-title {
+    color: #111111;
+  }
+
+  .header--light .header__mobile-sublink {
+    color: #555555;
+  }
+
+  .header--light .header__mobile-sublink:hover {
+    color: #111111;
+  }
+
+  .header--light .header__mobile-cta {
+    border-top-color: rgba(0, 0, 0, 0.06);
   }
 </style>

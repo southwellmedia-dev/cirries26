@@ -1,0 +1,50 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/navigation/Footer.astro';
+import CTABar from '../components/ui/CTABar.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  heroTheme?: 'dark' | 'light';
+  showCTA?: boolean;
+}
+
+const {
+  title,
+  description = 'Network visibility and control platform',
+  heroTheme = 'dark',
+  showCTA = true
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <!-- Header starts dark for hero, transitions to light on scroll -->
+  <Header variant="dark" />
+
+  <main class="subpage" id="main-content">
+    <!-- Hero slot - always dark background -->
+    <slot name="hero" />
+
+    <!-- Main content - light theme -->
+    <div class="subpage__content" data-theme="light">
+      <slot />
+    </div>
+  </main>
+
+  <!-- Site-wide CTA Bar -->
+  {showCTA && <CTABar />}
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .subpage {
+    min-height: 100vh;
+  }
+
+  .subpage__content {
+    background: var(--color-bg-primary);
+  }
+</style>

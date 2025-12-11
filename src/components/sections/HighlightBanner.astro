@@ -1,0 +1,177 @@
+---
+import Container from '../ui/Container.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  variant?: 'gradient' | 'dark' | 'primary';
+}
+
+const {
+  eyebrow,
+  title,
+  subtitle,
+  variant = 'gradient'
+} = Astro.props;
+---
+
+<section class:list={["highlight-banner", `highlight-banner--${variant}`]}>
+  <div class="highlight-banner__background">
+    <div class="highlight-banner__gradient"></div>
+    <div class="highlight-banner__pattern"></div>
+  </div>
+
+  <Container size="xl" class="highlight-banner__container">
+    <div class="highlight-banner__content">
+      {eyebrow && (
+        <span class="highlight-banner__eyebrow">{eyebrow}</span>
+      )}
+
+      <h2 class="highlight-banner__title">
+        <Fragment set:html={title} />
+      </h2>
+
+      {subtitle && (
+        <p class="highlight-banner__subtitle">{subtitle}</p>
+      )}
+
+      <slot />
+    </div>
+  </Container>
+</section>
+
+<style>
+  .highlight-banner {
+    position: relative;
+    padding: var(--space-20) 0;
+    overflow: hidden;
+  }
+
+  .highlight-banner__background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  /* Gradient variant - red gradient with dark edges */
+  .highlight-banner--gradient .highlight-banner__background {
+    background:
+      linear-gradient(
+        135deg,
+        #1a0508 0%,
+        #2d0a0f 20%,
+        #4a1118 40%,
+        #3d0e13 60%,
+        #2d0a0f 80%,
+        #1a0508 100%
+      );
+  }
+
+  .highlight-banner--gradient .highlight-banner__gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 80% 100% at 50% 0%,
+        rgba(234, 36, 43, 0.15) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 60% 80% at 50% 100%,
+        rgba(234, 36, 43, 0.1) 0%,
+        transparent 40%
+      );
+  }
+
+  /* Dark variant */
+  .highlight-banner--dark .highlight-banner__background {
+    background: #0a0a0a;
+  }
+
+  /* Primary variant - solid red */
+  .highlight-banner--primary .highlight-banner__background {
+    background: var(--color-primary);
+  }
+
+  .highlight-banner__pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.5;
+  }
+
+  .highlight-banner :global(.highlight-banner__container) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .highlight-banner__content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .highlight-banner__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    padding: var(--space-1-5) var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-full);
+  }
+
+  .highlight-banner__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #ffffff;
+    margin-bottom: var(--space-4);
+  }
+
+  .highlight-banner__title :global(span),
+  .highlight-banner__title :global(em) {
+    color: var(--color-primary-hover);
+    font-style: normal;
+  }
+
+  .highlight-banner--gradient .highlight-banner__title :global(span),
+  .highlight-banner--gradient .highlight-banner__title :global(em) {
+    color: #ffffff;
+    opacity: 0.9;
+  }
+
+  .highlight-banner__subtitle {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .highlight-banner {
+      padding: var(--space-12) 0;
+    }
+
+    .highlight-banner__title {
+      font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+
+    .highlight-banner__subtitle {
+      font-size: var(--text-base);
+    }
+  }
+</style>

@@ -1,0 +1,554 @@
+---
+/**
+ * ProactiveSection - "Proactive Intelligence" section with flow workflow
+ *
+ * Displays the three-step workflow with animated SVG paths showing
+ * data flow from trigger through processing to result.
+ */
+import Container from "../../ui/Container.astro";
+
+interface WorkflowStep {
+  number: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  title?: string;
+  titleHighlight?: string;
+  subtitle?: string;
+  triggerLabel?: string;
+  triggerHeadline?: string;
+  resultLabel?: string;
+  resultHeadline?: string;
+  steps?: WorkflowStep[];
+}
+
+const {
+  title = "Proactive Intelligence,",
+  titleHighlight = "Not Reactive Alerts",
+  subtitle = "DART AI doesn't just identify problems—it anticipates them. Our advanced machine learning models analyze patterns across your entire network, predicting issues before they impact your operations.",
+  triggerLabel = "Anomaly Detected",
+  triggerHeadline = "Network anomaly identified in real-time",
+  resultLabel = "Issue Resolved",
+  resultHeadline = "Automated response initiated and completed",
+  steps = [
+    {
+      number: "01",
+      title: "Instant Identification",
+      description: "AI detects anomalies across all network layers in milliseconds."
+    },
+    {
+      number: "02",
+      title: "Forensic Analysis",
+      description: "Deep-dive analysis with automated root cause identification."
+    },
+    {
+      number: "03",
+      title: "Actionable Resolution",
+      description: "AI-generated remediation steps with confidence scores."
+    }
+  ]
+} = Astro.props;
+---
+
+<section class="proactive-section" data-theme="dark">
+  <div class="proactive-section__bg"></div>
+  <Container size="xl">
+    <header class="proactive-section__header">
+      <h2 class="proactive-section__title">
+        {title}<br />
+        <em>{titleHighlight}</em>
+      </h2>
+      <p class="proactive-section__subtitle">{subtitle}</p>
+    </header>
+
+    <!-- Flow Workflow System -->
+    <div class="flow-system">
+      <!-- SVG Connection Path -->
+      <svg class="flow-path-svg" preserveAspectRatio="none">
+        <defs>
+          <linearGradient
+            id="flowGradientVertical"
+            x1="0%"
+            y1="0%"
+            x2="0%"
+            y2="100%"
+          >
+            <stop offset="0%" stop-color="#dc2626"></stop>
+            <stop offset="45%" stop-color="#dc2626"></stop>
+            <stop offset="55%" stop-color="#22c55e"></stop>
+            <stop offset="100%" stop-color="#22c55e"></stop>
+          </linearGradient>
+          <filter id="pingGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2" result="blur"></feGaussianBlur>
+            <feMerge>
+              <feMergeNode in="blur"></feMergeNode>
+              <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+          </filter>
+          <filter id="flowGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="blur"></feGaussianBlur>
+            <feMerge>
+              <feMergeNode in="blur"></feMergeNode>
+              <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+          </filter>
+        </defs>
+        <path class="flow-path-glow" d="M 0 0"></path>
+        <path class="flow-path-structure" d="M 0 0"></path>
+        <path class="flow-path-structure flow-path-fast" d="M 0 0"></path>
+        <circle class="flow-ping flow-ping-trigger" r="3" cx="0" cy="0"></circle>
+        <circle class="flow-ping flow-ping-branch1" r="2.5" cx="0" cy="0"></circle>
+        <circle class="flow-ping flow-ping-branch2" r="2.5" cx="0" cy="0"></circle>
+        <circle class="flow-ping flow-ping-branch3" r="2.5" cx="0" cy="0"></circle>
+        <circle class="flow-ping flow-ping-converge1" r="2.5" cx="0" cy="0"></circle>
+        <circle class="flow-ping flow-ping-converge2" r="2.5" cx="0" cy="0"></circle>
+        <circle class="flow-ping flow-ping-converge3" r="2.5" cx="0" cy="0"></circle>
+        <circle class="flow-ping flow-ping-result" r="3" cx="0" cy="0"></circle>
+      </svg>
+
+      <!-- Trigger Banner -->
+      <div class="flow-node-banner trigger-banner">
+        <div class="trigger-icon">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+          </svg>
+        </div>
+        <div class="trigger-text">
+          <span class="trigger-label">{triggerLabel}</span>
+          <p class="trigger-headline">{triggerHeadline}</p>
+        </div>
+      </div>
+
+      <!-- Workflow Steps Grid -->
+      <div class="workflow-grid">
+        {steps.map((step) => (
+          <div class="workflow-card">
+            <div class="card-header">
+              <div class="card-number">{step.number}</div>
+            </div>
+            <h3 class="card-title">{step.title}</h3>
+            <p class="card-description">{step.description}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Result Banner -->
+      <div class="flow-node-banner result-banner">
+        <div class="result-icon">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <div class="result-text">
+          <span class="result-label">{resultLabel}</span>
+          <p class="result-headline">{resultHeadline}</p>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     PROACTIVE INTELLIGENCE SECTION
+     ======================================== */
+  .proactive-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    overflow: hidden;
+    background: var(--color-bg-primary);
+  }
+
+  .proactive-section__bg {
+    position: absolute;
+    inset: 0;
+    background: var(--color-bg-primary);
+  }
+
+  .proactive-section__header {
+    position: relative;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto var(--space-12);
+    z-index: 1;
+  }
+
+  .proactive-section__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-bold);
+    line-height: 1.2;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .proactive-section__title em {
+    color: var(--color-primary);
+    font-style: normal;
+  }
+
+  .proactive-section__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  /* ========================================
+     FLOW WORKFLOW SYSTEM
+     ======================================== */
+  .flow-system {
+    position: relative;
+  }
+
+  .flow-path-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: visible;
+  }
+
+  .flow-path-glow {
+    fill: none;
+    stroke: url(#flowGradientVertical);
+    stroke-width: 3;
+    stroke-linecap: round;
+    opacity: 0.08;
+    filter: url(#flowGlow);
+  }
+
+  .flow-path-structure {
+    fill: none;
+    stroke: url(#flowGradientVertical);
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-dasharray: 8 12;
+    opacity: 0.35;
+    animation: flowPathMove 1s linear infinite;
+  }
+
+  .flow-path-structure.flow-path-fast {
+    stroke-width: 0.75;
+    stroke-dasharray: 4 16;
+    opacity: 0.25;
+    animation: flowPathMoveFast 0.6s linear infinite;
+  }
+
+  @keyframes flowPathMove {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -20; }
+  }
+
+  @keyframes flowPathMoveFast {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -20; }
+  }
+
+  .flow-ping {
+    opacity: 0;
+  }
+
+  .flow-ping-trigger,
+  .flow-ping-branch1,
+  .flow-ping-branch2,
+  .flow-ping-branch3 {
+    fill: #dc2626;
+  }
+
+  .flow-ping-converge1,
+  .flow-ping-converge2,
+  .flow-ping-converge3,
+  .flow-ping-result {
+    fill: #22c55e;
+  }
+
+  /* Flow Node Banners */
+  .flow-node-banner {
+    position: relative;
+    z-index: 2;
+  }
+
+  .trigger-banner {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(
+      135deg,
+      rgba(220, 38, 38, 0.1) 0%,
+      rgba(220, 38, 38, 0.03) 100%
+    );
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(220, 38, 38, 0.2);
+    border-radius: 12px;
+    margin-bottom: 3.5rem;
+  }
+
+  .trigger-icon {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+  }
+
+  .trigger-text {
+    flex: 1;
+  }
+
+  .trigger-label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #dc2626;
+    margin-bottom: 0.25rem;
+  }
+
+  .trigger-headline {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* Result Banner */
+  .result-banner {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(
+      135deg,
+      rgba(34, 197, 94, 0.1) 0%,
+      rgba(34, 197, 94, 0.03) 100%
+    );
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: 12px;
+  }
+
+  .result-icon {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+  }
+
+  .result-text {
+    flex: 1;
+  }
+
+  .result-label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #22c55e;
+    margin-bottom: 0.25rem;
+  }
+
+  .result-headline {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* Workflow Grid */
+  .workflow-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (min-width: 768px) {
+    .workflow-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .trigger-headline,
+    .result-headline {
+      font-size: 1.125rem;
+    }
+  }
+
+  .workflow-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    z-index: 2;
+  }
+
+  .workflow-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .card-number {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 100%);
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 800;
+    color: #ffffff;
+    transition: all 0.3s ease;
+  }
+
+  .workflow-card:hover .card-number {
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.625rem;
+    transition: color 0.3s ease;
+  }
+
+  .workflow-card:hover .card-title {
+    color: #f0f0f0;
+  }
+
+  .card-description {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+  }
+
+  /* Flow Banner Mobile */
+  @media (max-width: 767px) {
+    .trigger-banner,
+    .result-banner {
+      flex-direction: column;
+      text-align: center;
+      gap: 1rem;
+    }
+
+    .flow-path-svg {
+      display: none;
+    }
+  }
+
+  /* Flow Animation Classes */
+  .flow-animated-trigger {
+    animation: flowTriggerGlow 5s ease-in-out infinite;
+  }
+
+  @keyframes flowTriggerGlow {
+    0%, 100% { border-color: rgba(220, 38, 38, 0.2); }
+    50% { border-color: rgba(220, 38, 38, 0.35); }
+  }
+
+  .flow-animated-result {
+    animation: flowResultGlow 5s ease-in-out infinite;
+  }
+
+  @keyframes flowResultGlow {
+    0%, 100% { border-color: rgba(34, 197, 94, 0.2); }
+    50% { border-color: rgba(34, 197, 94, 0.35); }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .proactive-section {
+      padding: var(--space-12) 0;
+    }
+
+    .proactive-section__title {
+      font-size: var(--text-2xl);
+    }
+  }
+</style>
+
+<script>
+  import { initFlowPath } from "../../../scripts/flowpath";
+
+  function init(): void {
+    setTimeout(initFlowPath, 200);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+
+  // Resize handler
+  let flowResizeTimeout: ReturnType<typeof setTimeout>;
+  window.addEventListener("resize", () => {
+    clearTimeout(flowResizeTimeout);
+    flowResizeTimeout = setTimeout(initFlowPath, 250);
+  });
+</script>
