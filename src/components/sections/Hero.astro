@@ -1,7 +1,7 @@
 ---
 import Container from "../ui/Container.astro";
 import Button from "../ui/Button.astro";
-import LogoMeshNetwork from "../three/LogoMeshNetwork";
+import LogoObsidian from "../three/LogoObsidian";
 
 interface Props {
   headlineTop?: string;
@@ -31,7 +31,7 @@ const {
   <div class="hero__background hero__background--three">
     <div class="hero__three-gradient"></div>
     <div class="hero__three-canvas">
-      <LogoMeshNetwork client:load />
+      <LogoObsidian client:load />
     </div>
     <div class="hero__three-overlay"></div>
     <div class="hero__three-noise"></div>
@@ -397,13 +397,13 @@ const {
   /* Responsive */
   @media (max-width: 1200px) {
     .hero__three-canvas {
-      transform: scale(0.9);
+      /* Let Three.js handle scaling internally */
+      opacity: 0.95;
     }
   }
 
   @media (max-width: 992px) {
     .hero__three-canvas {
-      transform: scale(0.8);
       opacity: 0.9;
     }
   }
@@ -428,7 +428,6 @@ const {
     }
 
     .hero__three-canvas {
-      transform: scale(0.7);
       opacity: 0.85;
     }
 
@@ -443,7 +442,6 @@ const {
     }
 
     .hero__three-canvas {
-      transform: scale(0.6);
       opacity: 0.8;
     }
   }
