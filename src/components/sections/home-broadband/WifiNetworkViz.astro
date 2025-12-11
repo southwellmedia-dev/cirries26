@@ -4,7 +4,9 @@
  *
  * Displays an animated Wi-Fi hub with connected device nodes,
  * signal strength indicators, and data packet animations.
+ * Center hub matches DART-AI neural network visualization style.
  */
+import DartLogoLight from "../../../assets/logos/dart-lightmode.svg";
 
 interface DeviceNode {
   label: string;
@@ -96,26 +98,13 @@ const {
       <div class="signal-ring signal-ring-3"></div>
     </div>
 
-    <!-- Central Wi-Fi Hub -->
+    <!-- Central Wi-Fi Hub - DART-AI Style -->
     <div class="wifi-hub" id="wifi-hub">
-      <div class="hub-pulse"></div>
-      <div class="hub-outer-ring"></div>
-      <div class="hub-inner">
-        <!-- Wi-Fi Icon -->
-        <svg
-          class="wifi-icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
-          <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
-          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
-          <circle cx="12" cy="20" r="1" fill="currentColor"></circle>
-        </svg>
+      <div class="core-pulse"></div>
+      <div class="core-ring core-ring-1"></div>
+      <div class="core-ring core-ring-2"></div>
+      <div class="core-logo">
+        <img src={DartLogoLight.src} alt="DART-AI" />
       </div>
     </div>
 
@@ -244,7 +233,7 @@ const {
     }
   }
 
-  /* Central Wi-Fi Hub */
+  /* Central Wi-Fi Hub - DART-AI Style */
   .wifi-hub {
     position: absolute;
     top: 50%;
@@ -255,39 +244,52 @@ const {
     z-index: 10;
   }
 
-  .hub-pulse {
+  .core-pulse {
     position: absolute;
-    inset: -30px;
+    inset: -20px;
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      rgba(234, 36, 43, 0.2) 0%,
+      rgba(220, 38, 38, 0.15) 0%,
       transparent 70%
     );
-    animation: hubPulse 2.5s ease-in-out infinite;
+    animation: corePulse 3s ease-in-out infinite;
   }
 
-  @keyframes hubPulse {
+  @keyframes corePulse {
     0%,
     100% {
       transform: scale(1);
       opacity: 0.5;
     }
     50% {
-      transform: scale(1.15);
+      transform: scale(1.2);
       opacity: 0.8;
     }
   }
 
-  .hub-outer-ring {
+  .core-ring {
     position: absolute;
-    inset: -12px;
+    inset: 0;
     border-radius: 50%;
-    border: 2px dashed rgba(234, 36, 43, 0.25);
-    animation: hubRotate 15s linear infinite;
+    border: 1px solid rgba(220, 38, 38, 0.25);
   }
 
-  @keyframes hubRotate {
+  .core-ring-1 {
+    inset: -10px;
+    animation: ringRotate 20s linear infinite;
+    border-style: dashed;
+    border-color: rgba(220, 38, 38, 0.2);
+  }
+
+  .core-ring-2 {
+    inset: -25px;
+    animation: ringRotate 30s linear infinite reverse;
+    border-style: dotted;
+    border-color: rgba(220, 38, 38, 0.12);
+  }
+
+  @keyframes ringRotate {
     from {
       transform: rotate(0deg);
     }
@@ -296,26 +298,27 @@ const {
     }
   }
 
-  .hub-inner {
+  .core-logo {
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-radius: 50%;
-    border: 2px solid rgba(234, 36, 43, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.12),
-      0 0 60px rgba(234, 36, 43, 0.15),
-      inset 0 2px 8px rgba(255, 255, 255, 0.8);
+      0 4px 30px rgba(0, 0, 0, 0.1),
+      0 0 40px rgba(220, 38, 38, 0.1),
+      inset 0 0 30px rgba(255, 255, 255, 0.5);
+    overflow: hidden;
   }
 
-  .wifi-icon {
-    width: 44px;
-    height: 44px;
-    color: var(--color-primary);
-    filter: drop-shadow(0 2px 4px rgba(234, 36, 43, 0.3));
+  .core-logo img {
+    width: 65%;
+    height: auto;
   }
 
   /* Device Nodes */
@@ -663,17 +666,20 @@ const {
       height: 80px;
     }
 
-    .hub-pulse {
-      inset: -20px;
+    .core-pulse {
+      inset: -15px;
     }
 
-    .hub-outer-ring {
+    .core-ring-1 {
       inset: -8px;
     }
 
-    .wifi-icon {
-      width: 36px;
-      height: 36px;
+    .core-ring-2 {
+      inset: -18px;
+    }
+
+    .core-logo img {
+      width: 60%;
     }
 
     .signal-ring-1 {

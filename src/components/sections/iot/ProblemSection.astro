@@ -1,0 +1,805 @@
+---
+/**
+ * IoT ProblemSection - "Connected But Vulnerable"
+ *
+ * Dark, tension-filled section showing the chaos of unmanaged IoT:
+ * - Threat monitoring dashboard (left)
+ * - Pain point cards showing vulnerabilities (right)
+ */
+import Container from "../../ui/Container.astro";
+
+interface ThreatAlert {
+  type: string;
+  severity: "critical" | "high" | "medium";
+  message: string;
+  device: string;
+  time: string;
+}
+
+interface PainPoint {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  sectionTitle?: string;
+  contextParagraph?: string;
+  threats?: ThreatAlert[];
+  painPoints?: PainPoint[];
+  bridgeStatement?: string;
+  bridgeEmphasis?: string;
+}
+
+const {
+  sectionTitle = "Connected But Vulnerable",
+  contextParagraph = "You've connected your devices. The data is flowing. But with thousands of endpoints comes immense complexity. Bottlenecks, security vulnerabilities, and unpredictable device failures can turn your innovative IoT project into a costly and fragile liability.",
+  threats = [
+    {
+      type: "Anomaly",
+      severity: "critical",
+      message: "Unusual data transmission pattern detected",
+      device: "Sensor Node #2847",
+      time: "2s ago"
+    },
+    {
+      type: "Security",
+      severity: "high",
+      message: "Unauthorized access attempt blocked",
+      device: "Edge Gateway #12",
+      time: "15s ago"
+    },
+    {
+      type: "Performance",
+      severity: "medium",
+      message: "Bandwidth congestion on subnet",
+      device: "Industrial Zone A",
+      time: "1m ago"
+    }
+  ],
+  painPoints = [
+    {
+      icon: "chaos",
+      title: "Data Overload",
+      description: "Thousands of endpoints generating data without prioritization—critical alerts lost in the noise.",
+    },
+    {
+      icon: "security",
+      title: "Security Blindspots",
+      description: "Every connected device is a potential entry point. Traditional firewalls can't detect IoT-specific threats.",
+    },
+    {
+      icon: "downtime",
+      title: "Unpredictable Failures",
+      description: "Device failures cascade through your network, causing outages you can't predict or prevent.",
+    },
+  ],
+  bridgeStatement = "Don't Just Build a Connected Network.",
+  bridgeEmphasis = " Build an Intelligent One.",
+} = Astro.props;
+
+const icons: Record<string, string> = {
+  chaos: "M13 10V3L4 14h7v7l9-11h-7z",
+  security: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z",
+  downtime: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
+};
+
+const severityColors: Record<string, { bg: string; border: string; text: string }> = {
+  critical: { bg: "rgba(239, 68, 68, 0.15)", border: "rgba(239, 68, 68, 0.3)", text: "#ef4444" },
+  high: { bg: "rgba(245, 158, 11, 0.15)", border: "rgba(245, 158, 11, 0.3)", text: "#f59e0b" },
+  medium: { bg: "rgba(59, 130, 246, 0.15)", border: "rgba(59, 130, 246, 0.3)", text: "#3b82f6" },
+};
+---
+
+<section class="problem-section" data-theme="dark">
+  <div class="problem-bg">
+    <div class="problem-gradient"></div>
+    <div class="problem-grid"></div>
+    <div class="problem-noise"></div>
+    <div class="threat-glow"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="problem-content">
+      <!-- Header -->
+      <header class="problem-header">
+        <span class="problem-eyebrow">The Challenge</span>
+        <h2 class="problem-title">{sectionTitle}</h2>
+        <p class="problem-context">{contextParagraph}</p>
+      </header>
+
+      <!-- Two Column Grid -->
+      <div class="two-col">
+        <!-- Left: Threat Monitor -->
+        <div class="col-threats">
+          <div class="threat-monitor">
+            <div class="monitor-chrome">
+              <div class="chrome-dots">
+                <span class="dot dot--red"></span>
+                <span class="dot dot--yellow"></span>
+                <span class="dot dot--green"></span>
+              </div>
+              <span class="chrome-title">IoT Threat Monitor</span>
+              <span class="chrome-status">
+                <span class="status-pulse"></span>
+                Live
+              </span>
+            </div>
+
+            <div class="monitor-header">
+              <div class="header-stats">
+                <div class="stat">
+                  <span class="stat-value" id="device-count">2,847</span>
+                  <span class="stat-label">Devices</span>
+                </div>
+                <div class="stat stat--warning">
+                  <span class="stat-value" id="alert-count">23</span>
+                  <span class="stat-label">Active Alerts</span>
+                </div>
+                <div class="stat stat--danger">
+                  <span class="stat-value" id="threat-count">3</span>
+                  <span class="stat-label">Threats</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="monitor-body">
+              <div class="threat-feed">
+                {threats.map((threat, index) => (
+                  <div
+                    class={`threat-item threat-item--${threat.severity}`}
+                    style={`--delay: ${index * 0.15}s; --severity-bg: ${severityColors[threat.severity].bg}; --severity-border: ${severityColors[threat.severity].border}; --severity-text: ${severityColors[threat.severity].text}`}
+                  >
+                    <div class="threat-indicator">
+                      <span class="indicator-dot"></span>
+                    </div>
+                    <div class="threat-content">
+                      <div class="threat-header">
+                        <span class="threat-type">{threat.type}</span>
+                        <span class="threat-severity">{threat.severity}</span>
+                      </div>
+                      <p class="threat-message">{threat.message}</p>
+                      <div class="threat-meta">
+                        <span class="threat-device">
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                          </svg>
+                          {threat.device}
+                        </span>
+                        <span class="threat-time">{threat.time}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div class="monitor-footer">
+                <div class="network-status">
+                  <span class="network-label">Network Health</span>
+                  <div class="health-bar">
+                    <div class="health-fill" style="width: 35%"></div>
+                  </div>
+                  <span class="health-value health-value--critical">Critical</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Pain Cards -->
+        <div class="col-pain">
+          <div class="pain-cards">
+            {painPoints.map((point, index) => (
+              <article class="pain-card" style={`--delay: ${index * 0.1}s`}>
+                <div class="pain-bar"></div>
+                <div class="pain-icon">
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path d={icons[point.icon]}></path>
+                  </svg>
+                </div>
+                <div class="pain-content">
+                  <h3 class="pain-title">{point.title}</h3>
+                  <p class="pain-desc">{point.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Bridge -->
+      <div class="bridge">
+        <p class="bridge-text">
+          {bridgeStatement}
+          <strong class="bridge-emphasis">{bridgeEmphasis}</strong>
+        </p>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .problem-section {
+    position: relative;
+    padding: var(--space-20) 0 var(--space-16);
+    background: #070709;
+    overflow: hidden;
+  }
+
+  .problem-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .problem-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 60% 50% at 25% 20%,
+        rgba(239, 68, 68, 0.08) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 40% 30% at 75% 70%,
+        rgba(234, 36, 43, 0.06) 0%,
+        transparent 50%
+      ),
+      linear-gradient(180deg, #070709 0%, #0a0a0c 100%);
+  }
+
+  .problem-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(
+      ellipse 80% 60% at 50% 40%,
+      black 0%,
+      transparent 70%
+    );
+  }
+
+  .problem-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    mix-blend-mode: overlay;
+  }
+
+  .threat-glow {
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.1) 0%, transparent 60%);
+    animation: threatPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes threatPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+  }
+
+  .problem-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .problem-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .problem-eyebrow {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: var(--radius-full);
+  }
+
+  .problem-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: var(--space-5);
+  }
+
+  .problem-context {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  /* Two Column Grid */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+    align-items: stretch;
+    margin-bottom: var(--space-12);
+  }
+
+  /* Threat Monitor */
+  .col-threats {
+    display: flex;
+  }
+
+  .threat-monitor {
+    width: 100%;
+    background: #0b0b0d;
+    border: 1px solid #1c1c20;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.4),
+      0 0 80px rgba(239, 68, 68, 0.06);
+  }
+
+  .monitor-chrome {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 8px 12px;
+    background: #131315;
+    border-bottom: 1px solid #1c1c20;
+  }
+
+  .chrome-dots {
+    display: flex;
+    gap: 5px;
+  }
+
+  .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+
+  .dot--red { background: #ff5f57; }
+  .dot--yellow { background: #ffbd2e; }
+  .dot--green { background: #28ca41; }
+
+  .chrome-title {
+    flex: 1;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .chrome-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    color: #ef4444;
+  }
+
+  .status-pulse {
+    width: 6px;
+    height: 6px;
+    background: #ef4444;
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .monitor-header {
+    padding: 12px;
+    background: #0e0e10;
+    border-bottom: 1px solid #18181b;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: var(--space-4);
+  }
+
+  .stat {
+    flex: 1;
+    padding: 8px 10px;
+    background: #0b0b0d;
+    border: 1px solid #1c1c20;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  .stat--warning {
+    border-color: rgba(245, 158, 11, 0.3);
+    background: rgba(245, 158, 11, 0.05);
+  }
+
+  .stat--danger {
+    border-color: rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.05);
+  }
+
+  .stat-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: var(--font-bold);
+    color: #fff;
+  }
+
+  .stat--warning .stat-value { color: #f59e0b; }
+  .stat--danger .stat-value { color: #ef4444; }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .monitor-body {
+    padding: 12px;
+  }
+
+  .threat-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .threat-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    background: var(--severity-bg);
+    border: 1px solid var(--severity-border);
+    border-radius: 6px;
+    opacity: 0;
+    transform: translateX(-10px);
+    animation: slideIn 0.4s ease forwards;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes slideIn {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .threat-indicator {
+    display: flex;
+    align-items: flex-start;
+    padding-top: 4px;
+  }
+
+  .indicator-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--severity-text);
+    border-radius: 50%;
+    animation: indicatorPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes indicatorPulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--severity-text); }
+    50% { opacity: 0.7; box-shadow: 0 0 8px 2px var(--severity-text); }
+  }
+
+  .threat-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .threat-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .threat-type {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--severity-text);
+  }
+
+  .threat-severity {
+    padding: 1px 5px;
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    color: var(--severity-text);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+
+  .threat-message {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 6px 0;
+    line-height: 1.4;
+  }
+
+  .threat-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .threat-device {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .threat-time {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .monitor-footer {
+    padding: 10px;
+    background: #0a0a0c;
+    border: 1px solid #18181b;
+    border-radius: 6px;
+  }
+
+  .network-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .network-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.4);
+    white-space: nowrap;
+  }
+
+  .health-bar {
+    flex: 1;
+    height: 6px;
+    background: #1c1c20;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+
+  .health-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ef4444, #f59e0b);
+    border-radius: var(--radius-full);
+    animation: healthPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes healthPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  .health-value {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+  }
+
+  .health-value--critical {
+    color: #ef4444;
+  }
+
+  /* Pain Cards */
+  .col-pain {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pain-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .pain-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #0b0b0d;
+    border: 1px solid #1c1c20;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.4s ease forwards;
+    animation-delay: var(--delay);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .pain-card:hover {
+    border-color: rgba(239, 68, 68, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .pain-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ef4444, transparent);
+    opacity: 0.4;
+  }
+
+  .pain-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.12);
+    border-radius: 8px;
+    color: #ef4444;
+  }
+
+  .pain-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .pain-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: var(--font-semibold);
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .pain-desc {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+  }
+
+  /* Bridge */
+  .bridge {
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: var(--space-4);
+  }
+
+  .bridge-text {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+  }
+
+  .bridge-emphasis {
+    font-weight: var(--font-bold);
+    color: #fff;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .two-col {
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .problem-section {
+      padding: var(--space-14) 0 var(--space-12);
+    }
+
+    .header-stats {
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      min-width: calc(50% - var(--space-2));
+    }
+
+    .pain-card {
+      padding: 12px 14px;
+    }
+
+    .pain-icon {
+      width: 36px;
+      height: 36px;
+    }
+  }
+</style>
+
+<script>
+  // Animate threat counts
+  function animateValue(element: HTMLElement | null, start: number, end: number, duration: number) {
+    if (!element) return;
+    let startTimestamp: number | null = null;
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      element.textContent = Math.floor(progress * (end - start) + start).toLocaleString();
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }
+
+  const deviceCount = document.getElementById('device-count');
+  const alertCount = document.getElementById('alert-count');
+  const threatCount = document.getElementById('threat-count');
+
+  setTimeout(() => {
+    animateValue(deviceCount, 0, 2847, 2000);
+    animateValue(alertCount, 0, 23, 1500);
+    animateValue(threatCount, 0, 3, 800);
+  }, 500);
+</script>

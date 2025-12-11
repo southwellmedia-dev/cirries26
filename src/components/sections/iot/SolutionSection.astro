@@ -1,0 +1,817 @@
+---
+/**
+ * IoT SolutionSection - "From Chaos to Control"
+ *
+ * Clean, confident section showing DART-AI bringing intelligence to IoT:
+ * - Before/After comparison of IoT management
+ * - Live dashboard visualization showing controlled state
+ */
+import Container from "../../ui/Container.astro";
+
+interface Props {
+  sectionTitle?: string;
+  contextParagraph?: string;
+}
+
+const {
+  sectionTitle = "The Intelligence Layer Your IoT Needs",
+  contextParagraph = "DART-AI is the intelligence layer that makes your entire IoT ecosystem resilient, secure, and radically efficient. The success of your IoT initiative depends on its ability to be managed, secured, and scaled efficiently.",
+} = Astro.props;
+---
+
+<section class="solution-section" data-theme="light">
+  <div class="solution-bg">
+    <div class="solution-gradient"></div>
+    <div class="solution-grid"></div>
+    <div class="solution-glow"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="solution-content">
+      <!-- Section Header -->
+      <header class="solution-header">
+        <span class="solution-eyebrow">The Solution</span>
+        <h2 class="solution-title">{sectionTitle}</h2>
+        <p class="solution-context">{contextParagraph}</p>
+      </header>
+
+      <!-- Before/After Comparison -->
+      <div class="comparison-block">
+        <!-- Before Panel -->
+        <div class="comparison-panel comparison-panel--before">
+          <div class="panel-label">
+            <span class="label-dot label-dot--before"></span>
+            Without DART-AI
+          </div>
+
+          <div class="control-screen control-screen--before">
+            <div class="screen-header">
+              <div class="screen-dots">
+                <span class="dot dot--red"></span>
+                <span class="dot dot--yellow"></span>
+                <span class="dot dot--green"></span>
+              </div>
+              <span class="screen-title">IoT Management</span>
+              <div class="screen-status screen-status--chaos">
+                <span class="status-dot"></span>
+                Unmanaged
+              </div>
+            </div>
+
+            <div class="screen-body screen-body--before">
+              <!-- Chaotic network visualization -->
+              <div class="chaos-network">
+                <div class="chaos-nodes">
+                  {[...Array(12)].map((_, i) => (
+                    <div class="chaos-node" style={`--i: ${i}`}>
+                      <span class="node-dot"></span>
+                    </div>
+                  ))}
+                </div>
+                <div class="chaos-overlay">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 8v4m0 4h.01"></path>
+                  </svg>
+                  <span>No Central Control</span>
+                </div>
+              </div>
+
+              <div class="chaos-stats">
+                <div class="chaos-stat">
+                  <span class="chaos-value">???</span>
+                  <span class="chaos-label">Device Status</span>
+                </div>
+                <div class="chaos-stat">
+                  <span class="chaos-value">???</span>
+                  <span class="chaos-label">Threats</span>
+                </div>
+                <div class="chaos-stat">
+                  <span class="chaos-value">???</span>
+                  <span class="chaos-label">Performance</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="screen-footer screen-footer--before">
+              <span class="footer-status">Manual intervention required for every issue</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transformation Arrow -->
+        <div class="transformation-arrow">
+          <div class="arrow-line"></div>
+          <div class="arrow-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </div>
+          <div class="arrow-line"></div>
+        </div>
+
+        <!-- After Panel -->
+        <div class="comparison-panel comparison-panel--after">
+          <div class="panel-label">
+            <span class="label-dot label-dot--after"></span>
+            With DART-AI
+          </div>
+
+          <div class="control-screen control-screen--after">
+            <div class="screen-header screen-header--active">
+              <div class="screen-dots">
+                <span class="dot dot--red"></span>
+                <span class="dot dot--yellow"></span>
+                <span class="dot dot--green"></span>
+              </div>
+              <span class="screen-title">DART-AI Command Center</span>
+              <div class="screen-status screen-status--online">
+                <span class="status-dot"></span>
+                Intelligent Control
+              </div>
+            </div>
+
+            <div class="screen-body screen-body--after">
+              <!-- Organized network visualization -->
+              <div class="intelligent-network">
+                <div class="network-hub">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                  </svg>
+                </div>
+                <div class="network-rings">
+                  <div class="ring ring--1"></div>
+                  <div class="ring ring--2"></div>
+                </div>
+                <div class="network-nodes">
+                  {[...Array(8)].map((_, i) => (
+                    <div class="network-node" style={`--i: ${i}; --total: 8`}>
+                      <span class="node-indicator"></span>
+                    </div>
+                  ))}
+                </div>
+                <div class="network-connections">
+                  {[...Array(8)].map((_, i) => (
+                    <div class="network-connection" style={`--i: ${i}; --total: 8`}></div>
+                  ))}
+                </div>
+              </div>
+
+              <div class="smart-stats">
+                <div class="smart-stat">
+                  <span class="smart-value smart-value--good">2,847</span>
+                  <span class="smart-label">Devices Online</span>
+                </div>
+                <div class="smart-stat">
+                  <span class="smart-value smart-value--secure">0</span>
+                  <span class="smart-label">Active Threats</span>
+                </div>
+                <div class="smart-stat">
+                  <span class="smart-value smart-value--optimal">98.7%</span>
+                  <span class="smart-label">Network Health</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="screen-footer screen-footer--after">
+              <div class="ai-actions">
+                <div class="action-item">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+                  </svg>
+                  <span>Auto-prioritizing traffic</span>
+                </div>
+                <div class="action-item">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+                  </svg>
+                  <span>Threats neutralized</span>
+                </div>
+                <div class="action-item">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+                  </svg>
+                  <span>Predictive maintenance active</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .solution-section {
+    position: relative;
+    padding: var(--space-16) 0 var(--space-24);
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .solution-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .solution-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 100% 60% at 50% 0%,
+        rgba(34, 197, 94, 0.04) 0%,
+        transparent 50%
+      ),
+      linear-gradient(180deg, #f8f9fa 0%, #ffffff 30%, #ffffff 100%);
+  }
+
+  .solution-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(
+      ellipse 80% 60% at 50% 80%,
+      black 0%,
+      transparent 70%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 60% at 50% 80%,
+      black 0%,
+      transparent 70%
+    );
+  }
+
+  .solution-glow {
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 400px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(34, 197, 94, 0.08) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+
+  .solution-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Section Header */
+  .solution-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .solution-eyebrow {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: var(--radius-full);
+  }
+
+  .solution-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #111111;
+    margin-bottom: var(--space-5);
+  }
+
+  .solution-context {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: rgba(0, 0, 0, 0.55);
+  }
+
+  /* Comparison Block */
+  .comparison-block {
+    display: flex;
+    align-items: stretch;
+    gap: var(--space-4);
+  }
+
+  .comparison-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #666666;
+  }
+
+  .label-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .label-dot--before { background: #9ca3af; }
+  .label-dot--after {
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+  }
+
+  /* Control Screen */
+  .control-screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+
+  .control-screen--before {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+  }
+
+  .control-screen--after {
+    background: #ffffff;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.08),
+      0 0 40px rgba(34, 197, 94, 0.1);
+  }
+
+  .screen-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: #e5e7eb;
+    border-bottom: 1px solid #d1d5db;
+  }
+
+  .screen-header--active {
+    background: linear-gradient(90deg, #f0fdf4 0%, #dcfce7 100%);
+    border-bottom-color: rgba(34, 197, 94, 0.2);
+  }
+
+  .screen-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .dot--red { background: #ef4444; }
+  .dot--yellow { background: #f59e0b; }
+  .dot--green { background: #22c55e; }
+
+  .screen-title {
+    flex: 1;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: #6b7280;
+  }
+
+  .screen-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .screen-status--chaos {
+    color: #9ca3af;
+  }
+
+  .screen-status--chaos .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #9ca3af;
+  }
+
+  .screen-status--online {
+    color: #22c55e;
+  }
+
+  .screen-status--online .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: statusPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+    50% { opacity: 0.8; box-shadow: 0 0 0 4px rgba(34, 197, 94, 0); }
+  }
+
+  /* Screen Body */
+  .screen-body {
+    flex: 1;
+    padding: var(--space-4);
+    min-height: 200px;
+  }
+
+  /* Chaos Network (Before) */
+  .chaos-network {
+    position: relative;
+    height: 120px;
+    margin-bottom: var(--space-3);
+  }
+
+  .chaos-nodes {
+    position: absolute;
+    inset: 0;
+  }
+
+  .chaos-node {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    animation: chaosFloat 3s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.2s);
+  }
+
+  .chaos-node:nth-child(1) { top: 10%; left: 15%; }
+  .chaos-node:nth-child(2) { top: 25%; left: 45%; }
+  .chaos-node:nth-child(3) { top: 15%; left: 75%; }
+  .chaos-node:nth-child(4) { top: 40%; left: 25%; }
+  .chaos-node:nth-child(5) { top: 50%; left: 60%; }
+  .chaos-node:nth-child(6) { top: 35%; left: 85%; }
+  .chaos-node:nth-child(7) { top: 65%; left: 10%; }
+  .chaos-node:nth-child(8) { top: 70%; left: 40%; }
+  .chaos-node:nth-child(9) { top: 60%; left: 70%; }
+  .chaos-node:nth-child(10) { top: 80%; left: 20%; }
+  .chaos-node:nth-child(11) { top: 85%; left: 55%; }
+  .chaos-node:nth-child(12) { top: 75%; left: 80%; }
+
+  @keyframes chaosFloat {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(5px, -3px); }
+    50% { transform: translate(-3px, 5px); }
+    75% { transform: translate(3px, 3px); }
+  }
+
+  .node-dot {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #d1d5db;
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+
+  .chaos-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+  }
+
+  .chaos-overlay span {
+    margin-top: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .chaos-stats {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .chaos-stat {
+    flex: 1;
+    padding: var(--space-2);
+    background: #e5e7eb;
+    border-radius: var(--radius-md);
+    text-align: center;
+  }
+
+  .chaos-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: var(--font-bold);
+    color: #9ca3af;
+  }
+
+  .chaos-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    color: #9ca3af;
+  }
+
+  /* Intelligent Network (After) */
+  .intelligent-network {
+    position: relative;
+    height: 120px;
+    margin-bottom: var(--space-3);
+  }
+
+  .network-hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    border-radius: 50%;
+    color: white;
+    z-index: 5;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+  }
+
+  .network-rings {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ring {
+    position: absolute;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: 50%;
+  }
+
+  .ring--1 {
+    width: 70px;
+    height: 70px;
+  }
+
+  .ring--2 {
+    width: 100px;
+    height: 100px;
+  }
+
+  .network-nodes {
+    position: absolute;
+    inset: 0;
+  }
+
+  .network-node {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    transform-origin: center;
+    transform: rotate(calc(var(--i) * 360deg / var(--total))) translateY(-45px);
+  }
+
+  .node-indicator {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+    animation: nodeGlow 2s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.2s);
+  }
+
+  @keyframes nodeGlow {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  .network-connections {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .network-connection {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 45px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(34, 197, 94, 0.4), rgba(34, 197, 94, 0.1));
+    transform-origin: left center;
+    transform: rotate(calc(var(--i) * 360deg / var(--total)));
+  }
+
+  .smart-stats {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .smart-stat {
+    flex: 1;
+    padding: var(--space-2);
+    background: #f0fdf4;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: var(--radius-md);
+    text-align: center;
+  }
+
+  .smart-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: var(--font-bold);
+  }
+
+  .smart-value--good { color: #22c55e; }
+  .smart-value--secure { color: #22c55e; }
+  .smart-value--optimal { color: #22c55e; }
+
+  .smart-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    color: #6b7280;
+  }
+
+  /* Screen Footer */
+  .screen-footer {
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .screen-footer--before {
+    background: #f3f4f6;
+  }
+
+  .footer-status {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: #9ca3af;
+    font-style: italic;
+  }
+
+  .screen-footer--after {
+    background: #f0fdf4;
+    border-top-color: rgba(34, 197, 94, 0.2);
+  }
+
+  .ai-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .action-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: rgba(34, 197, 94, 0.1);
+    border-radius: var(--radius-full);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: #22c55e;
+  }
+
+  /* Transformation Arrow */
+  .transformation-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8) var(--space-2);
+    flex-shrink: 0;
+  }
+
+  .arrow-line {
+    flex: 1;
+    width: 2px;
+    background: linear-gradient(180deg,
+      transparent 0%,
+      rgba(34, 197, 94, 0.3) 30%,
+      rgba(34, 197, 94, 0.3) 70%,
+      transparent 100%
+    );
+  }
+
+  .arrow-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin: var(--space-2) 0;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    border-radius: 50%;
+    color: #ffffff;
+    box-shadow:
+      0 4px 12px rgba(34, 197, 94, 0.3),
+      0 0 24px rgba(34, 197, 94, 0.2);
+    animation: arrowPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes arrowPulse {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow:
+        0 4px 12px rgba(34, 197, 94, 0.3),
+        0 0 24px rgba(34, 197, 94, 0.2);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow:
+        0 6px 16px rgba(34, 197, 94, 0.4),
+        0 0 32px rgba(34, 197, 94, 0.3);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .comparison-block {
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .transformation-arrow {
+      flex-direction: row;
+      padding: var(--space-2) var(--space-8);
+    }
+
+    .arrow-line {
+      flex: 1;
+      height: 2px;
+      width: auto;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(34, 197, 94, 0.3) 30%,
+        rgba(34, 197, 94, 0.3) 70%,
+        transparent 100%
+      );
+    }
+
+    .arrow-icon {
+      margin: 0 var(--space-2);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .solution-section {
+      padding: var(--space-12) 0 var(--space-16);
+    }
+
+    .screen-title {
+      display: none;
+    }
+
+    .chaos-stats,
+    .smart-stats {
+      flex-direction: column;
+    }
+
+    .ai-actions {
+      flex-direction: column;
+    }
+
+    .arrow-icon {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>

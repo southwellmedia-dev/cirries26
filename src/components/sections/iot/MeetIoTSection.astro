@@ -1,0 +1,732 @@
+---
+/**
+ * MeetIoTSection - "Your IoT Network is Connected. Is It Intelligent?"
+ *
+ * Features an IoT mesh network visualization with:
+ * - Central DART-AI logo hub
+ * - Various IoT device nodes around the perimeter
+ * - Animated connection lines showing data flow
+ */
+import Container from "../../ui/Container.astro";
+import Button from "../../ui/Button.astro";
+import DartLogoLight from "../../../assets/logos/dart-lightmode.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  paragraphs?: string[];
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  eyebrow = "IoT Network Intelligence",
+  title = "Your IoT Network is Connected.",
+  highlightText = "Is It Intelligent?",
+  paragraphs = [
+    "An IoT deployment without a central nervous system is just <strong>unmanaged chaos</strong>. DART-AI transforms your raw device data into real-time control, security, and operational intelligence, ensuring your IoT investment delivers on its promise.",
+    "DART-AI is the intelligence layer that makes your entire IoT ecosystem <strong>resilient, secure, and radically efficient.</strong>",
+  ],
+  primaryCta = { label: "Build Intelligent IoT", href: "/contact" },
+  secondaryCta = { label: "View All Solutions", href: "/solutions" },
+} = Astro.props;
+
+// IoT Device types for visualization - positioned around outer ring only
+// Status: "healthy" (green), "warning" (yellow), "critical" (red)
+const iotDevices = [
+  { type: "sensor", label: "Sensor", angle: 0, distance: 160, status: "healthy" },
+  { type: "camera", label: "Camera", angle: 45, distance: 160, status: "warning" },
+  { type: "industrial", label: "PLC", angle: 90, distance: 160, status: "healthy" },
+  { type: "gateway", label: "Gateway", angle: 135, distance: 160, status: "critical" },
+  { type: "medical", label: "Medical", angle: 180, distance: 160, status: "healthy" },
+  { type: "meter", label: "Meter", angle: 225, distance: 160, status: "warning" },
+  { type: "vehicle", label: "Fleet", angle: 270, distance: 160, status: "critical" },
+  { type: "hvac", label: "HVAC", angle: 315, distance: 160, status: "healthy" },
+];
+
+// Device icons
+const deviceIcons: Record<string, string> = {
+  sensor: "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z",
+  camera: "M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z",
+  industrial: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z",
+  gateway: "M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01",
+  medical: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z",
+  meter: "M13 10V3L4 14h7v7l9-11h-7z",
+  vehicle: "M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0",
+  hvac: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
+};
+---
+
+<section class="meet-iot-section" data-theme="light">
+  <!-- Ambient background -->
+  <div class="iot-bg">
+    <div class="iot-gradient"></div>
+    <div class="iot-grid"></div>
+    <div class="iot-noise"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="meet-iot">
+      <div class="meet-iot__content">
+        <span class="meet-iot__eyebrow">{eyebrow}</span>
+
+        <h2 class="meet-iot__title">
+          {title} <span>{highlightText}</span>
+        </h2>
+
+        {
+          paragraphs.map((text) => (
+            <p class="meet-iot__text" set:html={text} />
+          ))
+        }
+
+        <div class="meet-iot__actions">
+          <Button href={primaryCta.href} variant="primary">
+            {primaryCta.label}
+          </Button>
+          <Button href={secondaryCta.href} variant="outline-dark">
+            {secondaryCta.label}
+          </Button>
+        </div>
+      </div>
+
+      <!-- IoT Mesh Network Visualization -->
+      <div class="iot-network" id="iot-network">
+        <!-- SVG for connection lines -->
+        <svg class="iot-connections" viewBox="0 0 400 400" id="iot-connections-svg">
+          <defs>
+            <linearGradient id="connection-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color: rgba(234, 36, 43, 0.1)" />
+              <stop offset="50%" style="stop-color: rgba(234, 36, 43, 0.4)" />
+              <stop offset="100%" style="stop-color: rgba(234, 36, 43, 0.1)" />
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <g id="mesh-lines"></g>
+          <g id="connection-lines"></g>
+        </svg>
+
+        <!-- Central Hub - DART-AI Logo (matching neural-network-viz style) -->
+        <div class="iot-hub" id="iot-hub">
+          <div class="core-pulse"></div>
+          <div class="core-ring core-ring-1"></div>
+          <div class="core-ring core-ring-2"></div>
+          <div class="core-logo">
+            <img src={DartLogoLight.src} alt="DART-AI" />
+          </div>
+        </div>
+
+        <!-- IoT Device Nodes -->
+        {iotDevices.map((device, index) => (
+          <div
+            class={`iot-device iot-device--${device.type} iot-device--${device.status}`}
+            data-angle={device.angle}
+            data-distance={device.distance}
+            data-index={index}
+            data-status={device.status}
+            style={`--device-delay: ${index * 0.15}s`}
+          >
+            <div class="device-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d={deviceIcons[device.type]}></path>
+              </svg>
+              <div class="device-status">
+                <span class="status-ping"></span>
+              </div>
+            </div>
+            <span class="device-label">{device.label}</span>
+          </div>
+        ))}
+
+        <!-- Data packets container -->
+        <div class="data-packets" id="iot-data-packets"></div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     IOT SECTION STYLES
+     ======================================== */
+  .meet-iot-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .iot-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .iot-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 100% 80% at 75% 40%,
+        rgba(234, 36, 43, 0.04) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 60% 60% at 25% 80%,
+        rgba(59, 130, 246, 0.03) 0%,
+        transparent 40%
+      ),
+      linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #f0f1f3 100%);
+  }
+
+  .iot-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(
+      ellipse 90% 80% at 70% 50%,
+      black 20%,
+      transparent 70%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 90% 80% at 70% 50%,
+      black 20%,
+      transparent 70%
+    );
+  }
+
+  .iot-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.02;
+    mix-blend-mode: multiply;
+  }
+
+  /* Content Layout */
+  .meet-iot {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  .meet-iot__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+    color: var(--color-primary);
+  }
+
+  .meet-iot__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #111111;
+    margin-bottom: var(--space-6);
+  }
+
+  .meet-iot__title span {
+    display: block;
+    color: var(--color-primary);
+  }
+
+  .meet-iot__text {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: #555555;
+    margin-bottom: var(--space-4);
+  }
+
+  .meet-iot__text :global(strong) {
+    color: #111111;
+    font-weight: var(--font-semibold);
+  }
+
+  .meet-iot__actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  /* ========================================
+     IOT NETWORK VISUALIZATION
+     ======================================== */
+  .iot-network {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .iot-connections {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  /* Central Hub - matching neural-network-viz style */
+  .iot-hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    z-index: 10;
+  }
+
+  .core-pulse {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(220, 38, 38, 0.15) 0%,
+      transparent 70%
+    );
+    animation: corePulse 3s ease-in-out infinite;
+  }
+
+  @keyframes corePulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.15);
+      opacity: 0.8;
+    }
+  }
+
+  .core-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(220, 38, 38, 0.25);
+  }
+
+  .core-ring-1 {
+    inset: -10px;
+    animation: ringRotate 20s linear infinite;
+    border-style: dashed;
+    border-color: rgba(220, 38, 38, 0.2);
+  }
+
+  .core-ring-2 {
+    inset: -25px;
+    animation: ringRotate 30s linear infinite reverse;
+    border-style: dotted;
+    border-color: rgba(220, 38, 38, 0.12);
+  }
+
+  @keyframes ringRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .core-logo {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.08),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    z-index: 12;
+  }
+
+  .core-logo img {
+    width: 65%;
+    height: auto;
+  }
+
+  /* IoT Device Nodes */
+  .iot-device {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: deviceAppear 0.5s ease forwards;
+    animation-delay: var(--device-delay);
+    z-index: 8;
+  }
+
+  @keyframes deviceAppear {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  .device-icon {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.06),
+      0 4px 16px rgba(0, 0, 0, 0.04);
+    color: #374151;
+    transition: all 0.3s ease;
+  }
+
+  .iot-device:hover .device-icon {
+    border-color: var(--color-primary);
+    box-shadow:
+      0 4px 16px rgba(234, 36, 43, 0.15),
+      0 0 0 3px rgba(234, 36, 43, 0.08);
+    color: var(--color-primary);
+  }
+
+  .device-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #6b7280;
+    white-space: nowrap;
+  }
+
+  /* Status dot - centered on bottom edge of device icon */
+  .device-status {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+  }
+
+  .status-ping {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: statusBlink 2s ease-in-out infinite;
+    animation-delay: var(--device-delay);
+  }
+
+  /* Status colors */
+  .iot-device--healthy .status-ping {
+    background: #22c55e;
+  }
+
+  .iot-device--warning .status-ping {
+    background: #f59e0b;
+  }
+
+  .iot-device--critical .status-ping {
+    background: #ef4444;
+  }
+
+  /* Critical devices - inverted red box */
+  .iot-device--critical .device-icon {
+    background: linear-gradient(145deg, #ef4444 0%, #dc2626 100%);
+    border-color: rgba(239, 68, 68, 0.8);
+    color: #ffffff;
+    box-shadow:
+      0 4px 16px rgba(239, 68, 68, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .iot-device--critical:hover .device-icon {
+    background: linear-gradient(145deg, #f87171 0%, #ef4444 100%);
+    border-color: rgba(239, 68, 68, 1);
+    color: #ffffff;
+    box-shadow:
+      0 8px 24px rgba(239, 68, 68, 0.4),
+      0 0 0 3px rgba(239, 68, 68, 0.2);
+  }
+
+  .iot-device--critical .device-status {
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  @keyframes statusBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* Data Packets */
+  .data-packets {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 6;
+  }
+
+  :global(.iot-data-packet) {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 9;
+  }
+
+  :global(.iot-data-packet--healthy) {
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+  }
+
+  :global(.iot-data-packet--warning) {
+    background: #f59e0b;
+    box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
+  }
+
+  :global(.iot-data-packet--critical) {
+    background: #ef4444;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.9);
+  }
+
+  /* Connection Lines */
+  :global(.iot-connection-line) {
+    stroke: rgba(234, 36, 43, 0.15);
+    stroke-width: 1;
+    fill: none;
+    stroke-dasharray: 4 4;
+    animation: dashFlow 20s linear infinite;
+  }
+
+  :global(.iot-mesh-line) {
+    stroke: rgba(0, 0, 0, 0.04);
+    stroke-width: 1;
+    fill: none;
+  }
+
+  @keyframes dashFlow {
+    to {
+      stroke-dashoffset: -100;
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .meet-iot {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .iot-network {
+      max-width: 400px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .meet-iot-section {
+      padding: var(--space-12) 0;
+    }
+
+    .meet-iot__title {
+      font-size: var(--text-2xl);
+    }
+
+    .meet-iot__actions {
+      flex-direction: column;
+    }
+
+    .iot-network {
+      max-width: 320px;
+    }
+
+    .iot-hub {
+      width: 90px;
+      height: 90px;
+    }
+
+    .core-ring-1 {
+      inset: -8px;
+    }
+
+    .core-ring-2 {
+      inset: -18px;
+    }
+
+    .device-icon {
+      width: 36px;
+      height: 36px;
+    }
+
+    .device-label {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function initIoTNetwork() {
+    const network = document.getElementById('iot-network');
+    const svg = document.getElementById('iot-connections-svg');
+    const connectionLines = document.getElementById('connection-lines');
+    const meshLines = document.getElementById('mesh-lines');
+    const dataPacketsContainer = document.getElementById('iot-data-packets');
+
+    if (!network || !svg || !connectionLines || !meshLines || !dataPacketsContainer) return;
+
+    const devices = network.querySelectorAll('.iot-device') as NodeListOf<HTMLElement>;
+    const networkRect = network.getBoundingClientRect();
+    const centerX = networkRect.width / 2;
+    const centerY = networkRect.height / 2;
+    const svgNS = 'http://www.w3.org/2000/svg';
+
+    // Position devices
+    devices.forEach((device) => {
+      const angle = parseFloat(device.dataset.angle || '0') * (Math.PI / 180);
+      const distance = parseFloat(device.dataset.distance || '150');
+      const scaleFactor = Math.min(networkRect.width, networkRect.height) / 400;
+      const scaledDistance = distance * scaleFactor;
+
+      const x = centerX + Math.cos(angle) * scaledDistance;
+      const y = centerY + Math.sin(angle) * scaledDistance;
+
+      device.style.left = `${x}px`;
+      device.style.top = `${y}px`;
+    });
+
+    // Scale coordinates to SVG viewBox
+    const scaleX = 400 / networkRect.width;
+    const scaleY = 400 / networkRect.height;
+
+    // Draw connection lines from hub to devices
+    connectionLines.innerHTML = '';
+    devices.forEach((device, index) => {
+      const deviceStyle = window.getComputedStyle(device);
+      const deviceX = parseFloat(deviceStyle.left) * scaleX;
+      const deviceY = parseFloat(deviceStyle.top) * scaleY;
+
+      const line = document.createElementNS(svgNS, 'line');
+      line.setAttribute('x1', '200');
+      line.setAttribute('y1', '200');
+      line.setAttribute('x2', String(deviceX));
+      line.setAttribute('y2', String(deviceY));
+      line.setAttribute('class', 'iot-connection-line');
+      line.style.animationDelay = `${index * 0.2}s`;
+      connectionLines.appendChild(line);
+    });
+
+    // Draw mesh connections between nearby devices
+    meshLines.innerHTML = '';
+    const devicePositions: { x: number; y: number }[] = [];
+    devices.forEach((device) => {
+      const deviceStyle = window.getComputedStyle(device);
+      devicePositions.push({
+        x: parseFloat(deviceStyle.left) * scaleX,
+        y: parseFloat(deviceStyle.top) * scaleY
+      });
+    });
+
+    // Connect devices that are close to each other
+    for (let i = 0; i < devicePositions.length; i++) {
+      for (let j = i + 1; j < devicePositions.length; j++) {
+        const dx = devicePositions[i].x - devicePositions[j].x;
+        const dy = devicePositions[i].y - devicePositions[j].y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 120) {
+          const line = document.createElementNS(svgNS, 'line');
+          line.setAttribute('x1', String(devicePositions[i].x));
+          line.setAttribute('y1', String(devicePositions[i].y));
+          line.setAttribute('x2', String(devicePositions[j].x));
+          line.setAttribute('y2', String(devicePositions[j].y));
+          line.setAttribute('class', 'iot-mesh-line');
+          meshLines.appendChild(line);
+        }
+      }
+    }
+
+    // Animate data packets - color-coded by device status
+    function createDataPacket(startX: number, startY: number, endX: number, endY: number, delay: number, status: string) {
+      const packet = document.createElement('div');
+      packet.className = `iot-data-packet iot-data-packet--${status}`;
+      packet.style.left = `${startX}px`;
+      packet.style.top = `${startY}px`;
+      dataPacketsContainer?.appendChild(packet);
+
+      setTimeout(() => {
+        packet.style.transition = 'all 1s cubic-bezier(0.4, 0, 0.2, 1)';
+        packet.style.opacity = '1';
+        packet.style.left = `${endX}px`;
+        packet.style.top = `${endY}px`;
+
+        setTimeout(() => {
+          packet.style.opacity = '0';
+          setTimeout(() => packet.remove(), 300);
+        }, 800);
+      }, delay);
+    }
+
+    function animateDataPackets() {
+      devices.forEach((device, index) => {
+        const deviceStyle = window.getComputedStyle(device);
+        const deviceX = parseFloat(deviceStyle.left);
+        const deviceY = parseFloat(deviceStyle.top);
+        const status = device.dataset.status || 'healthy';
+
+        const toHub = Math.random() > 0.5;
+        const startX = toHub ? deviceX : centerX;
+        const startY = toHub ? deviceY : centerY;
+        const endX = toHub ? centerX : deviceX;
+        const endY = toHub ? centerY : deviceY;
+
+        createDataPacket(startX, startY, endX, endY, index * 200 + Math.random() * 400, status);
+      });
+    }
+
+    setTimeout(animateDataPackets, 800);
+    setInterval(animateDataPackets, 4500);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(initIoTNetwork, 200));
+  } else {
+    setTimeout(initIoTNetwork, 200);
+  }
+</script>
