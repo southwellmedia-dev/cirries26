@@ -39,7 +39,7 @@ export function initWifiNetwork(): void {
     const distance = parseFloat(node.dataset.distance || "150");
 
     // Scale distance based on container size
-    const scaleFactor = Math.min(networkRect.width, networkRect.height) / 400;
+    const scaleFactor = Math.min(networkRect.width, networkRect.height) / 480;
     const scaledDistance = distance * scaleFactor;
 
     const x = centerX + Math.cos(angle) * scaledDistance;
@@ -67,13 +67,13 @@ export function initWifiNetwork(): void {
     const relativeNodeY = nodeRect.top - networkRect.top + nodeRect.height / 2;
 
     // Scale to SVG viewBox coordinates
-    const scaleX = 400 / networkRect.width;
-    const scaleY = 400 / networkRect.height;
+    const scaleX = 480 / networkRect.width;
+    const scaleY = 480 / networkRect.height;
 
     const svgNodeX = relativeNodeX * scaleX;
     const svgNodeY = relativeNodeY * scaleY;
-    const svgCenterX = 200;
-    const svgCenterY = 200;
+    const svgCenterX = 240;
+    const svgCenterY = 240;
 
     // Get signal strength from data attribute
     const signalStrength = node.dataset.signal || "3";

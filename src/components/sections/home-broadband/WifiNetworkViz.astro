@@ -8,45 +8,49 @@
  */
 import DartLogoLight from "../../../assets/logos/dart-lightmode.svg";
 
-interface DeviceNode {
-  label: string;
-  icon: string;
-  position: { angle: number; distance: number };
-  signalStrength: 1 | 2 | 3;
-}
-
-interface Props {
-  devices?: DeviceNode[];
-}
-
-const {
-  devices = [
-    {
-      label: "Smart TV",
-      icon: "M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-6l2 2v1H8v-1l2-2H4a2 2 0 0 1-2-2V6zm2 0v10h16V6H4z",
-      position: { angle: -45, distance: 160 },
-      signalStrength: 3,
-    },
-    {
-      label: "Desktop",
-      icon: "M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-5l1 2v1H8v-1l1-2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 2v10h16V6H4z M9 18h6",
-      position: { angle: 45, distance: 165 },
-      signalStrength: 2,
-    },
-    {
-      label: "Laptop",
-      icon: "M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5zm2 0v10h12V5H6zM2 18a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z",
-      position: { angle: 135, distance: 155 },
-      signalStrength: 1,
-    },
-    {
-      label: "Phone",
-      icon: "M7 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H7zm5 18a1 1 0 1 1 0-2 1 1 0 0 1 0 2z",
-      position: { angle: -135, distance: 150 },
-      signalStrength: 3,
-    },
-  ],
-} = Astro.props;
+// Device data with metrics for DART-AI style monitoring cards
+const devices = [
+  {
+    label: "Smart TV",
+    icon: "M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-6l2 2v1H8v-1l2-2H4a2 2 0 0 1-2-2V6zm2 0v10h16V6H4z",
+    angle: -50,
+    distance: 220,
+    signalStrength: 3,
+    signalPercent: 94,
+    latency: "12ms",
+    status: "healthy",
+  },
+  {
+    label: "Desktop",
+    icon: "M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-5l1 2v1H8v-1l1-2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 2v10h16V6H4z M9 18h6",
+    angle: 50,
+    distance: 225,
+    signalStrength: 2,
+    signalPercent: 67,
+    latency: "45ms",
+    status: "warning",
+  },
+  {
+    label: "Laptop",
+    icon: "M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5zm2 0v10h12V5H6zM2 18a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z",
+    angle: 130,
+    distance: 215,
+    signalStrength: 1,
+    signalPercent: 23,
+    latency: "189ms",
+    status: "critical",
+  },
+  {
+    label: "Phone",
+    icon: "M7 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H7zm5 18a1 1 0 1 1 0-2 1 1 0 0 1 0 2z",
+    angle: -130,
+    distance: 210,
+    signalStrength: 3,
+    signalPercent: 91,
+    latency: "8ms",
+    status: "healthy",
+  },
+];
 ---
 
 <div class="wifi-viz-container">
@@ -58,7 +62,7 @@ const {
       width="100%"
       height="100%"
       preserveAspectRatio="xMidYMid meet"
-      viewBox="0 0 400 400"
+      viewBox="0 0 480 480"
     >
       <defs>
         <!-- Signal pulse gradient -->
@@ -108,42 +112,50 @@ const {
       </div>
     </div>
 
-    <!-- Device Nodes -->
+    <!-- Device Nodes - DART-AI Monitoring Style -->
     {
       devices.map((device, index) => (
         <div
-          class="device-node"
+          class={`device-node device-node--${device.status}`}
           data-device-index={index}
-          data-angle={device.position.angle}
-          data-distance={device.position.distance}
+          data-angle={device.angle}
+          data-distance={device.distance}
           data-signal={device.signalStrength}
+          data-status={device.status}
         >
           <div class="device-content">
-            <div class="device-icon">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d={device.icon} />
-              </svg>
+            <!-- Header with icon and label -->
+            <div class="device-header">
+              <div class="device-icon">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d={device.icon} />
+                </svg>
+              </div>
+              <span class="device-label">{device.label}</span>
+              <div class="device-status-dot" />
             </div>
-            <span class="device-label">{device.label}</span>
-            <!-- Signal strength indicator -->
-            <div
-              class={`signal-strength signal-strength--${device.signalStrength}`}
-            >
-              <div class="signal-bar signal-bar-1" />
-              <div class="signal-bar signal-bar-2" />
-              <div class="signal-bar signal-bar-3" />
+            <!-- Metrics Row -->
+            <div class="device-metrics">
+              <div class="metric">
+                <span class="metric-value">{device.signalPercent}%</span>
+                <span class="metric-label">Signal</span>
+              </div>
+              <div class="metric-divider"></div>
+              <div class="metric">
+                <span class="metric-value">{device.latency}</span>
+                <span class="metric-label">Latency</span>
+              </div>
             </div>
           </div>
-          <div class="device-glow" />
         </div>
       ))
     }
@@ -162,13 +174,13 @@ const {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 450px;
+    min-height: 520px;
   }
 
   .wifi-network {
     position: relative;
     width: 100%;
-    max-width: 400px;
+    max-width: 480px;
     aspect-ratio: 1;
   }
 
@@ -239,8 +251,8 @@ const {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     z-index: 10;
   }
 
@@ -321,11 +333,11 @@ const {
     height: auto;
   }
 
-  /* Device Nodes */
+  /* Device Nodes - DART-AI Monitoring Cards */
   .device-node {
     position: absolute;
     transform: translate(-50%, -50%);
-    z-index: 5;
+    z-index: 8;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -339,183 +351,156 @@ const {
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 1.25rem;
-    background: rgba(255, 255, 255, 0.95);
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(15, 15, 15, 0.92);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1.5px solid #d1d5db;
-    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
     transition: all 0.3s ease;
     box-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.08),
-      0 1px 3px rgba(0, 0, 0, 0.06);
+      0 4px 20px rgba(0, 0, 0, 0.25),
+      0 1px 3px rgba(0, 0, 0, 0.15);
+    min-width: 140px;
+    white-space: nowrap;
   }
 
   .device-node:hover .device-content {
-    background: #ffffff;
+    background: rgba(20, 20, 20, 0.95);
+    border-color: rgba(255, 255, 255, 0.15);
     box-shadow:
-      0 8px 40px rgba(0, 0, 0, 0.12),
-      0 0 20px rgba(0, 0, 0, 0.05);
+      0 8px 32px rgba(0, 0, 0, 0.35),
+      0 0 20px rgba(0, 0, 0, 0.2);
   }
 
-  /* Border colors based on signal strength */
-
-  /* Weak signal (1) - INVERTED red card to stand out as problem */
-  .device-node[data-signal="1"] .device-content {
-    background: linear-gradient(145deg, #ef4444 0%, #dc2626 100%);
-    border-color: rgba(239, 68, 68, 0.8);
-    box-shadow:
-      0 4px 24px rgba(239, 68, 68, 0.25),
-      0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  .device-node[data-signal="1"] .device-label {
-    color: #ffffff;
-  }
-  .device-node[data-signal="1"] .device-icon {
-    background: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-  }
-  .device-node[data-signal="1"] .signal-bar {
-    background: rgba(255, 255, 255, 0.3);
-  }
-  .device-node[data-signal="1"] .signal-strength--1 .signal-bar-1 {
-    background: #ffffff;
-  }
-  .device-node[data-signal="1"]:hover .device-content {
-    background: linear-gradient(145deg, #f87171 0%, #ef4444 100%);
-    border-color: rgba(239, 68, 68, 1);
-    box-shadow:
-      0 8px 40px rgba(239, 68, 68, 0.35),
-      0 0 30px rgba(239, 68, 68, 0.25);
-  }
-  .device-node[data-signal="1"]:hover .device-icon {
-    background: rgba(255, 255, 255, 0.3);
-  }
-
-  .device-node[data-signal="2"] .device-content,
-  .device-node[data-signal="3"] .device-content {
-    border-color: transparent;
-  }
-  .device-node[data-signal="2"]:hover .device-content,
-  .device-node[data-signal="3"]:hover .device-content {
-    border-color: transparent;
-    box-shadow:
-      0 8px 40px rgba(0, 0, 0, 0.12),
-      0 0 20px rgba(0, 0, 0, 0.05);
+  /* Device Header */
+  .device-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
   }
 
   .device-icon {
-    width: 44px;
-    height: 44px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(234, 36, 43, 0.1);
-    border-radius: 10px;
-    color: var(--color-primary);
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.9);
     transition: all 0.3s ease;
-  }
-
-  .device-node:hover .device-icon {
-    background: rgba(234, 36, 43, 0.15);
-    transform: scale(1.08);
   }
 
   .device-label {
     font-family: var(--font-display);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: #333333;
+    color: rgba(255, 255, 255, 0.9);
+    flex: 1;
+    white-space: nowrap;
   }
 
-  /* Signal Strength Indicator */
-  .signal-strength {
-    display: flex;
-    gap: 3px;
-    align-items: flex-end;
-    height: 12px;
-    padding-top: 2px;
-  }
-
-  .signal-bar {
-    width: 4px;
-    border-radius: 1px;
-    background: #d1d5db;
-  }
-
-  .signal-bar-1 {
-    height: 4px;
-  }
-
-  .signal-bar-2 {
-    height: 7px;
-  }
-
-  .signal-bar-3 {
-    height: 10px;
-  }
-
-  /* Signal Strength Level 1 - Weak (Red) - only first bar active */
-  .signal-strength--1 .signal-bar-1 {
-    background: #ef4444;
-    animation: signalPulse 1.5s ease-in-out infinite;
-  }
-
-  /* Signal Strength Level 2 - Medium (Yellow) - first two bars active */
-  .signal-strength--2 .signal-bar-1,
-  .signal-strength--2 .signal-bar-2 {
-    background: #f59e0b;
-    animation: signalPulse 1.5s ease-in-out infinite;
-  }
-  .signal-strength--2 .signal-bar-2 {
-    animation-delay: 0.15s;
-  }
-
-  /* Signal Strength Level 3 - Strong (Green) - all bars active */
-  .signal-strength--3 .signal-bar-1,
-  .signal-strength--3 .signal-bar-2,
-  .signal-strength--3 .signal-bar-3 {
+  .device-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
     background: #22c55e;
-    animation: signalPulse 1.5s ease-in-out infinite;
-  }
-  .signal-strength--3 .signal-bar-2 {
-    animation-delay: 0.1s;
-  }
-  .signal-strength--3 .signal-bar-3 {
-    animation-delay: 0.2s;
+    animation: statusPulse 2s ease-in-out infinite;
   }
 
-  @keyframes signalPulse {
-    0%,
-    100% {
-      opacity: 0.6;
-    }
-    50% {
-      opacity: 1;
-    }
+  /* Device Metrics */
+  .device-metrics {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  .device-glow {
-    position: absolute;
-    inset: -12px;
-    background: radial-gradient(
-      circle,
-      rgba(234, 36, 43, 0.08) 0%,
-      transparent 70%
-    );
-    border-radius: 22px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: -1;
+  .metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
   }
 
-  .device-node:hover .device-glow {
-    opacity: 1;
+  .metric-value {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+  }
+
+  .metric-label {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 2px;
+  }
+
+  .metric-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Status Colors */
+  .device-node--healthy .device-status-dot {
+    background: #22c55e;
+  }
+
+  .device-node--warning .device-status-dot {
+    background: #f59e0b;
+  }
+
+  .device-node--warning .metric-value {
+    color: #f59e0b;
+  }
+
+  /* Critical Status - Inverted Red Card */
+  .device-node--critical .device-content {
+    background: linear-gradient(145deg, #ef4444 0%, #dc2626 100%);
+    border-color: rgba(239, 68, 68, 0.6);
+    box-shadow:
+      0 4px 24px rgba(239, 68, 68, 0.3),
+      0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  .device-node--critical:hover .device-content {
+    background: linear-gradient(145deg, #f87171 0%, #ef4444 100%);
+    border-color: rgba(239, 68, 68, 0.8);
+    box-shadow:
+      0 8px 32px rgba(239, 68, 68, 0.4),
+      0 0 20px rgba(239, 68, 68, 0.25);
+  }
+
+  .device-node--critical .device-icon {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .device-node--critical .device-status-dot {
+    background: #ffffff;
+  }
+
+  .device-node--critical .device-metrics {
+    border-top-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .device-node--critical .metric-label {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
   }
 
   /* Device Node Floating Animations */
@@ -644,26 +629,26 @@ const {
      ======================================== */
   @media (max-width: 1024px) {
     .wifi-viz-container {
-      min-height: 380px;
+      min-height: 450px;
     }
 
     .wifi-network {
-      max-width: 360px;
+      max-width: 420px;
     }
   }
 
   @media (max-width: 768px) {
     .wifi-viz-container {
-      min-height: 340px;
+      min-height: 380px;
     }
 
     .wifi-network {
-      max-width: 300px;
+      max-width: 340px;
     }
 
     .wifi-hub {
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
     }
 
     .core-pulse {
@@ -698,35 +683,30 @@ const {
     }
 
     .device-content {
-      padding: 0.75rem 1rem;
-      gap: 0.35rem;
+      padding: 8px 10px;
+      gap: 6px;
+      min-width: 95px;
     }
 
     .device-icon {
-      width: 36px;
-      height: 36px;
+      width: 24px;
+      height: 24px;
     }
 
     .device-label {
-      font-size: 0.65rem;
+      font-size: 0.6rem;
     }
 
-    .signal-strength {
-      height: 10px;
+    .metric-value {
+      font-size: 0.7rem;
     }
 
-    .signal-bar {
-      width: 3px;
+    .metric-label {
+      font-size: 0.45rem;
     }
 
-    .signal-bar-1 {
-      height: 3px;
-    }
-    .signal-bar-2 {
-      height: 5px;
-    }
-    .signal-bar-3 {
-      height: 8px;
+    .metric-divider {
+      height: 18px;
     }
   }
 </style>
