@@ -76,24 +76,9 @@ export const mainNavigation: NavItem[] = [
     type: 'dropdown',
     links: [
       {
-        label: 'Enterprise Networks',
-        href: '/use-cases/enterprise',
-        description: 'Large-scale network management'
-      },
-      {
-        label: 'Service Providers',
-        href: '/use-cases/service-providers',
-        description: 'Carrier-grade visibility'
-      },
-      {
-        label: 'Mobile Carriers',
-        href: '/use-cases/mobile-carriers',
-        description: 'Mobile network optimization'
-      },
-      {
-        label: 'Government & Defense',
-        href: '/use-cases/government',
-        description: 'Secure government solutions'
+        label: 'Medical Device Network Reliability',
+        href: '/use-cases/medical-device-network-reliability',
+        description: 'Private 5G for surgical robotics'
       }
     ]
   },
@@ -167,10 +152,7 @@ export const footerNavigation = {
     { label: 'SLA Assurance & Reporting', href: '/solutions/sla-assurance-reporting' }
   ],
   useCases: [
-    { label: 'Enterprise Networks', href: '/use-cases/enterprise' },
-    { label: 'Service Providers', href: '/use-cases/service-providers' },
-    { label: 'Mobile Carriers', href: '/use-cases/mobile-carriers' },
-    { label: 'Government & Defense', href: '/use-cases/government' }
+    { label: 'Medical Device Network Reliability', href: '/use-cases/medical-device-network-reliability' }
   ],
   resources: [
     { label: 'Documentation', href: '/resources/docs' },

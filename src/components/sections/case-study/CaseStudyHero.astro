@@ -1,0 +1,382 @@
+---
+/**
+ * CaseStudyHero - Editorial-style hero for case studies
+ *
+ * Magazine-inspired layout with dramatic typography, industry badge,
+ * and full-bleed imagery. White/transparent header compatible.
+ */
+import Container from "../../ui/Container.astro";
+
+interface Props {
+  industry: string;
+  companyType: string;
+  headline: string;
+  subheadline?: string;
+  heroImage?: string;
+  readTime?: string;
+}
+
+const {
+  industry = "Healthcare",
+  companyType = "Medical Device Company",
+  headline = "Enhancing Network Reliability for Critical Medical Applications",
+  subheadline,
+  heroImage = "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1920&q=80",
+  readTime = "5 min read"
+} = Astro.props;
+---
+
+<section class="case-hero" data-theme="light">
+  <!-- Background Image with Overlay -->
+  <div class="case-hero__bg">
+    <img
+      src={heroImage}
+      alt=""
+      class="case-hero__bg-image"
+      loading="eager"
+    />
+    <div class="case-hero__bg-overlay"></div>
+    <div class="case-hero__bg-gradient"></div>
+  </div>
+
+  <!-- Decorative Elements -->
+  <div class="case-hero__decor">
+    <div class="case-hero__line case-hero__line--1"></div>
+    <div class="case-hero__line case-hero__line--2"></div>
+    <div class="case-hero__grid-pattern"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="case-hero__content">
+      <!-- Meta Row -->
+      <div class="case-hero__meta">
+        <span class="case-hero__industry-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+          </svg>
+          {industry}
+        </span>
+        <span class="case-hero__divider"></span>
+        <span class="case-hero__read-time">{readTime}</span>
+      </div>
+
+      <!-- Company Type -->
+      <p class="case-hero__company-type">{companyType}</p>
+
+      <!-- Main Headline -->
+      <h1 class="case-hero__headline">
+        {headline}
+      </h1>
+
+      {subheadline && (
+        <p class="case-hero__subheadline">{subheadline}</p>
+      )}
+
+      <!-- Scroll Indicator -->
+      <div class="case-hero__scroll">
+        <span class="case-hero__scroll-text">Scroll to explore</span>
+        <div class="case-hero__scroll-line">
+          <div class="case-hero__scroll-dot"></div>
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <!-- Side Label -->
+  <div class="case-hero__side-label">
+    <span>Case Study</span>
+  </div>
+</section>
+
+<style>
+  /* ========================================
+     CASE STUDY HERO - Editorial Magazine Style
+     ======================================== */
+  .case-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--space-32) 0 var(--space-16);
+    overflow: hidden;
+  }
+
+  /* Background System */
+  .case-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .case-hero__bg-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    filter: grayscale(20%);
+  }
+
+  .case-hero__bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(1px);
+  }
+
+  .case-hero__bg-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.7) 40%,
+        rgba(255, 255, 255, 0.95) 70%,
+        #ffffff 100%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(234, 36, 43, 0.03) 0%,
+        transparent 50%
+      );
+  }
+
+  /* Decorative Elements */
+  .case-hero__decor {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .case-hero__line {
+    position: absolute;
+    background: var(--color-primary);
+    opacity: 0.15;
+  }
+
+  .case-hero__line--1 {
+    top: 0;
+    left: 10%;
+    width: 1px;
+    height: 40%;
+    animation: lineGrow 1.5s ease-out 0.5s both;
+  }
+
+  .case-hero__line--2 {
+    bottom: 20%;
+    right: 15%;
+    width: 80px;
+    height: 1px;
+    animation: lineGrowH 1s ease-out 1s both;
+  }
+
+  @keyframes lineGrow {
+    from { height: 0; }
+  }
+
+  @keyframes lineGrowH {
+    from { width: 0; }
+  }
+
+  .case-hero__grid-pattern {
+    position: absolute;
+    top: 20%;
+    right: 5%;
+    width: 200px;
+    height: 200px;
+    background-image:
+      linear-gradient(rgba(234, 36, 43, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(234, 36, 43, 0.08) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.5;
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+    animation: fadeInUp 1s ease-out 0.8s both;
+  }
+
+  /* Content */
+  .case-hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+  }
+
+  /* Meta Row */
+  .case-hero__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+  }
+
+  .case-hero__industry-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-primary);
+    color: white;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: var(--radius-sm);
+  }
+
+  .case-hero__divider {
+    width: 24px;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .case-hero__read-time {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #666666;
+    letter-spacing: 0.02em;
+  }
+
+  /* Company Type */
+  .case-hero__company-type {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--font-medium);
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-4);
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+  }
+
+  /* Main Headline */
+  .case-hero__headline {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: var(--font-bold);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #111111;
+    margin-bottom: var(--space-6);
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+  }
+
+  .case-hero__subheadline {
+    font-family: var(--font-body);
+    font-size: var(--text-xl);
+    line-height: var(--leading-relaxed);
+    color: #555555;
+    max-width: 600px;
+    animation: fadeInUp 0.8s ease-out 0.5s both;
+  }
+
+  /* Scroll Indicator */
+  .case-hero__scroll {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-12);
+    animation: fadeInUp 0.8s ease-out 0.7s both;
+  }
+
+  .case-hero__scroll-text {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888888;
+  }
+
+  .case-hero__scroll-line {
+    width: 40px;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .case-hero__scroll-dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 100%;
+    background: var(--color-primary);
+    border-radius: var(--radius-full);
+    animation: scrollDot 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollDot {
+    0%, 100% { left: 0; }
+    50% { left: calc(100% - 8px); }
+  }
+
+  /* Side Label */
+  .case-hero__side-label {
+    position: absolute;
+    right: var(--space-6);
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    transform-origin: center;
+    z-index: 2;
+  }
+
+  .case-hero__side-label span {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #AAAAAA;
+    white-space: nowrap;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .case-hero__side-label {
+      display: none;
+    }
+
+    .case-hero__grid-pattern {
+      width: 150px;
+      height: 150px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .case-hero {
+      min-height: 90vh;
+      padding: var(--space-24) 0 var(--space-12);
+    }
+
+    .case-hero__headline {
+      font-size: clamp(2rem, 8vw, 3rem);
+    }
+
+    .case-hero__meta {
+      flex-wrap: wrap;
+    }
+
+    .case-hero__grid-pattern {
+      display: none;
+    }
+
+    .case-hero__line--2 {
+      display: none;
+    }
+  }
+</style>

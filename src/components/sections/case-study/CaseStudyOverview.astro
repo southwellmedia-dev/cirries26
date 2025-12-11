@@ -1,0 +1,308 @@
+---
+/**
+ * CaseStudyOverview - Executive summary with key highlights
+ *
+ * Editorial two-column layout with pull quote and key facts sidebar.
+ * Features animated data visualizations and timeline elements.
+ */
+import Container from "../../ui/Container.astro";
+
+interface KeyFact {
+  label: string;
+  value: string;
+  icon?: string;
+}
+
+interface Props {
+  summary: string;
+  dartDescription?: string;
+  keyFacts?: KeyFact[];
+  productName?: string;
+  productLogo?: string;
+}
+
+const {
+  summary = "DART AI is monitoring the network between the remotely controlled operating theater robots and the applications residing in the cloud. The network is a private 5G environment.",
+  dartDescription = "DART AI ensures that the KPIs are met between the operating theater and the cloud by identifying problems in the network as they happen and providing a fix. This reduces the Mean-Time-To-Repair and maintains the required SLAs.",
+  keyFacts = [
+    { label: "Network Type", value: "Private 5G", icon: "signal" },
+    { label: "Environment", value: "Operating Theater", icon: "building" },
+    { label: "Application", value: "Robotic Surgery", icon: "cpu" },
+    { label: "Focus", value: "Real-time KPIs", icon: "activity" }
+  ],
+  productName = "DART AI",
+  productLogo
+} = Astro.props;
+
+const iconPaths: Record<string, string> = {
+  signal: "M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 4v16",
+  building: "M3 21h18M9 21V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v15M9 21H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h4M15 21h4a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-4",
+  cpu: "M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0-6v6m18-6v6",
+  activity: "M22 12h-4l-3 9L9 3l-3 9H2"
+};
+---
+
+<section class="case-overview" data-theme="light">
+  <Container size="xl">
+    <div class="case-overview__layout">
+      <!-- Main Content Column -->
+      <div class="case-overview__main">
+        <div class="case-overview__section-label">
+          <span class="case-overview__label-number">01</span>
+          <span class="case-overview__label-text">Overview</span>
+        </div>
+
+        <div class="case-overview__summary">
+          <p class="case-overview__lead animate-on-scroll">{summary}</p>
+
+          <div class="case-overview__product-highlight animate-on-scroll">
+            <div class="case-overview__product-bar"></div>
+            <p class="case-overview__product-text">
+              <strong>{productName}</strong> is Cirries next generation network observability product with automation and AI.
+            </p>
+          </div>
+
+          <p class="case-overview__description animate-on-scroll">{dartDescription}</p>
+        </div>
+      </div>
+
+      <!-- Sidebar Facts -->
+      <aside class="case-overview__sidebar">
+        <div class="case-overview__facts-card animate-on-scroll">
+          <h3 class="case-overview__facts-title">Key Facts</h3>
+          <ul class="case-overview__facts-list">
+            {keyFacts.map((fact, index) => (
+              <li
+                class="case-overview__fact"
+                style={`animation-delay: ${0.1 * (index + 1)}s`}
+              >
+                <div class="case-overview__fact-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d={iconPaths[fact.icon || 'activity']} />
+                  </svg>
+                </div>
+                <div class="case-overview__fact-content">
+                  <span class="case-overview__fact-label">{fact.label}</span>
+                  <span class="case-overview__fact-value">{fact.value}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     CASE STUDY OVERVIEW - Editorial Layout
+     ======================================== */
+  .case-overview {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: #ffffff;
+  }
+
+  .case-overview__layout {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: var(--space-16);
+    align-items: start;
+  }
+
+  /* Section Label */
+  .case-overview__section-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+  }
+
+  .case-overview__label-number {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    letter-spacing: 0.05em;
+  }
+
+  .case-overview__label-text {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #888888;
+  }
+
+  /* Main Content */
+  .case-overview__main {
+    position: relative;
+  }
+
+  .case-overview__summary {
+    padding-left: var(--space-8);
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .case-overview__lead {
+    font-family: var(--font-body);
+    font-size: var(--text-xl);
+    font-weight: var(--font-medium);
+    line-height: var(--leading-relaxed);
+    color: #333333;
+    margin-bottom: var(--space-8);
+  }
+
+  .case-overview__product-highlight {
+    position: relative;
+    padding: var(--space-6);
+    background: linear-gradient(135deg, rgba(234, 36, 43, 0.04) 0%, rgba(234, 36, 43, 0.02) 100%);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-8);
+  }
+
+  .case-overview__product-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--color-primary);
+    border-radius: var(--radius-full);
+  }
+
+  .case-overview__product-text {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: #555555;
+    margin: 0;
+  }
+
+  .case-overview__product-text strong {
+    color: var(--color-primary);
+    font-weight: var(--font-semibold);
+  }
+
+  .case-overview__description {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: #555555;
+  }
+
+  /* Sidebar */
+  .case-overview__sidebar {
+    position: sticky;
+    top: 100px;
+  }
+
+  .case-overview__facts-card {
+    background: #fafafa;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+
+  .case-overview__facts-title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #888888;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .case-overview__facts-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .case-overview__fact {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    transition: background-color 0.2s ease;
+  }
+
+  .case-overview__fact:hover {
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  .case-overview__fact-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(234, 36, 43, 0.08);
+    border-radius: var(--radius-md);
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .case-overview__fact-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .case-overview__fact-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #888888;
+  }
+
+  .case-overview__fact-value {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: #333333;
+  }
+
+  /* Animation states */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .case-overview__layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .case-overview__sidebar {
+      position: relative;
+      top: 0;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .case-overview {
+      padding: var(--space-12) 0;
+    }
+
+    .case-overview__summary {
+      padding-left: var(--space-4);
+    }
+  }
+</style>

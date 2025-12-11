@@ -1,0 +1,489 @@
+---
+/**
+ * CaseStudySolution - Solution and implementation process
+ *
+ * Features animated timeline, key features grid, and
+ * implementation process visualization.
+ */
+import Container from "../../ui/Container.astro";
+
+interface Feature {
+  icon: string;
+  title: string;
+}
+
+interface Props {
+  title?: string;
+  solutionText?: string;
+  implementationTitle?: string;
+  implementationText?: string;
+  features?: Feature[];
+}
+
+const {
+  title = "The Solution",
+  solutionText = "To address these challenges, the company deployed Cirries Technologies' DART AI. This solution provided real-time network observability, AI-driven anomaly detection, and automated root cause analysis. With advanced analytics and intelligent troubleshooting, it significantly improved network performance by identifying and resolving jitter and packet loss issues before they impacted operations.",
+  implementationTitle = "Implementation Process",
+  implementationText = "The deployment of DART AI was seamless, with plug-and-play integration into the Company's existing infrastructure. The cloud-based solution minimized downtime and required minimal manual intervention, allowing for rapid adoption and immediate performance improvements.",
+  features = [
+    { icon: "brain", title: "AI-driven network observability" },
+    { icon: "zap", title: "Real-time data processing & analytics" },
+    { icon: "activity", title: "Latency & jitter monitoring" },
+    { icon: "tool", title: "Automated troubleshooting & root cause analysis" },
+    { icon: "shield", title: "Security threat detection & response" }
+  ]
+} = Astro.props;
+
+const iconPaths: Record<string, string> = {
+  brain: "M12 2a9 9 0 0 0-9 9c0 3.6 2.4 6.6 5.5 7.7.3.9.5 2.3.5 2.3h6s.2-1.4.5-2.3C18.6 17.6 21 14.6 21 11a9 9 0 0 0-9-9zM9 10a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm6 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z",
+  zap: "M13 2L3 14h9l-1 8 10-12h-9l1-8z",
+  activity: "M22 12h-4l-3 9L9 3l-3 9H2",
+  tool: "M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z",
+  shield: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+};
+
+const timelineSteps = [
+  { phase: "Discovery", duration: "Week 1", desc: "Infrastructure assessment" },
+  { phase: "Integration", duration: "Week 2", desc: "Plug-and-play deployment" },
+  { phase: "Calibration", duration: "Week 3", desc: "Baseline establishment" },
+  { phase: "Live", duration: "Week 4", desc: "Full operation mode" }
+];
+---
+
+<section class="case-solution" data-theme="light">
+  <!-- Background -->
+  <div class="case-solution__bg">
+    <div class="case-solution__gradient"></div>
+    <div class="case-solution__pattern"></div>
+  </div>
+
+  <Container size="xl">
+    <!-- Section Header -->
+    <div class="case-solution__header animate-on-scroll">
+      <div class="case-solution__section-label">
+        <span class="case-solution__label-number">03</span>
+        <span class="case-solution__label-text">{title}</span>
+      </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="case-solution__layout">
+      <!-- Solution Description -->
+      <div class="case-solution__main">
+        <div class="case-solution__content animate-on-scroll">
+          <p class="case-solution__text">{solutionText}</p>
+        </div>
+
+        <!-- Key Features Grid -->
+        <div class="case-solution__features">
+          <h3 class="case-solution__features-title animate-on-scroll">Key Features Utilized</h3>
+          <div class="case-solution__features-grid">
+            {features.map((feature, index) => (
+              <div
+                class="case-solution__feature animate-on-scroll"
+                style={`animation-delay: ${0.08 * (index + 1)}s`}
+              >
+                <div class="case-solution__feature-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d={iconPaths[feature.icon]} />
+                  </svg>
+                </div>
+                <span class="case-solution__feature-text">{feature.title}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Implementation Sidebar -->
+      <aside class="case-solution__sidebar">
+        <div class="case-solution__implementation animate-on-scroll">
+          <h3 class="case-solution__impl-title">{implementationTitle}</h3>
+          <p class="case-solution__impl-text">{implementationText}</p>
+
+          <!-- Timeline -->
+          <div class="case-solution__timeline">
+            {timelineSteps.map((step, index) => (
+              <div
+                class="case-solution__timeline-step"
+                style={`animation-delay: ${0.15 * (index + 1)}s`}
+              >
+                <div class="case-solution__timeline-node">
+                  <div class="case-solution__timeline-dot"></div>
+                  {index < timelineSteps.length - 1 && (
+                    <div class="case-solution__timeline-line"></div>
+                  )}
+                </div>
+                <div class="case-solution__timeline-content">
+                  <div class="case-solution__timeline-header">
+                    <span class="case-solution__timeline-phase">{step.phase}</span>
+                    <span class="case-solution__timeline-duration">{step.duration}</span>
+                  </div>
+                  <p class="case-solution__timeline-desc">{step.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Success Badge -->
+        <div class="case-solution__success-badge animate-on-scroll">
+          <div class="case-solution__success-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div class="case-solution__success-content">
+            <span class="case-solution__success-label">Deployment Status</span>
+            <span class="case-solution__success-value">Seamless Integration</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     CASE STUDY SOLUTION - Light Editorial
+     ======================================== */
+  .case-solution {
+    position: relative;
+    padding: var(--space-24) 0;
+    background: #f8f9fa;
+    overflow: hidden;
+  }
+
+  /* Background */
+  .case-solution__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .case-solution__gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 80% 60% at 80% 20%,
+        rgba(34, 197, 94, 0.06) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 60% 50% at 10% 80%,
+        rgba(234, 36, 43, 0.04) 0%,
+        transparent 40%
+      );
+  }
+
+  .case-solution__pattern {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-image:
+      radial-gradient(circle at 2px 2px, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: linear-gradient(90deg, transparent 0%, black 50%, transparent 100%);
+  }
+
+  /* Header */
+  .case-solution__header {
+    margin-bottom: var(--space-10);
+    position: relative;
+    z-index: 1;
+  }
+
+  .case-solution__section-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .case-solution__label-number {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #22c55e;
+    letter-spacing: 0.05em;
+  }
+
+  .case-solution__label-text {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #888888;
+  }
+
+  /* Layout */
+  .case-solution__layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: var(--space-16);
+    align-items: start;
+  }
+
+  /* Main Content */
+  .case-solution__main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .case-solution__content {
+    padding-left: var(--space-8);
+    border-left: 2px solid #22c55e;
+  }
+
+  .case-solution__text {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: #444444;
+  }
+
+  /* Features Grid */
+  .case-solution__features-title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888888;
+    margin-bottom: var(--space-4);
+  }
+
+  .case-solution__features-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .case-solution__feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-lg);
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+
+  .case-solution__feature:hover {
+    border-color: #22c55e;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.1);
+    transform: translateX(4px);
+  }
+
+  .case-solution__feature-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(34, 197, 94, 0.1);
+    border-radius: var(--radius-md);
+    color: #22c55e;
+    flex-shrink: 0;
+  }
+
+  .case-solution__feature-text {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    color: #333333;
+  }
+
+  /* Sidebar */
+  .case-solution__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .case-solution__implementation {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+  }
+
+  .case-solution__impl-title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: #111111;
+    margin-bottom: var(--space-3);
+  }
+
+  .case-solution__impl-text {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: #666666;
+    margin-bottom: var(--space-6);
+  }
+
+  /* Timeline */
+  .case-solution__timeline {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .case-solution__timeline-step {
+    display: flex;
+    gap: var(--space-4);
+  }
+
+  .case-solution__timeline-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20px;
+    flex-shrink: 0;
+  }
+
+  .case-solution__timeline-dot {
+    width: 12px;
+    height: 12px;
+    background: #22c55e;
+    border-radius: 50%;
+    border: 3px solid rgba(34, 197, 94, 0.2);
+    flex-shrink: 0;
+  }
+
+  .case-solution__timeline-line {
+    width: 2px;
+    flex: 1;
+    min-height: 40px;
+    background: linear-gradient(180deg, #22c55e 0%, rgba(34, 197, 94, 0.2) 100%);
+    margin: var(--space-1) 0;
+  }
+
+  .case-solution__timeline-content {
+    flex: 1;
+    padding-bottom: var(--space-5);
+  }
+
+  .case-solution__timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-1);
+  }
+
+  .case-solution__timeline-phase {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: #333333;
+  }
+
+  .case-solution__timeline-duration {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.1);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+  }
+
+  .case-solution__timeline-desc {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    color: #888888;
+    margin: 0;
+  }
+
+  /* Success Badge */
+  .case-solution__success-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: var(--radius-xl);
+  }
+
+  .case-solution__success-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #22c55e;
+    border-radius: var(--radius-lg);
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .case-solution__success-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .case-solution__success-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #888888;
+  }
+
+  .case-solution__success-value {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: #22c55e;
+  }
+
+  /* Animation states */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .case-solution__layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .case-solution {
+      padding: var(--space-16) 0;
+    }
+
+    .case-solution__content {
+      padding-left: var(--space-4);
+    }
+
+    .case-solution__feature {
+      padding: var(--space-3) var(--space-4);
+    }
+
+    .case-solution__feature-icon {
+      width: 36px;
+      height: 36px;
+    }
+  }
+</style>

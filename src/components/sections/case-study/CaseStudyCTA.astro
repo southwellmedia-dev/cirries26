@@ -1,0 +1,405 @@
+---
+/**
+ * CaseStudyCTA - Call to action section for case studies
+ *
+ * Features compelling CTA with why choose section
+ * and contact options.
+ */
+import Container from "../../ui/Container.astro";
+import Button from "../../ui/Button.astro";
+
+interface WhyPoint {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  whyTitle?: string;
+  whyPoints?: WhyPoint[];
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  title = "Ready to Transform Your Network?",
+  description = "Discover how Cirries Technologies can enhance network reliability in your industry.",
+  whyTitle = "Why Cirries?",
+  whyPoints = [
+    {
+      title: "Deep Network Insights",
+      description: "Advanced visibility into every aspect of network performance"
+    },
+    {
+      title: "AI-Powered Automation",
+      description: "Intelligent problem detection and resolution"
+    },
+    {
+      title: "Seamless Integration",
+      description: "Cloud-native solution that works with your existing infrastructure"
+    }
+  ],
+  primaryCta = { label: "Request A Demo", href: "/contact" },
+  secondaryCta = { label: "Explore DART AI", href: "/solutions/intelligent-network-observability/dart-ai" }
+} = Astro.props;
+---
+
+<section class="case-cta" data-theme="dark">
+  <!-- Background -->
+  <div class="case-cta__bg">
+    <div class="case-cta__gradient"></div>
+    <div class="case-cta__grid"></div>
+    <div class="case-cta__glow"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="case-cta__layout">
+      <!-- Why Section -->
+      <div class="case-cta__why animate-on-scroll">
+        <h3 class="case-cta__why-title">{whyTitle}</h3>
+        <div class="case-cta__why-points">
+          {whyPoints.map((point, index) => (
+            <div
+              class="case-cta__why-point"
+              style={`animation-delay: ${0.1 * (index + 1)}s`}
+            >
+              <div class="case-cta__why-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              <div class="case-cta__why-content">
+                <h4 class="case-cta__why-point-title">{point.title}</h4>
+                <p class="case-cta__why-point-desc">{point.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- CTA Block -->
+      <div class="case-cta__main animate-on-scroll">
+        <div class="case-cta__content">
+          <h2 class="case-cta__title">{title}</h2>
+          <p class="case-cta__description">{description}</p>
+
+          <div class="case-cta__actions">
+            <Button href={primaryCta.href} variant="primary" size="lg">
+              {primaryCta.label}
+            </Button>
+            <Button href={secondaryCta.href} variant="outline-light" size="lg">
+              {secondaryCta.label}
+            </Button>
+          </div>
+
+          <div class="case-cta__contact">
+            <span class="case-cta__contact-label">Or reach out directly:</span>
+            <a href="mailto:sales@cirries.com" class="case-cta__contact-link">
+              sales@cirries.com
+            </a>
+          </div>
+        </div>
+
+        <!-- Decorative Element -->
+        <div class="case-cta__decor">
+          <div class="case-cta__ring case-cta__ring--1"></div>
+          <div class="case-cta__ring case-cta__ring--2"></div>
+          <div class="case-cta__pulse"></div>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     CASE STUDY CTA - Dark Conversion Section
+     ======================================== */
+  .case-cta {
+    position: relative;
+    padding: var(--space-24) 0;
+    background: var(--color-bg-primary);
+    overflow: hidden;
+  }
+
+  /* Background */
+  .case-cta__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .case-cta__gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 80% 80% at 80% 50%,
+        rgba(234, 36, 43, 0.15) 0%,
+        transparent 50%
+      ),
+      linear-gradient(
+        180deg,
+        #0a0a0a 0%,
+        #0f0f0f 100%
+      );
+  }
+
+  .case-cta__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at 70% 50%, black 20%, transparent 60%);
+  }
+
+  .case-cta__glow {
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translateY(-50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(234, 36, 43, 0.2) 0%, transparent 60%);
+    filter: blur(60px);
+    pointer-events: none;
+  }
+
+  /* Layout */
+  .case-cta__layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--space-16);
+    align-items: center;
+  }
+
+  /* Why Section */
+  .case-cta__why {
+    padding-right: var(--space-8);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .case-cta__why-title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
+  }
+
+  .case-cta__why-points {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .case-cta__why-point {
+    display: flex;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
+    transition: all 0.3s ease;
+  }
+
+  .case-cta__why-point:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(234, 36, 43, 0.2);
+  }
+
+  .case-cta__why-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(234, 36, 43, 0.1);
+    border-radius: var(--radius-md);
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .case-cta__why-content {
+    flex: 1;
+  }
+
+  .case-cta__why-point-title {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+  }
+
+  .case-cta__why-point-desc {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Main CTA */
+  .case-cta__main {
+    position: relative;
+    padding-left: var(--space-8);
+  }
+
+  .case-cta__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-bold);
+    line-height: 1.1;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .case-cta__description {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+    max-width: 450px;
+  }
+
+  .case-cta__actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  .case-cta__contact {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .case-cta__contact-label {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .case-cta__contact-link {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .case-cta__contact-link:hover {
+    color: var(--color-primary-hover);
+  }
+
+  /* Decorative Elements */
+  .case-cta__decor {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 200px;
+    height: 200px;
+    pointer-events: none;
+  }
+
+  .case-cta__ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed rgba(234, 36, 43, 0.2);
+  }
+
+  .case-cta__ring--1 {
+    inset: 0;
+    animation: ringRotate 20s linear infinite;
+  }
+
+  .case-cta__ring--2 {
+    inset: 30px;
+    animation: ringRotate 15s linear infinite reverse;
+    border-style: dotted;
+    border-color: rgba(234, 36, 43, 0.15);
+  }
+
+  @keyframes ringRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .case-cta__pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    animation: ctaPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes ctaPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.4; }
+  }
+
+  /* Animation states */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .case-cta__layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .case-cta__why {
+      padding-right: 0;
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: var(--space-8);
+    }
+
+    .case-cta__main {
+      padding-left: 0;
+    }
+
+    .case-cta__decor {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .case-cta {
+      padding: var(--space-16) 0;
+    }
+
+    .case-cta__actions {
+      flex-direction: column;
+    }
+
+    .case-cta__contact {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-1);
+    }
+  }
+</style>

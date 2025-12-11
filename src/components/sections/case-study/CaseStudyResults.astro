@@ -1,0 +1,561 @@
+---
+/**
+ * CaseStudyResults - Animated metrics and outcomes display
+ *
+ * Features large animated statistics with counting effect,
+ * visual data representation, and key benefits list.
+ */
+import Container from "../../ui/Container.astro";
+
+interface Metric {
+  value: string;
+  prefix?: string;
+  suffix?: string;
+  label: string;
+  description: string;
+  color?: 'primary' | 'success' | 'blue';
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  metrics?: Metric[];
+}
+
+const {
+  title = "Results & Benefits",
+  subtitle = "Measurable improvements across all key performance indicators",
+  metrics = [
+    {
+      value: "50",
+      suffix: "%",
+      label: "Reduction in Jitter",
+      description: "Ensuring seamless device connectivity",
+      color: "primary"
+    },
+    {
+      value: "30",
+      suffix: "%",
+      label: "Decrease in Packet Loss",
+      description: "Improved data transmission reliability",
+      color: "success"
+    },
+    {
+      value: "70",
+      suffix: "%",
+      label: "Manual Effort Reduction",
+      description: "Freeing up IT resources",
+      color: "blue"
+    }
+  ]
+} = Astro.props;
+
+const colorMap = {
+  primary: { main: '#EA242B', bg: 'rgba(234, 36, 43, 0.1)', border: 'rgba(234, 36, 43, 0.2)' },
+  success: { main: '#22c55e', bg: 'rgba(34, 197, 94, 0.1)', border: 'rgba(34, 197, 94, 0.2)' },
+  blue: { main: '#3b82f6', bg: 'rgba(59, 130, 246, 0.1)', border: 'rgba(59, 130, 246, 0.2)' }
+};
+
+const benefits = [
+  "Enhanced network visibility and automated performance optimization",
+  "Real-time monitoring with proactive issue detection",
+  "Dramatically reduced Mean Time to Repair (MTTR)",
+  "Maintained critical SLA requirements for medical applications"
+];
+---
+
+<section class="case-results" data-theme="dark">
+  <!-- Background -->
+  <div class="case-results__bg">
+    <div class="case-results__gradient"></div>
+    <div class="case-results__grid"></div>
+    <div class="case-results__particles" id="results-particles"></div>
+  </div>
+
+  <Container size="xl">
+    <!-- Section Header -->
+    <div class="case-results__header animate-on-scroll">
+      <div class="case-results__section-label">
+        <span class="case-results__label-number">04</span>
+        <span class="case-results__label-text">{title}</span>
+      </div>
+      <p class="case-results__subtitle">{subtitle}</p>
+    </div>
+
+    <!-- Metrics Grid -->
+    <div class="case-results__metrics">
+      {metrics.map((metric, index) => {
+        const colors = colorMap[metric.color || 'primary'];
+        return (
+          <div
+            class="case-results__metric animate-on-scroll"
+            style={`animation-delay: ${0.15 * (index + 1)}s; --metric-color: ${colors.main}; --metric-bg: ${colors.bg}; --metric-border: ${colors.border};`}
+            data-value={metric.value}
+          >
+            <div class="case-results__metric-visual">
+              <svg class="case-results__metric-ring" viewBox="0 0 120 120">
+                <circle
+                  class="case-results__metric-ring-bg"
+                  cx="60"
+                  cy="60"
+                  r="54"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="4"
+                />
+                <circle
+                  class="case-results__metric-ring-progress"
+                  cx="60"
+                  cy="60"
+                  r="54"
+                  fill="none"
+                  stroke="var(--metric-color)"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-dasharray="339.3"
+                  stroke-dashoffset="339.3"
+                  transform="rotate(-90 60 60)"
+                />
+              </svg>
+              <div class="case-results__metric-value">
+                {metric.prefix && <span class="case-results__metric-prefix">{metric.prefix}</span>}
+                <span class="case-results__metric-number" data-target={metric.value}>0</span>
+                {metric.suffix && <span class="case-results__metric-suffix">{metric.suffix}</span>}
+              </div>
+            </div>
+            <div class="case-results__metric-info">
+              <h3 class="case-results__metric-label">{metric.label}</h3>
+              <p class="case-results__metric-desc">{metric.description}</p>
+            </div>
+            <div class="case-results__metric-glow"></div>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Benefits List -->
+    <div class="case-results__benefits animate-on-scroll">
+      <h3 class="case-results__benefits-title">Additional Benefits</h3>
+      <ul class="case-results__benefits-list">
+        {benefits.map((benefit, index) => (
+          <li
+            class="case-results__benefit"
+            style={`animation-delay: ${0.1 * (index + 1)}s`}
+          >
+            <div class="case-results__benefit-check">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <span>{benefit}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     CASE STUDY RESULTS - Animated Metrics
+     ======================================== */
+  .case-results {
+    position: relative;
+    padding: var(--space-24) 0;
+    background: var(--color-bg-primary);
+    overflow: hidden;
+  }
+
+  /* Background */
+  .case-results__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .case-results__gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 100% 80% at 50% 100%,
+        rgba(234, 36, 43, 0.1) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 60% 40% at 20% 20%,
+        rgba(34, 197, 94, 0.05) 0%,
+        transparent 40%
+      ),
+      radial-gradient(
+        ellipse 50% 50% at 80% 30%,
+        rgba(59, 130, 246, 0.05) 0%,
+        transparent 40%
+      );
+  }
+
+  .case-results__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse at 50% 80%, black 20%, transparent 60%);
+  }
+
+  .case-results__particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* Header */
+  .case-results__header {
+    text-align: center;
+    margin-bottom: var(--space-16);
+    position: relative;
+    z-index: 1;
+  }
+
+  .case-results__section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .case-results__label-number {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    letter-spacing: 0.05em;
+  }
+
+  .case-results__label-text {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-text-muted);
+  }
+
+  .case-results__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-xl);
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Metrics Grid */
+  .case-results__metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+    margin-bottom: var(--space-16);
+    position: relative;
+    z-index: 1;
+  }
+
+  .case-results__metric {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-8);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-2xl);
+    transition: all 0.4s ease;
+  }
+
+  .case-results__metric:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--metric-border);
+    transform: translateY(-8px);
+  }
+
+  .case-results__metric-glow {
+    position: absolute;
+    inset: -1px;
+    border-radius: var(--radius-2xl);
+    background: radial-gradient(
+      circle at 50% 100%,
+      var(--metric-bg) 0%,
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+  }
+
+  .case-results__metric:hover .case-results__metric-glow {
+    opacity: 1;
+  }
+
+  /* Metric Visual */
+  .case-results__metric-visual {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin-bottom: var(--space-4);
+  }
+
+  .case-results__metric-ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .case-results__metric-ring-bg {
+    color: rgba(255, 255, 255, 0.05);
+  }
+
+  .case-results__metric-ring-progress {
+    transition: stroke-dashoffset 1.5s ease-out;
+  }
+
+  .case-results__metric.is-visible .case-results__metric-ring-progress {
+    stroke-dashoffset: calc(339.3 * (1 - var(--progress, 0.5)));
+  }
+
+  .case-results__metric-value {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  .case-results__metric-prefix {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: var(--font-medium);
+    color: var(--metric-color);
+    margin-right: 2px;
+  }
+
+  .case-results__metric-number {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    line-height: 1;
+  }
+
+  .case-results__metric-suffix {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-semibold);
+    color: var(--metric-color);
+    margin-top: 8px;
+  }
+
+  /* Metric Info */
+  .case-results__metric-label {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .case-results__metric-desc {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  /* Benefits */
+  .case-results__benefits {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--space-8);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-xl);
+  }
+
+  .case-results__benefits-title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+    text-align: center;
+  }
+
+  .case-results__benefits-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  .case-results__benefit {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    transition: background-color 0.2s ease;
+  }
+
+  .case-results__benefit:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .case-results__benefit-check {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(34, 197, 94, 0.15);
+    border-radius: var(--radius-sm);
+    color: #22c55e;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .case-results__benefit span {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Animation states */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .case-results__metrics {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+
+    .case-results__metric {
+      padding: var(--space-6);
+    }
+
+    .case-results__metric-visual {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .case-results {
+      padding: var(--space-16) 0;
+    }
+
+    .case-results__metrics {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    .case-results__metric {
+      flex-direction: row;
+      text-align: left;
+      gap: var(--space-6);
+    }
+
+    .case-results__metric-visual {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+
+    .case-results__benefits-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Animated counter and ring progress
+  function animateMetrics() {
+    const metrics = document.querySelectorAll('.case-results__metric');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const metric = entry.target as HTMLElement;
+          metric.classList.add('is-visible');
+
+          // Animate number
+          const numberEl = metric.querySelector('.case-results__metric-number') as HTMLElement;
+          if (numberEl) {
+            const target = parseInt(numberEl.dataset.target || '0', 10);
+            animateNumber(numberEl, target);
+          }
+
+          // Animate ring
+          const ring = metric.querySelector('.case-results__metric-ring-progress') as SVGCircleElement;
+          if (ring) {
+            const value = parseInt(metric.dataset.value || '50', 10);
+            const progress = value / 100;
+            metric.style.setProperty('--progress', progress.toString());
+          }
+
+          observer.unobserve(metric);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    metrics.forEach((metric) => observer.observe(metric));
+  }
+
+  function animateNumber(element: HTMLElement, target: number) {
+    const duration = 1500;
+    const start = 0;
+    const startTime = performance.now();
+
+    function update(currentTime: number) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // Easing function
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const current = Math.floor(start + (target - start) * easeOutQuart);
+
+      element.textContent = current.toString();
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        element.textContent = target.toString();
+      }
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', animateMetrics);
+  } else {
+    animateMetrics();
+  }
+</script>

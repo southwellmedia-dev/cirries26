@@ -1,0 +1,140 @@
+---
+/**
+ * Medical Device Network Reliability Case Study
+ *
+ * Editorial-style case study showcasing how DART AI
+ * enhanced network reliability for a medical device company.
+ */
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import CaseStudyHero from '../../components/sections/case-study/CaseStudyHero.astro';
+import CaseStudyOverview from '../../components/sections/case-study/CaseStudyOverview.astro';
+import CaseStudyChallenge from '../../components/sections/case-study/CaseStudyChallenge.astro';
+import CaseStudySolution from '../../components/sections/case-study/CaseStudySolution.astro';
+import CaseStudyResults from '../../components/sections/case-study/CaseStudyResults.astro';
+import CaseStudyTestimonial from '../../components/sections/case-study/CaseStudyTestimonial.astro';
+import CaseStudyCTA from '../../components/sections/case-study/CaseStudyCTA.astro';
+
+const pageTitle = "Medical Device Company Enhances Network Reliability | Cirries Case Study";
+const pageDescription = "Discover how a leading medical device company used DART AI to reduce jitter by 50% and packet loss by 30% in their critical private 5G network environment.";
+---
+
+<CaseStudyLayout title={pageTitle} description={pageDescription}>
+  <!-- Hero Section -->
+  <CaseStudyHero
+    industry="Healthcare"
+    companyType="Medical Device and Services Company"
+    headline="Enhancing Network Reliability for Critical Medical Applications"
+    subheadline="How DART AI transformed network operations for remotely controlled operating theater robots"
+    heroImage="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1920&q=80"
+    readTime="5 min read"
+  />
+
+  <!-- Overview Section -->
+  <CaseStudyOverview
+    summary="DART AI is monitoring the network between the remotely controlled operating theater robots and the applications residing in the cloud. The network is a private 5G environment."
+    dartDescription="DART AI ensures that the KPIs are met between the operating theater and the cloud by identifying problems in the network as they happen and providing a fix. This reduces the Mean-Time-To-Repair and maintains the required SLAs."
+    keyFacts={[
+      { label: "Network Type", value: "Private 5G", icon: "signal" },
+      { label: "Environment", value: "Operating Theater", icon: "building" },
+      { label: "Application", value: "Robotic Surgery", icon: "cpu" },
+      { label: "Focus", value: "Real-time KPIs", icon: "activity" }
+    ]}
+    productName="DART AI"
+  />
+
+  <!-- Challenge Section -->
+  <CaseStudyChallenge
+    title="The Challenge"
+    pullQuote="Traditional troubleshooting methods were time-consuming and lacked proactive detection capabilities."
+    description="The company faced persistent issues with jitter and packet loss affecting the performance of critical medical applications. These network inefficiencies led to delays in data transmission, impacting real-time monitoring and device responsiveness."
+    challengePoints={[
+      {
+        title: "Network Jitter",
+        description: "Unpredictable latency variations affecting surgical precision"
+      },
+      {
+        title: "Packet Loss",
+        description: "Critical data transmission failures during procedures"
+      },
+      {
+        title: "Manual Diagnosis",
+        description: "Hours of investigation with reactive troubleshooting"
+      }
+    ]}
+    image="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=800&q=80"
+    imageAlt="Medical technology environment"
+  />
+
+  <!-- Solution Section -->
+  <CaseStudySolution
+    title="The Solution"
+    solutionText="To address these challenges, the company deployed Cirries Technologies' DART AI. This solution provided real-time network observability, AI-driven anomaly detection, and automated root cause analysis. With advanced analytics and intelligent troubleshooting, it significantly improved network performance by identifying and resolving jitter and packet loss issues before they impacted operations."
+    implementationTitle="Implementation Process"
+    implementationText="The deployment of DART AI was seamless, with plug-and-play integration into the Company's existing infrastructure. The cloud-based solution minimized downtime and required minimal manual intervention, allowing for rapid adoption and immediate performance improvements."
+    features={[
+      { icon: "brain", title: "AI-driven network observability" },
+      { icon: "zap", title: "Real-time data processing & analytics" },
+      { icon: "activity", title: "Latency & jitter monitoring" },
+      { icon: "tool", title: "Automated troubleshooting & root cause analysis" },
+      { icon: "shield", title: "Security threat detection & response" }
+    ]}
+  />
+
+  <!-- Results Section -->
+  <CaseStudyResults
+    title="Results & Benefits"
+    subtitle="Measurable improvements across all key performance indicators"
+    metrics={[
+      {
+        value: "50",
+        suffix: "%",
+        label: "Reduction in Jitter",
+        description: "Ensuring seamless device connectivity",
+        color: "primary"
+      },
+      {
+        value: "30",
+        suffix: "%",
+        label: "Decrease in Packet Loss",
+        description: "Improved data transmission reliability",
+        color: "success"
+      },
+      {
+        value: "70",
+        suffix: "%",
+        label: "Manual Effort Reduction",
+        description: "Freeing up IT resources",
+        color: "blue"
+      }
+    ]}
+  />
+
+  <!-- Testimonial Section -->
+  <CaseStudyTestimonial
+    quote="DART AI has transformed our network operations, providing real-time insights and automated solutions to mitigate jitter and packet loss. This has significantly improved the performance and reliability of our medical device remote communications."
+    role="IT Technical Lead"
+  />
+
+  <!-- CTA Section -->
+  <CaseStudyCTA
+    title="Ready to Transform Your Network?"
+    description="Discover how Cirries Technologies can enhance network reliability in your industry."
+    whyTitle="Why Cirries?"
+    whyPoints={[
+      {
+        title: "Deep Network Insights",
+        description: "Advanced visibility into every aspect of network performance"
+      },
+      {
+        title: "AI-Powered Automation",
+        description: "Intelligent problem detection and resolution"
+      },
+      {
+        title: "Seamless Integration",
+        description: "Cloud-native solution that works with your existing infrastructure"
+      }
+    ]}
+    primaryCta={{ label: "Request A Demo", href: "/contact" }}
+    secondaryCta={{ label: "Explore DART AI", href: "/solutions/intelligent-network-observability/dart-ai" }}
+  />
+</CaseStudyLayout>
