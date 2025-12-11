@@ -1,0 +1,45 @@
+---
+/**
+ * Home Broadband Product Page
+ *
+ * DART-AI for Home Wi-Fi Intelligence featuring:
+ * - Meet Home Broadband section with Wi-Fi hub visualization
+ * - Problem/Solution sections (to be added)
+ * - Benefits and features (to be added)
+ */
+import SubpageLayout from "../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetHomeBroadbandSection from "../../../components/sections/home-broadband/MeetHomeBroadbandSection.astro";
+import ProblemSection from "../../../components/sections/home-broadband/ProblemSection.astro";
+import SolutionSection from "../../../components/sections/home-broadband/SolutionSection.astro";
+import TransformSection from "../../../components/sections/home-broadband/TransformSection.astro";
+---
+
+<SubpageLayout
+  title="Home Broadband - Wi-Fi Intelligence for Service Providers"
+  description="DART-AI gives you visibility and control beyond your network edge, empowering you to proactively diagnose and fix home Wi-Fi issues."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Home Broadband"
+      subtitle="Wi-Fi Intelligence Beyond the Network Edge"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet Home Broadband Section -->
+  <MeetHomeBroadbandSection />
+
+  <!-- Problem Section - Dark, tension-filled -->
+  <ProblemSection />
+
+  <!-- Solution Section - Clean, confident -->
+  <SolutionSection />
+
+  <!-- Transform Section - Benefits Bento Grid -->
+  <TransformSection />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>

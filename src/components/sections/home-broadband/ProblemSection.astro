@@ -1,0 +1,871 @@
+---
+/**
+ * ProblemSection - "The Most Expensive Words in Your Call Center"
+ *
+ * Clean two-column layout: Support ticket left, pain point cards right
+ * Simple horizontal flow showing cause → effect
+ */
+import Container from "../../ui/Container.astro";
+
+interface PainPoint {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  sectionTitle?: string;
+  contextParagraph?: string;
+  painPoints?: PainPoint[];
+  bridgeStatement?: string;
+  bridgeEmphasis?: string;
+}
+
+const {
+  sectionTitle = "The Most Expensive Words in Your Call Center",
+  contextParagraph = "Your network is running perfectly. But a customer's experience is defined by their Wi-Fi signal — blocked by a wall, conflicting with a neighbor's network, or throttled by a decade-old router. You have zero visibility, yet you bear all the costs.",
+  painPoints = [
+    {
+      icon: "headset",
+      title: "Longer Support Calls",
+      description:
+        "Agents fly blind with scripted troubleshooting that wastes time and erodes patience.",
+    },
+    {
+      icon: "truck",
+      title: "Needless Truck Rolls",
+      description:
+        "Expensive technicians dispatched only to find the problem isn't yours.",
+    },
+    {
+      icon: "churn",
+      title: "Customer Churn",
+      description:
+        "Frustrated subscribers switch to competitors, convinced your service is faulty.",
+    },
+  ],
+  bridgeStatement = "The home Wi-Fi network has become your responsibility, but you've never had the right tools to manage it...",
+  bridgeEmphasis = " until now.",
+} = Astro.props;
+
+const icons: Record<string, string> = {
+  headset:
+    "M4 16v-8a8 8 0 1 1 16 0v8m-16 0a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3zm16 0a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v3z",
+  truck:
+    "M1 3h15v13H1zm15 5h3l3 3v5h-6zm3 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-13 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z",
+  churn: "M16 17l5-5m0 0l-5-5m5 5H9m3 9a9 9 0 1 1 0-18",
+};
+---
+
+<section class="problem-section" data-theme="dark">
+  <div class="problem-bg">
+    <div class="problem-gradient"></div>
+    <div class="problem-grid"></div>
+    <div class="problem-noise"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="problem-content">
+      <!-- Header -->
+      <header class="problem-header">
+        <span class="problem-eyebrow">The Problem</span>
+        <h2 class="problem-title">{sectionTitle}</h2>
+        <p class="problem-context">{contextParagraph}</p>
+      </header>
+
+      <!-- Two Column Grid -->
+      <div class="two-col">
+        <!-- Left: Ticket -->
+        <div class="col-ticket">
+          <div class="support-ticket">
+            <div class="ticket-chrome">
+              <div class="chrome-dots">
+                <span class="dot dot--red"></span>
+                <span class="dot dot--yellow"></span>
+                <span class="dot dot--green"></span>
+              </div>
+              <span class="chrome-title">Support Ticket System</span>
+              <span class="chrome-btn">Escalate</span>
+            </div>
+
+            <div class="ticket-header">
+              <div class="ticket-meta">
+                <span class="meta-label">Ticket</span>
+                <span class="meta-id">#47291</span>
+              </div>
+              <div class="ticket-status">
+                <span class="status-dot"></span>
+                Open
+              </div>
+              <div class="ticket-priority">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M12 2L2 22h20L12 2zm0 4l7.5 14h-15L12 6z"></path>
+                  <path d="M11 10h2v5h-2zm0 6h2v2h-2z"></path>
+                </svg>
+                High
+              </div>
+              <div class="ticket-timer">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 6v6l4 2"></path>
+                </svg>
+                <span class="timer-value">00:00</span>
+              </div>
+            </div>
+
+            <div class="ticket-body">
+              <div class="customer-row">
+                <div class="customer-avatar">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                </div>
+                <div class="customer-info">
+                  <span class="customer-name">Customer #8847</span>
+                  <span class="customer-detail">Residential • Active</span>
+                </div>
+                <span class="sentiment-badge">Frustrated</span>
+              </div>
+
+              <div class="issue-block">
+                <span class="block-label">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                    ></path>
+                  </svg>
+                  Issue
+                </span>
+                <div class="issue-content">
+                  <p class="issue-quote">"My internet is slow."</p>
+                </div>
+              </div>
+
+              <div class="diagnostics-block">
+                <span class="block-label">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                  </svg>
+                  Network Diagnostics
+                </span>
+                <div class="diagnostics-empty">
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M8 15s1.5-2 4-2 4 2 4 2"></path>
+                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                  </svg>
+                  <span>No visibility into home network</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ticket-footer">
+              <span class="footer-note">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72"
+                  ></path>
+                </svg>
+                Callback requested
+              </span>
+              <div class="footer-actions">
+                <button class="btn btn--secondary">Add Note</button>
+                <button class="btn btn--primary">Dispatch Tech</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Pain Cards -->
+        <div class="col-pain">
+          <div class="pain-cards">
+            {
+              painPoints.map((point, index) => (
+                <article class="pain-card" style={`--delay: ${index * 0.1}s`}>
+                  <div class="pain-bar" />
+                  <div class="pain-icon">
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                    >
+                      <path d={icons[point.icon]} />
+                    </svg>
+                  </div>
+                  <div class="pain-content">
+                    <h3 class="pain-title">{point.title}</h3>
+                    <p class="pain-desc">{point.description}</p>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Bridge -->
+      <div class="bridge">
+        <p class="bridge-text">
+          {bridgeStatement}
+          <strong class="bridge-emphasis">{bridgeEmphasis}</strong>
+        </p>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .problem-section {
+    position: relative;
+    padding: var(--space-20) 0 var(--space-16);
+    background: #070709;
+    overflow: hidden;
+  }
+
+  .problem-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .problem-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 60% 50% at 25% 20%,
+        rgba(234, 36, 43, 0.1) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 40% 30% at 75% 70%,
+        rgba(234, 36, 43, 0.06) 0%,
+        transparent 50%
+      ),
+      linear-gradient(180deg, #070709 0%, #0a0a0c 100%);
+  }
+
+  .problem-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(
+      ellipse 80% 60% at 50% 40%,
+      black 0%,
+      transparent 70%
+    );
+  }
+
+  .problem-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    mix-blend-mode: overlay;
+  }
+
+  .problem-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .problem-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .problem-eyebrow {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-primary);
+    background: rgba(234, 36, 43, 0.1);
+    border: 1px solid rgba(234, 36, 43, 0.25);
+    border-radius: var(--radius-full);
+  }
+
+  .problem-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: var(--space-5);
+  }
+
+  .problem-context {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  /* Two Column Grid - True 50/50 Split */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+    align-items: stretch;
+    margin-bottom: var(--space-12);
+  }
+
+  /* Ticket Column */
+  .col-ticket {
+    display: flex;
+  }
+
+  .support-ticket {
+    width: 100%;
+    background: #0b0b0d;
+    border: 1px solid #1c1c20;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.4),
+      0 0 80px rgba(234, 36, 43, 0.06);
+  }
+
+  .ticket-chrome {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 8px 12px;
+    background: #131315;
+    border-bottom: 1px solid #1c1c20;
+  }
+
+  .chrome-dots {
+    display: flex;
+    gap: 5px;
+  }
+
+  .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+
+  .dot--red {
+    background: #ff5f57;
+  }
+  .dot--yellow {
+    background: #ffbd2e;
+  }
+  .dot--green {
+    background: #28ca41;
+  }
+
+  .chrome-title {
+    flex: 1;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .chrome-btn {
+    padding: 2px 7px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--color-primary);
+    background: rgba(234, 36, 43, 0.1);
+    border: 1px solid rgba(234, 36, 43, 0.2);
+    border-radius: 3px;
+  }
+
+  .ticket-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 8px 12px;
+    background: #0e0e10;
+    border-bottom: 1px solid #18181b;
+  }
+
+  .ticket-meta {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .meta-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .meta-id {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-semibold);
+    color: #fff;
+  }
+
+  .ticket-status {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 6px;
+    background: rgba(234, 36, 43, 0.1);
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--color-primary);
+  }
+
+  .status-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  .ticket-priority {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    color: #f59e0b;
+  }
+
+  .ticket-timer {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .ticket-body {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .customer-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: #0d0d0f;
+    border: 1px solid #18181b;
+    border-radius: 6px;
+  }
+
+  .customer-avatar {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #131315;
+    border: 1px solid #1f1f23;
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .customer-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .customer-name {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: var(--font-medium);
+    color: #fff;
+  }
+
+  .customer-detail {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .sentiment-badge {
+    padding: 2px 6px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    color: var(--color-primary);
+    background: rgba(234, 36, 43, 0.1);
+    border: 1px solid rgba(234, 36, 43, 0.2);
+    border-radius: 3px;
+  }
+
+  .issue-block,
+  .diagnostics-block {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .block-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .block-label svg {
+    opacity: 0.5;
+  }
+
+  .issue-content {
+    padding: 12px 14px;
+    background: #0d0d0f;
+    border: 1px solid #18181b;
+    border-left: 2px solid var(--color-primary);
+    border-radius: 6px;
+  }
+
+  .issue-quote {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: var(--font-medium);
+    color: #fff;
+    margin: 0;
+  }
+
+  .diagnostics-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 16px;
+    background: #09090b;
+    border: 1px dashed #1c1c20;
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.2);
+  }
+
+  .diagnostics-empty span {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .ticket-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: #0e0e10;
+    border-top: 1px solid #18181b;
+  }
+
+  .footer-note {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .footer-note svg {
+    opacity: 0.4;
+  }
+
+  .footer-actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  .btn {
+    padding: 5px 8px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn--secondary {
+    color: rgba(255, 255, 255, 0.5);
+    background: transparent;
+    border: 1px solid #252528;
+  }
+
+  .btn--secondary:hover {
+    border-color: #353538;
+    color: #fff;
+  }
+
+  .btn--primary {
+    color: #fff;
+    background: var(--color-primary);
+    border: 1px solid var(--color-primary);
+  }
+
+  .btn--primary:hover {
+    background: var(--color-primary-hover);
+  }
+
+  /* Pain Column */
+  .col-pain {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .pain-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .pain-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #0b0b0d;
+    border: 1px solid #1c1c20;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.4s ease forwards;
+    animation-delay: var(--delay);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .pain-card:hover {
+    border-color: rgba(234, 36, 43, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .pain-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-primary),
+      transparent
+    );
+    opacity: 0.4;
+  }
+
+  .pain-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    background: rgba(234, 36, 43, 0.08);
+    border: 1px solid rgba(234, 36, 43, 0.12);
+    border-radius: 8px;
+    color: var(--color-primary);
+  }
+
+  .pain-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .pain-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: var(--font-semibold);
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .pain-desc {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+  }
+
+  /* Bridge */
+  .bridge {
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: var(--space-4);
+  }
+
+  .bridge-text {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+  }
+
+  .bridge-emphasis {
+    font-weight: var(--font-bold);
+    color: #fff;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .two-col {
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .problem-section {
+      padding: var(--space-14) 0 var(--space-12);
+    }
+
+    .ticket-header {
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .ticket-priority {
+      margin-left: 0;
+    }
+
+    .ticket-timer {
+      display: none;
+    }
+
+    .footer-actions {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .pain-card {
+      padding: 12px 14px;
+    }
+
+    .pain-icon {
+      width: 36px;
+      height: 36px;
+    }
+  }
+</style>
+
+<script>
+  const timerEl = document.querySelector(".timer-value");
+  if (timerEl) {
+    let seconds = 0;
+    setInterval(() => {
+      seconds++;
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      timerEl.textContent = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    }, 1000);
+  }
+</script>
