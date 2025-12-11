@@ -1,14 +1,8 @@
 ---
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
-
-// Import use case images
-import hospitalImg from '../../assets/hospital.jpg';
-import homeNetworkImg from '../../assets/home-network.jpg';
-import gamingImg from '../../assets/gaming.jpg';
 
 interface UseCase {
-  image: ImageMetadata;
+  image: string;
   badge: string;
   title: string;
   description: string;
@@ -22,28 +16,28 @@ interface Props {
 const {
   useCases = [
     {
-      image: hospitalImg,
-      badge: "DART AI Case Study",
+      image: "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=2400&q=90&fit=crop",
+      badge: "Healthcare",
       title: "Medical Device Network Reliability",
       description:
         "Discover how DART AI transformed network operations for remotely controlled surgical robots, reducing jitter by 50% and packet loss by 30% in a private 5G environment.",
       href: "/use-cases/medical-device-network-reliability",
     },
     {
-      image: homeNetworkImg,
-      badge: "Network Performance",
-      title: "Optimizing Home Networks for Remote Work",
+      image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2400&q=90&fit=crop",
+      badge: "Healthcare",
+      title: "Hospital Network Enhancement",
       description:
-        "Learn how DART AI helps maintain stable and high-performance home networks, crucial for today's remote workforce and smart homes.",
-      href: "/use-cases/home-networks",
+        "Learn how DART AI enhanced network performance for EHR, telemedicine, and IoT medical devices, achieving over 50% decrease in service interruptions.",
+      href: "/use-cases/hospital-network-enhancement",
     },
     {
-      image: gamingImg,
-      badge: "Low Latency",
-      title: "Enhancing Online Gaming Experience with DART AI",
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=2400&q=90&fit=crop",
+      badge: "Telecommunications",
+      title: "Network Operator Experience",
       description:
-        "See how DART AI reduces latency and ensures a seamless gaming experience for competitive and casual gamers alike and also helps in reducing the cost of the network.",
-      href: "/use-cases/gaming",
+        "See how DART AI transformed network operations for a national operator, reducing latency complaints by 50% across hybrid and 5G infrastructure.",
+      href: "/use-cases/network-operator-experience",
     },
   ],
 } = Astro.props;
@@ -57,8 +51,12 @@ const {
           src={useCase.image}
           alt=""
           class="use-case-card__image"
-          loading={index === 0 ? "eager" : "lazy"}
+          loading="lazy"
+          width={800}
+          height={600}
           quality={80}
+          widths={[400, 600, 800]}
+          sizes="(max-width: 1024px) 100vw, 33vw"
         />
 
         <div class="use-case-card__overlay" />
@@ -117,11 +115,15 @@ const {
     height: 100%;
     object-fit: cover;
     z-index: var(--z-base);
-    transition: transform var(--duration-slow) var(--ease-out);
+    filter: grayscale(100%);
+    transition:
+      transform var(--duration-slow) var(--ease-out),
+      filter var(--duration-normal) var(--ease-out);
   }
 
   .use-case-card:hover .use-case-card__image {
     transform: scale(1.05);
+    filter: grayscale(0%);
   }
 
   .use-case-card__overlay {

@@ -79,6 +79,16 @@ export const mainNavigation: NavItem[] = [
         label: 'Medical Device Network Reliability',
         href: '/use-cases/medical-device-network-reliability',
         description: 'Private 5G for surgical robotics'
+      },
+      {
+        label: 'Hospital Network Enhancement',
+        href: '/use-cases/hospital-network-enhancement',
+        description: 'Digital health systems optimization'
+      },
+      {
+        label: 'Network Operator Experience',
+        href: '/use-cases/network-operator-experience',
+        description: 'Hybrid & 5G infrastructure'
       }
     ]
   },
@@ -88,56 +98,31 @@ export const mainNavigation: NavItem[] = [
     type: 'dropdown',
     links: [
       {
-        label: 'Documentation',
-        href: '/resources/docs',
-        description: 'Technical guides and API reference'
-      },
-      {
-        label: 'Case Studies',
-        href: '/resources/case-studies',
-        description: 'Customer success stories'
-      },
-      {
-        label: 'White Papers',
-        href: '/resources/white-papers',
-        description: 'In-depth research and analysis'
+        label: 'Industries',
+        href: '/industries',
+        description: 'Solutions by industry'
       },
       {
         label: 'Blog',
-        href: '/resources/blog',
+        href: '/blog',
         description: 'Latest news and insights'
-      },
-      {
-        label: 'Webinars',
-        href: '/resources/webinars',
-        description: 'Live and on-demand sessions'
       }
     ]
   },
   {
-    label: 'About',
+    label: 'Company',
     href: '/about',
     type: 'dropdown',
     links: [
       {
-        label: 'Our Story',
-        href: '/about/story',
-        description: 'Our mission and journey'
+        label: 'About',
+        href: '/about',
+        description: 'Our mission and story'
       },
       {
-        label: 'Team',
-        href: '/about/team',
-        description: 'Meet our leadership'
-      },
-      {
-        label: 'Careers',
-        href: '/about/careers',
-        description: 'Join our team'
-      },
-      {
-        label: 'News',
-        href: '/about/news',
-        description: 'Press releases and updates'
+        label: 'Contact Us',
+        href: '/contact',
+        description: 'Get in touch'
       }
     ]
   }
@@ -152,20 +137,16 @@ export const footerNavigation = {
     { label: 'SLA Assurance & Reporting', href: '/solutions/sla-assurance-reporting' }
   ],
   useCases: [
-    { label: 'Medical Device Network Reliability', href: '/use-cases/medical-device-network-reliability' }
+    { label: 'Medical Device Network Reliability', href: '/use-cases/medical-device-network-reliability' },
+    { label: 'Hospital Network Enhancement', href: '/use-cases/hospital-network-enhancement' },
+    { label: 'Network Operator Experience', href: '/use-cases/network-operator-experience' }
   ],
   resources: [
-    { label: 'Documentation', href: '/resources/docs' },
-    { label: 'Case Studies', href: '/resources/case-studies' },
-    { label: 'White Papers', href: '/resources/white-papers' },
-    { label: 'Blog', href: '/resources/blog' },
-    { label: 'Webinars', href: '/resources/webinars' }
+    { label: 'Industries', href: '/industries' },
+    { label: 'Blog', href: '/blog' }
   ],
   company: [
-    { label: 'Our Story', href: '/about/story' },
-    { label: 'Team', href: '/about/team' },
-    { label: 'Careers', href: '/about/careers' },
-    { label: 'News', href: '/about/news' },
-    { label: 'Contact', href: '/contact' }
+    { label: 'About', href: '/about' },
+    { label: 'Contact Us', href: '/contact' }
   ]
 };

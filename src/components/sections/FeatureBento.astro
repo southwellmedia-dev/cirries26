@@ -84,7 +84,7 @@ const {
 
 <section class="bento">
   <Container size="xl">
-    <!-- Row 1: Two Large Feature Cards -->
+    <!-- Row 1: Two Large Feature Cards (above-fold, eager loading) -->
     <div class="bento__row bento__row--large">
       {largeFeatures.map((feature, index) => (
         <a
@@ -96,8 +96,10 @@ const {
             <Image
               src={feature.image}
               alt={feature.title}
-              loading="lazy"
-              quality={80}
+              loading="eager"
+              quality={85}
+              widths={[600, 900, 1200]}
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
             <div class="bento__card-tint" aria-hidden="true"></div>
             <div class="bento__card-overlay"></div>
@@ -129,6 +131,8 @@ const {
                 alt={feature.title}
                 loading="lazy"
                 quality={80}
+                widths={[400, 600, 800]}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
               <div class="bento__card-tint" aria-hidden="true"></div>
               <div class="bento__card-overlay"></div>
@@ -161,6 +165,8 @@ const {
                 alt={feature.title}
                 loading="lazy"
                 quality={80}
+                widths={[300, 450, 600]}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
               />
               <div class="bento__card-tint" aria-hidden="true"></div>
               <div class="bento__card-overlay"></div>

@@ -1,0 +1,141 @@
+---
+/**
+ * Network Operator User Experience Enhancement Case Study
+ *
+ * Editorial-style case study showcasing how DART AI
+ * enhanced user experience for a national network operator
+ * with extensive hybrid and 5G network infrastructure.
+ */
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import CaseStudyHero from '../../components/sections/case-study/CaseStudyHero.astro';
+import CaseStudyOverview from '../../components/sections/case-study/CaseStudyOverview.astro';
+import CaseStudyChallenge from '../../components/sections/case-study/CaseStudyChallenge.astro';
+import CaseStudySolution from '../../components/sections/case-study/CaseStudySolution.astro';
+import CaseStudyResults from '../../components/sections/case-study/CaseStudyResults.astro';
+import CaseStudyTestimonial from '../../components/sections/case-study/CaseStudyTestimonial.astro';
+import CaseStudyCTA from '../../components/sections/case-study/CaseStudyCTA.astro';
+
+const pageTitle = "Network Operator Enhances User Experience with DART AI | Cirries Case Study";
+const pageDescription = "Discover how a national network operator used DART AI to achieve 50% reduction in latency complaints and 30% decrease in packet loss across their hybrid and 5G infrastructure.";
+---
+
+<CaseStudyLayout title={pageTitle} description={pageDescription}>
+  <!-- Hero Section -->
+  <CaseStudyHero
+    industry="Telecommunications"
+    companyType="National Network Operator"
+    headline="Enhancing User Experience Across Millions of Connections"
+    subheadline="How DART AI transformed network operations for a national hybrid and 5G infrastructure"
+    heroImage="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=2400&q=90&fit=crop"
+    readTime="6 min read"
+  />
+
+  <!-- Overview Section -->
+  <CaseStudyOverview
+    summary="A national network operator, providing services to millions of users, faced challenges in maintaining consistent service quality across its extensive hybrid and 5G network infrastructure. The operator aimed to improve user experience by reducing network disruptions and enhancing performance metrics."
+    dartDescription="DART AI provides deep insights into network behavior, identifying bottlenecks and anomalies in real time while monitoring key performance indicators (KPIs) like latency, jitter, and packet loss continuously, ensuring immediate detection of service degradation."
+    keyFacts={[
+      { label: "Scale", value: "Millions of Users", icon: "users" },
+      { label: "Network Type", value: "Hybrid & 5G", icon: "signal" },
+      { label: "Deployment", value: "Cloud-Based", icon: "cloud" },
+      { label: "Approach", value: "AI-Predictive", icon: "brain" }
+    ]}
+    productName="DART AI"
+  />
+
+  <!-- Challenge Section -->
+  <CaseStudyChallenge
+    title="The Challenge"
+    pullQuote="Traditional network monitoring solutions are not equipped to handle the complexity and scale of modern 5G networks, leading to reactive rather than proactive management."
+    description="With the increase in data-intensive applications and IoT devices, the operator experienced spikes in network usage, leading to congestion, higher latency, and occasional service outages. Frequent customer complaints about slow data speeds, dropped calls, and poor video streaming quality were affecting customer satisfaction."
+    challengePoints={[
+      {
+        title: "Network Congestion",
+        description: "Data-intensive applications and IoT devices causing usage spikes and higher latency"
+      },
+      {
+        title: "Customer Complaints",
+        description: "Slow data speeds, dropped calls, and poor video streaming during peak usage times"
+      },
+      {
+        title: "Legacy Monitoring",
+        description: "Traditional solutions unable to handle complexity and scale of modern 5G networks"
+      }
+    ]}
+    image="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1600&q=90&fit=crop"
+    imageAlt="Network infrastructure"
+  />
+
+  <!-- Solution Section -->
+  <CaseStudySolution
+    title="The Solution"
+    solutionText="The network operator decided to leverage DART AI from Cirries Technologies to transform its network operations. DART AI not only detects but also diagnoses and suggests or implements fixes for network issues, reducing the time from detection to resolution. It predicts potential network issues based on usage patterns and historical data, allowing for preventive actions before users are affected."
+    implementationTitle="Implementation Process"
+    implementationText="DART AI was integrated into the operator's existing network infrastructure with minimal disruption, utilizing its cloud-based, plug-and-play capabilities. Network engineers and IT staff were trained on interpreting AI-generated insights and using the system's automated tools. DART AI was initially deployed in a high-traffic urban area to test effectiveness before a full-scale rollout across the network."
+    features={[
+      { icon: "brain", title: "AI-powered network monitoring" },
+      { icon: "zap", title: "Real-time performance analysis" },
+      { icon: "activity", title: "Latency and jitter control" },
+      { icon: "search", title: "Proactive problem-solving" },
+      { icon: "tool", title: "Automated root cause analysis" }
+    ]}
+  />
+
+  <!-- Results Section -->
+  <CaseStudyResults
+    title="Results & Benefits"
+    subtitle="Measurable improvements in service quality and customer satisfaction"
+    metrics={[
+      {
+        value: "50",
+        suffix: "%",
+        label: "Reduction in Latency Complaints",
+        description: "Smoother streaming and faster data transfer",
+        color: "primary"
+      },
+      {
+        value: "30",
+        suffix: "%",
+        label: "Decrease in Packet Loss",
+        description: "Stable connections even during peak loads",
+        color: "success"
+      },
+      {
+        value: "70",
+        suffix: "%",
+        label: "Manual Troubleshooting Reduction",
+        description: "IT team focus on strategic initiatives",
+        color: "blue"
+      }
+    ]}
+  />
+
+  <!-- Testimonial Section -->
+  <CaseStudyTestimonial
+    quote="Our customers demanded a comprehensive network observability platform that not only tracks multiple network elements but also correlates packet data with these elements to detect anomalies. The Cirries DART AI platform delivers this capability, using AI to drive resolutions that significantly reduce Mean Time to Resolution (MTTR) and network downtime."
+    role="Chief Technology Officer"
+  />
+
+  <!-- CTA Section -->
+  <CaseStudyCTA
+    title="Ready to Transform Your Network Operations?"
+    description="Discover how Cirries Technologies can enhance service quality and customer satisfaction for your telecom network."
+    whyTitle="Why Cirries for Telecom?"
+    whyPoints={[
+      {
+        title: "5G-Ready Platform",
+        description: "Built for the complexity and scale of modern networks"
+      },
+      {
+        title: "Predictive Intelligence",
+        description: "Prevent issues before they impact customers"
+      },
+      {
+        title: "Rapid Deployment",
+        description: "Cloud-based, plug-and-play integration"
+      }
+    ]}
+    primaryCta={{ label: "Request A Demo", href: "/contact" }}
+    secondaryCta={{ label: "Explore DART AI", href: "/solutions/intelligent-network-observability/dart-ai" }}
+  />
+</CaseStudyLayout>

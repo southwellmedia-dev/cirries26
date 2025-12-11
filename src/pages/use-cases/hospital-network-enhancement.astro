@@ -1,0 +1,141 @@
+---
+/**
+ * Hospital Network Enhancement Case Study
+ *
+ * Editorial-style case study showcasing how DART AI
+ * enhanced network performance for a leading hospital's
+ * digital health systems including EHR, telemedicine, and IoT devices.
+ */
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import CaseStudyHero from '../../components/sections/case-study/CaseStudyHero.astro';
+import CaseStudyOverview from '../../components/sections/case-study/CaseStudyOverview.astro';
+import CaseStudyChallenge from '../../components/sections/case-study/CaseStudyChallenge.astro';
+import CaseStudySolution from '../../components/sections/case-study/CaseStudySolution.astro';
+import CaseStudyResults from '../../components/sections/case-study/CaseStudyResults.astro';
+import CaseStudyTestimonial from '../../components/sections/case-study/CaseStudyTestimonial.astro';
+import CaseStudyCTA from '../../components/sections/case-study/CaseStudyCTA.astro';
+
+const pageTitle = "Hospital Network Enhancement with DART AI | Cirries Case Study";
+const pageDescription = "Discover how a leading hospital used DART AI to achieve over 50% decrease in service interruptions and 30% reduction in packet loss for critical digital health systems.";
+---
+
+<CaseStudyLayout title={pageTitle} description={pageDescription}>
+  <!-- Hero Section -->
+  <CaseStudyHero
+    industry="Healthcare"
+    companyType="Leading Hospital"
+    headline="Transforming Digital Health Through Intelligent Network Observability"
+    subheadline="How DART AI enhanced network performance for EHR, telemedicine, and IoT medical devices"
+    heroImage="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=2400&q=90&fit=crop"
+    readTime="6 min read"
+  />
+
+  <!-- Overview Section -->
+  <CaseStudyOverview
+    summary="A leading hospital, aiming to leverage technology for better patient care, was dealing with network inefficiencies in its digital health systems. The hospital's network supports critical applications like electronic health records (EHR), telemedicine, and IoT medical devices."
+    dartDescription="DART AI provides AI-Driven Network Observability with comprehensive visibility into network health, identifying anomalies as they occur and continuously monitoring network performance metrics like latency, jitter, and packet loss, offering real-time data processing for immediate action."
+    keyFacts={[
+      { label: "Applications", value: "EHR, Telemedicine, IoT", icon: "cpu" },
+      { label: "Focus Areas", value: "ICU & Operating Theaters", icon: "building" },
+      { label: "Integration", value: "Plug-and-Play", icon: "plug" },
+      { label: "Analytics", value: "Predictive AI", icon: "brain" }
+    ]}
+    productName="DART AI"
+  />
+
+  <!-- Challenge Section -->
+  <CaseStudyChallenge
+    title="The Challenge"
+    pullQuote="Traditional network management tools did not provide real-time insights or predictive analytics, leading to reactive rather than proactive maintenance."
+    description="Persistent network issues like latency, jitter, and packet loss were affecting critical services, leading to delays in patient care and operational inefficiencies. The hospital needed a solution that could provide proactive monitoring and automatic root cause analysis."
+    challengePoints={[
+      {
+        title: "Network Performance Critical",
+        description: "Excellent performance essential for telehealth consultations and monitoring patient vitals via IoT devices"
+      },
+      {
+        title: "Reactive Monitoring",
+        description: "Traditional tools lacked real-time insights or predictive analytics capabilities"
+      },
+      {
+        title: "Operational Downtime",
+        description: "Manual troubleshooting periods reduced staff efficiency and impacted patient care"
+      }
+    ]}
+    image="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&q=90&fit=crop"
+    imageAlt="Hospital digital health environment"
+  />
+
+  <!-- Solution Section -->
+  <CaseStudySolution
+    title="The Solution"
+    solutionText="The hospital implemented DART AI by Cirries Technologies to address these challenges. DART AI utilizes AI to pinpoint the exact causes of network issues, automating what would otherwise be a manual, time-consuming process. The system not only fixes current issues but also predicts potential future problems, mitigating them before they impact operations."
+    implementationTitle="Implementation Process"
+    implementationText="DART AI integrated with the hospital's existing network infrastructure with minimal disruption, thanks to its plug-and-play design. Staff received brief training to understand system alerts and automated responses. Implementation started with critical areas like the ICU and operation theaters before expanding hospital-wide."
+    features={[
+      { icon: "brain", title: "AI-driven network monitoring" },
+      { icon: "zap", title: "Real-time performance analytics" },
+      { icon: "activity", title: "Latency and jitter management" },
+      { icon: "trending-up", title: "Proactive network health optimization" },
+      { icon: "shield", title: "Predictive issue prevention" }
+    ]}
+  />
+
+  <!-- Results Section -->
+  <CaseStudyResults
+    title="Results & Benefits"
+    subtitle="Measurable improvements enhancing patient care delivery"
+    metrics={[
+      {
+        value: "50",
+        suffix: "%",
+        label: "Decrease in Service Interruptions",
+        description: "Enhancing patient care delivery",
+        color: "primary"
+      },
+      {
+        value: "30",
+        suffix: "%",
+        label: "Reduction in Packet Loss",
+        description: "Reliable transmission of patient data",
+        color: "success"
+      },
+      {
+        value: "70",
+        suffix: "%",
+        label: "Manual Effort Reduction",
+        description: "IT staff focus on strategic tasks",
+        color: "blue"
+      }
+    ]}
+  />
+
+  <!-- Testimonial Section -->
+  <CaseStudyTestimonial
+    quote="The Cirries DART AI product has been a game changer for our network performance. In our trial deployment on the network, we saw an immediate improvement in network visibility and proactive issue resolution. The AI-driven insights allowed us to identify and address anomalies in real-time, resulting in increased network uptime and enhanced operational efficiency. The integration of DART AI with our existing infrastructure was seamless, and its predictive analytics helped us discover potential network outages before they could impact our services. We are extremely impressed with the depth of data insights DART AI provides and the measurable improvements it delivered for our network."
+    role="Senior Network Manager"
+  />
+
+  <!-- CTA Section -->
+  <CaseStudyCTA
+    title="Ready to Transform Your Hospital Network?"
+    description="Discover how Cirries Technologies can enhance network reliability for your healthcare organization."
+    whyTitle="Why Cirries for Healthcare?"
+    whyPoints={[
+      {
+        title: "Critical Care Ready",
+        description: "Designed for mission-critical healthcare environments"
+      },
+      {
+        title: "AI-Powered Prediction",
+        description: "Prevent issues before they impact patient care"
+      },
+      {
+        title: "Seamless Integration",
+        description: "Plug-and-play deployment with minimal disruption"
+      }
+    ]}
+    primaryCta={{ label: "Request A Demo", href: "/contact" }}
+    secondaryCta={{ label: "Explore DART AI", href: "/solutions/intelligent-network-observability/dart-ai" }}
+  />
+</CaseStudyLayout>

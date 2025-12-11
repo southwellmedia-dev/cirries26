@@ -24,7 +24,8 @@
       "Bash(find:*)",
       "Bash(wc:*)",
       "Bash(ls -la \"D:\\cirries26\\claudedocs\"\" && echo \"---\" && ls -la \"D:cirries26srctemplatessubpage\"\")",
-      "Bash(ls -la \"D:\\cirries26\\src\\components\\sections\\meet 2>/dev/null || ls -la D:cirries26srccomponentssections\")"
+      "Bash(ls -la \"D:\\cirries26\\src\\components\\sections\\meet 2>/dev/null || ls -la D:cirries26srccomponentssections\")",
+      "WebFetch(domain:unsplash.com)"
     ]
   }
 }

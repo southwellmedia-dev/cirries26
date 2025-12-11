@@ -64,25 +64,25 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
         const svgCenterX = svgWidth / 2;
         const svgCenterY = svgHeight / 2;
 
-        // Materials - dark gray base that's subtle
+        // Materials - increased visibility for smaller screens
         const meshMaterial = new THREE.MeshBasicMaterial({
           color: 0x1a1a1a,
           side: THREE.DoubleSide,
           transparent: true,
-          opacity: 0.05,
+          opacity: 0.15,
         });
 
         const wireMaterial = new THREE.MeshBasicMaterial({
-          color: 0x333333, // Dark gray wireframe
+          color: 0x444444, // Lighter gray wireframe for better visibility
           wireframe: true,
           transparent: true,
-          opacity: 0.35,
+          opacity: 0.5,
         });
 
         const edgeMaterial = new THREE.LineBasicMaterial({
-          color: 0x444444, // Medium gray edges - main visible structure
+          color: 0x666666, // Lighter edges for better visibility
           transparent: true,
-          opacity: 0.6,
+          opacity: 0.8,
         });
 
         // Glimmer material - red highlight that follows mouse using custom shader

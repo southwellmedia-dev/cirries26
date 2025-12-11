@@ -94,7 +94,6 @@ const icons: Record<string, string> = {
     <!-- Closing Statement -->
     <footer class="section-footer">
       <p class="closing-text">{closingStatement}</p>
-      <div class="closing-accent"></div>
     </footer>
   </Container>
 </section>
@@ -153,7 +152,7 @@ const icons: Record<string, string> = {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: #22c55e;
+    color: var(--color-primary);
   }
 
   .section-title {
@@ -300,15 +299,7 @@ const icons: Record<string, string> = {
     font-weight: var(--font-semibold);
     line-height: 1.5;
     color: #1a1a1a;
-    margin: 0 0 var(--space-6);
-  }
-
-  .closing-accent {
-    width: 60px;
-    height: 4px;
-    margin: 0 auto;
-    background: linear-gradient(90deg, var(--color-primary), #22c55e);
-    border-radius: 2px;
+    margin: 0;
   }
 
   /* ========================================
