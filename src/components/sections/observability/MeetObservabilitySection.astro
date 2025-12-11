@@ -1,0 +1,692 @@
+---
+/**
+ * MeetObservabilitySection - "A Network That Thinks"
+ *
+ * Features a neural pathway visualization representing:
+ * - Four interconnected AI layers as cognitive nodes
+ * - Data flowing through pathways (synaptic connections)
+ * - Light, floating aesthetic with no hard boxes
+ */
+import Container from "../../ui/Container.astro";
+import Button from "../../ui/Button.astro";
+import DartLogomark from "../../../assets/logos/ai-logomark.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  paragraphs?: string[];
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  eyebrow = "Intelligent Network Observability",
+  title = "A Network",
+  highlightText = "That Thinks",
+  paragraphs = [
+    "In the face of overwhelming network complexity, simple machine learning and basic alerts are no longer enough. They add to the noise, creating a flood of data without context or clear direction. To truly master the modern network, you need more than monitoring; you need a system that can understand, reason, act, and communicate.",
+    "Cirries delivers this with a multi-layered intelligence engine that functions like a complete cognitive system for your network, combining four distinct but interconnected forms of AI."
+  ],
+  primaryCta = { label: "Get Started", href: "/contact" },
+  secondaryCta = { label: "View All Solutions", href: "/solutions" }
+} = Astro.props;
+---
+
+<section class="meet-observability-section" data-theme="light">
+  <!-- Background -->
+  <div class="section-bg">
+    <div class="bg-gradient"></div>
+    <div class="bg-grain"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="meet-observability">
+      <!-- Content Column -->
+      <div class="meet-observability__content">
+        <span class="meet-observability__eyebrow">{eyebrow}</span>
+        <h2 class="meet-observability__title">{title} <span>{highlightText}</span></h2>
+        {paragraphs.map((text) => (
+          <p class="meet-observability__text" set:html={text} />
+        ))}
+        <div class="meet-observability__actions">
+          <Button href={primaryCta.href} variant="primary">
+            {primaryCta.label}
+          </Button>
+          <Button href={secondaryCta.href} variant="outline-dark">
+            {secondaryCta.label}
+          </Button>
+        </div>
+      </div>
+
+      <!-- Neural Pathway Visualization -->
+      <div class="neural-viz" id="neural-viz">
+        <!-- Neural pathway connections SVG -->
+        <!--
+          Node positions on circle with radius 140, center at (200, 200):
+          - Top (0°):    (200, 60)   = (200 + 140*sin(0), 200 - 140*cos(0))
+          - Right (90°): (340, 200)  = (200 + 140*sin(90), 200 - 140*cos(90))
+          - Bottom (180°): (200, 340) = (200 + 140*sin(180), 200 - 140*cos(180))
+          - Left (270°): (60, 200)   = (200 + 140*sin(270), 200 - 140*cos(270))
+
+          SVG Arc: A rx ry x-axis-rotation large-arc-flag sweep-flag x y
+          For 90° arc on circle r=140: A 140 140 0 0 1 endX endY
+        -->
+        <svg class="neural-paths" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <!-- Pulse gradients - fade from node toward center -->
+            <!-- Vertical: top to center (y1=0 is top, y2=100 is bottom/center) -->
+            <linearGradient id="pulse-gradient-v" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="rgba(234, 36, 43, 0.5)" />
+              <stop offset="100%" stop-color="rgba(234, 36, 43, 0)" />
+            </linearGradient>
+            <!-- Vertical reversed: bottom to center -->
+            <linearGradient id="pulse-gradient-v-rev" x1="0%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" stop-color="rgba(234, 36, 43, 0.5)" />
+              <stop offset="100%" stop-color="rgba(234, 36, 43, 0)" />
+            </linearGradient>
+            <!-- Horizontal: right to center -->
+            <linearGradient id="pulse-gradient-h" x1="100%" y1="0%" x2="0%" y2="0%">
+              <stop offset="0%" stop-color="rgba(234, 36, 43, 0.5)" />
+              <stop offset="100%" stop-color="rgba(234, 36, 43, 0)" />
+            </linearGradient>
+            <!-- Horizontal reversed: left to center -->
+            <linearGradient id="pulse-gradient-h-rev" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="rgba(234, 36, 43, 0.5)" />
+              <stop offset="100%" stop-color="rgba(234, 36, 43, 0)" />
+            </linearGradient>
+          </defs>
+
+          <!-- Background awareness rings -->
+          <circle cx="200" cy="200" r="180" fill="none" stroke="rgba(234, 36, 43, 0.04)" stroke-width="1" class="awareness-ring" />
+          <circle cx="200" cy="200" r="100" fill="none" stroke="rgba(234, 36, 43, 0.06)" stroke-width="1" class="awareness-ring awareness-ring--2" />
+
+          <!-- Main orbit circle (the path nodes sit on) - r=140 -->
+          <circle cx="200" cy="200" r="140" fill="none" stroke="rgba(234, 36, 43, 0.1)" stroke-width="1" class="orbit-circle" />
+
+          <!-- Pulse lines from each node to center -->
+          <!-- Top node to center -->
+          <line class="pulse-line pulse-line--1" x1="200" y1="60" x2="200" y2="200"
+                stroke="url(#pulse-gradient-v)" stroke-width="2" stroke-linecap="round" />
+          <!-- Right node to center -->
+          <line class="pulse-line pulse-line--2" x1="340" y1="200" x2="200" y2="200"
+                stroke="url(#pulse-gradient-h)" stroke-width="2" stroke-linecap="round" />
+          <!-- Bottom node to center -->
+          <line class="pulse-line pulse-line--3" x1="200" y1="340" x2="200" y2="200"
+                stroke="url(#pulse-gradient-v-rev)" stroke-width="2" stroke-linecap="round" />
+          <!-- Left node to center -->
+          <line class="pulse-line pulse-line--4" x1="60" y1="200" x2="200" y2="200"
+                stroke="url(#pulse-gradient-h-rev)" stroke-width="2" stroke-linecap="round" />
+        </svg>
+
+        <!-- Four cognitive nodes -->
+        <div class="cognitive-nodes">
+          <!-- Node 1: Understand (Top) -->
+          <div class="cog-node cog-node--understand">
+            <div class="node-core">
+              <svg class="node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="node-label">Understand</span>
+          </div>
+
+          <!-- Node 2: Predict (Right) -->
+          <div class="cog-node cog-node--predict">
+            <div class="node-core">
+              <svg class="node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="node-label">Predict</span>
+          </div>
+
+          <!-- Node 3: Act (Bottom) -->
+          <div class="cog-node cog-node--act">
+            <div class="node-core">
+              <svg class="node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="node-label">Act</span>
+          </div>
+
+          <!-- Node 4: Communicate (Left) -->
+          <div class="cog-node cog-node--communicate">
+            <div class="node-core">
+              <svg class="node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <span class="node-label">Communicate</span>
+          </div>
+        </div>
+
+        <!-- Central Logo -->
+        <div class="logo-center">
+          <div class="logo-glow"></div>
+          <div class="logo-circle">
+            <img src={DartLogomark.src} alt="DART" class="dart-logo" />
+          </div>
+        </div>
+
+        <!-- Flowing data particles container -->
+        <div class="data-particles" id="data-particles"></div>
+
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     SECTION BASE - LIGHT THEME
+     ======================================== */
+  .meet-observability-section {
+    position: relative;
+    padding: var(--space-24) 0;
+    background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+    overflow: hidden;
+  }
+
+  .section-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .bg-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 100% 80% at 70% 30%, rgba(234, 36, 43, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 60% at 80% 70%, rgba(234, 36, 43, 0.02) 0%, transparent 40%);
+  }
+
+  .bg-grain {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.015;
+  }
+
+  /* ========================================
+     LAYOUT
+     ======================================== */
+  .meet-observability {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-16);
+    align-items: center;
+  }
+
+  /* ========================================
+     CONTENT
+     ======================================== */
+  .meet-observability__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+  }
+
+  .meet-observability__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #0f0f0f;
+    margin-bottom: var(--space-6);
+  }
+
+  .meet-observability__title span {
+    color: var(--color-primary);
+  }
+
+  .meet-observability__text {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #555;
+    margin-bottom: var(--space-4);
+  }
+
+  .meet-observability__text:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .meet-observability__actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  /* ========================================
+     NEURAL VISUALIZATION
+     ======================================== */
+  .neural-viz {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* Neural Paths SVG */
+  .neural-paths {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .awareness-ring {
+    animation: breathe 6s ease-in-out infinite;
+  }
+
+  .awareness-ring--2 {
+    animation-delay: 3s;
+  }
+
+  @keyframes breathe {
+    0%, 100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .orbit-circle {
+    animation: orbitPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes orbitPulse {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.2; }
+  }
+
+  /* Pulse line animation - lines from each node pulsating toward center */
+  .pulse-line {
+    stroke-dasharray: 140;
+    stroke-dashoffset: 140;
+    animation: pulseLine 2s ease-out infinite;
+  }
+
+  .pulse-line--1 { animation-delay: 0s; }
+  .pulse-line--2 { animation-delay: 0.5s; }
+  .pulse-line--3 { animation-delay: 1s; }
+  .pulse-line--4 { animation-delay: 1.5s; }
+
+  @keyframes pulseLine {
+    0% {
+      stroke-dashoffset: 140;
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.8;
+    }
+    100% {
+      stroke-dashoffset: 0;
+      opacity: 0;
+    }
+  }
+
+  /* Cognitive Nodes */
+  .cognitive-nodes {
+    position: absolute;
+    inset: 0;
+  }
+
+  .cog-node {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Node positions calculated to match SVG coordinates:
+     SVG viewBox is 400x400, nodes on circle r=140, center (200,200)
+     CSS positions as percentages: (svgCoord / 400) * 100%
+     - Top: (200, 60) → (50%, 15%)
+     - Right: (340, 200) → (85%, 50%)
+     - Bottom: (200, 340) → (50%, 85%)
+     - Left: (60, 200) → (15%, 50%)
+  */
+  .cog-node--understand {
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .cog-node--predict {
+    top: 50%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+  }
+
+  .cog-node--act {
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .cog-node--communicate {
+    top: 50%;
+    left: 15%;
+    transform: translate(-50%, -50%);
+  }
+
+  .node-core {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #0a0a0a;
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.15),
+      0 1px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .cog-node:hover .node-core {
+    transform: scale(1.1);
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.2),
+      0 0 20px rgba(234, 36, 43, 0.15);
+  }
+
+  .node-icon {
+    width: 20px;
+    height: 20px;
+    color: #ffffff;
+  }
+
+  .node-label {
+    font-family: var(--font-display);
+    font-size: 0.5625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #666;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.2em 0.5em;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* Central Logo */
+  .logo-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+  }
+
+  .logo-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(234, 36, 43, 0.08) 0%, transparent 70%);
+    animation: logoGlow 4s ease-in-out infinite;
+  }
+
+  @keyframes logoGlow {
+    0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.15); }
+  }
+
+  .logo-circle {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffffff 0%, #f8f8f8 100%);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.08),
+      0 2px 8px rgba(0, 0, 0, 0.04),
+      inset 0 2px 4px rgba(255, 255, 255, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(234, 36, 43, 0.1);
+  }
+
+  .dart-logo {
+    width: 50px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Data Particles */
+  .data-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  :global(.neural-particle) {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    opacity: 0;
+    box-shadow: 0 0 6px rgba(234, 36, 43, 0.5);
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 1024px) {
+    .meet-observability {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .neural-viz {
+      max-width: 380px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .meet-observability-section {
+      padding: var(--space-16) 0;
+    }
+
+    .meet-observability__title {
+      font-size: clamp(1.75rem, 6vw, 2.25rem);
+    }
+
+    .meet-observability__actions {
+      flex-direction: column;
+    }
+
+    .neural-viz {
+      max-width: 320px;
+    }
+
+    .logo-circle {
+      width: 75px;
+      height: 75px;
+    }
+
+    .dart-logo {
+      width: 42px;
+    }
+
+    .logo-glow {
+      width: 120px;
+      height: 120px;
+    }
+
+    .node-core {
+      width: 38px;
+      height: 38px;
+    }
+
+    .node-icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .neural-viz {
+      max-width: 280px;
+    }
+
+    .logo-circle {
+      width: 65px;
+      height: 65px;
+    }
+
+    .dart-logo {
+      width: 36px;
+    }
+
+    .logo-glow {
+      width: 100px;
+      height: 100px;
+    }
+
+    .node-core {
+      width: 32px;
+      height: 32px;
+    }
+
+    .node-icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    .node-label {
+      font-size: 0.5rem;
+    }
+  }
+</style>
+
+<script>
+  /**
+   * Neural Pathway Visualization
+   * - Particles pulse from each cognitive node toward the center
+   * - Circle: center (200,200), radius 140 in SVG coords (400x400 viewBox)
+   * - Nodes at: Top (200,60), Right (340,200), Bottom (200,340), Left (60,200)
+   */
+  function initNeuralViz() {
+    const dataParticles = document.getElementById('data-particles');
+    const neuralViz = document.getElementById('neural-viz');
+
+    if (!dataParticles || !neuralViz) return;
+
+    const rect = neuralViz.getBoundingClientRect();
+
+    // Circle parameters (matching SVG)
+    const svgSize = 400;
+    const centerSvg = 200;
+    const radiusSvg = 140;
+
+    // Convert SVG coords to actual pixel coords
+    const scale = rect.width / svgSize;
+    const centerX = centerSvg * scale;
+    const centerY = centerSvg * scale;
+    const radius = radiusSvg * scale;
+
+    // Node positions (matching SVG coords, converted to pixels)
+    // Top, Right, Bottom, Left
+    const nodePositions = [
+      { x: centerX, y: (60 / svgSize) * rect.height },           // Top
+      { x: (340 / svgSize) * rect.width, y: centerY },           // Right
+      { x: centerX, y: (340 / svgSize) * rect.height },          // Bottom
+      { x: (60 / svgSize) * rect.width, y: centerY }             // Left
+    ];
+
+    let isAnimating = false;
+
+    /**
+     * Create particle that pulses from a node toward the center
+     */
+    function createPulseParticle() {
+      const particle = document.createElement('div');
+      particle.classList.add('neural-particle');
+
+      // Pick a random node to pulse from
+      const nodeIdx = Math.floor(Math.random() * 4);
+      const startPos = nodePositions[nodeIdx];
+
+      dataParticles.appendChild(particle);
+
+      const duration = 1000 + Math.random() * 500;
+      const keyframes = [
+        {
+          left: `${startPos.x}px`,
+          top: `${startPos.y}px`,
+          opacity: 0,
+          transform: 'translate(-50%, -50%) scale(0.5)'
+        },
+        {
+          left: `${startPos.x}px`,
+          top: `${startPos.y}px`,
+          opacity: 0.8,
+          transform: 'translate(-50%, -50%) scale(1)',
+          offset: 0.15
+        },
+        {
+          left: `${centerX}px`,
+          top: `${centerY}px`,
+          opacity: 0,
+          transform: 'translate(-50%, -50%) scale(0.3)'
+        }
+      ];
+
+      particle.animate(keyframes, {
+        duration,
+        easing: 'ease-in'
+      }).onfinish = () => particle.remove();
+    }
+
+    function startAnimation() {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      // Spawn particles pulsing toward center
+      setInterval(createPulseParticle, 400);
+    }
+
+    // Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startAnimation();
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+
+    observer.observe(neuralViz);
+  }
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNeuralViz);
+  } else {
+    initNeuralViz();
+  }
+</script>

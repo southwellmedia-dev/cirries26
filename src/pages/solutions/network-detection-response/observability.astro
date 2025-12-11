@@ -1,0 +1,40 @@
+---
+/**
+ * Intelligent Network Observability Page
+ *
+ * "A Network That Thinks"
+ *
+ * Multi-layered intelligence engine showcasing four forms of AI:
+ * - Hero section introducing the cognitive system concept
+ * - Meet section with cognitive layers visualization
+ * - AI Layers section with detailed breakdown of 4 intelligences
+ * - CTA section (provided by layout via CTABar)
+ */
+import SubpageLayout from "../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetObservabilitySection from "../../../components/sections/observability/MeetObservabilitySection.astro";
+import AILayersSection from "../../../components/sections/observability/AILayersSection.astro";
+---
+
+<SubpageLayout
+  title="Intelligent Network Observability - Cirries Technologies"
+  description="A multi-layered intelligence engine that functions like a complete cognitive system for your network, combining four distinct but interconnected forms of AI."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Intelligent Network <span>Observability</span>"
+      subtitle="A Network That Thinks"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet Observability - Light section with cognitive visualization -->
+  <MeetObservabilitySection />
+
+  <!-- AI Layers - Dark section with 4 intelligence cards -->
+  <AILayersSection />
+
+  <!-- CTA Section is provided by the layout via CTABar -->
+</SubpageLayout>
