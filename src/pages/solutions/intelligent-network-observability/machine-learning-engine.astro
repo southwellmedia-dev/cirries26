@@ -1,0 +1,40 @@
+---
+/**
+ * Machine Learning Engine Product Page
+ *
+ * Deep-dive into DART AI's proprietary ML engine featuring:
+ * - Meet the ML Engine section with neural network visualization
+ * - Combined ML capabilities (Dynamic Baseline, Predictive, Root Cause, Capacity)
+ */
+import SubpageLayout from "../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetMLSection from "../../../components/sections/ml-engine/MeetMLSection.astro";
+import MLCapabilitiesSection from "../../../components/sections/ml-engine/MLCapabilitiesSection.astro";
+import DARTAdvantageSection from "../../../components/sections/ml-engine/DARTAdvantageSection.astro";
+---
+
+<SubpageLayout
+  title="Machine Learning Engine - The Intelligence Behind DART AI"
+  description="Discover how DART AI's proprietary ML engine transforms network data into actionable intelligence through dynamic baselining, predictive analytics, and automated root cause analysis."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Machine Learning Engine"
+      subtitle="The Intelligence Behind DART AI"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet the ML Engine Section -->
+  <MeetMLSection />
+
+  <!-- ML Capabilities Section (includes Dynamic Baseline, Predictive, Root Cause, Capacity) -->
+  <MLCapabilitiesSection />
+
+  <!-- The DART AI Advantage Section -->
+  <DARTAdvantageSection />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>

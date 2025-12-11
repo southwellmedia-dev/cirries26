@@ -1,0 +1,545 @@
+---
+/**
+ * DARTAdvantageSection - The DART AI Advantage comparison section
+ *
+ * Light mode editorial section showcasing the transformation from
+ * traditional monitoring to DART AI's ML-powered intelligence.
+ * Features dramatic typography, large watermark logo, and comparison table.
+ */
+import { Image } from "astro:assets";
+import Container from "../../ui/Container.astro";
+
+import dartLogo from "../../../assets/logos/dart-lightmode.svg";
+
+interface ComparisonRow {
+  traditional: string;
+  dartAI: string;
+  outcome: string;
+}
+
+interface Props {
+  badge?: string;
+  title?: string;
+  titleHighlight?: string;
+  subtitle?: string;
+  comparisonRows?: ComparisonRow[];
+}
+
+const {
+  badge = "Intelligence Advantage",
+  title = "The DART AI",
+  titleHighlight = "Advantage",
+  subtitle = "Traditional monitoring keeps you reactive. DART AI's machine learning engine transforms your operations from fighting fires to preventing them.",
+  comparisonRows = [
+    {
+      traditional: "Static alerts & false positives",
+      dartAI: "Dynamic, multi-dimensional baselining",
+      outcome: "Solve problems before users report them"
+    },
+    {
+      traditional: "Reactive failover & downtime",
+      dartAI: "Predictive traffic forecasting & rerouting",
+      outcome: "Deliver consistent, flawless service"
+    },
+    {
+      traditional: "Alert storms & long \"war rooms\"",
+      dartAI: "Automated, cross-domain event correlation",
+      outcome: "Pinpoint root cause in minutes, not days"
+    },
+    {
+      traditional: "Guesswork-based capacity planning",
+      dartAI: "Long-term trend analysis & forecasting",
+      outcome: "Invest with confidence, eliminate waste"
+    }
+  ]
+} = Astro.props;
+---
+
+<section class="advantage-section" data-theme="light">
+  <!-- Subtle texture background -->
+  <div class="section-texture"></div>
+
+  <Container size="xl">
+    <!-- Header with watermark logo -->
+    <div class="advantage-header">
+      <div class="header-content">
+        <span class="advantage-badge">{badge}</span>
+        <h2 class="advantage-title">
+          {title} <em class="title-highlight">{titleHighlight}</em>
+        </h2>
+        <p class="advantage-subtitle">{subtitle}</p>
+      </div>
+      <div class="header-watermark">
+        <Image src={dartLogo} alt="DART AI" width={550} height={105} />
+      </div>
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="comparison-container">
+      <!-- Table Header -->
+      <div class="table-header">
+        <div class="header-cell header-cell--traditional">
+          <span class="header-icon header-icon--old">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 8v4 M12 16h.01"></path>
+            </svg>
+          </span>
+          <span class="header-text">Traditional Approach</span>
+        </div>
+        <div class="header-cell header-cell--transform">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14 M12 5l7 7-7 7"></path>
+          </svg>
+        </div>
+        <div class="header-cell header-cell--dart">
+          <span class="header-icon header-icon--new">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z M2 17l10 5 10-5 M2 12l10 5 10-5"></path>
+            </svg>
+          </span>
+          <span class="header-text">DART AI Intelligence</span>
+        </div>
+        <div class="header-cell header-cell--outcome">
+          <span class="header-icon header-icon--result">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </span>
+          <span class="header-text">Your Outcome</span>
+        </div>
+      </div>
+
+      <!-- Table Rows -->
+      <div class="table-body">
+        {comparisonRows.map((row, index) => (
+          <div class="table-row" style={`--row-delay: ${index * 0.1}s`}>
+            <div class="row-cell row-cell--traditional">
+              <span class="cell-marker cell-marker--warning"></span>
+              <span class="cell-content">{row.traditional}</span>
+            </div>
+            <div class="row-cell row-cell--arrow">
+              <div class="arrow-line">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14 M12 5l7 7-7 7"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="row-cell row-cell--dart">
+              <span class="cell-marker cell-marker--success"></span>
+              <span class="cell-content">{row.dartAI}</span>
+            </div>
+            <div class="row-cell row-cell--outcome">
+              <span class="outcome-check">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span class="cell-content">{row.outcome}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     DART AI ADVANTAGE SECTION - Light Editorial
+     ======================================== */
+  .advantage-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: var(--color-bg-secondary);
+    overflow: hidden;
+  }
+
+  .section-texture {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 80%, rgba(234, 36, 43, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(234, 36, 43, 0.02) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  /* Header */
+  .advantage-header {
+    position: relative;
+    margin-bottom: var(--space-12);
+  }
+
+  .header-content {
+    position: relative;
+    z-index: 2;
+    max-width: 640px;
+  }
+
+  .header-watermark {
+    position: absolute;
+    right: -18%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .header-watermark img {
+    width: 1400px;
+    max-width: none;
+    height: auto;
+    filter: grayscale(100%);
+    opacity: 0.025;
+  }
+
+  .advantage-badge {
+    display: inline-block;
+    padding: var(--space-2) var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-primary);
+    background: var(--color-primary-muted);
+    border: 1px solid var(--color-primary-subtle);
+    border-radius: 100px;
+    margin-bottom: var(--space-4);
+  }
+
+  .advantage-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-4);
+  }
+
+  .title-highlight {
+    color: var(--color-primary);
+    font-style: italic;
+  }
+
+  .advantage-subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin: 0;
+    max-width: 580px;
+  }
+
+  /* ========================================
+     COMPARISON TABLE
+     ======================================== */
+  .comparison-container {
+    position: relative;
+    z-index: 2;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Table Header */
+  .table-header {
+    display: grid;
+    grid-template-columns: 1fr 60px 1.2fr 1fr;
+    background: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .header-cell {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-5) var(--space-6);
+  }
+
+  .header-cell--transform {
+    justify-content: center;
+    color: var(--color-text-muted);
+    padding: var(--space-5) var(--space-2);
+  }
+
+  .header-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+  }
+
+  .header-icon--old {
+    background: var(--color-border-subtle);
+    color: var(--color-text-muted);
+  }
+
+  .header-icon--new {
+    background: var(--color-primary-muted);
+    color: var(--color-primary);
+  }
+
+  .header-icon--result {
+    background: var(--color-success-subtle);
+    color: var(--color-success-dark);
+  }
+
+  .header-text {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+  }
+
+  .header-cell--dart .header-text {
+    color: var(--color-primary);
+  }
+
+  .header-cell--outcome .header-text {
+    color: var(--color-success-dark);
+  }
+
+  /* Table Body */
+  .table-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .table-row {
+    display: grid;
+    grid-template-columns: 1fr 60px 1.2fr 1fr;
+    border-bottom: 1px solid var(--color-border-subtle);
+    transition: background-color 0.2s ease;
+    animation: rowReveal 0.5s ease forwards;
+    animation-delay: var(--row-delay);
+    opacity: 0;
+  }
+
+  @keyframes rowReveal {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .table-row:last-child {
+    border-bottom: none;
+  }
+
+  .table-row:hover {
+    background: var(--color-bg-secondary);
+  }
+
+  .row-cell {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-5) var(--space-6);
+  }
+
+  .row-cell--arrow {
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-5) var(--space-2);
+  }
+
+  .arrow-line {
+    color: var(--color-primary);
+    opacity: 0.5;
+  }
+
+  .cell-marker {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .cell-marker--warning {
+    background: var(--color-text-dim);
+    box-shadow: 0 0 0 3px var(--color-border-subtle);
+  }
+
+  .cell-marker--success {
+    background: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-subtle);
+  }
+
+  .cell-content {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+  }
+
+  .row-cell--traditional .cell-content {
+    color: var(--color-text-muted);
+  }
+
+  .row-cell--dart .cell-content {
+    color: var(--color-text-primary);
+    font-weight: var(--font-medium);
+  }
+
+  .row-cell--outcome .cell-content {
+    color: var(--color-text-primary);
+    font-weight: var(--font-semibold);
+  }
+
+  .outcome-check {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-success-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--color-success-dark);
+    flex-shrink: 0;
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 1024px) {
+    .header-watermark img {
+      width: 800px;
+    }
+
+    .table-header {
+      grid-template-columns: 1fr 50px 1.2fr 1fr;
+    }
+
+    .table-row {
+      grid-template-columns: 1fr 50px 1.2fr 1fr;
+    }
+
+    .header-cell,
+    .row-cell {
+      padding: var(--space-4) var(--space-5);
+    }
+  }
+
+  @media (max-width: 900px) {
+    /* Switch to stacked card layout */
+    .table-header {
+      display: none;
+    }
+
+    .table-body {
+      padding: var(--space-4);
+      gap: var(--space-4);
+    }
+
+    .table-row {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      padding: var(--space-5);
+      background: var(--color-bg-secondary);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-subtle);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .table-row:hover {
+      background: var(--color-bg-tertiary);
+    }
+
+    .row-cell--arrow {
+      display: none;
+    }
+
+    .row-cell {
+      padding: var(--space-2) 0;
+    }
+
+    .row-cell::before {
+      font-family: var(--font-display);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: block;
+      margin-bottom: var(--space-1);
+    }
+
+    .row-cell--traditional::before {
+      content: "Before";
+      color: var(--color-text-muted);
+    }
+
+    .row-cell--dart::before {
+      content: "With DART AI";
+      color: var(--color-primary);
+    }
+
+    .row-cell--outcome::before {
+      content: "Result";
+      color: var(--color-success-dark);
+    }
+
+    .row-cell--traditional,
+    .row-cell--dart,
+    .row-cell--outcome {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
+
+    .cell-marker {
+      display: none;
+    }
+
+    .outcome-check {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .advantage-section {
+      padding: var(--space-14) 0;
+    }
+
+    .advantage-header {
+      margin-bottom: var(--space-8);
+    }
+
+    .header-watermark {
+      display: none;
+    }
+
+    .advantage-title {
+      font-size: var(--text-2xl);
+    }
+
+    .advantage-subtitle {
+      font-size: var(--text-base);
+    }
+
+    .comparison-container {
+      border-radius: var(--radius-lg);
+    }
+
+    .statement-text {
+      font-size: var(--text-lg);
+    }
+  }
+</style>

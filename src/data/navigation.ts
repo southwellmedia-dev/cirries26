@@ -36,7 +36,7 @@ export const mainNavigation: NavItem[] = [
         links: [
           { label: 'DART AI', href: '/solutions/intelligent-network-observability/dart-ai' },
           { label: 'Gen AI', href: '/solutions/intelligent-network-observability/gen-ai' },
-          { label: 'Machine Learning AI', href: '/solutions/intelligent-network-observability/machine-learning' },
+          { label: 'Machine Learning AI', href: '/solutions/intelligent-network-observability/machine-learning-engine' },
           { label: 'Agentic AI', href: '/solutions/intelligent-network-observability/agentic-ai', highlighted: true }
         ]
       },

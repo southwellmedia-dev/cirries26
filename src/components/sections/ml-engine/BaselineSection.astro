@@ -1,0 +1,520 @@
+---
+/**
+ * BaselineSection - Dynamic Performance Baseline visualization
+ *
+ * Shows how DART AI learns and establishes network baselines with
+ * an animated waveform visualization contrasting traditional vs ML approach.
+ */
+import Container from "../../ui/Container.astro";
+
+interface Props {
+  badge?: string;
+  title?: string;
+  titleHighlight?: string;
+  problemTitle?: string;
+  problemText?: string;
+  solutionTitle?: string;
+  solutionText?: string;
+}
+
+const {
+  badge = "Adaptive Learning",
+  title = "Establishes a Dynamic",
+  titleHighlight = "Performance Baseline",
+  problemTitle = "The Problem It Solves",
+  problemText = "Traditional monitoring tools use static \"high/low\" thresholds that trigger constant false positives or miss subtle, service-degrading issues.",
+  solutionTitle = "How DART AI Does It",
+  solutionText = "Upon deployment, our ML models begin by ingesting your real-time and historical packet, flow, and device data. It doesn't just look at averages; it learns the unique \"rhythm\" of your network—including normal peaks, valleys, and application-specific behaviors—across different times of day, week, and month."
+} = Astro.props;
+---
+
+<section class="baseline-section" data-theme="dark">
+  <div class="baseline-bg">
+    <div class="baseline-grid"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="baseline-content">
+      <!-- Header -->
+      <div class="baseline-header">
+        <span class="baseline-badge">{badge}</span>
+        <h2 class="baseline-title">
+          {title}<br />
+          <em>{titleHighlight}</em>
+        </h2>
+      </div>
+
+      <!-- Comparison Layout -->
+      <div class="baseline-comparison">
+        <!-- Traditional Approach -->
+        <div class="approach-card approach-card--traditional">
+          <div class="approach-header">
+            <div class="approach-icon approach-icon--warning">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <h3 class="approach-title">{problemTitle}</h3>
+          </div>
+          <p class="approach-text">{problemText}</p>
+
+          <!-- Static Threshold Visualization -->
+          <div class="viz-container">
+            <svg class="threshold-viz" viewBox="0 0 360 140">
+              <!-- Grid lines -->
+              <line x1="45" y1="35" x2="340" y2="35" class="threshold-line threshold-line--high" />
+              <line x1="45" y1="105" x2="340" y2="105" class="threshold-line threshold-line--low" />
+
+              <!-- Labels -->
+              <text x="10" y="40" class="threshold-label">High</text>
+              <text x="10" y="110" class="threshold-label">Low</text>
+
+              <!-- Chaotic signal with false positives -->
+              <path
+                d="M45,70 Q70,55 95,65 T145,45 T195,80 T245,30 T295,75 T340,40"
+                class="signal-line signal-line--chaotic"
+              />
+
+              <!-- False positive markers -->
+              <circle cx="245" cy="30" r="10" class="alert-marker alert-marker--false" />
+              <circle cx="340" cy="40" r="10" class="alert-marker alert-marker--false" />
+            </svg>
+            <div class="viz-label">
+              <span class="viz-label__icon viz-label__icon--warning">!</span>
+              <span>Static thresholds = False positives</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DART AI Approach -->
+        <div class="approach-card approach-card--dart">
+          <div class="approach-header">
+            <div class="approach-icon approach-icon--success">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <h3 class="approach-title">{solutionTitle}</h3>
+          </div>
+          <p class="approach-text">{solutionText}</p>
+
+          <!-- Dynamic Baseline Visualization -->
+          <div class="viz-container">
+            <svg class="baseline-viz" viewBox="0 0 360 140">
+              <!-- Dynamic baseline band (learned pattern) -->
+              <path
+                d="M20,55 Q70,40 120,50 T220,52 T320,45 T350,48"
+                class="baseline-band baseline-band--upper"
+              />
+              <path
+                d="M20,90 Q70,100 120,95 T220,98 T320,92 T350,95"
+                class="baseline-band baseline-band--lower"
+              />
+
+              <!-- Shaded baseline zone -->
+              <path
+                d="M20,55 Q70,40 120,50 T220,52 T320,45 T350,48 L350,95 Q320,92 220,98 T120,95 T20,90 Z"
+                class="baseline-zone"
+              />
+
+              <!-- Signal within baseline -->
+              <path
+                d="M20,72 Q50,65 80,70 T130,68 T180,76 T230,72 T280,82 T330,70 T350,68"
+                class="signal-line signal-line--healthy"
+              />
+
+              <!-- True anomaly detection -->
+              <circle cx="280" cy="82" r="8" class="detection-marker" />
+              <path d="M280,90 L280,115" class="detection-line" />
+              <text x="280" y="130" class="detection-label">Anomaly Detected</text>
+            </svg>
+            <div class="viz-label">
+              <span class="viz-label__icon viz-label__icon--success">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span>Dynamic baseline = True anomaly detection</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Statement -->
+      <div class="baseline-statement">
+        <p class="statement-text">
+          This multi-dimensional, constantly evolving baseline is the foundation for all <em>true anomaly detection</em>—from performance bottlenecks to emerging security threats.
+        </p>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     BASELINE SECTION
+     ======================================== */
+  .baseline-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: var(--color-bg-primary);
+    overflow: hidden;
+  }
+
+  .baseline-bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .baseline-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 0%, transparent 70%);
+  }
+
+  .baseline-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .baseline-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+  }
+
+  .baseline-badge {
+    display: inline-block;
+    padding: 0.375rem 0.875rem;
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary);
+    background: rgba(220, 38, 38, 0.12);
+    border: 1px solid rgba(220, 38, 38, 0.25);
+    border-radius: 100px;
+    margin-bottom: var(--space-4);
+  }
+
+  .baseline-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-bold);
+    line-height: 1.2;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-primary);
+  }
+
+  .baseline-title em {
+    color: var(--color-primary);
+    font-style: normal;
+  }
+
+  /* Comparison Layout */
+  .baseline-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+    margin-bottom: var(--space-10);
+  }
+
+  /* Approach Cards */
+  .approach-card {
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    transition: all 0.3s ease;
+  }
+
+  .approach-card--traditional {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .approach-card--dart {
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.08) 0%, rgba(220, 38, 38, 0.02) 100%);
+    border: 1px solid rgba(220, 38, 38, 0.2);
+  }
+
+  .approach-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .approach-card--traditional:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .approach-card--dart:hover {
+    border-color: rgba(220, 38, 38, 0.35);
+  }
+
+  .approach-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  .approach-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    flex-shrink: 0;
+  }
+
+  .approach-icon--warning {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+  }
+
+  .approach-icon--success {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+  }
+
+  .approach-title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+  }
+
+  .approach-text {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-6);
+  }
+
+  /* Visualization Container */
+  .viz-container {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: visible;
+  }
+
+  .threshold-viz,
+  .baseline-viz {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 360 / 140;
+    display: block;
+    overflow: visible;
+  }
+
+  /* Traditional Visualization Styles */
+  .threshold-line {
+    stroke-width: 2.5;
+    stroke-dasharray: 8 4;
+  }
+
+  .threshold-line--high {
+    stroke: rgba(239, 68, 68, 0.5);
+  }
+
+  .threshold-line--low {
+    stroke: rgba(59, 130, 246, 0.5);
+  }
+
+  .threshold-label {
+    font-size: 13px;
+    fill: rgba(255, 255, 255, 0.6);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .signal-line {
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .signal-line--chaotic {
+    stroke: rgba(255, 255, 255, 0.6);
+    animation: signalPulse 3s ease-in-out infinite;
+  }
+
+  .signal-line--healthy {
+    stroke: #22c55e;
+    stroke-width: 3;
+    animation: signalFlow 4s linear infinite;
+  }
+
+  @keyframes signalPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+  }
+
+  @keyframes signalFlow {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -50; }
+  }
+
+  .alert-marker--false {
+    fill: #ef4444;
+    animation: alertPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes alertPulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+
+  /* DART AI Visualization Styles */
+  .baseline-band {
+    fill: none;
+    stroke-width: 1.5;
+    stroke-dasharray: 4 2;
+  }
+
+  .baseline-band--upper {
+    stroke: rgba(34, 197, 94, 0.4);
+  }
+
+  .baseline-band--lower {
+    stroke: rgba(34, 197, 94, 0.4);
+  }
+
+  .baseline-zone {
+    fill: rgba(34, 197, 94, 0.08);
+    animation: zonePulse 4s ease-in-out infinite;
+  }
+
+  @keyframes zonePulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  .detection-marker {
+    fill: var(--color-primary);
+    animation: detectionPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes detectionPulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+  }
+
+  .detection-line {
+    stroke: var(--color-primary);
+    stroke-width: 1.5;
+    stroke-dasharray: 3 2;
+    opacity: 0.7;
+  }
+
+  .detection-label {
+    font-size: 12px;
+    fill: var(--color-primary);
+    font-family: var(--font-display);
+    text-anchor: middle;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Viz Labels */
+  .viz-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    color: var(--color-text-secondary);
+  }
+
+  .viz-label__icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .viz-label__icon--warning {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+  }
+
+  .viz-label__icon--success {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+  }
+
+  /* Key Statement */
+  .baseline-statement {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding-top: var(--space-4);
+  }
+
+  .statement-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    font-weight: var(--font-medium);
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .statement-text em {
+    color: var(--color-text-primary);
+    font-style: normal;
+    font-weight: var(--font-semibold);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .baseline-comparison {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .baseline-section {
+      padding: var(--space-12) 0;
+    }
+
+    .baseline-title {
+      font-size: var(--text-2xl);
+    }
+
+    .approach-card {
+      padding: var(--space-6);
+    }
+
+    .approach-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+
+    .statement-text {
+      font-size: var(--text-base);
+    }
+  }
+</style>

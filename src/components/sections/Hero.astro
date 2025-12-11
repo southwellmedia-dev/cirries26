@@ -37,6 +37,20 @@ const {
     <div class="hero__three-noise"></div>
     <!-- Animated grid lines -->
     <div class="hero__three-grid"></div>
+    <!-- Network pulse lines - aligned to 60px grid -->
+    <div class="hero__pulse-lines" aria-hidden="true">
+      <!-- Lines positioned at grid intervals: calc(60px * n) from edges -->
+      <div class="hero__pulse-line" style="--line-col: 3; --line-delay: 0.2s; --line-duration: 3.5s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 6; --line-delay: 1.8s; --line-duration: 4.2s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 9; --line-delay: 0.9s; --line-duration: 3.8s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 12; --line-delay: 2.5s; --line-duration: 4.0s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 15; --line-delay: 0.4s; --line-duration: 3.6s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 18; --line-delay: 3.1s; --line-duration: 4.5s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 21; --line-delay: 1.3s; --line-duration: 3.9s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 24; --line-delay: 2.2s; --line-duration: 4.1s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 27; --line-delay: 0.7s; --line-duration: 3.7s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 30; --line-delay: 2.9s; --line-duration: 4.3s;"></div>
+    </div>
   </div>
 
   <!-- Content -->
@@ -139,6 +153,76 @@ const {
       rgba(0, 0, 0, 0.3) 40%,
       transparent 70%
     );
+  }
+
+  /* Network pulse lines - shooting upward along grid lines */
+  .hero__pulse-lines {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+    /* Match grid mask for seamless blend */
+    mask-image: radial-gradient(
+      ellipse 80% 70% at 50% 80%,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.5) 40%,
+      transparent 70%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 70% at 50% 80%,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.5) 40%,
+      transparent 70%
+    );
+  }
+
+  .hero__pulse-line {
+    position: absolute;
+    /* Snap to 60px grid columns */
+    left: calc(var(--line-col, 10) * 60px);
+    bottom: 0;
+    width: 1px;
+    /* Long trailing tail */
+    height: 200px;
+    /* Gradient: long fade at bottom, bright tip at top */
+    background: linear-gradient(
+      to top,
+      transparent 0%,
+      rgba(255, 255, 255, 0.02) 10%,
+      rgba(255, 255, 255, 0.04) 30%,
+      rgba(255, 255, 255, 0.08) 60%,
+      rgba(255, 255, 255, 0.15) 85%,
+      rgba(255, 255, 255, 0.25) 100%
+    );
+    opacity: 0;
+    transform: translateY(0);
+    animation: pulseUp var(--line-duration, 4s) var(--line-delay, 0s) infinite ease-out;
+  }
+
+  @keyframes pulseUp {
+    0% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+    3% {
+      opacity: 1;
+    }
+    60% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-100vh);
+    }
+  }
+
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .hero__pulse-line {
+      animation: none;
+      opacity: 0;
+    }
   }
 
   /* Video - kept for fallback */
