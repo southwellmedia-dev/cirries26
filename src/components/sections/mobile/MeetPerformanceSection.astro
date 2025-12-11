@@ -1,0 +1,614 @@
+---
+/**
+ * MeetPerformanceSection - "From Reactive Firefighting to Proactive Intelligence"
+ *
+ * Performance monitoring intro section featuring:
+ * - AI-powered anomaly detection visualization
+ * - DART-AI hub connected via animated data streams to monitoring signals
+ * - Dynamic particle flow animation using CSS
+ *
+ * Structure matches MeetEndToEndSection pattern exactly
+ */
+import Container from "../../ui/Container.astro";
+import Button from "../../ui/Button.astro";
+import DartLogoLight from "../../../assets/logos/dart-lightmode.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  paragraphs?: string[];
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  eyebrow = "AI-Powered Performance",
+  title = "From Reactive Firefighting",
+  highlightText = "To Proactive Intelligence.",
+  paragraphs = [
+    "Traditional monitoring tools alert you after the damage is done—after latency spikes, after dropped connections, after business-critical applications fail. You're always catching up, never getting ahead.",
+    "DART-AI transforms network operations with <strong>AI-powered anomaly detection</strong> that identifies performance issues and security threats before they impact your users—moving from reactive firefighting to proactive optimization.",
+  ],
+  primaryCta = {
+    label: "Transform Your Operations",
+    href: "/contact",
+  },
+  secondaryCta = { label: "View All Solutions", href: "/solutions" },
+} = Astro.props;
+
+// AI monitoring signals visualization (matches stack layers pattern)
+const monitoringSignals = [
+  {
+    signal: "Anomaly",
+    label: "Detection",
+    sublabel: "AI Learning",
+    color: "#8B5CF6",
+    faIcon: "fa-solid fa-brain",
+  },
+  {
+    signal: "Latency",
+    label: "Monitoring",
+    sublabel: "Real-time",
+    color: "#3B82F6",
+    faIcon: "fa-solid fa-gauge-high",
+  },
+  {
+    signal: "Security",
+    label: "Threat Intel",
+    sublabel: "Proactive",
+    color: "#10B981",
+    faIcon: "fa-solid fa-shield-halved",
+  },
+  {
+    signal: "Capacity",
+    label: "Forecasting",
+    sublabel: "Predictive",
+    color: "#F59E0B",
+    faIcon: "fa-solid fa-chart-line",
+  },
+];
+---
+
+<section class="meet-perf-section" data-theme="light">
+  <!-- Ambient background -->
+  <div class="perf-bg">
+    <div class="perf-gradient"></div>
+    <div class="perf-grid"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="meet-perf">
+      <!-- Left: Content -->
+      <div class="meet-perf__content">
+        <span class="meet-perf__eyebrow">{eyebrow}</span>
+
+        <h2 class="meet-perf__title">
+          {title}
+          <span>{highlightText}</span>
+        </h2>
+
+        {paragraphs.map((text) => <p class="meet-perf__text" set:html={text} />)}
+
+        <div class="meet-perf__actions">
+          <Button href={primaryCta.href} variant="primary">
+            {primaryCta.label}
+          </Button>
+          <Button href={secondaryCta.href} variant="outline-dark">
+            {secondaryCta.label}
+          </Button>
+        </div>
+      </div>
+
+      <!-- Right: AI Performance Visualization -->
+      <div class="perf-visualization">
+        <!-- Central Hub - DART-AI -->
+        <div class="perf-hub">
+          <div class="perf-hub-pulse"></div>
+          <div class="perf-hub-ring perf-hub-ring-1"></div>
+          <div class="perf-hub-ring perf-hub-ring-2"></div>
+          <div class="perf-hub-core">
+            <img src={DartLogoLight.src} alt="DART-AI" />
+          </div>
+          <div class="perf-hub-label">AI Analysis</div>
+        </div>
+
+        <!-- SVG Connection Lines between hub and signals -->
+        <svg class="perf-connections" viewBox="0 0 120 280" preserveAspectRatio="none">
+          <!-- Gray branch paths from signals to hub center -->
+          <path class="perf-branch" d="M 0 140 Q 40 140 60 35 L 120 35" stroke="rgba(180, 180, 180, 0.4)" stroke-width="2" fill="none" />
+          <path class="perf-branch" d="M 0 140 Q 50 140 70 105 L 120 105" stroke="rgba(180, 180, 180, 0.4)" stroke-width="2" fill="none" />
+          <path class="perf-branch" d="M 0 140 Q 50 140 70 175 L 120 175" stroke="rgba(180, 180, 180, 0.4)" stroke-width="2" fill="none" />
+          <path class="perf-branch" d="M 0 140 Q 40 140 60 245 L 120 245" stroke="rgba(180, 180, 180, 0.4)" stroke-width="2" fill="none" />
+
+          <!-- Hidden paths for animation (reversed: from signals to hub) -->
+          <defs>
+            <path id="path-anomaly" d="M 120 35 L 60 35 Q 40 140 0 140" fill="none" />
+            <path id="path-latency" d="M 120 105 L 70 105 Q 50 140 0 140" fill="none" />
+            <path id="path-security" d="M 120 175 L 70 175 Q 50 140 0 140" fill="none" />
+            <path id="path-capacity" d="M 120 245 L 60 245 Q 40 140 0 140" fill="none" />
+          </defs>
+
+          <!-- Animated colored particles flowing FROM signals TO hub -->
+          <circle class="perf-packet" r="5" fill="#8B5CF6">
+            <animateMotion dur="2s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+              <mpath href="#path-anomaly" />
+            </animateMotion>
+          </circle>
+          <circle class="perf-packet" r="5" fill="#3B82F6">
+            <animateMotion dur="1.8s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" begin="0.4s">
+              <mpath href="#path-latency" />
+            </animateMotion>
+          </circle>
+          <circle class="perf-packet" r="5" fill="#10B981">
+            <animateMotion dur="1.8s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" begin="0.8s">
+              <mpath href="#path-security" />
+            </animateMotion>
+          </circle>
+          <circle class="perf-packet" r="5" fill="#F59E0B">
+            <animateMotion dur="2s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" begin="1.2s">
+              <mpath href="#path-capacity" />
+            </animateMotion>
+          </circle>
+
+          <!-- Second wave of particles for continuous flow -->
+          <circle class="perf-packet" r="4" fill="#8B5CF6" opacity="0.7">
+            <animateMotion dur="2s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" begin="1s">
+              <mpath href="#path-anomaly" />
+            </animateMotion>
+          </circle>
+          <circle class="perf-packet" r="4" fill="#3B82F6" opacity="0.7">
+            <animateMotion dur="1.8s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" begin="1.3s">
+              <mpath href="#path-latency" />
+            </animateMotion>
+          </circle>
+          <circle class="perf-packet" r="4" fill="#10B981" opacity="0.7">
+            <animateMotion dur="1.8s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" begin="1.7s">
+              <mpath href="#path-security" />
+            </animateMotion>
+          </circle>
+          <circle class="perf-packet" r="4" fill="#F59E0B" opacity="0.7">
+            <animateMotion dur="2s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" begin="2.1s">
+              <mpath href="#path-capacity" />
+            </animateMotion>
+          </circle>
+        </svg>
+
+        <!-- Monitoring Signal Cards -->
+        <div class="perf-signal-cards">
+          {
+            monitoringSignals.map((signal, index) => (
+              <div
+                class="perf-signal-card"
+                style={`--signal-color: ${signal.color}; --signal-delay: ${index * 0.15}s; --signal-index: ${index}`}
+                data-signal={signal.signal}
+              >
+                <div class="perf-signal-badge">{signal.signal}</div>
+                <div class="perf-signal-icon">
+                  <i class={signal.faIcon} />
+                </div>
+                <div class="perf-signal-info">
+                  <span class="perf-signal-label">{signal.label}</span>
+                  <span class="perf-signal-sublabel">{signal.sublabel}</span>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .meet-perf-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .perf-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .perf-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 100% 80% at 75% 40%,
+        rgba(234, 36, 43, 0.04) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 70% 50% at 20% 70%,
+        rgba(234, 36, 43, 0.02) 0%,
+        transparent 45%
+      ),
+      linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #f5f5f7 100%);
+  }
+
+  .perf-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(
+      ellipse 85% 75% at 65% 50%,
+      black 15%,
+      transparent 70%
+    );
+  }
+
+  /* Content Layout */
+  .meet-perf {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  .meet-perf__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+    color: var(--color-primary, #ea242b);
+  }
+
+  .meet-perf__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #111111;
+    margin-bottom: var(--space-6);
+  }
+
+  .meet-perf__title span {
+    display: block;
+    color: var(--color-primary, #ea242b);
+  }
+
+  .meet-perf__text {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: #555555;
+    margin-bottom: var(--space-4);
+  }
+
+  .meet-perf__text :global(strong) {
+    color: #111111;
+    font-weight: var(--font-semibold);
+  }
+
+  .meet-perf__actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  /* ========================================
+     Visualization Container - Flexbox Layout
+     ======================================== */
+  .perf-visualization {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+    min-height: 340px;
+    padding: var(--space-6) 0;
+  }
+
+  /* ========================================
+     Central Hub - DART-AI
+     ======================================== */
+  .perf-hub {
+    position: relative;
+    flex-shrink: 0;
+    width: 110px;
+    height: 110px;
+    z-index: 10;
+  }
+
+  .perf-hub-pulse {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(234, 36, 43, 0.12) 0%,
+      transparent 70%
+    );
+    animation: perf-hub-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes perf-hub-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    50% {
+      transform: scale(1.15);
+      opacity: 0.9;
+    }
+  }
+
+  .perf-hub-ring {
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .perf-hub-ring-1 {
+    inset: -10px;
+    border: 1px dashed rgba(234, 36, 43, 0.25);
+    animation: perf-ring-rotate 25s linear infinite;
+  }
+
+  .perf-hub-ring-2 {
+    inset: -24px;
+    border: 1px dotted rgba(234, 36, 43, 0.15);
+    animation: perf-ring-rotate 35s linear infinite reverse;
+  }
+
+  @keyframes perf-ring-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .perf-hub-core {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.1),
+      0 0 60px rgba(234, 36, 43, 0.06);
+    z-index: 12;
+  }
+
+  .perf-hub-core img {
+    width: 55%;
+    height: auto;
+  }
+
+  .perf-hub-label {
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary, #ea242b);
+    white-space: nowrap;
+    padding: 5px 12px;
+    background: rgba(234, 36, 43, 0.08);
+    border-radius: 6px;
+  }
+
+  /* ========================================
+     SVG Connection Lines
+     ======================================== */
+  .perf-connections {
+    width: 100px;
+    height: 280px;
+    flex-shrink: 0;
+  }
+
+  .perf-branch {
+    stroke-dasharray: 6 3;
+    animation: perf-dash-animate 15s linear infinite;
+  }
+
+  @keyframes perf-dash-animate {
+    to {
+      stroke-dashoffset: -90;
+    }
+  }
+
+  .perf-packet {
+    filter: drop-shadow(0 0 6px currentColor);
+  }
+
+  /* ========================================
+     Signal Cards
+     ======================================== */
+  .perf-signal-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 5;
+    flex-shrink: 0;
+  }
+
+  .perf-signal-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    opacity: 0;
+    transform: translateX(20px);
+    animation: perf-card-slide-in 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation-delay: var(--signal-delay);
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  @keyframes perf-card-slide-in {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .perf-signal-card:hover {
+    border-color: var(--signal-color);
+    box-shadow: 0 6px 24px color-mix(in srgb, var(--signal-color) 18%, transparent);
+    transform: translateX(-6px);
+  }
+
+  /* ========================================
+     Signal Card Content
+     ======================================== */
+  .perf-signal-badge {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--signal-color) 12%, transparent);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    font-weight: var(--font-bold);
+    color: var(--signal-color);
+    flex-shrink: 0;
+  }
+
+  .perf-signal-icon {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--signal-color);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .perf-signal-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .perf-signal-label {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: var(--font-semibold);
+    color: #111111;
+    line-height: 1.2;
+  }
+
+  .perf-signal-sublabel {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ========================================
+     Responsive Styles
+     ======================================== */
+  @media (max-width: 1024px) {
+    .meet-perf {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .perf-visualization {
+      justify-content: center;
+    }
+
+    .perf-hub {
+      width: 100px;
+      height: 100px;
+    }
+
+    .perf-connections {
+      width: 80px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .meet-perf-section {
+      padding: var(--space-12) 0;
+    }
+
+    .meet-perf__title {
+      font-size: var(--text-2xl);
+    }
+
+    .meet-perf__actions {
+      flex-direction: column;
+    }
+
+    .perf-visualization {
+      flex-direction: column;
+      gap: var(--space-4);
+      min-height: auto;
+    }
+
+    .perf-hub {
+      width: 90px;
+      height: 90px;
+    }
+
+    .perf-hub-label {
+      bottom: -24px;
+      font-size: 0.55rem;
+    }
+
+    .perf-connections {
+      width: 60px;
+      height: 80px;
+      transform: rotate(90deg);
+    }
+
+    .perf-signal-cards {
+      gap: 12px;
+    }
+
+    .perf-signal-card {
+      padding: 10px 14px;
+      gap: 10px;
+    }
+
+    .perf-signal-badge {
+      width: 28px;
+      height: 28px;
+      font-size: 0.5rem;
+    }
+
+    .perf-signal-icon {
+      width: 24px;
+      height: 24px;
+      font-size: 0.85rem;
+    }
+
+    .perf-signal-label {
+      font-size: 0.75rem;
+    }
+
+    .perf-signal-sublabel {
+      display: none;
+    }
+  }
+</style>

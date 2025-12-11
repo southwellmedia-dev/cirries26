@@ -1,0 +1,241 @@
+---
+/**
+ * End-to-End Optimization Page - Mobile Network Visibility
+ *
+ * Focused page for complete mobile network observability:
+ * - Full-stack visibility L2-L7
+ * - Packet as ground truth concept
+ * - War room elimination
+ *
+ * Content from: end-to-end.md
+ */
+import SubpageLayout from "../../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetEndToEndSection from "../../../../components/sections/mobile/MeetEndToEndSection.astro";
+import ProblemSection from "../../../../components/sections/mobile/ProblemSection.astro";
+import SolutionSection from "../../../../components/sections/mobile/SolutionSection.astro";
+import TransformSection from "../../../../components/sections/mobile/TransformSection.astro";
+import MobileNavBar from "../../../../components/sections/mobile/MobileNavBar.astro";
+
+// Override props for End-to-End specific content
+const problemProps = {
+  sectionTitle: "Data Silos Create Guesswork",
+  contextParagraph:
+    "When a cloud application slows down or a user complains, the search for answers begins. Your cloud team checks their dashboards. Your network team looks at flow data. Your application team sifts through logs. Each team has a different tool, a different dataset, and a different theory.",
+  silos: [
+    {
+      domain: "Cloud Team",
+      faIcon: "fa-solid fa-cloud",
+      status: "partial" as const,
+      issues: ["Infrastructure metrics", "VM-level view only"],
+      color: "#3B82F6",
+    },
+    {
+      domain: "Network Team",
+      faIcon: "fa-solid fa-network-wired",
+      status: "limited" as const,
+      issues: ["Flow data gaps", "No application context"],
+      color: "#10B981",
+    },
+    {
+      domain: "App Team",
+      faIcon: "fa-solid fa-code",
+      status: "partial" as const,
+      issues: ["Log analysis only", "Network blind spots"],
+      color: "#8B5CF6",
+    },
+    {
+      domain: "Security Team",
+      faIcon: "fa-solid fa-shield-halved",
+      status: "blind" as const,
+      issues: ["Alert fatigue", "Missing context"],
+      color: "#EF4444",
+    },
+  ],
+  painPoints: [
+    {
+      faIcon: "fa-solid fa-file-lines",
+      title: "Logs Hide the 'Why'",
+      description:
+        "Logs, metrics, and flow records are all summaries. They tell you that something happened, but they often hide the why. They're not the original conversation.",
+    },
+    {
+      faIcon: "fa-solid fa-people-arrows",
+      title: "The War Room Begins",
+      description:
+        "Hours of wasted time with multiple teams in a room, each with their own theory, none with the definitive evidence to prove root cause.",
+    },
+    {
+      faIcon: "fa-solid fa-ghost",
+      title: "Hidden Threats",
+      description:
+        "Sophisticated security threats hide in subtle anomalies. Without deep visibility, lateral movement and data exfiltration go undetected.",
+    },
+  ],
+  bridgeStatement: "Summaries and logs show fragments—",
+  bridgeEmphasis: "Packets show the ground truth.",
+};
+
+const solutionProps = {
+  sectionTitle: "The Indisputable Truth of the Packet",
+  contextParagraph:
+    "Packets are not a summary; they are the original conversation. They are the ground truth of exactly what happened, when it happened, and who was involved. DART-AI creates a unified observability layer that correlates data across every device, application, and service.",
+  beforeState: {
+    title: "Fragmented Data Silos",
+    status: "Guesswork & Blame",
+    metrics: [
+      { label: "Visibility", value: "Partial", sublabel: "Summaries only" },
+      { label: "Root Cause", value: "Theory", sublabel: "No proof" },
+      { label: "Resolution", value: "Hours", sublabel: "War rooms" },
+    ],
+  },
+  afterState: {
+    title: "DART-AI Ground Truth",
+    status: "Complete & Unified",
+    metrics: [
+      { label: "Visibility", value: "100%", sublabel: "L2 to L7" },
+      { label: "Root Cause", value: "Packet Proof", sublabel: "Forensic" },
+      { label: "Resolution", value: "Minutes", sublabel: "Precision" },
+    ],
+  },
+  capabilities: [
+    {
+      faIcon: "fa-solid fa-eye",
+      title: "100% Packet Capture",
+      description:
+        "Capture and analyze 100% of packets in real time. See every conversation, every handshake, every failure.",
+      metric: "100%",
+      metricLabel: "Visibility",
+    },
+    {
+      faIcon: "fa-solid fa-layer-group",
+      title: "Full-Stack Correlation",
+      description:
+        "Correlate data from the physical network transport (L2) all the way up to the application's API calls (L7).",
+      metric: "L2-L7",
+      metricLabel: "Coverage",
+    },
+    {
+      faIcon: "fa-solid fa-crosshairs",
+      title: "Instant Root Cause",
+      description:
+        "See the precise point of failure—TCP retransmissions, slow database queries, misconfigured gateways—with forensic clarity.",
+      metric: "Seconds",
+      metricLabel: "To Clarity",
+    },
+  ],
+};
+
+const transformProps = {
+  sectionTitle: "From Hours of Guesswork to Minutes of Precision",
+  pillars: [
+    {
+      number: "01",
+      title: "Eliminate Every Blind Spot",
+      lead: "Gain full-stack visibility from the physical network transport all the way up to application API calls. See the critical East-West traffic that other tools miss entirely.",
+      faIcon: "fa-solid fa-eye",
+      accent: "#3B82F6",
+      features: [
+        {
+          title: "Full Protocol Coverage",
+          description:
+            "L2 through L7 visibility across your entire mobile infrastructure—no blind spots, no gaps.",
+        },
+        {
+          title: "East-West Traffic Analysis",
+          description:
+            "See internal traffic patterns that are invisible to perimeter-focused tools and flow data.",
+        },
+        {
+          title: "Real-Time Correlation",
+          description:
+            "Automatically correlate events across network, compute, and application layers in real time.",
+        },
+      ],
+    },
+    {
+      number: "02",
+      title: "Pinpoint the 'Why', Not Just 'Where'",
+      lead: "Stop guessing if it's the network, the application, or the cloud. Our platform shows you the precise point of failure with forensic clarity that everyone can trust.",
+      faIcon: "fa-solid fa-crosshairs",
+      accent: "#8B5CF6",
+      features: [
+        {
+          title: "TCP-Level Forensics",
+          description:
+            "See retransmissions, latency spikes, and connection issues at the packet level—not summarized.",
+        },
+        {
+          title: "End the Blame Game",
+          description:
+            "Definitive evidence that proves root cause. No more theories, no more finger-pointing.",
+        },
+        {
+          title: "Unified Evidence Layer",
+          description:
+            "One dataset, one truth, one platform. Every team works from the same source of evidence.",
+        },
+      ],
+    },
+    {
+      number: "03",
+      title: "Uncover Hidden Threats",
+      lead: "Analyze network behavior at the most granular level to detect the subtle anomalies that signal sophisticated security threats, from lateral movement to data exfiltration.",
+      faIcon: "fa-solid fa-shield-halved",
+      accent: "#10B981",
+      features: [
+        {
+          title: "Behavioral Anomaly Detection",
+          description:
+            "AI identifies patterns that signal threats before they become breaches—not after.",
+        },
+        {
+          title: "Lateral Movement Tracking",
+          description:
+            "See attackers moving through your network—activity that completely evades perimeter defenses.",
+        },
+        {
+          title: "Data Exfiltration Prevention",
+          description:
+            "Detect unusual data flows and potential exfiltration attempts in real-time.",
+        },
+      ],
+    },
+  ],
+};
+---
+
+<SubpageLayout
+  title="End-to-End Mobile Optimization - Complete Network Visibility"
+  description="DART-AI delivers end-to-end mobile network visibility. Analyze 100% of packets in real-time for forensic root cause analysis and proactive threat detection."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="End-to-End Optimization"
+      subtitle="The Ground Truth for Your Entire Network"
+      align="left"
+      breadcrumbs={[
+        { label: "Mobile", href: "/solutions/connectivity-performance/mobile" }
+      ]}
+    />
+  </Fragment>
+
+  <!-- Meet Section - Full-stack visibility -->
+  <MeetEndToEndSection />
+
+  <!-- Mobile Solutions Navigation -->
+  <MobileNavBar currentPage="/solutions/connectivity-performance/mobile/end-to-end" />
+
+  <!-- Problem Section - Data silos -->
+  <ProblemSection {...problemProps} />
+
+  <!-- Solution Section - Packet ground truth -->
+  <SolutionSection {...solutionProps} />
+
+  <!-- Transform Section - From guesswork to precision -->
+  <TransformSection {...transformProps} />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>

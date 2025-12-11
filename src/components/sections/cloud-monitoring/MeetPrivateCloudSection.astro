@@ -1,0 +1,548 @@
+---
+/**
+ * MeetPrivateCloudSection - "Fulfill the Promise of Your Private Cloud"
+ *
+ * Private cloud-focused intro section featuring:
+ * - Central DART-AI hub with VMware, VMs, containers, storage nodes
+ * - Focus on control, compliance, and predictive assurance
+ * - End-to-end observability across virtualized layers
+ */
+import Container from "../../ui/Container.astro";
+import Button from "../../ui/Button.astro";
+import DartLogoLight from "../../../assets/logos/dart-lightmode.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  paragraphs?: string[];
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  eyebrow = "Private Cloud Observability",
+  title = "Fulfill the Promise of",
+  highlightText = "Your Private Cloud.",
+  paragraphs = [
+    "You chose a private cloud for <strong>ultimate control, ironclad security, and guaranteed performance</strong>. But as your environment scales, that promised control can be lost to complexity.",
+    "DART-AI restores that control. We provide the <strong>deep, end-to-end observability</strong> and predictive intelligence needed to master your private cloud—ensuring it operates as the secure, high-performance asset it was designed to be.",
+  ],
+  primaryCta = {
+    label: "Take Back Control",
+    href: "/contact",
+  },
+  secondaryCta = { label: "View All Solutions", href: "/solutions" },
+} = Astro.props;
+
+// Private cloud infrastructure nodes
+const cloudNodes = [
+  { type: "vmware", label: "VMware", angle: -45, distance: 160, status: "healthy", color: "#607078" },
+  { type: "vms", label: "VMs", angle: 15, distance: 155, status: "healthy", color: "#0078D4" },
+  { type: "containers", label: "Containers", angle: 75, distance: 160, status: "warning", color: "#326CE5" },
+  { type: "storage", label: "Storage", angle: 135, distance: 150, status: "healthy", color: "#10B981" },
+  { type: "network", label: "SDN", angle: 195, distance: 155, status: "healthy", color: "#8B5CF6" },
+  { type: "compute", label: "Compute", angle: -105, distance: 150, status: "healthy", color: "#F59E0B" },
+];
+
+// Node icons
+const nodeIcons: Record<string, string> = {
+  vmware: "M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z",
+  vms: "M5 3v18h14V3H5zm12 2v14H7V5h10z",
+  containers: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4",
+  storage: "M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4",
+  network: "M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.142 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0",
+  compute: "M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z",
+};
+---
+
+<section class="meet-private-cloud-section" data-theme="light">
+  <!-- Ambient background -->
+  <div class="cloud-bg">
+    <div class="cloud-gradient"></div>
+    <div class="cloud-grid"></div>
+    <div class="cloud-pattern"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="meet-cloud">
+      <!-- Left: Content -->
+      <div class="meet-cloud__content">
+        <span class="meet-cloud__eyebrow">{eyebrow}</span>
+
+        <h2 class="meet-cloud__title">
+          {title}
+          <span>{highlightText}</span>
+        </h2>
+
+        {paragraphs.map((text) => <p class="meet-cloud__text" set:html={text} />)}
+
+        <div class="meet-cloud__actions">
+          <Button href={primaryCta.href} variant="primary">
+            {primaryCta.label}
+          </Button>
+          <Button href={secondaryCta.href} variant="outline-dark">
+            {secondaryCta.label}
+          </Button>
+        </div>
+      </div>
+
+      <!-- Right: Private Cloud Visualization -->
+      <div class="cloud-network" id="private-cloud-network">
+        <!-- SVG for connection lines -->
+        <svg class="cloud-connections" viewBox="0 0 400 400" id="private-cloud-connections-svg">
+          <defs>
+            <linearGradient id="private-flow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color: rgba(96, 112, 120, 0.1)"></stop>
+              <stop offset="50%" style="stop-color: rgba(96, 112, 120, 0.5)"></stop>
+              <stop offset="100%" style="stop-color: rgba(96, 112, 120, 0.1)"></stop>
+            </linearGradient>
+          </defs>
+          <g id="private-mesh-lines"></g>
+          <g id="private-connection-lines"></g>
+        </svg>
+
+        <!-- Central Hub - DART-AI -->
+        <div class="cloud-hub" id="private-cloud-hub">
+          <div class="hub-pulse"></div>
+          <div class="hub-ring hub-ring-1"></div>
+          <div class="hub-ring hub-ring-2"></div>
+          <div class="hub-ring hub-ring-3"></div>
+          <div class="hub-core">
+            <img src={DartLogoLight.src} alt="DART-AI" />
+          </div>
+          <div class="hub-label">Absolute Control</div>
+        </div>
+
+        <!-- Private Cloud Nodes -->
+        {cloudNodes.map((node, index) => (
+          <div
+            class={`cloud-node cloud-node--${node.type} cloud-node--${node.status}`}
+            data-angle={node.angle}
+            data-distance={node.distance}
+            data-index={index}
+            data-status={node.status}
+            data-color={node.color}
+            style={`--node-delay: ${index * 0.12}s; --node-color: ${node.color}`}
+          >
+            <div class="node-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d={nodeIcons[node.type]}></path>
+              </svg>
+              <div class="node-status">
+                <span class="status-ping"></span>
+              </div>
+            </div>
+            <span class="node-label">{node.label}</span>
+          </div>
+        ))}
+
+        <!-- Data flow packets container -->
+        <div class="data-flows" id="private-cloud-data-flows"></div>
+
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .meet-private-cloud-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .cloud-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .cloud-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 45% at 70% 40%, rgba(96, 112, 120, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 40% at 30% 55%, rgba(139, 92, 246, 0.03) 0%, transparent 45%),
+      radial-gradient(ellipse 45% 35% at 75% 70%, rgba(16, 185, 129, 0.03) 0%, transparent 40%),
+      linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #f5f5f7 100%);
+  }
+
+  .cloud-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 85% 75% at 65% 50%, black 15%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 85% 75% at 65% 50%, black 15%, transparent 70%);
+  }
+
+  .cloud-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.015;
+    mix-blend-mode: multiply;
+  }
+
+  /* Content Layout */
+  .meet-cloud {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  .meet-cloud__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+    color: #607078;
+  }
+
+  .meet-cloud__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #111111;
+    margin-bottom: var(--space-6);
+  }
+
+  .meet-cloud__title span {
+    display: block;
+    color: var(--color-primary);
+  }
+
+  .meet-cloud__text {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: #555555;
+    margin-bottom: var(--space-4);
+  }
+
+  .meet-cloud__text :global(strong) {
+    color: #111111;
+    font-weight: var(--font-semibold);
+  }
+
+  .meet-cloud__actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  /* Cloud Network Visualization */
+  .cloud-network {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .cloud-connections {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  /* Central Hub */
+  .cloud-hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 130px;
+    height: 130px;
+    z-index: 10;
+  }
+
+  .hub-pulse {
+    position: absolute;
+    inset: -25px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(96, 112, 120, 0.12) 0%, transparent 70%);
+    animation: hubPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes hubPulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.2); opacity: 0.9; }
+  }
+
+  .hub-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(96, 112, 120, 0.2);
+  }
+
+  .hub-ring-1 {
+    inset: -12px;
+    animation: ringRotate 25s linear infinite;
+    border-style: dashed;
+    border-color: rgba(96, 112, 120, 0.15);
+  }
+
+  .hub-ring-2 {
+    inset: -28px;
+    animation: ringRotate 35s linear infinite reverse;
+    border-style: dotted;
+    border-color: rgba(139, 92, 246, 0.1);
+  }
+
+  .hub-ring-3 {
+    inset: -48px;
+    animation: ringRotate 50s linear infinite;
+    border-style: dashed;
+    border-width: 1px;
+    border-color: rgba(16, 185, 129, 0.08);
+  }
+
+  @keyframes ringRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .hub-core {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(255, 255, 255, 0.8) inset,
+      0 0 60px rgba(96, 112, 120, 0.05);
+    z-index: 12;
+  }
+
+  .hub-core img {
+    width: 60%;
+    height: auto;
+  }
+
+  .hub-label {
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #607078;
+    white-space: nowrap;
+    padding: 4px 10px;
+    background: rgba(96, 112, 120, 0.08);
+    border-radius: 4px;
+  }
+
+  /* Cloud Nodes */
+  .cloud-node {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: nodeAppear 0.5s ease forwards;
+    animation-delay: var(--node-delay);
+    z-index: 8;
+  }
+
+  @keyframes nodeAppear {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+
+  .node-icon {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 1.5px solid rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06), 0 4px 20px rgba(0, 0, 0, 0.03);
+    color: var(--node-color);
+    transition: all 0.3s ease;
+  }
+
+  .cloud-node:hover .node-icon {
+    border-color: var(--node-color);
+    box-shadow:
+      0 4px 20px color-mix(in srgb, var(--node-color) 20%, transparent),
+      0 0 0 3px color-mix(in srgb, var(--node-color) 10%, transparent);
+    transform: scale(1.05);
+  }
+
+  .node-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #6b7280;
+    white-space: nowrap;
+  }
+
+  /* Status dot */
+  .node-status {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    z-index: 2;
+  }
+
+  .status-ping {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: statusBlink 2s ease-in-out infinite;
+    animation-delay: var(--node-delay);
+  }
+
+  .cloud-node--healthy .status-ping { background: #22c55e; }
+  .cloud-node--warning .status-ping { background: #f59e0b; }
+  .cloud-node--critical .status-ping { background: #ef4444; }
+
+  @keyframes statusBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* Data Flows */
+  .data-flows {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 6;
+  }
+
+  :global(.private-cloud-data-flow) {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 9;
+  }
+
+  :global(.private-cloud-data-flow--healthy) {
+    background: #22c55e;
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.7);
+  }
+
+  :global(.private-cloud-data-flow--warning) {
+    background: #f59e0b;
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.7);
+  }
+
+  :global(.private-cloud-connection-line) {
+    stroke: rgba(96, 112, 120, 0.15);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-dasharray: 6 4;
+    animation: dashFlow 25s linear infinite;
+  }
+
+  :global(.private-cloud-mesh-line) {
+    stroke: rgba(0, 0, 0, 0.03);
+    stroke-width: 1;
+    fill: none;
+  }
+
+  @keyframes dashFlow {
+    to { stroke-dashoffset: -120; }
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .meet-cloud {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .cloud-network {
+      max-width: 420px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .meet-private-cloud-section {
+      padding: var(--space-12) 0;
+    }
+
+    .meet-cloud__title {
+      font-size: var(--text-2xl);
+    }
+
+    .meet-cloud__actions {
+      flex-direction: column;
+    }
+
+    .cloud-network {
+      max-width: 340px;
+    }
+
+    .cloud-hub {
+      width: 100px;
+      height: 100px;
+    }
+
+    .hub-ring-1 { inset: -10px; }
+    .hub-ring-2 { inset: -22px; }
+    .hub-ring-3 { inset: -38px; }
+
+    .hub-label {
+      font-size: 0.5rem;
+      bottom: -28px;
+    }
+
+    .node-icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    .node-label {
+      display: none;
+    }
+
+  }
+</style>
+
+<script>
+  import "../../../scripts/private-cloud-network.ts";
+</script>

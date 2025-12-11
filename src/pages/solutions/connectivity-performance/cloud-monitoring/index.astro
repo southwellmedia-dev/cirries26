@@ -1,0 +1,58 @@
+---
+/**
+ * Cloud Monitoring & Observability - Index Page
+ *
+ * Unified hybrid/multi-cloud overview page focusing on:
+ * - Single source of truth for fragmented environments
+ * - Cross-cloud visibility and correlation
+ * - War room elimination and operational clarity
+ *
+ * Content merged from:
+ * - cloud-optimization.md: Multi-cloud unified view
+ * - hybrid-cloud.md: SD-WAN seams, DART IQ, migration
+ * - multi-cloud.md: War room, autonomous operations
+ *
+ * Related sub-pages:
+ * - /public-cloud: AWS, Azure, GCP (hyperscalers.md)
+ * - /private-cloud: VMware, on-prem (private-cloud.md)
+ */
+import SubpageLayout from "../../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetCloudSection from "../../../../components/sections/cloud-monitoring/MeetCloudSection.astro";
+import CloudNavBar from "../../../../components/sections/cloud-monitoring/CloudNavBar.astro";
+import ProblemSection from "../../../../components/sections/cloud-monitoring/ProblemSection.astro";
+import SolutionSection from "../../../../components/sections/cloud-monitoring/SolutionSection.astro";
+import TransformSection from "../../../../components/sections/cloud-monitoring/TransformSection.astro";
+---
+
+<SubpageLayout
+  title="Cloud Monitoring & Observability - Unified Visibility Across Your Entire Cloud Estate"
+  description="DART-AI delivers complete visibility into AWS, Azure, GCP, VMware, and on-prem environments. See East-West traffic, optimize costs, and predict issues before they impact users."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Cloud Monitoring & Observability"
+      subtitle="One View. Every Cloud. Complete Clarity."
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet Cloud Section - Unified hybrid/multi-cloud visualization -->
+  <MeetCloudSection />
+
+  <!-- Cloud Navigation Bar - Links to Public/Private Cloud sub-pages -->
+  <CloudNavBar currentPage="/solutions/connectivity-performance/cloud-monitoring" />
+
+  <!-- Problem Section - Flying blind, siloed visibility -->
+  <ProblemSection />
+
+  <!-- Solution Section - Unified intelligence transformation -->
+  <SolutionSection />
+
+  <!-- Transform Section - Benefits Bento Grid -->
+  <TransformSection />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>

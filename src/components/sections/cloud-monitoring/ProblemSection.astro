@@ -1,0 +1,715 @@
+---
+/**
+ * Cloud ProblemSection - "Flying Blind in the Cloud"
+ *
+ * Dark, tension-filled section showing the chaos of fragmented cloud visibility:
+ * - Multi-cloud dashboard showing silos (left)
+ * - Pain point cards showing blind spots (right)
+ */
+import Container from "../../ui/Container.astro";
+
+interface CloudSilo {
+  provider: string;
+  faIcon: string; // Font Awesome icon class
+  status: "limited" | "partial" | "blind";
+  issues: string[];
+  color: string;
+}
+
+interface PainPoint {
+  faIcon: string; // Font Awesome icon class
+  title: string;
+  description: string;
+}
+
+interface Props {
+  sectionTitle?: string;
+  contextParagraph?: string;
+  cloudSilos?: CloudSilo[];
+  painPoints?: PainPoint[];
+  bridgeStatement?: string;
+  bridgeEmphasis?: string;
+}
+
+const {
+  sectionTitle = "Flying Blind in the Cloud",
+  contextParagraph = "Your workloads run across AWS, Azure, GCP, and your private cloud. But your visibility doesn't. Native monitoring tools show fragments of the picture—leaving dangerous blind spots where performance issues and security threats hide.",
+  cloudSilos = [
+    {
+      provider: "AWS",
+      faIcon: "fa-brands fa-aws",
+      status: "partial",
+      issues: ["North-South only", "No E-W visibility"],
+      color: "#FF9900",
+    },
+    {
+      provider: "Azure",
+      faIcon: "fa-brands fa-microsoft",
+      status: "limited",
+      issues: ["Log aggregation gaps", "Cross-tenant blind spots"],
+      color: "#0078D4",
+    },
+    {
+      provider: "GCP",
+      faIcon: "fa-brands fa-google",
+      status: "partial",
+      issues: ["VPC flow logs only", "Missing packet detail"],
+      color: "#4285F4",
+    },
+    {
+      provider: "Private",
+      faIcon: "fa-solid fa-server",
+      status: "blind",
+      issues: ["VM isolation", "No cross-domain correlation"],
+      color: "#6B7280",
+    },
+  ],
+  painPoints = [
+    {
+      faIcon: "fa-solid fa-eye-slash",
+      title: "East-West Traffic is a Black Box",
+      description: "The most critical performance and security issues live in traffic between your services—and native tools can't see it.",
+    },
+    {
+      faIcon: "fa-solid fa-bolt",
+      title: "The Seams Are Breaking",
+      description: "SD-WAN links, VPNs, and direct interconnects are your most fragile points. When a route changes or firewall misconfigures, you're the last to know.",
+    },
+    {
+      faIcon: "fa-solid fa-money-bill-trend-up",
+      title: "Spiraling Cloud Costs",
+      description: "Data egress fees, inefficient routing, and over-provisioned resources—without visibility, you're bleeding money.",
+    },
+    {
+      faIcon: "fa-solid fa-users-slash",
+      title: "The War Room Never Ends",
+      description: "Is it the cloud provider? The network? The code? Siloed tools create siloed teams, and nobody owns the answer.",
+    },
+  ],
+  bridgeStatement = "You need a platform that sees everything—",
+  bridgeEmphasis = "not just what each cloud vendor chooses to show you.",
+} = Astro.props;
+
+const statusConfig: Record<string, { label: string; color: string }> = {
+  limited: { label: "Limited", color: "#f59e0b" },
+  partial: { label: "Partial", color: "#f59e0b" },
+  blind: { label: "Blind Spot", color: "#ef4444" },
+};
+---
+
+<section class="problem-section" data-theme="dark">
+  <div class="problem-bg">
+    <div class="problem-gradient"></div>
+    <div class="problem-grid"></div>
+    <div class="problem-noise"></div>
+    <div class="silo-glow silo-glow--1"></div>
+    <div class="silo-glow silo-glow--2"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="problem-content">
+      <!-- Header -->
+      <header class="problem-header">
+        <span class="problem-eyebrow">The Challenge</span>
+        <h2 class="problem-title">{sectionTitle}</h2>
+        <p class="problem-context">{contextParagraph}</p>
+      </header>
+
+      <!-- Two Column Grid -->
+      <div class="two-col">
+        <!-- Left: Cloud Silos Dashboard -->
+        <div class="col-silos">
+          <div class="silo-dashboard">
+            <div class="dashboard-chrome">
+              <div class="chrome-dots">
+                <span class="dot dot--red"></span>
+                <span class="dot dot--yellow"></span>
+                <span class="dot dot--green"></span>
+              </div>
+              <span class="chrome-title">Cloud Visibility Status</span>
+              <span class="chrome-warning">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path>
+                  <line x1="12" y1="9" x2="12" y2="13"></line>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Fragmented
+              </span>
+            </div>
+
+            <div class="dashboard-body">
+              <div class="silo-grid">
+                {cloudSilos.map((silo, index) => (
+                  <div
+                    class={`silo-card silo-card--${silo.status}`}
+                    style={`--silo-color: ${silo.color}; --silo-delay: ${index * 0.1}s`}
+                  >
+                    <div class="silo-header">
+                      <div class="silo-icon" style={`background: ${silo.color}15; border-color: ${silo.color}30; color: ${silo.color}`}>
+                        <i class={silo.faIcon}></i>
+                      </div>
+                      <div class="silo-info">
+                        <span class="silo-provider">{silo.provider}</span>
+                        <span
+                          class="silo-status"
+                          style={`color: ${statusConfig[silo.status].color}; background: ${statusConfig[silo.status].color}15`}
+                        >
+                          {statusConfig[silo.status].label}
+                        </span>
+                      </div>
+                    </div>
+                    <div class="silo-issues">
+                      {silo.issues.map((issue) => (
+                        <span class="silo-issue">
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                          </svg>
+                          {issue}
+                        </span>
+                      ))}
+                    </div>
+                    <div class="silo-blindspot"></div>
+                  </div>
+                ))}
+              </div>
+
+              <!-- Unified View Missing Indicator -->
+              <div class="unified-missing">
+                <div class="missing-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                  </svg>
+                </div>
+                <div class="missing-content">
+                  <span class="missing-label">Unified Cross-Cloud View</span>
+                  <span class="missing-status">NOT AVAILABLE</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Pain Cards -->
+        <div class="col-pain">
+          <div class="pain-cards">
+            {painPoints.map((point, index) => (
+              <article class="pain-card" style={`--delay: ${index * 0.12}s`}>
+                <div class="pain-bar"></div>
+                <div class="pain-icon">
+                  <i class={point.faIcon}></i>
+                </div>
+                <div class="pain-content">
+                  <h3 class="pain-title">{point.title}</h3>
+                  <p class="pain-desc">{point.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Bridge -->
+      <div class="bridge">
+        <p class="bridge-text">
+          {bridgeStatement}
+          <strong class="bridge-emphasis">{bridgeEmphasis}</strong>
+        </p>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .problem-section {
+    position: relative;
+    padding: var(--space-20) 0 var(--space-16);
+    background: #070709;
+    overflow: hidden;
+  }
+
+  .problem-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .problem-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 50% 40% at 20% 25%,
+        rgba(255, 153, 0, 0.06) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 50% 40% at 80% 30%,
+        rgba(0, 120, 212, 0.05) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 40% 30% at 50% 70%,
+        rgba(239, 68, 68, 0.04) 0%,
+        transparent 50%
+      ),
+      linear-gradient(180deg, #070709 0%, #0a0a0c 100%);
+  }
+
+  .problem-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(
+      ellipse 75% 55% at 50% 40%,
+      black 0%,
+      transparent 70%
+    );
+  }
+
+  .problem-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.02;
+    mix-blend-mode: overlay;
+  }
+
+  .silo-glow {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    animation: siloGlow 5s ease-in-out infinite;
+  }
+
+  .silo-glow--1 {
+    top: 15%;
+    left: 10%;
+    background: radial-gradient(circle, rgba(255, 153, 0, 0.08) 0%, transparent 60%);
+  }
+
+  .silo-glow--2 {
+    bottom: 20%;
+    right: 15%;
+    background: radial-gradient(circle, rgba(0, 120, 212, 0.06) 0%, transparent 60%);
+    animation-delay: 2.5s;
+  }
+
+  @keyframes siloGlow {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+  }
+
+  .problem-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .problem-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .problem-eyebrow {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: var(--radius-full);
+  }
+
+  .problem-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: var(--space-5);
+  }
+
+  .problem-context {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  /* Two Column Grid */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+    align-items: stretch;
+    margin-bottom: var(--space-12);
+  }
+
+  /* Silo Dashboard */
+  .col-silos {
+    display: flex;
+  }
+
+  .silo-dashboard {
+    width: 100%;
+    background: #0b0b0d;
+    border: 1px solid #1c1c20;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+      0 20px 50px rgba(0, 0, 0, 0.5),
+      0 0 80px rgba(245, 158, 11, 0.03);
+  }
+
+  .dashboard-chrome {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 10px 14px;
+    background: #131315;
+    border-bottom: 1px solid #1c1c20;
+  }
+
+  .chrome-dots {
+    display: flex;
+    gap: 5px;
+  }
+
+  .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+
+  .dot--red { background: #ff5f57; }
+  .dot--yellow { background: #ffbd2e; }
+  .dot--green { background: #28ca41; }
+
+  .chrome-title {
+    flex: 1;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .chrome-warning {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    color: #f59e0b;
+  }
+
+  .dashboard-body {
+    padding: 14px;
+  }
+
+  .silo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .silo-card {
+    padding: 12px;
+    background: #0e0e10;
+    border: 1px solid #1a1a1e;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: siloFadeIn 0.4s ease forwards;
+    animation-delay: var(--silo-delay);
+  }
+
+  @keyframes siloFadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .silo-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .silo-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    border: 1px solid;
+    font-size: 0.95rem;
+  }
+
+  .silo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .silo-provider {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: var(--font-semibold);
+    color: #fff;
+  }
+
+  .silo-status {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    border-radius: 3px;
+    width: fit-content;
+  }
+
+  .silo-issues {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .silo-issue {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .silo-issue svg {
+    color: rgba(239, 68, 68, 0.6);
+    flex-shrink: 0;
+  }
+
+  .silo-blindspot {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.4), transparent);
+    opacity: 0.6;
+  }
+
+  .silo-card--blind {
+    border-color: rgba(239, 68, 68, 0.2);
+    background: rgba(239, 68, 68, 0.03);
+  }
+
+  .silo-card--blind .silo-blindspot {
+    opacity: 1;
+    background: linear-gradient(90deg, transparent, #ef4444, transparent);
+  }
+
+  /* Unified Missing */
+  .unified-missing {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: rgba(239, 68, 68, 0.05);
+    border: 1px dashed rgba(239, 68, 68, 0.25);
+    border-radius: 8px;
+  }
+
+  .missing-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 8px;
+    color: #ef4444;
+  }
+
+  .missing-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .missing-label {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .missing-status {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #ef4444;
+  }
+
+  /* Pain Cards */
+  .col-pain {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pain-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+  }
+
+  .pain-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: #0b0b0d;
+    border: 1px solid #1c1c20;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.4s ease forwards;
+    animation-delay: var(--delay);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .pain-card:hover {
+    border-color: rgba(245, 158, 11, 0.25);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .pain-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #f59e0b, transparent);
+    opacity: 0.35;
+  }
+
+  .pain-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.12);
+    border-radius: 10px;
+    color: #f59e0b;
+    font-size: 1.1rem;
+  }
+
+  .pain-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .pain-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: var(--font-semibold);
+    color: #fff;
+    margin-bottom: 5px;
+  }
+
+  .pain-desc {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+  }
+
+  /* Bridge */
+  .bridge {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: var(--space-4);
+  }
+
+  .bridge-text {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+  }
+
+  .bridge-emphasis {
+    font-weight: var(--font-bold);
+    color: #fff;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .two-col {
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .problem-section {
+      padding: var(--space-14) 0 var(--space-12);
+    }
+
+    .silo-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pain-card {
+      padding: 14px 16px;
+    }
+
+    .pain-icon {
+      width: 38px;
+      height: 38px;
+    }
+  }
+</style>

@@ -1,0 +1,241 @@
+---
+/**
+ * Mobile Performance Page - Performance & Security Intelligence
+ *
+ * Focused page for mobile performance and security:
+ * - Real-time performance monitoring
+ * - Anomaly detection and threat identification
+ * - SLA assurance and predictive analytics
+ *
+ * NOTE: Draft content - client to provide final copy
+ */
+import SubpageLayout from "../../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetPerformanceSection from "../../../../components/sections/mobile/MeetPerformanceSection.astro";
+import ProblemSection from "../../../../components/sections/mobile/ProblemSection.astro";
+import SolutionSection from "../../../../components/sections/mobile/SolutionSection.astro";
+import TransformSection from "../../../../components/sections/mobile/TransformSection.astro";
+import MobileNavBar from "../../../../components/sections/mobile/MobileNavBar.astro";
+
+// Override props for Performance & Security specific content
+const problemProps = {
+  sectionTitle: "Reactive Operations Kill Performance",
+  contextParagraph:
+    "In mobile networks, waiting for users to report problems means you've already failed. Traditional monitoring tools alert you after the damage is done—after latency spikes, after dropped connections, after business-critical applications fail.",
+  silos: [
+    {
+      domain: "Alert Fatigue",
+      faIcon: "fa-solid fa-bell",
+      status: "partial" as const,
+      issues: ["Thousands of alerts", "No prioritization"],
+      color: "#EF4444",
+    },
+    {
+      domain: "Threshold-Based",
+      faIcon: "fa-solid fa-ruler",
+      status: "limited" as const,
+      issues: ["Static thresholds", "Miss gradual degradation"],
+      color: "#F59E0B",
+    },
+    {
+      domain: "Siloed Metrics",
+      faIcon: "fa-solid fa-chart-simple",
+      status: "partial" as const,
+      issues: ["Infrastructure only", "No business context"],
+      color: "#3B82F6",
+    },
+    {
+      domain: "Manual Analysis",
+      faIcon: "fa-solid fa-magnifying-glass",
+      status: "blind" as const,
+      issues: ["Slow investigation", "Human error"],
+      color: "#8B5CF6",
+    },
+  ],
+  painPoints: [
+    {
+      faIcon: "fa-solid fa-clock",
+      title: "Always Behind the Problem",
+      description:
+        "By the time traditional tools alert you, users have already experienced the issue. Reactive monitoring means you're always catching up.",
+    },
+    {
+      faIcon: "fa-solid fa-chart-line",
+      title: "Missing Gradual Degradation",
+      description:
+        "Static thresholds can't detect slow performance decay. A service that gradually worsens over days flies under the radar until it fails.",
+    },
+    {
+      faIcon: "fa-solid fa-user-secret",
+      title: "Security Threats Hide in Noise",
+      description:
+        "Sophisticated attackers exploit the chaos of alert fatigue. Their subtle movements get lost in the thousands of notifications your team ignores.",
+    },
+  ],
+  bridgeStatement: "Reactive monitoring shows you the past—",
+  bridgeEmphasis: "DART-AI predicts the future.",
+};
+
+const solutionProps = {
+  sectionTitle: "AI-Powered Proactive Intelligence",
+  contextParagraph:
+    "DART-AI continuously analyzes your mobile network at the packet level, using machine learning to identify performance anomalies and security threats before they impact your business. Move from reactive firefighting to proactive optimization.",
+  beforeState: {
+    title: "Reactive Monitoring",
+    status: "Always Catching Up",
+    metrics: [
+      { label: "Detection", value: "After Impact", sublabel: "User-reported" },
+      { label: "Analysis", value: "Manual", sublabel: "Hours to days" },
+      { label: "Security", value: "Alert Noise", sublabel: "Fatigue" },
+    ],
+  },
+  afterState: {
+    title: "DART-AI Proactive",
+    status: "Ahead of Issues",
+    metrics: [
+      { label: "Detection", value: "Pre-Impact", sublabel: "AI predicted" },
+      { label: "Analysis", value: "Automated", sublabel: "Real-time" },
+      { label: "Security", value: "Prioritized", sublabel: "Actionable" },
+    ],
+  },
+  capabilities: [
+    {
+      faIcon: "fa-solid fa-brain",
+      title: "Anomaly Detection",
+      description:
+        "AI learns your network's normal behavior and instantly identifies deviations that signal emerging problems.",
+      metric: "< 1min",
+      metricLabel: "Detection",
+    },
+    {
+      faIcon: "fa-solid fa-chart-line",
+      title: "Predictive Analytics",
+      description:
+        "Forecast performance trends and capacity needs. Address bottlenecks before they become outages.",
+      metric: "Predictive",
+      metricLabel: "Insights",
+    },
+    {
+      faIcon: "fa-solid fa-shield-halved",
+      title: "Threat Intelligence",
+      description:
+        "Correlate network behavior patterns to identify sophisticated threats that evade traditional security tools.",
+      metric: "Real-time",
+      metricLabel: "Protection",
+    },
+  ],
+};
+
+const transformProps = {
+  sectionTitle: "From Firefighting to Optimization",
+  pillars: [
+    {
+      number: "01",
+      title: "Detect Before Impact",
+      lead: "DART-AI's machine learning models continuously analyze packet-level data, identifying performance anomalies minutes or hours before users are affected.",
+      faIcon: "fa-solid fa-radar",
+      accent: "#10B981",
+      features: [
+        {
+          title: "Behavioral Baseline Learning",
+          description:
+            "AI learns what 'normal' looks like for your specific network, detecting subtle deviations humans would miss.",
+        },
+        {
+          title: "Early Warning System",
+          description:
+            "Get alerts when anomalies first appear—not after they've cascaded into service-impacting incidents.",
+        },
+        {
+          title: "Automated Root Cause",
+          description:
+            "When issues are detected, AI automatically correlates evidence to identify probable causes.",
+        },
+      ],
+    },
+    {
+      number: "02",
+      title: "Optimize Continuously",
+      lead: "Move beyond break-fix operations. Use predictive intelligence to optimize network performance, capacity planning, and resource allocation proactively.",
+      faIcon: "fa-solid fa-arrow-trend-up",
+      accent: "#3B82F6",
+      features: [
+        {
+          title: "Capacity Forecasting",
+          description:
+            "Predict bandwidth and resource needs based on traffic patterns. Scale before demand exceeds capacity.",
+        },
+        {
+          title: "SLA Assurance",
+          description:
+            "Track real-time performance against SLA targets. Proactive alerts when metrics trend toward violation.",
+        },
+        {
+          title: "Cost Optimization",
+          description:
+            "Identify over-provisioned resources and inefficient traffic patterns to optimize network spend.",
+        },
+      ],
+    },
+    {
+      number: "03",
+      title: "Secure Proactively",
+      lead: "Traditional security tools miss sophisticated threats that hide in normal-looking traffic. DART-AI identifies behavioral anomalies that signal attacks in progress.",
+      faIcon: "fa-solid fa-shield-halved",
+      accent: "#8B5CF6",
+      features: [
+        {
+          title: "Zero-Day Detection",
+          description:
+            "Behavioral analysis catches unknown threats that signature-based tools completely miss.",
+        },
+        {
+          title: "Lateral Movement Visibility",
+          description:
+            "See attackers moving through your network. Detect east-west threats that bypass perimeter defenses.",
+        },
+        {
+          title: "Prioritized Threat Intelligence",
+          description:
+            "AI prioritizes threats by severity and confidence. Focus on what matters, not noise.",
+        },
+      ],
+    },
+  ],
+};
+---
+
+<SubpageLayout
+  title="Mobile Performance & Security - Proactive Network Intelligence"
+  description="DART-AI delivers AI-powered mobile performance monitoring and security. Detect anomalies before impact, optimize continuously, and identify threats that evade traditional tools."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Mobile Performance & Security"
+      subtitle="Proactive Intelligence for Mission-Critical Networks"
+      align="left"
+      breadcrumbs={[
+        { label: "Mobile", href: "/solutions/connectivity-performance/mobile" }
+      ]}
+    />
+  </Fragment>
+
+  <!-- Meet Section - Performance dashboard -->
+  <MeetPerformanceSection />
+
+  <!-- Mobile Solutions Navigation -->
+  <MobileNavBar currentPage="/solutions/connectivity-performance/mobile/performance" />
+
+  <!-- Problem Section - Reactive operations -->
+  <ProblemSection {...problemProps} />
+
+  <!-- Solution Section - AI-powered intelligence -->
+  <SolutionSection {...solutionProps} />
+
+  <!-- Transform Section - From firefighting to optimization -->
+  <TransformSection {...transformProps} />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>

@@ -1,0 +1,56 @@
+---
+/**
+ * Mobile Network Observability - Index Page
+ *
+ * Unified mobile network overview page focusing on:
+ * - Single source of truth for mobile/5G networks
+ * - Packet-level visibility across RAN, Core, Transport
+ * - End-to-end optimization and threat detection
+ *
+ * Content from: end-to-end.md (general mobile observability)
+ *
+ * Related sub-pages:
+ * - /open-ran: Private 5G & Open RAN (open-ran.md)
+ * - /end-to-end: End-to-End Optimization (end-to-end.md detailed)
+ * - /performance: Mobile Performance & Security
+ */
+import SubpageLayout from "../../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetMobileSection from "../../../../components/sections/mobile/MeetMobileSection.astro";
+import MobileNavBar from "../../../../components/sections/mobile/MobileNavBar.astro";
+import ProblemSection from "../../../../components/sections/mobile/ProblemSection.astro";
+import SolutionSection from "../../../../components/sections/mobile/SolutionSection.astro";
+import TransformSection from "../../../../components/sections/mobile/TransformSection.astro";
+---
+
+<SubpageLayout
+  title="Mobile Network Observability - The Single Source of Truth for Your Network"
+  description="DART-AI delivers complete visibility into mobile and 5G networks. Analyze 100% of packets in real-time for forensic depth, instant root cause analysis, and proactive threat detection."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Mobile Network Observability"
+      subtitle="The Single Source of Truth for Your Entire Network"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet Mobile Section - Unified network visualization -->
+  <MeetMobileSection />
+
+  <!-- Mobile Navigation Bar - Links to sub-pages -->
+  <MobileNavBar currentPage="/solutions/connectivity-performance/mobile" />
+
+  <!-- Problem Section - Data silos and guesswork -->
+  <ProblemSection />
+
+  <!-- Solution Section - Packet-level truth -->
+  <SolutionSection />
+
+  <!-- Transform Section - Benefits Bento Grid -->
+  <TransformSection />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>

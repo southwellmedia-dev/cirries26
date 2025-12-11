@@ -1,0 +1,493 @@
+---
+/**
+ * MeetOpenRANSection - "Unified Assurance for Private 5G in the Cloud"
+ *
+ * Open RAN specific intro section featuring:
+ * - Multi-vendor disaggregated architecture visualization
+ * - Cloud-native deployment (AWS, Azure, GCP)
+ * - Focus on eliminating accountability gaps
+ */
+import Container from "../../ui/Container.astro";
+import Button from "../../ui/Button.astro";
+import DartLogoLight from "../../../assets/logos/dart-lightmode.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  paragraphs?: string[];
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  eyebrow = "Open RAN Assurance",
+  title = "Delivering on the Promise",
+  highlightText = "of Open RAN.",
+  paragraphs = [
+    "The future of enterprise connectivity is here: <strong>Private 5G networks</strong>, built on the flexible, multi-vendor promise of Open RAN and deployed on the immense scale of hyperscalers like AWS, Azure, and Google Cloud.",
+    "But this freedom creates an unprecedented operational challenge. When your network is a collection of <strong>disaggregated components</strong> from different vendors running on a shared cloud platform, how do you guarantee performance?",
+  ],
+  primaryCta = {
+    label: "Ensure Your RAN Investment",
+    href: "/contact",
+  },
+  secondaryCta = { label: "View All Solutions", href: "/solutions" },
+} = Astro.props;
+
+// Open RAN components visualization
+const ranComponents = [
+  { type: "ru", label: "Radio Unit", sublabel: "Vendor A", angle: -60, distance: 150, color: "#8B5CF6", faIcon: "fa-solid fa-satellite-dish" },
+  { type: "du", label: "Distributed Unit", sublabel: "Vendor B", angle: 0, distance: 160, color: "#3B82F6", faIcon: "fa-solid fa-microchip" },
+  { type: "cu", label: "Central Unit", sublabel: "Vendor C", angle: 60, distance: 150, color: "#10B981", faIcon: "fa-solid fa-server" },
+  { type: "core", label: "5G Core", sublabel: "Vendor D", angle: 120, distance: 150, color: "#F59E0B", faIcon: "fa-solid fa-database" },
+  { type: "cloud", label: "Cloud Fabric", sublabel: "Hyperscaler", angle: 180, distance: 160, color: "#0078D4", faIcon: "fa-solid fa-cloud" },
+  { type: "edge", label: "Edge Compute", sublabel: "Multi-vendor", angle: -120, distance: 150, color: "#EC4899", faIcon: "fa-solid fa-bolt" },
+];
+---
+
+<section class="meet-openran-section" data-theme="light">
+  <!-- Ambient background -->
+  <div class="ran-bg">
+    <div class="ran-gradient"></div>
+    <div class="ran-grid"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="meet-ran">
+      <!-- Left: Content -->
+      <div class="meet-ran__content">
+        <span class="meet-ran__eyebrow">{eyebrow}</span>
+
+        <h2 class="meet-ran__title">
+          {title}
+          <span>{highlightText}</span>
+        </h2>
+
+        {paragraphs.map((text) => <p class="meet-ran__text" set:html={text} />)}
+
+        <div class="meet-ran__actions">
+          <Button href={primaryCta.href} variant="primary">
+            {primaryCta.label}
+          </Button>
+          <Button href={secondaryCta.href} variant="outline-dark">
+            {secondaryCta.label}
+          </Button>
+        </div>
+      </div>
+
+      <!-- Right: Open RAN Visualization -->
+      <div class="ran-network" id="ran-network">
+        <!-- SVG for connection lines -->
+        <svg class="ran-connections" viewBox="0 0 400 400" id="ran-connections-svg">
+          <defs>
+            <linearGradient id="ran-flow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color: rgba(234, 36, 43, 0.1)"></stop>
+              <stop offset="50%" style="stop-color: rgba(234, 36, 43, 0.5)"></stop>
+              <stop offset="100%" style="stop-color: rgba(234, 36, 43, 0.1)"></stop>
+            </linearGradient>
+          </defs>
+          <g id="ran-mesh-lines"></g>
+          <g id="ran-connection-lines"></g>
+        </svg>
+
+        <!-- Central Hub - DART-AI -->
+        <div class="ran-hub">
+          <div class="hub-pulse"></div>
+          <div class="hub-ring hub-ring-1"></div>
+          <div class="hub-ring hub-ring-2"></div>
+          <div class="hub-core">
+            <img src={DartLogoLight.src} alt="DART-AI" />
+          </div>
+          <div class="hub-label">Single Source of Truth</div>
+        </div>
+
+        <!-- RAN Component Nodes -->
+        {ranComponents.map((node, index) => (
+          <div
+            class={`ran-node ran-node--${node.type}`}
+            data-angle={node.angle}
+            data-distance={node.distance}
+            style={`--node-delay: ${index * 0.12}s; --node-color: ${node.color}`}
+          >
+            <div class="node-box">
+              <div class="node-icon">
+                <i class={`${node.faIcon} node-fa-icon`}></i>
+              </div>
+              <div class="node-info">
+                <span class="node-label">{node.label}</span>
+                <span class="node-vendor">{node.sublabel}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        <!-- Data flow container -->
+        <div class="data-flows" id="ran-data-flows"></div>
+
+        <!-- Disaggregated indicator ring -->
+        <div class="disaggregated-ring"></div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .meet-openran-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .ran-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .ran-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 100% 80% at 75% 40%, rgba(234, 36, 43, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse 70% 50% at 20% 70%, rgba(234, 36, 43, 0.02) 0%, transparent 45%),
+      linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #f5f5f7 100%);
+  }
+
+  .ran-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 85% 75% at 65% 50%, black 15%, transparent 70%);
+  }
+
+  /* Content Layout */
+  .meet-ran {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  .meet-ran__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+    color: var(--color-primary, #EA242B);
+  }
+
+  .meet-ran__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #111111;
+    margin-bottom: var(--space-6);
+  }
+
+  .meet-ran__title span {
+    display: block;
+    color: var(--color-primary, #EA242B);
+  }
+
+  .meet-ran__text {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: #555555;
+    margin-bottom: var(--space-4);
+  }
+
+  .meet-ran__text :global(strong) {
+    color: #111111;
+    font-weight: var(--font-semibold);
+  }
+
+  .meet-ran__actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  /* RAN Network Visualization */
+  .ran-network {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .ran-connections {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  /* Central Hub */
+  .ran-hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    z-index: 10;
+  }
+
+  .hub-pulse {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(234, 36, 43, 0.12) 0%, transparent 70%);
+    animation: hubPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes hubPulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.2); opacity: 0.9; }
+  }
+
+  .hub-ring {
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .hub-ring-1 {
+    inset: -10px;
+    border: 1px dashed rgba(234, 36, 43, 0.15);
+    animation: ringRotate 25s linear infinite;
+  }
+
+  .hub-ring-2 {
+    inset: -24px;
+    border: 1px dotted rgba(234, 36, 43, 0.1);
+    animation: ringRotate 35s linear infinite reverse;
+  }
+
+  @keyframes ringRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .hub-core {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.1),
+      0 0 60px rgba(234, 36, 43, 0.05);
+    z-index: 12;
+  }
+
+  .hub-core img {
+    width: 55%;
+    height: auto;
+  }
+
+  .hub-label {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary, #EA242B);
+    white-space: nowrap;
+    padding: 4px 10px;
+    background: rgba(234, 36, 43, 0.08);
+    border-radius: 4px;
+  }
+
+  /* Disaggregated Ring */
+  .disaggregated-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 88%;
+    height: 88%;
+    transform: translate(-50%, -50%);
+    border: 1px dashed rgba(234, 36, 43, 0.1);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* RAN Nodes */
+  .ran-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: nodeAppear 0.5s ease forwards;
+    animation-delay: var(--node-delay);
+    z-index: 8;
+  }
+
+  @keyframes nodeAppear {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+
+  .node-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .ran-node:hover .node-box {
+    border-color: var(--node-color);
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--node-color) 15%, transparent);
+    transform: translateY(-2px);
+  }
+
+  .node-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--node-color) 10%, transparent);
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .node-fa-icon {
+    font-size: 1rem;
+    color: var(--node-color);
+  }
+
+  .node-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .node-label {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: var(--font-semibold);
+    color: #111111;
+    line-height: 1.2;
+  }
+
+  .node-vendor {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  /* Data Flows */
+  .data-flows {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 6;
+  }
+
+  :global(.ran-connection-line) {
+    stroke: rgba(234, 36, 43, 0.12);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-dasharray: 6 4;
+    animation: dashFlow 25s linear infinite;
+  }
+
+  :global(.ran-mesh-line) {
+    stroke: rgba(0, 0, 0, 0.03);
+    stroke-width: 1;
+    fill: none;
+  }
+
+  @keyframes dashFlow {
+    to { stroke-dashoffset: -120; }
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .meet-ran {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .ran-network {
+      max-width: 420px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .meet-openran-section {
+      padding: var(--space-12) 0;
+    }
+
+    .meet-ran__title {
+      font-size: var(--text-2xl);
+    }
+
+    .meet-ran__actions {
+      flex-direction: column;
+    }
+
+    .ran-network {
+      max-width: 340px;
+    }
+
+    .ran-hub {
+      width: 100px;
+      height: 100px;
+    }
+
+    .node-box {
+      padding: 8px 10px;
+    }
+
+    .node-icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .node-fa-icon {
+      font-size: 0.85rem;
+    }
+
+    .node-label {
+      font-size: 0.65rem;
+    }
+
+    .node-vendor {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import "../../../scripts/ran-network.ts";
+</script>

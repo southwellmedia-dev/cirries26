@@ -1,0 +1,241 @@
+---
+/**
+ * Private Cloud Monitoring Page - VMware & On-Premises
+ *
+ * Focused page for private cloud/on-prem observability:
+ * - End-to-end visibility across virtualized layers
+ * - Compliance and SLA assurance
+ * - Predictive intelligence and proactive operations
+ *
+ * Content from: private-cloud.md
+ */
+import SubpageLayout from "../../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetPrivateCloudSection from "../../../../components/sections/cloud-monitoring/MeetPrivateCloudSection.astro";
+import CloudNavBar from "../../../../components/sections/cloud-monitoring/CloudNavBar.astro";
+import ProblemSection from "../../../../components/sections/cloud-monitoring/ProblemSection.astro";
+import SolutionSection from "../../../../components/sections/cloud-monitoring/SolutionSection.astro";
+import TransformSection from "../../../../components/sections/cloud-monitoring/TransformSection.astro";
+
+// Override props for private cloud-specific content
+const problemProps = {
+  sectionTitle: "Control Lost to Complexity",
+  contextParagraph:
+    "You chose a private cloud for control, security, and guaranteed performance. But as your environment scales, virtualized layers, software-defined networking, and distributed applications create blind spots—making it nearly impossible to pinpoint the true source of a performance issue.",
+  cloudSilos: [
+    {
+      provider: "VMware",
+      faIcon: "fa-solid fa-server",
+      status: "partial" as const,
+      issues: ["vSphere metrics only", "No packet visibility"],
+      color: "#607078",
+    },
+    {
+      provider: "VMs",
+      faIcon: "fa-solid fa-desktop",
+      status: "limited" as const,
+      issues: ["Agent overhead", "Cross-VM blind spots"],
+      color: "#0078D4",
+    },
+    {
+      provider: "Storage",
+      faIcon: "fa-solid fa-database",
+      status: "partial" as const,
+      issues: ["IOPS metrics only", "Latency correlation gaps"],
+      color: "#10B981",
+    },
+    {
+      provider: "Network",
+      faIcon: "fa-solid fa-network-wired",
+      status: "blind" as const,
+      issues: ["SDN opacity", "E-W traffic invisible"],
+      color: "#8B5CF6",
+    },
+  ],
+  painPoints: [
+    {
+      faIcon: "fa-solid fa-eye-slash",
+      title: "East-West Traffic is Hidden",
+      description:
+        "Traffic between your VMs and containers is where modern application problems hide—and your current tools provide no visibility into this critical corridor.",
+    },
+    {
+      faIcon: "fa-solid fa-users-slash",
+      title: "The Blame Game Never Ends",
+      description:
+        "When an app is slow, is it network, storage, compute, or code? Siloed tools can't correlate across layers—so your team wastes hours hunting for answers.",
+    },
+    {
+      faIcon: "fa-solid fa-fire",
+      title: "Reactive Fire Drills",
+      description:
+        "Without predictive intelligence, you only know about problems after users complain. SLA violations become the norm, not the exception.",
+    },
+  ],
+  bridgeStatement: "Your private cloud promised control—",
+  bridgeEmphasis: "it's time to take it back.",
+};
+
+const solutionProps = {
+  sectionTitle: "See Everything. From Underlay to Application.",
+  contextParagraph:
+    "DART-AI eliminates the silos between your infrastructure and applications, providing a single, unified view of your entire private cloud stack with granular, packet-level visibility.",
+  beforeState: {
+    title: "Siloed Visibility",
+    status: "Disconnected & Reactive",
+    metrics: [
+      { label: "E-W Visibility", value: "~10%", sublabel: "Blind spots" },
+      { label: "Root Cause", value: "Hours", sublabel: "Blame game" },
+      { label: "SLA Compliance", value: "Reactive", sublabel: "After violations" },
+    ],
+  },
+  afterState: {
+    title: "Unified Control",
+    status: "Connected & Proactive",
+    metrics: [
+      { label: "E-W Visibility", value: "100%", sublabel: "Full stack" },
+      { label: "Root Cause", value: "Minutes", sublabel: "Instant clarity" },
+      { label: "SLA Assurance", value: "15min+", sublabel: "Early warning" },
+    ],
+  },
+  capabilities: [
+    {
+      faIcon: "fa-solid fa-eye",
+      title: "Full Stack Visibility",
+      description:
+        "See from the underlay to the application. Illuminate East-West traffic between VMs and containers.",
+      metric: "100%",
+      metricLabel: "Visibility",
+    },
+    {
+      faIcon: "fa-solid fa-crosshairs",
+      title: "End the Blame Game",
+      description:
+        "Correlate performance across network, storage, compute, and application layers instantly.",
+      metric: "Minutes",
+      metricLabel: "Resolution",
+    },
+    {
+      faIcon: "fa-solid fa-shield-halved",
+      title: "Compliance Confidence",
+      description:
+        "Maintain complete visibility for sensitive workloads with audit trails for any compliance framework.",
+      metric: "Full",
+      metricLabel: "Audit Trail",
+    },
+  ],
+};
+
+const transformProps = {
+  sectionTitle: "Master Your Private Cloud",
+  pillars: [
+    {
+      number: "01",
+      title: "See Everything: Underlay to Application",
+      lead: "DART-AI eliminates the silos between your infrastructure and applications, providing a single, unified view across your entire private cloud stack.",
+      faIcon: "fa-solid fa-eye",
+      accent: "#607078",
+      features: [
+        {
+          title: "Illuminate East-West Traffic",
+          description:
+            "Granular, packet-level visibility into traffic moving between VMs and containers—the critical blind spot.",
+        },
+        {
+          title: "End the Blame Game",
+          description:
+            "Correlate performance data across network, storage, compute, and application layers instantly.",
+        },
+        {
+          title: "True Dependency Mapping",
+          description:
+            "Understand exactly how services interact across your virtualized infrastructure.",
+        },
+      ],
+    },
+    {
+      number: "02",
+      title: "Stay Ahead: Predictive Assurance",
+      lead: "Move from reactive fire-drills to proactive operations. DART's AI engine detects subtle anomalies that signal future trouble—before users are impacted.",
+      faIcon: "fa-solid fa-lightbulb",
+      accent: "#8B5CF6",
+      features: [
+        {
+          title: "Anticipate SLA Violations",
+          description:
+            "Predictive analytics identify potential breaches 15+ minutes before they happen.",
+        },
+        {
+          title: "Anomaly Detection",
+          description:
+            "AI learns the unique heartbeat of your environment, detecting subtle deviations from baseline.",
+        },
+        {
+          title: "Closed-Loop Remediation",
+          description:
+            "Trigger automated workflows to restore performance—often before users notice anything.",
+        },
+      ],
+    },
+    {
+      number: "03",
+      title: "Maximize ROI: Operational Excellence",
+      lead: "Your private cloud is a significant investment. DART-AI helps you maximize its value by guaranteeing performance and reducing operational burden.",
+      faIcon: "fa-solid fa-coins",
+      accent: "#22c55e",
+      features: [
+        {
+          title: "Guarantee Performance",
+          description:
+            "Ensure mission-critical enterprise workloads always meet strict performance requirements.",
+        },
+        {
+          title: "Reduce Operational Costs",
+          description:
+            "Eliminate downtime and drastically reduce hours spent on manual troubleshooting.",
+        },
+        {
+          title: "Strengthen Compliance",
+          description:
+            "Maintain complete audit trails for sensitive workloads and any compliance framework.",
+        },
+      ],
+    },
+  ],
+};
+---
+
+<SubpageLayout
+  title="Private Cloud Monitoring - VMware & On-Premises Observability"
+  description="DART-AI delivers complete visibility into VMware and on-premises environments. Master your private cloud with end-to-end observability, predictive assurance, and compliance confidence."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Private Cloud Monitoring"
+      subtitle="Fulfill the Promise of Your Private Cloud. Take Back Control."
+      align="left"
+      breadcrumbs={[
+        { label: "Cloud Monitoring", href: "/solutions/connectivity-performance/cloud-monitoring" }
+      ]}
+    />
+  </Fragment>
+
+  <!-- Meet Section - Private cloud focus -->
+  <MeetPrivateCloudSection />
+
+  <!-- Cloud Solutions Navigation -->
+  <CloudNavBar currentPage="/solutions/connectivity-performance/cloud-monitoring/private-cloud" />
+
+  <!-- Problem Section - Complexity and blind spots -->
+  <ProblemSection {...problemProps} />
+
+  <!-- Solution Section - DART-AI capabilities -->
+  <SolutionSection {...solutionProps} />
+
+  <!-- Transform Section - Benefits -->
+  <TransformSection {...transformProps} />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>

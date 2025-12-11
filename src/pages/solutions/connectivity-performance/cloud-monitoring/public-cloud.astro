@@ -1,0 +1,241 @@
+---
+/**
+ * Public Cloud Monitoring Page - Hyperscalers (AWS, Azure, GCP)
+ *
+ * Focused page for hyperscaler observability:
+ * - East-West traffic visibility
+ * - Cost control and egress optimization
+ * - Native tools limitations and blind spots
+ *
+ * Content from: hyperscalers.md
+ */
+import SubpageLayout from "../../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetPublicCloudSection from "../../../../components/sections/cloud-monitoring/MeetPublicCloudSection.astro";
+import CloudNavBar from "../../../../components/sections/cloud-monitoring/CloudNavBar.astro";
+import ProblemSection from "../../../../components/sections/cloud-monitoring/ProblemSection.astro";
+import SolutionSection from "../../../../components/sections/cloud-monitoring/SolutionSection.astro";
+import TransformSection from "../../../../components/sections/cloud-monitoring/TransformSection.astro";
+
+// Override props for hyperscaler-specific content
+const problemProps = {
+  sectionTitle: "Flying Blind in Your Hyperscaler",
+  contextParagraph:
+    "Cloud provider tools are useful, but they're designed to keep you within their ecosystem—leaving dangerous blind spots. The most critical is East-West traffic: communication between your own VMs, containers, and microservices. This is where performance issues and security threats hide.",
+  cloudSilos: [
+    {
+      provider: "AWS",
+      faIcon: "fa-brands fa-aws",
+      status: "partial" as const,
+      issues: ["VPC Flow Logs only", "No packet-level detail"],
+      color: "#FF9900",
+    },
+    {
+      provider: "Azure",
+      faIcon: "fa-brands fa-microsoft",
+      status: "limited" as const,
+      issues: ["NSG logs gaps", "Cross-tenant blind spots"],
+      color: "#0078D4",
+    },
+    {
+      provider: "GCP",
+      faIcon: "fa-brands fa-google",
+      status: "partial" as const,
+      issues: ["Sampled data only", "Missing E-W traffic"],
+      color: "#4285F4",
+    },
+    {
+      provider: "K8s",
+      faIcon: "fa-solid fa-dharmachakra",
+      status: "blind" as const,
+      issues: ["Container chaos", "Service mesh opacity"],
+      color: "#326CE5",
+    },
+  ],
+  painPoints: [
+    {
+      faIcon: "fa-solid fa-eye-slash",
+      title: "East-West Traffic is Invisible",
+      description:
+        "The communication between your VMs, containers, and microservices is where modern application issues and security threats hide—and native tools can't see it.",
+    },
+    {
+      faIcon: "fa-solid fa-money-bill-trend-up",
+      title: "Runaway Cloud Bills",
+      description:
+        "Data egress fees, inefficient routing, and over-provisioned resources create surprise bills. Without visibility, you're bleeding money every month.",
+    },
+    {
+      faIcon: "fa-solid fa-circle-question",
+      title: "Guessing at Root Cause",
+      description:
+        "When an application is slow, is it the network, the cloud provider, or your code? Native tools give fragments—never the complete picture.",
+    },
+  ],
+  bridgeStatement: "Native tools show you what they want you to see—",
+  bridgeEmphasis: "DART-AI shows you everything.",
+};
+
+const solutionProps = {
+  sectionTitle: "Beyond Native Tools: True Hyperscaler Visibility",
+  contextParagraph:
+    "DART-AI provides the deep, packet-level observability that native cloud tools hide. See 100% of your traffic, including the critical East-West corridor where performance and security issues live.",
+  beforeState: {
+    title: "Native Cloud Visibility",
+    status: "Limited & Fragmented",
+    metrics: [
+      { label: "Traffic Visibility", value: "~20%", sublabel: "N-S only" },
+      { label: "Cost Insight", value: "Reactive", sublabel: "Bill surprises" },
+      { label: "MTTR", value: "Hours", sublabel: "Blame game" },
+    ],
+  },
+  afterState: {
+    title: "DART-AI Visibility",
+    status: "Complete & Unified",
+    metrics: [
+      { label: "Traffic Visibility", value: "100%", sublabel: "E-W included" },
+      { label: "Cost Savings", value: "40%+", sublabel: "Egress optimized" },
+      { label: "MTTR", value: "Minutes", sublabel: "Root cause clarity" },
+    ],
+  },
+  capabilities: [
+    {
+      faIcon: "fa-solid fa-eye",
+      title: "100% Traffic Visibility",
+      description:
+        "See every packet in real-time—including the East-West traffic that native tools miss completely.",
+      metric: "100%",
+      metricLabel: "Visibility",
+    },
+    {
+      faIcon: "fa-solid fa-coins",
+      title: "Cost Intelligence",
+      description:
+        "Identify egress waste, optimize routing, and right-size resources based on actual traffic patterns.",
+      metric: "40%+",
+      metricLabel: "Savings",
+    },
+    {
+      faIcon: "fa-solid fa-diagram-project",
+      title: "True Dependency Mapping",
+      description:
+        "Understand exactly how your cloud services interact. Simplify troubleshooting and migration planning.",
+      metric: "Real-time",
+      metricLabel: "Mapping",
+    },
+  ],
+};
+
+const transformProps = {
+  sectionTitle: "Transform Your Hyperscaler Operations",
+  pillars: [
+    {
+      number: "01",
+      title: "See Everything: Complete East-West Visibility",
+      lead: "DART-AI illuminates the traffic between your VMs, containers, and microservices—the critical blind spot where performance and security issues hide.",
+      faIcon: "fa-solid fa-eye",
+      accent: "#FF9900",
+      features: [
+        {
+          title: "Pinpoint Application Latency",
+          description:
+            "Instantly identify performance bottlenecks between services—no more guessing based on siloed logs.",
+        },
+        {
+          title: "Uncover Hidden Threats",
+          description:
+            "Detect lateral movement and anomalous behavior within your VPC that security groups miss.",
+        },
+        {
+          title: "Map True Dependencies",
+          description:
+            "Understand exactly how cloud services interact across regions and availability zones.",
+        },
+      ],
+    },
+    {
+      number: "02",
+      title: "Slash Costs: Financial Control",
+      lead: "Cloud bills shouldn't be a surprise. DART-AI identifies costly inefficiencies and provides actionable insights to optimize every dollar of cloud spend.",
+      faIcon: "fa-solid fa-coins",
+      accent: "#22c55e",
+      features: [
+        {
+          title: "Eliminate Egress Waste",
+          description:
+            "Identify and optimize costly cross-region and cross-cloud data transfers in real-time.",
+        },
+        {
+          title: "Right-Size Everything",
+          description:
+            "Make architectural decisions based on actual traffic patterns—stop over-provisioning.",
+        },
+        {
+          title: "Predict Bandwidth Needs",
+          description:
+            "AI forecasts demand so you can scale proactively—avoiding both outages and overspend.",
+        },
+      ],
+    },
+    {
+      number: "03",
+      title: "Deploy Anywhere: Software-Native",
+      lead: "DART-AI is built for the cloud era. No hardware, no agents on every VM. It scales elastically with your needs, deploying effortlessly across any hyperscaler.",
+      faIcon: "fa-solid fa-cloud-arrow-up",
+      accent: "#3b82f6",
+      features: [
+        {
+          title: "Zero Hardware Footprint",
+          description:
+            "Purely software-based solution with no proprietary appliances or network taps required.",
+        },
+        {
+          title: "Elastic Scaling",
+          description:
+            "Automatically scales with your cloud environment—from startup to enterprise.",
+        },
+        {
+          title: "Multi-Cloud Ready",
+          description:
+            "Single platform across AWS, Azure, and GCP. One view, every cloud, complete clarity.",
+        },
+      ],
+    },
+  ],
+};
+---
+
+<SubpageLayout
+  title="Public Cloud Monitoring - AWS, Azure, GCP Observability"
+  description="DART-AI delivers complete visibility into AWS, Azure, and GCP. See East-West traffic, optimize costs, and eliminate blind spots that native cloud tools miss."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Public Cloud Monitoring"
+      subtitle="Master Your Hyperscaler. See What Native Tools Hide."
+      align="left"
+      breadcrumbs={[
+        { label: "Cloud Monitoring", href: "/solutions/connectivity-performance/cloud-monitoring" }
+      ]}
+    />
+  </Fragment>
+
+  <!-- Meet Section - Hyperscaler focus -->
+  <MeetPublicCloudSection />
+
+  <!-- Cloud Solutions Navigation -->
+  <CloudNavBar currentPage="/solutions/connectivity-performance/cloud-monitoring/public-cloud" />
+
+  <!-- Problem Section - Native tools limitations -->
+  <ProblemSection {...problemProps} />
+
+  <!-- Solution Section - DART-AI capabilities -->
+  <SolutionSection {...solutionProps} />
+
+  <!-- Transform Section - Benefits -->
+  <TransformSection {...transformProps} />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>

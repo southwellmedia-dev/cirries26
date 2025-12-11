@@ -1,0 +1,241 @@
+---
+/**
+ * Open RAN Page - Private 5G & Multi-Vendor Assurance
+ *
+ * Focused page for Open RAN observability:
+ * - Multi-vendor disaggregated architecture visibility
+ * - Accountability gap elimination
+ * - Cloud-native Private 5G deployment
+ *
+ * Content from: open-ran.md
+ */
+import SubpageLayout from "../../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetOpenRANSection from "../../../../components/sections/mobile/MeetOpenRANSection.astro";
+import ProblemSection from "../../../../components/sections/mobile/ProblemSection.astro";
+import SolutionSection from "../../../../components/sections/mobile/SolutionSection.astro";
+import TransformSection from "../../../../components/sections/mobile/TransformSection.astro";
+import MobileNavBar from "../../../../components/sections/mobile/MobileNavBar.astro";
+
+// Override props for Open RAN specific content
+const problemProps = {
+  sectionTitle: "The Accountability Gap in Open RAN",
+  contextParagraph:
+    "When your Private 5G network is a collection of disaggregated components from different vendors running on a shared cloud platform, troubleshooting becomes a nightmare. Without a single source of truth, finger-pointing begins and Mean Time to Resolution skyrockets.",
+  silos: [
+    {
+      domain: "Radio Unit (RU)",
+      faIcon: "fa-solid fa-satellite-dish",
+      status: "partial" as const,
+      issues: ["Vendor A metrics only", "No cross-component view"],
+      color: "#8B5CF6",
+    },
+    {
+      domain: "Distributed Unit (DU)",
+      faIcon: "fa-solid fa-microchip",
+      status: "limited" as const,
+      issues: ["Vendor B dashboard", "Software blind spots"],
+      color: "#3B82F6",
+    },
+    {
+      domain: "Central Unit (CU)",
+      faIcon: "fa-solid fa-server",
+      status: "partial" as const,
+      issues: ["Vendor C telemetry", "Integration gaps"],
+      color: "#10B981",
+    },
+    {
+      domain: "Cloud Fabric",
+      faIcon: "fa-solid fa-cloud",
+      status: "blind" as const,
+      issues: ["Hyperscaler opacity", "Network fabric hidden"],
+      color: "#0078D4",
+    },
+  ],
+  painPoints: [
+    {
+      faIcon: "fa-solid fa-users-between-lines",
+      title: "The Blame Game Begins",
+      description:
+        "When a critical application experiences latency, is it Vendor A's RU? Vendor B's DU software? A misconfiguration in the cloud network fabric? Or an issue in the 5G core?",
+    },
+    {
+      faIcon: "fa-solid fa-eye-slash",
+      title: "Flying Blind Across Vendors",
+      description:
+        "Each vendor provides their own monitoring tools, creating data silos. You can't see how components interact or where the breakdown actually occurs.",
+    },
+    {
+      faIcon: "fa-solid fa-clock-rotate-left",
+      title: "MTTR Skyrockets",
+      description:
+        "Without packet-level proof of exactly what happened, your teams waste hours in war rooms trying to diagnose problems they can't even see.",
+    },
+  ],
+  bridgeStatement: "Multi-vendor flexibility created operational complexity—",
+  bridgeEmphasis: "DART-AI provides the single source of truth.",
+};
+
+const solutionProps = {
+  sectionTitle: "Unified Assurance for a Disaggregated World",
+  contextParagraph:
+    "In a dynamic Open RAN environment, you cannot rely on siloed, vendor-specific monitoring tools. DART-AI provides a holistic intelligence layer that understands how the entire system works together to deliver a service.",
+  beforeState: {
+    title: "Vendor-Specific Silos",
+    status: "Fragmented & Blind",
+    metrics: [
+      { label: "Cross-Vendor Visibility", value: "0%", sublabel: "Silos only" },
+      { label: "Root Cause", value: "Unknown", sublabel: "Blame game" },
+      { label: "MTTR", value: "Hours", sublabel: "War rooms" },
+    ],
+  },
+  afterState: {
+    title: "DART-AI Unified View",
+    status: "Complete Correlation",
+    metrics: [
+      { label: "Cross-Vendor Visibility", value: "100%", sublabel: "RU to Core" },
+      { label: "Root Cause", value: "Packet Proof", sublabel: "Definitive" },
+      { label: "MTTR", value: "Minutes", sublabel: "Instant clarity" },
+    ],
+  },
+  capabilities: [
+    {
+      faIcon: "fa-solid fa-link",
+      title: "End-to-End Correlation",
+      description:
+        "Analyze 100% of traffic and metadata flowing between every component—RU, DU, CU, Core, and Cloud.",
+      metric: "100%",
+      metricLabel: "Coverage",
+    },
+    {
+      faIcon: "fa-solid fa-gavel",
+      title: "Definitive Proof",
+      description:
+        "Packet-level evidence eliminates finger-pointing. Know exactly which vendor's component caused the issue.",
+      metric: "Forensic",
+      metricLabel: "Clarity",
+    },
+    {
+      faIcon: "fa-solid fa-brain",
+      title: "Proactive Intelligence",
+      description:
+        "AI continuously monitors every link in the chain, detecting anomalies and predicting degradation before impact.",
+      metric: "Real-time",
+      metricLabel: "AI Analysis",
+    },
+  ],
+};
+
+const transformProps = {
+  sectionTitle: "Realize the True Promise of Open RAN",
+  pillars: [
+    {
+      number: "01",
+      title: "Eliminate the Accountability Gap",
+      lead: "DART-AI provides the definitive, packet-level proof needed to instantly pinpoint the root cause of any issue, turning a multi-vendor operational nightmare into a clear, manageable ecosystem.",
+      faIcon: "fa-solid fa-scale-balanced",
+      accent: "#8B5CF6",
+      features: [
+        {
+          title: "Cross-Vendor Correlation",
+          description:
+            "See exactly how traffic flows between components from different vendors—no more blind spots at integration points.",
+        },
+        {
+          title: "Instant Root Cause",
+          description:
+            "Packet-level evidence shows precisely where issues originate—RU, DU, CU, Core, or Cloud fabric.",
+        },
+        {
+          title: "End the War Room",
+          description:
+            "Replace hours of finger-pointing with minutes of precision. Evidence everyone can trust.",
+        },
+      ],
+    },
+    {
+      number: "02",
+      title: "Proactive Assurance at Scale",
+      lead: "DART's AI engine continuously monitors the performance of every link in the chain—from the RAN to the edge to the cloud core—maintaining ultra-low latency and high reliability.",
+      faIcon: "fa-solid fa-chart-line",
+      accent: "#3B82F6",
+      features: [
+        {
+          title: "Anomaly Detection",
+          description:
+            "AI identifies behavioral patterns that signal performance degradation before applications are impacted.",
+        },
+        {
+          title: "Latency Monitoring",
+          description:
+            "Track latency at every hop in real-time. Ensure mission-critical applications meet their SLAs.",
+        },
+        {
+          title: "Predictive Insights",
+          description:
+            "Forecast capacity needs and potential bottlenecks before they affect service quality.",
+        },
+      ],
+    },
+    {
+      number: "03",
+      title: "Maximize Your ROI",
+      lead: "The strategic goal of Open RAN is to reduce costs and avoid vendor lock-in. DART-AI ensures that promise isn't erased by soaring operational expenses from complex troubleshooting.",
+      faIcon: "fa-solid fa-piggy-bank",
+      accent: "#10B981",
+      features: [
+        {
+          title: "Dramatically Reduce MTTR",
+          description:
+            "Minutes instead of hours. Less downtime means lower operational costs and better service.",
+        },
+        {
+          title: "Optimize Resources",
+          description:
+            "Predictive resource optimization ensures you're not over-provisioning expensive infrastructure.",
+        },
+        {
+          title: "Protect Your Investment",
+          description:
+            "Don't let complexity compromise your Open RAN vision. Ensure it delivers technological and financial advantages.",
+        },
+      ],
+    },
+  ],
+};
+---
+
+<SubpageLayout
+  title="Open RAN Assurance - Private 5G Multi-Vendor Visibility"
+  description="DART-AI delivers unified assurance for Open RAN and Private 5G. Eliminate the accountability gap across multi-vendor disaggregated architectures with packet-level visibility."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Open RAN Assurance"
+      subtitle="Unified Visibility for Multi-Vendor Private 5G"
+      align="left"
+      breadcrumbs={[
+        { label: "Mobile", href: "/solutions/connectivity-performance/mobile" }
+      ]}
+    />
+  </Fragment>
+
+  <!-- Meet Section - Open RAN disaggregated architecture -->
+  <MeetOpenRANSection />
+
+  <!-- Mobile Solutions Navigation -->
+  <MobileNavBar currentPage="/solutions/connectivity-performance/mobile/open-ran" />
+
+  <!-- Problem Section - Accountability gap -->
+  <ProblemSection {...problemProps} />
+
+  <!-- Solution Section - Unified assurance -->
+  <SolutionSection {...solutionProps} />
+
+  <!-- Transform Section - ROI and benefits -->
+  <TransformSection {...transformProps} />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>

@@ -1,0 +1,616 @@
+---
+/**
+ * MeetEndToEndSection - "The Single Source of Truth for Your Entire Network"
+ *
+ * End-to-End Mobile intro section featuring:
+ * - Full-stack visibility visualization (L2-L7)
+ * - DART-AI hub connected via animated data streams to stack layers
+ * - Dynamic particle flow animation using CSS
+ */
+import Container from "../../ui/Container.astro";
+import Button from "../../ui/Button.astro";
+import DartLogoLight from "../../../assets/logos/dart-lightmode.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  paragraphs?: string[];
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  eyebrow = "End-to-End Visibility",
+  title = "The Single Source of Truth",
+  highlightText = "for Your Entire Network.",
+  paragraphs = [
+    "In today's distributed enterprise, your most critical business processes run on a network you can't fully see. When a cloud application slows down, each team checks their own dashboards, sifts through their own data, and develops their own theory.",
+    "This is the reality of modern IT: <strong>a collection of data silos</strong> that leads to guesswork, finger-pointing, and hours wasted in a war room trying to find a problem you can't even see.",
+  ],
+  primaryCta = {
+    label: "See the Ground Truth",
+    href: "/contact",
+  },
+  secondaryCta = { label: "View All Solutions", href: "/solutions" },
+} = Astro.props;
+
+// Full-stack layers visualization
+const stackLayers = [
+  {
+    layer: "L7",
+    label: "Application",
+    sublabel: "APIs & Services",
+    color: "#8B5CF6",
+    faIcon: "fa-solid fa-code",
+  },
+  {
+    layer: "L4",
+    label: "Transport",
+    sublabel: "TCP/UDP",
+    color: "#3B82F6",
+    faIcon: "fa-solid fa-arrows-left-right",
+  },
+  {
+    layer: "L3",
+    label: "Network",
+    sublabel: "IP Routing",
+    color: "#10B981",
+    faIcon: "fa-solid fa-network-wired",
+  },
+  {
+    layer: "L2",
+    label: "Data Link",
+    sublabel: "Ethernet",
+    color: "#F59E0B",
+    faIcon: "fa-solid fa-link",
+  },
+];
+---
+
+<section class="meet-e2e-section" data-theme="light">
+  <!-- Ambient background -->
+  <div class="e2e-bg">
+    <div class="e2e-gradient"></div>
+    <div class="e2e-grid"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="meet-e2e">
+      <!-- Left: Content -->
+      <div class="meet-e2e__content">
+        <span class="meet-e2e__eyebrow">{eyebrow}</span>
+
+        <h2 class="meet-e2e__title">
+          {title}
+          <span>{highlightText}</span>
+        </h2>
+
+        {paragraphs.map((text) => <p class="meet-e2e__text" set:html={text} />)}
+
+        <div class="meet-e2e__actions">
+          <Button href={primaryCta.href} variant="primary">
+            {primaryCta.label}
+          </Button>
+          <Button href={secondaryCta.href} variant="outline-dark">
+            {secondaryCta.label}
+          </Button>
+        </div>
+      </div>
+
+      <!-- Right: Full Stack Visualization -->
+      <div class="e2e-visualization">
+        <!-- Central Hub - DART-AI -->
+        <div class="e2e-hub">
+          <div class="e2e-hub-pulse"></div>
+          <div class="e2e-hub-ring e2e-hub-ring-1"></div>
+          <div class="e2e-hub-ring e2e-hub-ring-2"></div>
+          <div class="e2e-hub-core">
+            <img src={DartLogoLight.src} alt="DART-AI" />
+          </div>
+          <div class="e2e-hub-label">Ground Truth</div>
+        </div>
+
+        <!-- SVG Connection Lines between hub and layers -->
+        <svg class="e2e-connections" viewBox="0 0 120 280" preserveAspectRatio="none">
+          <!-- Gray branch paths from layers to hub center -->
+          <path class="e2e-branch" d="M 0 140 Q 40 140 60 35 L 120 35" stroke="rgba(180, 180, 180, 0.4)" stroke-width="2" fill="none" />
+          <path class="e2e-branch" d="M 0 140 Q 50 140 70 105 L 120 105" stroke="rgba(180, 180, 180, 0.4)" stroke-width="2" fill="none" />
+          <path class="e2e-branch" d="M 0 140 Q 50 140 70 175 L 120 175" stroke="rgba(180, 180, 180, 0.4)" stroke-width="2" fill="none" />
+          <path class="e2e-branch" d="M 0 140 Q 40 140 60 245 L 120 245" stroke="rgba(180, 180, 180, 0.4)" stroke-width="2" fill="none" />
+
+          <!-- Hidden paths for animation (reversed: from layers to hub) -->
+          <defs>
+            <path id="path-l7" d="M 120 35 L 60 35 Q 40 140 0 140" fill="none" />
+            <path id="path-l4" d="M 120 105 L 70 105 Q 50 140 0 140" fill="none" />
+            <path id="path-l3" d="M 120 175 L 70 175 Q 50 140 0 140" fill="none" />
+            <path id="path-l2" d="M 120 245 L 60 245 Q 40 140 0 140" fill="none" />
+          </defs>
+
+          <!-- Animated colored particles flowing FROM layers TO hub -->
+          <circle class="e2e-packet" r="5" fill="#8B5CF6">
+            <animateMotion dur="2s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear">
+              <mpath href="#path-l7" />
+            </animateMotion>
+          </circle>
+          <circle class="e2e-packet" r="5" fill="#3B82F6">
+            <animateMotion dur="1.8s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" begin="0.4s">
+              <mpath href="#path-l4" />
+            </animateMotion>
+          </circle>
+          <circle class="e2e-packet" r="5" fill="#10B981">
+            <animateMotion dur="1.8s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" begin="0.8s">
+              <mpath href="#path-l3" />
+            </animateMotion>
+          </circle>
+          <circle class="e2e-packet" r="5" fill="#F59E0B">
+            <animateMotion dur="2s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" begin="1.2s">
+              <mpath href="#path-l2" />
+            </animateMotion>
+          </circle>
+
+          <!-- Second wave of particles for continuous flow -->
+          <circle class="e2e-packet" r="4" fill="#8B5CF6" opacity="0.7">
+            <animateMotion dur="2s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" begin="1s">
+              <mpath href="#path-l7" />
+            </animateMotion>
+          </circle>
+          <circle class="e2e-packet" r="4" fill="#3B82F6" opacity="0.7">
+            <animateMotion dur="1.8s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" begin="1.3s">
+              <mpath href="#path-l4" />
+            </animateMotion>
+          </circle>
+          <circle class="e2e-packet" r="4" fill="#10B981" opacity="0.7">
+            <animateMotion dur="1.8s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" begin="1.7s">
+              <mpath href="#path-l3" />
+            </animateMotion>
+          </circle>
+          <circle class="e2e-packet" r="4" fill="#F59E0B" opacity="0.7">
+            <animateMotion dur="2s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear" begin="2.1s">
+              <mpath href="#path-l2" />
+            </animateMotion>
+          </circle>
+        </svg>
+
+        <!-- Stack Layers -->
+        <div class="e2e-stack-layers">
+          {
+            stackLayers.map((layer, index) => (
+              <div
+                class="e2e-stack-layer"
+                style={`--layer-color: ${layer.color}; --layer-delay: ${index * 0.15}s; --layer-index: ${index}`}
+                data-layer={layer.layer}
+              >
+                <div class="e2e-layer-badge">{layer.layer}</div>
+                <div class="e2e-layer-icon">
+                  <i class={layer.faIcon} />
+                </div>
+                <div class="e2e-layer-info">
+                  <span class="e2e-layer-label">{layer.label}</span>
+                  <span class="e2e-layer-sublabel">{layer.sublabel}</span>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .meet-e2e-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .e2e-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .e2e-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 100% 80% at 75% 40%,
+        rgba(234, 36, 43, 0.04) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 70% 50% at 20% 70%,
+        rgba(234, 36, 43, 0.02) 0%,
+        transparent 45%
+      ),
+      linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #f5f5f7 100%);
+  }
+
+  .e2e-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(
+      ellipse 85% 75% at 65% 50%,
+      black 15%,
+      transparent 70%
+    );
+  }
+
+  /* Content Layout */
+  .meet-e2e {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  .meet-e2e__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+    color: var(--color-primary, #ea242b);
+  }
+
+  .meet-e2e__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #111111;
+    margin-bottom: var(--space-6);
+  }
+
+  .meet-e2e__title span {
+    display: block;
+    color: var(--color-primary, #ea242b);
+  }
+
+  .meet-e2e__text {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: #555555;
+    margin-bottom: var(--space-4);
+  }
+
+  .meet-e2e__text :global(strong) {
+    color: #111111;
+    font-weight: var(--font-semibold);
+  }
+
+  .meet-e2e__actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  /* ========================================
+     Visualization Container - Flexbox Layout
+     ======================================== */
+  .e2e-visualization {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+    min-height: 340px;
+    padding: var(--space-6) 0;
+  }
+
+  /* ========================================
+     Central Hub - DART-AI
+     ======================================== */
+  .e2e-hub {
+    position: relative;
+    flex-shrink: 0;
+    width: 110px;
+    height: 110px;
+    z-index: 10;
+  }
+
+  .e2e-hub-pulse {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(234, 36, 43, 0.12) 0%,
+      transparent 70%
+    );
+    animation: e2e-hub-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes e2e-hub-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    50% {
+      transform: scale(1.15);
+      opacity: 0.9;
+    }
+  }
+
+  .e2e-hub-ring {
+    position: absolute;
+    border-radius: 50%;
+  }
+
+  .e2e-hub-ring-1 {
+    inset: -10px;
+    border: 1px dashed rgba(234, 36, 43, 0.25);
+    animation: e2e-ring-rotate 25s linear infinite;
+  }
+
+  .e2e-hub-ring-2 {
+    inset: -24px;
+    border: 1px dotted rgba(234, 36, 43, 0.15);
+    animation: e2e-ring-rotate 35s linear infinite reverse;
+  }
+
+  @keyframes e2e-ring-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .e2e-hub-core {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.1),
+      0 0 60px rgba(234, 36, 43, 0.06);
+    z-index: 12;
+  }
+
+  .e2e-hub-core img {
+    width: 55%;
+    height: auto;
+  }
+
+  .e2e-hub-label {
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary, #ea242b);
+    white-space: nowrap;
+    padding: 5px 12px;
+    background: rgba(234, 36, 43, 0.08);
+    border-radius: 6px;
+  }
+
+  /* ========================================
+     SVG Connection Lines
+     ======================================== */
+  .e2e-connections {
+    width: 100px;
+    height: 280px;
+    flex-shrink: 0;
+  }
+
+  .e2e-branch {
+    stroke-dasharray: 6 3;
+    animation: e2e-dash-animate 15s linear infinite;
+  }
+
+  @keyframes e2e-dash-animate {
+    to {
+      stroke-dashoffset: -90;
+    }
+  }
+
+  .e2e-packet {
+    filter: drop-shadow(0 0 6px currentColor);
+  }
+
+  .e2e-endpoint {
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+
+  /* ========================================
+     Stack Layers
+     ======================================== */
+  .e2e-stack-layers {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 5;
+    flex-shrink: 0;
+  }
+
+  .e2e-stack-layer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    opacity: 0;
+    transform: translateX(20px);
+    animation: e2e-layer-slide-in 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation-delay: var(--layer-delay);
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  @keyframes e2e-layer-slide-in {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .e2e-stack-layer:hover {
+    border-color: var(--layer-color);
+    box-shadow: 0 6px 24px color-mix(in srgb, var(--layer-color) 18%, transparent);
+    transform: translateX(-6px);
+  }
+
+  /* ========================================
+     Layer Card Content
+     ======================================== */
+  .e2e-layer-badge {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--layer-color) 12%, transparent);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-bold);
+    color: var(--layer-color);
+    flex-shrink: 0;
+  }
+
+  .e2e-layer-icon {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--layer-color);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .e2e-layer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .e2e-layer-label {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: var(--font-semibold);
+    color: #111111;
+    line-height: 1.2;
+  }
+
+  .e2e-layer-sublabel {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ========================================
+     Responsive Styles
+     ======================================== */
+  @media (max-width: 1024px) {
+    .meet-e2e {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .e2e-visualization {
+      justify-content: center;
+    }
+
+    .e2e-hub {
+      width: 100px;
+      height: 100px;
+    }
+
+    .e2e-connections {
+      width: 80px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .meet-e2e-section {
+      padding: var(--space-12) 0;
+    }
+
+    .meet-e2e__title {
+      font-size: var(--text-2xl);
+    }
+
+    .meet-e2e__actions {
+      flex-direction: column;
+    }
+
+    .e2e-visualization {
+      flex-direction: column;
+      gap: var(--space-4);
+      min-height: auto;
+    }
+
+    .e2e-hub {
+      width: 90px;
+      height: 90px;
+    }
+
+    .e2e-hub-label {
+      bottom: -24px;
+      font-size: 0.55rem;
+    }
+
+    .e2e-connections {
+      width: 60px;
+      height: 80px;
+      transform: rotate(90deg);
+    }
+
+    .e2e-stack-layers {
+      gap: 12px;
+    }
+
+    .e2e-stack-layer {
+      padding: 10px 14px;
+      gap: 10px;
+    }
+
+    .e2e-layer-badge {
+      width: 28px;
+      height: 28px;
+      font-size: 0.6rem;
+    }
+
+    .e2e-layer-icon {
+      width: 24px;
+      height: 24px;
+      font-size: 0.85rem;
+    }
+
+    .e2e-layer-label {
+      font-size: 0.75rem;
+    }
+
+    .e2e-layer-sublabel {
+      display: none;
+    }
+  }
+</style>
