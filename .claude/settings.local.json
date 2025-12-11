@@ -17,7 +17,8 @@
       "Bash(git remote add:*)",
       "mcp__playwright__browser_take_screenshot",
       "mcp__playwright__browser_evaluate",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(cat:*)"
     ]
   }
 }

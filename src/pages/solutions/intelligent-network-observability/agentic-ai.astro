@@ -1,0 +1,41 @@
+---
+/**
+ * Agentic AI Product Page
+ *
+ * The Autonomous Network powered by Agentic AI featuring:
+ * - Meet Agentic AI section with neural network visualization
+ * - Core capabilities (Goal-Oriented, Autonomous Resolution, Predictive Assurance)
+ * - Real-world impact across critical industries
+ */
+import SubpageLayout from "../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetAgenticSection from "../../../components/sections/agentic-ai/MeetAgenticSection.astro";
+import AgenticCapabilitiesSection from "../../../components/sections/agentic-ai/AgenticCapabilitiesSection.astro";
+import IndustriesSection from "../../../components/sections/agentic-ai/IndustriesSection.astro";
+---
+
+<SubpageLayout
+  title="Agentic AI - The Autonomous Network"
+  description="Transform your network from a passive system into an autonomous entity that can reason, decide, and act. Powered by Agentic AI from Cirries Technologies."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Agentic AI"
+      subtitle="The Autonomous Network"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet Agentic AI Section -->
+  <MeetAgenticSection />
+
+  <!-- Core Capabilities Section -->
+  <AgenticCapabilitiesSection />
+
+  <!-- Real-World Impact Section -->
+  <IndustriesSection />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>
