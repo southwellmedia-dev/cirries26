@@ -1,0 +1,90 @@
+---
+/**
+ * [PRODUCT_NAME] Product Page Template
+ *
+ * USAGE:
+ * 1. Copy this file to: src/pages/solutions/[category]/[page-name].astro
+ * 2. Replace all [MARKERS] with your values
+ * 3. Create section components in: src/components/sections/[page-name]/
+ *
+ * MARKERS TO REPLACE:
+ * - [PRODUCT_NAME]: Your product name (e.g., "DART AI")
+ * - [PAGE_NAME]: kebab-case (e.g., "dart-ai")
+ * - [COMPONENT_NAME]: PascalCase (e.g., "DartAi")
+ * - [ROUTE_PATH]: Full route path
+ * - [SEO_DESCRIPTION]: Page description for SEO
+ * - [HERO_SUBTITLE]: Hero section subtitle
+ */
+
+// ============================================
+// IMPORTS - Update paths based on file location
+// ============================================
+import SubpageLayout from "../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../components/sections/SubpageHero.astro";
+
+// CUSTOMIZE: Import your section components
+// Rename these to match your product/page name
+import Meet[COMPONENT_NAME]Section from "../../../components/sections/[PAGE_NAME]/Meet[COMPONENT_NAME]Section.astro";
+import [COMPONENT_NAME]CapabilitiesSection from "../../../components/sections/[PAGE_NAME]/[COMPONENT_NAME]CapabilitiesSection.astro";
+import [COMPONENT_NAME]FeaturesSection from "../../../components/sections/[PAGE_NAME]/[COMPONENT_NAME]FeaturesSection.astro";
+---
+
+<SubpageLayout
+  title="[PRODUCT_NAME] - Cirries Technologies"
+  description="[SEO_DESCRIPTION]"
+>
+  {/* ============================================
+      HERO SECTION (Dark)
+      - Always uses dark theme
+      - Provided by SubpageLayout slot
+      ============================================ */}
+  <Fragment slot="hero">
+    <SubpageHero
+      title="[PRODUCT_NAME]"
+      subtitle="[HERO_SUBTITLE]"
+      align="left"
+    />
+    {/* Optional: Add breadcrumbs for navigation
+      breadcrumbs={[
+        { label: "Solutions", href: "/solutions" },
+        { label: "[Category]", href: "/solutions/[category]" }
+      ]}
+    */}
+  </Fragment>
+
+  {/* ============================================
+      MEET [PRODUCT] SECTION (Light)
+      - Introduction with neural network visualization
+      - Two-column layout: content + animation
+      ============================================ */}
+  <Meet[COMPONENT_NAME]Section />
+
+  {/* ============================================
+      CAPABILITIES SECTION (Dark)
+      - Problem/Solution cards
+      - Stacked editorial layout
+      ============================================ */}
+  <[COMPONENT_NAME]CapabilitiesSection />
+
+  {/* ============================================
+      FEATURES SECTION (Light)
+      - 3-column feature grid
+      - Icon + title + description cards
+      ============================================ */}
+  <[COMPONENT_NAME]FeaturesSection />
+
+  {/* ============================================
+      CTA SECTION
+      - Automatically provided by SubpageLayout via CTABar
+      - No additional code needed
+      ============================================ */}
+</SubpageLayout>
+
+{/* ============================================
+    OPTIONAL: Add page-specific scripts
+    ============================================ */}
+{/*
+<script>
+  // Page-specific JavaScript if needed
+</script>
+*/}

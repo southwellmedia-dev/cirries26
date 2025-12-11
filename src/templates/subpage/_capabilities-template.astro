@@ -1,0 +1,454 @@
+---
+/**
+ * [PRODUCT_NAME] Capabilities Section Template
+ *
+ * Dark-themed section showcasing capabilities with problem/solution format.
+ * Features numbered editorial cards with staggered reveal animations.
+ *
+ * USAGE:
+ * 1. Copy to: src/components/sections/[page-name]/[Name]CapabilitiesSection.astro
+ * 2. Replace all [MARKERS] with your values
+ * 3. Customize capability content
+ *
+ * MARKERS TO REPLACE:
+ * - [COMPONENT_NAME]: CSS class prefix (e.g., "capabilities")
+ * - [PRODUCT_NAME]: Product name for closing statement
+ */
+
+import Container from "../../ui/Container.astro";
+
+// ============================================
+// PROPS INTERFACE
+// ============================================
+interface Capability {
+  number: string;    // "01", "02", etc.
+  title: string;     // Capability title
+  problem: string;   // The problem description
+  solution: string;  // The solution description
+}
+
+interface Props {
+  badge?: string;
+  title?: string;
+  titleHighlight?: string;
+  capabilities?: Capability[];
+  closingStatement?: string;
+}
+
+// ============================================
+// CUSTOMIZE: Default content values
+// ============================================
+const {
+  badge = "[BADGE_TEXT]",  // e.g., "Intelligent Capabilities"
+  title = "Beyond Detection:",
+  titleHighlight = "Predictive Action",
+  capabilities = [
+    // CUSTOMIZE: Add your capabilities (typically 3-5)
+    {
+      number: "01",
+      title: "First Capability Title",
+      problem: "Describe the pain point or challenge that users face. Be specific about the impact on their operations, productivity, or bottom line.",
+      solution: "Explain how your product addresses this problem. Detail the approach, technology, or methodology used. Highlight the tangible benefits and outcomes users can expect from this capability."
+    },
+    {
+      number: "02",
+      title: "Second Capability Title",
+      problem: "Another common challenge or limitation with traditional approaches. Explain why existing solutions fall short.",
+      solution: "Describe your innovative solution and how it fundamentally changes the game. Include specific features, automation, or intelligence that makes this possible."
+    },
+    {
+      number: "03",
+      title: "Third Capability Title",
+      problem: "A third pain point that resonates with your target audience. Focus on real-world scenarios they encounter.",
+      solution: "Detail your solution approach. Be specific about the technology, process, or methodology. Explain the measurable improvements users can expect."
+    },
+    {
+      number: "04",
+      title: "Fourth Capability Title",
+      problem: "Final challenge to address. This could focus on scalability, efficiency, or strategic concerns.",
+      solution: "Describe how this capability completes your value proposition. Tie it back to overall business outcomes and strategic advantages."
+    }
+  ],
+  closingStatement = "This comprehensive approach forms the foundation for all <em>intelligent operations</em>—from performance optimization to strategic planning."
+} = Astro.props;
+---
+
+<section class="[COMPONENT_NAME]-section" data-theme="dark">
+  {/* ============================================
+      ATMOSPHERIC BACKGROUND
+      - Grid pattern with mask
+      - Glow orbs for depth
+      ============================================ */}
+  <div class="section-bg">
+    <div class="grid-pattern"></div>
+    <div class="glow-orb glow-orb--top"></div>
+    <div class="glow-orb glow-orb--bottom"></div>
+  </div>
+
+  <Container size="xl">
+    {/* ============================================
+        SECTION HEADER
+        ============================================ */}
+    <header class="section-header">
+      <span class="section-badge">{badge}</span>
+      <h2 class="section-title">
+        {title} <em class="title-highlight">{titleHighlight}</em>
+      </h2>
+    </header>
+
+    {/* ============================================
+        CAPABILITIES STACK
+        - Stacked editorial cards
+        - Problem/Solution format
+        - Numbered watermarks
+        ============================================ */}
+    <div class="capabilities-stack">
+      {capabilities.map((cap, index) => (
+        <article class="capability-card" style={`--card-index: ${index}`}>
+          <div class="card-inner">
+            {/* Large number watermark */}
+            <span class="card-number">{cap.number}</span>
+
+            <div class="card-content">
+              <h3 class="card-title">{cap.title}</h3>
+
+              <div class="card-body">
+                {/* Problem Section */}
+                <div class="problem-section">
+                  <div class="section-marker">
+                    <span class="marker-line"></span>
+                    <span class="marker-label">The Problem</span>
+                  </div>
+                  <p class="section-text">{cap.problem}</p>
+                </div>
+
+                {/* Solution Section */}
+                <div class="solution-section">
+                  <div class="section-marker section-marker--highlight">
+                    <span class="marker-line"></span>
+                    <span class="marker-label">The Solution</span>
+                  </div>
+                  <p class="section-text">{cap.solution}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    {/* ============================================
+        CLOSING STATEMENT
+        ============================================ */}
+    <div class="section-statement">
+      <p class="statement-text" set:html={closingStatement} />
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     CAPABILITIES SECTION - Dark Editorial
+     ======================================== */
+  .[COMPONENT_NAME]-section {
+    position: relative;
+    padding: var(--space-24) 0;
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    overflow: hidden;
+  }
+
+  /* Atmospheric Background */
+  .section-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .grid-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 70% 50% at 50% 30%, black 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 30%, black 0%, transparent 70%);
+  }
+
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+  }
+
+  .glow-orb--top {
+    top: -200px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: var(--color-primary);
+    opacity: 0.08;
+  }
+
+  .glow-orb--bottom {
+    bottom: -150px;
+    left: -100px;
+    width: 400px;
+    height: 400px;
+    background: var(--color-primary);
+    opacity: 0.05;
+  }
+
+  /* ========================================
+     HEADER
+     ======================================== */
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--space-16);
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-badge {
+    display: inline-block;
+    padding: var(--space-2) var(--space-5);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+    background: var(--color-primary-muted);
+    border: 1px solid var(--color-primary-subtle);
+    border-radius: 100px;
+    margin-bottom: var(--space-5);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: var(--font-bold);
+    line-height: 1.1;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .title-highlight {
+    color: var(--color-text-primary);
+    font-style: normal;
+  }
+
+  /* ========================================
+     CAPABILITIES STACK
+     ======================================== */
+  .capabilities-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    margin-bottom: var(--space-12);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Capability Card */
+  .capability-card {
+    position: relative;
+    animation: cardReveal 0.6s ease forwards;
+    animation-delay: calc(var(--card-index) * 0.15s);
+    opacity: 0;
+  }
+
+  @keyframes cardReveal {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .card-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-8);
+    padding: var(--space-10);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .capability-card:hover .card-inner {
+    border-color: var(--color-primary-subtle);
+    transform: translateX(8px);
+    box-shadow:
+      -8px 0 0 var(--color-primary),
+      var(--shadow-lg);
+  }
+
+  .card-number {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-text-primary);
+    opacity: 0.08;
+    transition: all 0.4s ease;
+    user-select: none;
+  }
+
+  .capability-card:hover .card-number {
+    opacity: 0.15;
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    line-height: 1.3;
+    max-width: 600px;
+  }
+
+  .card-body {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: var(--space-8);
+  }
+
+  /* ========================================
+     PROBLEM/SOLUTION SECTIONS
+     ======================================== */
+  .problem-section,
+  .solution-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .section-marker {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .marker-line {
+    width: 24px;
+    height: 2px;
+    background: var(--color-text-muted);
+    transition: all 0.3s ease;
+  }
+
+  .section-marker--highlight .marker-line {
+    background: var(--color-primary);
+    width: 32px;
+  }
+
+  .marker-label {
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+  }
+
+  .section-marker--highlight .marker-label {
+    color: var(--color-primary);
+  }
+
+  .section-text {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .solution-section .section-text {
+    color: var(--color-text-primary);
+    opacity: 0.9;
+  }
+
+  /* ========================================
+     CLOSING STATEMENT
+     ======================================== */
+  .section-statement {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto var(--space-16);
+    padding: var(--space-8) 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .statement-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    font-weight: var(--font-medium);
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .statement-text :global(em) {
+    color: var(--color-text-primary);
+    font-style: normal;
+    font-weight: var(--font-semibold);
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 1024px) {
+    .card-inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .card-number {
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+      font-size: 3rem;
+    }
+
+    .card-body {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .[COMPONENT_NAME]-section {
+      padding: var(--space-16) 0;
+    }
+
+    .section-title {
+      font-size: var(--text-3xl);
+    }
+
+    .card-inner {
+      padding: var(--space-6);
+    }
+
+    .card-title {
+      font-size: var(--text-lg);
+      padding-right: 3rem;
+    }
+
+    .statement-text {
+      font-size: var(--text-base);
+    }
+  }
+</style>

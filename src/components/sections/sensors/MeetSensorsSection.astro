@@ -1,0 +1,710 @@
+---
+/**
+ * MeetSensorsSection - "Clarity at the Speed of 5G"
+ *
+ * Features a Packet Stream Visualization showing:
+ * - Chaotic incoming data packets (left)
+ * - DART Sensor capture/processing zone (center)
+ * - Clean, organized output stream (right)
+ * - Live throughput counters
+ */
+import Container from "../../ui/Container.astro";
+import Button from "../../ui/Button.astro";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  paragraphs?: string[];
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  eyebrow = "Purpose-Built for the Demands of 5G",
+  title = "Clarity at the",
+  highlightText = "Speed of 5G",
+  paragraphs = [
+    "The promise of 5G is one of transformation—a fully virtualized environment delivering ultra-low latency and unprecedented speed. But for network operators, this power is also the greatest operational challenge. At 5G speeds, <strong>problems occur in microseconds</strong>, and by the time you've manually detected an issue, the impact is already widespread.",
+    "In this high-velocity environment, the only source of ground truth is the data itself—the raw packets and rich metadata flowing through the network core. <strong>You cannot manage what you cannot see</strong>, and traditional probes simply cannot keep up.",
+    "<strong>DART Sensors</strong> are engineered to be the hyper-aware eyes and ears of your 5G network. They are more than just data collectors; they are high-performance instruments designed to capture every detail with perfect fidelity, providing the raw intelligence needed for true observability."
+  ],
+  primaryCta = { label: "Get Started", href: "/contact" },
+  secondaryCta = { label: "View All Solutions", href: "/solutions" }
+} = Astro.props;
+---
+
+<section class="meet-sensors-section" data-theme="light">
+  <!-- Background -->
+  <div class="section-bg">
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="meet-sensors">
+      <!-- Content Column -->
+      <div class="meet-sensors__content">
+        <span class="meet-sensors__eyebrow">{eyebrow}</span>
+        <h2 class="meet-sensors__title">{title} <span>{highlightText}</span></h2>
+        {paragraphs.map((text) => (
+          <p class="meet-sensors__text" set:html={text} />
+        ))}
+        <div class="meet-sensors__actions">
+          <Button href={primaryCta.href} variant="primary">
+            {primaryCta.label}
+          </Button>
+          <Button href={secondaryCta.href} variant="outline-dark">
+            {secondaryCta.label}
+          </Button>
+        </div>
+      </div>
+
+      <!-- Packet Stream Visualization -->
+      <div class="packet-viz">
+        <!-- Throughput Counter -->
+        <div class="throughput-display">
+          <div class="throughput-value">
+            <span class="counter" id="packet-counter">0</span>
+            <span class="counter-unit">Gbps</span>
+          </div>
+          <div class="throughput-label">Live Throughput</div>
+        </div>
+
+        <!-- Main Visualization -->
+        <div class="stream-container">
+          <!-- Incoming Chaos Zone -->
+          <div class="zone zone--input">
+            <div class="zone-label">Raw 5G Data</div>
+            <div class="packet-stream packet-stream--chaotic" id="chaotic-stream">
+              <!-- Packets injected via JS -->
+            </div>
+          </div>
+
+          <!-- Sensor Capture Zone -->
+          <div class="sensor-core">
+            <div class="sensor-ring sensor-ring--outer"></div>
+            <div class="sensor-ring sensor-ring--inner"></div>
+            <div class="sensor-body">
+              <div class="sensor-scanner"></div>
+              <span class="sensor-label">DART<br/>SENSOR</span>
+            </div>
+            <div class="capture-field"></div>
+          </div>
+
+          <!-- Output Clean Zone -->
+          <div class="zone zone--output">
+            <div class="zone-label">High-Fidelity Stream</div>
+            <div class="packet-stream packet-stream--organized" id="organized-stream">
+              <!-- Clean packets injected via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+          <div class="stat-item">
+            <span class="stat-value">100 Gbps</span>
+            <span class="stat-label">Line Rate</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-value" id="flow-counter">0</span>
+            <span class="stat-label">Flow Records/sec</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-value">0%</span>
+            <span class="stat-label">Packet Loss</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     SECTION BASE
+     ======================================== */
+  .meet-sensors-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .section-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .bg-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 75% 40%, rgba(220, 38, 38, 0.04) 0%, transparent 50%),
+      linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #f2f3f5 100%);
+  }
+
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 70% 70% at 60% 50%, black 20%, transparent 70%);
+  }
+
+  .bg-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.02;
+  }
+
+  /* ========================================
+     LAYOUT
+     ======================================== */
+  .meet-sensors {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  /* ========================================
+     CONTENT
+     ======================================== */
+  .meet-sensors__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-primary);
+  }
+
+  .meet-sensors__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #0a0a0a;
+    margin-bottom: var(--space-6);
+  }
+
+  .meet-sensors__title span {
+    color: var(--color-primary);
+  }
+
+  .meet-sensors__text {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: #4a4a4a;
+    margin-bottom: var(--space-4);
+  }
+
+  .meet-sensors__text :global(strong) {
+    color: #0a0a0a;
+    font-weight: 600;
+  }
+
+  .meet-sensors__actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  /* ========================================
+     PACKET VISUALIZATION
+     ======================================== */
+  .packet-viz {
+    position: relative;
+    background: linear-gradient(145deg, #0a0a0a 0%, #111111 100%);
+    border-radius: 20px;
+    padding: var(--space-6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  /* Throughput Display */
+  .throughput-display {
+    text-align: center;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .throughput-value {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  .counter {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .counter-unit {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .throughput-label {
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 0.25rem;
+  }
+
+  /* Stream Container */
+  .stream-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 200px;
+    margin-bottom: var(--space-4);
+    position: relative;
+  }
+
+  /* Zones */
+  .zone {
+    flex: 1;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .zone-label {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.625rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.35);
+    margin-bottom: var(--space-2);
+    text-align: center;
+  }
+
+  .zone--input .zone-label {
+    color: rgba(255, 150, 150, 0.5);
+  }
+
+  .zone--output .zone-label {
+    color: rgba(100, 255, 150, 0.5);
+  }
+
+  /* Packet Streams */
+  .packet-stream {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .packet-stream--chaotic {
+    background: linear-gradient(90deg, rgba(220, 38, 38, 0.05) 0%, rgba(220, 38, 38, 0.1) 100%);
+    border: 1px dashed rgba(220, 38, 38, 0.2);
+  }
+
+  .packet-stream--organized {
+    background: linear-gradient(90deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+  }
+
+  /* Packets */
+  :global(.packet) {
+    position: absolute;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  :global(.packet--chaotic) {
+    background: var(--color-primary);
+    box-shadow: 0 0 6px rgba(220, 38, 38, 0.4);
+    opacity: 0.7;
+  }
+
+  :global(.packet--clean) {
+    background: #22c55e;
+    box-shadow: 0 0 4px rgba(34, 197, 94, 0.4);
+    opacity: 0.85;
+  }
+
+  /* Sensor Core */
+  .sensor-core {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    flex-shrink: 0;
+    margin: 0 var(--space-3);
+  }
+
+  .sensor-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(220, 38, 38, 0.3);
+  }
+
+  .sensor-ring--outer {
+    inset: -12px;
+    border-style: dashed;
+    animation: rotateRing 20s linear infinite;
+  }
+
+  .sensor-ring--inner {
+    inset: -4px;
+    border-color: rgba(220, 38, 38, 0.5);
+    animation: rotateRing 15s linear infinite reverse;
+  }
+
+  @keyframes rotateRing {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .sensor-body {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    border-radius: 50%;
+    border: 2px solid rgba(220, 38, 38, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow:
+      0 0 20px rgba(220, 38, 38, 0.15),
+      inset 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .sensor-scanner {
+    position: absolute;
+    inset: 0;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(220, 38, 38, 0.15) 30deg,
+      transparent 60deg
+    );
+    animation: scan 2s linear infinite;
+  }
+
+  @keyframes scan {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .sensor-label {
+    font-family: var(--font-display);
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    line-height: 1.3;
+    position: relative;
+    z-index: 2;
+  }
+
+  .capture-field {
+    position: absolute;
+    inset: -30px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(220, 38, 38, 0.08) 0%, transparent 70%);
+    animation: pulse 2s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+  }
+
+  /* Stats Bar */
+  .stats-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-value {
+    display: block;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #ffffff;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.5625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 2px;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 1024px) {
+    .meet-sensors {
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+    }
+
+    .packet-viz {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .meet-sensors-section {
+      padding: var(--space-12) 0;
+    }
+
+    .meet-sensors__title {
+      font-size: var(--text-2xl);
+    }
+
+    .meet-sensors__actions {
+      flex-direction: column;
+    }
+
+    .stream-container {
+      height: 160px;
+    }
+
+    .sensor-core {
+      width: 80px;
+      height: 80px;
+    }
+
+    .counter {
+      font-size: 2rem;
+    }
+
+    .stats-bar {
+      gap: var(--space-4);
+    }
+
+    .stat-value {
+      font-size: 0.8125rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stream-container {
+      height: 140px;
+    }
+
+    .sensor-core {
+      width: 60px;
+      height: 60px;
+      margin: 0 var(--space-2);
+    }
+
+    .sensor-ring--outer {
+      inset: -8px;
+    }
+
+    .sensor-ring--inner {
+      inset: -2px;
+    }
+
+    .sensor-label {
+      font-size: 0.5rem;
+    }
+  }
+</style>
+
+<script>
+  // Packet Stream Animation
+  function initPacketViz() {
+    const chaoticStream = document.getElementById('chaotic-stream');
+    const organizedStream = document.getElementById('organized-stream');
+    const packetCounter = document.getElementById('packet-counter');
+    const flowCounter = document.getElementById('flow-counter');
+
+    if (!chaoticStream || !organizedStream) return;
+
+    let throughput = 0;
+    let flowRate = 0;
+    const targetThroughput = 100;
+    const targetFlowRate = 2400000;
+
+    // Animate counters
+    function animateCounter() {
+      if (throughput < targetThroughput) {
+        throughput += Math.random() * 3;
+        if (throughput > targetThroughput) throughput = targetThroughput;
+        if (packetCounter) {
+          packetCounter.textContent = Math.floor(throughput).toString();
+        }
+      }
+
+      if (flowRate < targetFlowRate) {
+        flowRate += Math.random() * 80000;
+        if (flowRate > targetFlowRate) flowRate = targetFlowRate;
+        if (flowCounter) {
+          flowCounter.textContent = formatNumber(Math.floor(flowRate));
+        }
+      }
+
+      if (throughput < targetThroughput || flowRate < targetFlowRate) {
+        requestAnimationFrame(animateCounter);
+      }
+    }
+
+    function formatNumber(num: number): string {
+      if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + 'M';
+      }
+      if (num >= 1000) {
+        return (num / 1000).toFixed(0) + 'K';
+      }
+      return num.toString();
+    }
+
+    // Create chaotic packets
+    function createChaoticPacket() {
+      const packet = document.createElement('div');
+      packet.classList.add('packet', 'packet--chaotic');
+
+      // Random size
+      const width = 3 + Math.random() * 8;
+      const height = 2 + Math.random() * 4;
+      packet.style.width = `${width}px`;
+      packet.style.height = `${height}px`;
+
+      // Random vertical position
+      const top = Math.random() * 85;
+      packet.style.top = `${top}%`;
+      packet.style.left = '-10px';
+
+      // Random rotation for chaos effect
+      packet.style.transform = `rotate(${Math.random() * 30 - 15}deg)`;
+
+      chaoticStream.appendChild(packet);
+
+      // Animate across
+      const duration = 800 + Math.random() * 400;
+      packet.animate([
+        { left: '-10px', opacity: 0 },
+        { left: '20%', opacity: 0.8 },
+        { left: '100%', opacity: 0.3 }
+      ], {
+        duration,
+        easing: 'linear'
+      }).onfinish = () => packet.remove();
+    }
+
+    // Create organized packets
+    function createOrganizedPacket() {
+      const packet = document.createElement('div');
+      packet.classList.add('packet', 'packet--clean');
+
+      // Uniform size
+      packet.style.width = '6px';
+      packet.style.height = '3px';
+
+      // Structured vertical position (lanes)
+      const lane = Math.floor(Math.random() * 5);
+      const top = 15 + lane * 17;
+      packet.style.top = `${top}%`;
+      packet.style.left = '-10px';
+
+      organizedStream.appendChild(packet);
+
+      // Smooth animation
+      const duration = 600 + Math.random() * 200;
+      packet.animate([
+        { left: '-10px', opacity: 0 },
+        { left: '10%', opacity: 0.9 },
+        { left: '110%', opacity: 0.9 }
+      ], {
+        duration,
+        easing: 'linear'
+      }).onfinish = () => packet.remove();
+    }
+
+    // Spawn packets
+    let chaoticInterval: ReturnType<typeof setInterval>;
+    let organizedInterval: ReturnType<typeof setInterval>;
+
+    function startAnimation() {
+      // Chaotic packets - faster, more random
+      chaoticInterval = setInterval(createChaoticPacket, 50);
+
+      // Organized packets - steady flow
+      organizedInterval = setInterval(createOrganizedPacket, 80);
+
+      // Start counter animation
+      setTimeout(animateCounter, 500);
+    }
+
+    // Intersection Observer for performance
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startAnimation();
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(chaoticStream);
+  }
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPacketViz);
+  } else {
+    initPacketViz();
+  }
+</script>

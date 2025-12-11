@@ -20,7 +20,11 @@
       "Bash(git add:*)",
       "Bash(cat:*)",
       "Bash(mkdir:*)",
-      "mcp__chrome-devtools__new_page"
+      "mcp__chrome-devtools__new_page",
+      "Bash(find:*)",
+      "Bash(wc:*)",
+      "Bash(ls -la \"D:\\cirries26\\claudedocs\"\" && echo \"---\" && ls -la \"D:cirries26srctemplatessubpage\"\")",
+      "Bash(ls -la \"D:\\cirries26\\src\\components\\sections\\meet 2>/dev/null || ls -la D:cirries26srccomponentssections\")"
     ]
   }
 }

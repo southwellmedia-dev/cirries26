@@ -1,0 +1,40 @@
+---
+/**
+ * DART Sensors Product Page
+ *
+ * "Clarity at the Speed of 5G: The Power of DART Sensors"
+ *
+ * Purpose-built sensors for 5G network observability featuring:
+ * - Hero section introducing the 5G challenge
+ * - Meet section with neural network visualization showing sensor capabilities
+ * - Data Deluge section highlighting throughput and processing scale
+ * - CTA section (provided by layout via CTABar)
+ */
+import SubpageLayout from "../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetSensorsSection from "../../../components/sections/sensors/MeetSensorsSection.astro";
+import DataDelugeSection from "../../../components/sections/sensors/DataDelugeSection.astro";
+---
+
+<SubpageLayout
+  title="DART Sensors - Cirries Technologies"
+  description="Purpose-built sensors for 5G network observability. Capture raw packets and rich metadata at line rates up to 100 Gbps with DART Sensors."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="DART <span>Sensors</span>"
+      subtitle="The Power of Purpose-Built 5G Observability"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet DART Sensors - Light section with neural visualization -->
+  <MeetSensorsSection />
+
+  <!-- Taming the Data Deluge - Dark section with spec highlights -->
+  <DataDelugeSection />
+
+  <!-- CTA Section is provided by the layout via CTABar -->
+</SubpageLayout>
