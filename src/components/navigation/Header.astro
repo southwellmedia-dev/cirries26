@@ -12,6 +12,31 @@ interface Props {
 
 const { variant = 'dark' } = Astro.props;
 const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
+
+// Get current path for active state detection
+const currentPath = Astro.url.pathname;
+
+// Helper function to check if a nav item is active
+function isActive(href: string | undefined): boolean {
+  if (!href) return false;
+  // Exact match for home
+  if (href === '/') return currentPath === '/';
+  // For other pages, check if current path starts with the href
+  return currentPath === href || currentPath.startsWith(href + '/');
+}
+
+// Helper to check if any child link is active (for dropdowns/megamenus)
+function hasActiveChild(item: typeof mainNavigation[0]): boolean {
+  if (item.links) {
+    return item.links.some(link => isActive(link.href));
+  }
+  if (item.columns) {
+    return item.columns.some(col =>
+      isActive(col.href) || col.links?.some(link => isActive(link.href))
+    );
+  }
+  return false;
+}
 ---
 
 <header class:list={["header", { "header--light": variant === "light" }]} id="header" data-variant={variant}>
@@ -29,15 +54,21 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
     <!-- Desktop Navigation -->
     <nav class="header__nav" aria-label="Main navigation">
       <ul class="header__nav-list">
-        {mainNavigation.map((item) => (
-          <li class="header__nav-item" data-type={item.type}>
+        {mainNavigation.map((item) => {
+          const itemIsActive = isActive(item.href) || hasActiveChild(item);
+          return (
+          <li class:list={["header__nav-item", { "is-active": itemIsActive }]} data-type={item.type}>
             {item.type === 'link' ? (
-              <a href={item.href} class="header__nav-link">
+              <a
+                href={item.href}
+                class:list={["header__nav-link", { "is-active": itemIsActive }]}
+                aria-current={itemIsActive ? "page" : undefined}
+              >
                 {item.label}
               </a>
             ) : (
               <button
-                class="header__nav-trigger"
+                class:list={["header__nav-trigger", { "is-active": itemIsActive }]}
                 aria-expanded="false"
                 aria-haspopup="true"
               >
@@ -66,7 +97,11 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
               <div class="header__dropdown">
                 <div class="header__dropdown-inner">
                   {item.links.map((link) => (
-                    <a href={link.href} class="header__dropdown-link">
+                    <a
+                      href={link.href}
+                      class:list={["header__dropdown-link", { "is-active": isActive(link.href) }]}
+                      aria-current={isActive(link.href) ? "page" : undefined}
+                    >
                       <span class="header__dropdown-label">{link.label}</span>
                       {link.description && (
                         <span class="header__dropdown-desc">{link.description}</span>
@@ -82,11 +117,16 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
               <div class="header__megamenu">
                 <div class="header__megamenu-inner">
                   <div class="header__megamenu-grid">
-                    {item.columns.map((column) => (
-                      <div class="header__megamenu-column">
+                    {item.columns.map((column) => {
+                      const columnIsActive = isActive(column.href) || column.links?.some(link => isActive(link.href));
+                      return (
+                      <div class:list={["header__megamenu-column", { "is-active": columnIsActive }]}>
                         <div class="header__megamenu-header">
                           {column.href ? (
-                            <a href={column.href} class="header__megamenu-title">
+                            <a
+                              href={column.href}
+                              class:list={["header__megamenu-title", { "is-active": isActive(column.href) }]}
+                            >
                               {column.title}
                               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                                 <path d="M4.5 3L7.5 6L4.5 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -106,8 +146,10 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
                                   href={link.href}
                                   class:list={[
                                     'header__megamenu-link',
-                                    { 'header__megamenu-link--featured': link.highlighted }
+                                    { 'header__megamenu-link--featured': link.highlighted },
+                                    { 'is-active': isActive(link.href) }
                                   ]}
+                                  aria-current={isActive(link.href) ? "page" : undefined}
                                 >
                                   {link.label}
                                   {link.highlighted && (
@@ -119,13 +161,13 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
                           </ul>
                         )}
                       </div>
-                    ))}
+                    )})}
                   </div>
                 </div>
               </div>
             )}
           </li>
-        ))}
+        )})}
       </ul>
     </nav>
 
@@ -154,13 +196,24 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
   <!-- Mobile Menu -->
   <div class="header__mobile-menu" id="mobile-menu" aria-hidden="true">
     <nav class="header__mobile-nav">
-      {mainNavigation.map((item) => (
-        <div class="header__mobile-section">
+      {mainNavigation.map((item) => {
+        const itemIsActive = isActive(item.href) || hasActiveChild(item);
+        return (
+        <div class:list={["header__mobile-section", { "is-active": itemIsActive }]}>
           {item.type === 'link' ? (
-            <a href={item.href} class="header__mobile-link">{item.label}</a>
+            <a
+              href={item.href}
+              class:list={["header__mobile-link", { "is-active": itemIsActive }]}
+              aria-current={itemIsActive ? "page" : undefined}
+            >
+              {item.label}
+            </a>
           ) : (
             <>
-              <button class="header__mobile-accordion" aria-expanded="false">
+              <button
+                class:list={["header__mobile-accordion", { "is-active": itemIsActive }]}
+                aria-expanded="false"
+              >
                 {item.label}
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                   <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -168,12 +221,23 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
               </button>
               <div class="header__mobile-dropdown">
                 {item.type === 'dropdown' && item.links?.map((link) => (
-                  <a href={link.href} class="header__mobile-sublink">{link.label}</a>
+                  <a
+                    href={link.href}
+                    class:list={["header__mobile-sublink", { "is-active": isActive(link.href) }]}
+                    aria-current={isActive(link.href) ? "page" : undefined}
+                  >
+                    {link.label}
+                  </a>
                 ))}
                 {item.type === 'megamenu' && item.columns?.map((column) => (
                   <div class="header__mobile-group">
                     {column.href ? (
-                      <a href={column.href} class="header__mobile-group-title">{column.title}</a>
+                      <a
+                        href={column.href}
+                        class:list={["header__mobile-group-title", { "is-active": isActive(column.href) }]}
+                      >
+                        {column.title}
+                      </a>
                     ) : (
                       <span class="header__mobile-group-title">{column.title}</span>
                     )}
@@ -182,8 +246,10 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
                         href={link.href}
                         class:list={[
                           'header__mobile-sublink',
-                          { 'header__mobile-sublink--featured': link.highlighted }
+                          { 'header__mobile-sublink--featured': link.highlighted },
+                          { 'is-active': isActive(link.href) }
                         ]}
+                        aria-current={isActive(link.href) ? "page" : undefined}
                       >
                         {link.label}
                         {link.highlighted && <span class="header__mobile-badge">New</span>}
@@ -195,7 +261,7 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
             </>
           )}
         </div>
-      ))}
+      )})}
       <div class="header__mobile-cta">
         <Button href="/contact" variant="primary" fullWidth>
           Request A Demo
@@ -379,7 +445,9 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
 
   .header__nav-link:hover,
   .header__nav-trigger:hover,
-  .header__nav-trigger[aria-expanded="true"] {
+  .header__nav-trigger[aria-expanded="true"],
+  .header__nav-link.is-active,
+  .header__nav-trigger.is-active {
     color: var(--color-text-primary);
     background-color: rgba(255, 255, 255, 0.05);
   }
@@ -433,7 +501,8 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
     transition: background-color var(--duration-fast) var(--ease-out);
   }
 
-  .header__dropdown-link:hover {
+  .header__dropdown-link:hover,
+  .header__dropdown-link.is-active {
     background-color: rgba(255, 255, 255, 0.05);
   }
 
@@ -550,7 +619,8 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
     transition: color var(--duration-fast) var(--ease-out);
   }
 
-  .header__megamenu-link:hover {
+  .header__megamenu-link:hover,
+  .header__megamenu-link.is-active {
     color: var(--color-text-primary);
   }
 
@@ -737,7 +807,8 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
     transition: color var(--duration-fast) var(--ease-out);
   }
 
-  .header__mobile-sublink:hover {
+  .header__mobile-sublink:hover,
+  .header__mobile-sublink.is-active {
     color: var(--color-text-primary);
   }
 
@@ -800,7 +871,9 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
 
   .header--light .header__nav-link:hover,
   .header--light .header__nav-trigger:hover,
-  .header--light .header__nav-trigger[aria-expanded="true"] {
+  .header--light .header__nav-trigger[aria-expanded="true"],
+  .header--light .header__nav-link.is-active,
+  .header--light .header__nav-trigger.is-active {
     color: #111111;
     background-color: rgba(0, 0, 0, 0.04);
   }
@@ -814,7 +887,8 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
       0 0 0 1px rgba(0, 0, 0, 0.03);
   }
 
-  .header--light .header__dropdown-link:hover {
+  .header--light .header__dropdown-link:hover,
+  .header--light .header__dropdown-link.is-active {
     background-color: rgba(0, 0, 0, 0.03);
   }
 
@@ -835,7 +909,8 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
     color: #555555;
   }
 
-  .header--light .header__megamenu-link:hover {
+  .header--light .header__megamenu-link:hover,
+  .header--light .header__megamenu-link.is-active {
     color: #111111;
   }
 
@@ -864,7 +939,8 @@ const logo = variant === 'light' ? cirriesLogoLight : cirriesLogoDark;
     color: #555555;
   }
 
-  .header--light .header__mobile-sublink:hover {
+  .header--light .header__mobile-sublink:hover,
+  .header--light .header__mobile-sublink.is-active {
     color: #111111;
   }
 
