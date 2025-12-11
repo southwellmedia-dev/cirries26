@@ -1,0 +1,40 @@
+---
+/**
+ * Anomaly Detection Product Page
+ *
+ * "Achieve Certainty with AI-Powered Network Defense"
+ *
+ * AI-powered network defense that moves beyond alerts to deliver certainty:
+ * - Hero section introducing the challenge of traditional security
+ * - Meet section with heartbeat visualization showing AI learning
+ * - Zero Trust section highlighting key capabilities
+ * - CTA section (provided by layout via CTABar)
+ */
+import SubpageLayout from "../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetAnomalySection from "../../../components/sections/anomaly-detection/MeetAnomalySection.astro";
+import ZeroTrustSection from "../../../components/sections/anomaly-detection/ZeroTrustSection.astro";
+---
+
+<SubpageLayout
+  title="Anomaly Detection - Cirries Technologies"
+  description="AI-powered network defense that moves beyond alerts to deliver certainty. Detect sophisticated threats by analyzing 100% of packet data in real time."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Anomaly <span>Detection</span>"
+      subtitle="Achieve Certainty with AI-Powered Network Defense"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet Anomaly Detection - Light section with heartbeat visualization -->
+  <MeetAnomalySection />
+
+  <!-- Zero Trust Foundation - Dark section with capability cards -->
+  <ZeroTrustSection />
+
+  <!-- CTA Section is provided by the layout via CTABar -->
+</SubpageLayout>

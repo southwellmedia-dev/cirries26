@@ -1,0 +1,640 @@
+---
+/**
+ * MeetAnomalySection - "Learning the Heartbeat of Your Network"
+ *
+ * Features a network heartbeat visualization representing:
+ * - AI learning the operational rhythm of your network
+ * - Real-time analysis detecting anomalies
+ * - Floating, light aesthetic matching the sensors page
+ */
+import Container from "../../ui/Container.astro";
+import Button from "../../ui/Button.astro";
+import DartLogomark from "../../../assets/logos/ai-logomark.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  paragraphs?: string[];
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  eyebrow = "AI-Powered Network Defense",
+  title = "Learning the Heartbeat",
+  highlightText = "of Your Network",
+  paragraphs = [
+    "In today's borderless network, traditional security tools are failing. Firewalls, intrusion detection systems, and SIEMs generate a tsunami of alerts, leaving security teams struggling to find the real threats in a sea of noise. Meanwhile, sophisticated attackers exploit the biggest blind spot in your infrastructure: the East-West traffic moving between your own servers and applications.",
+    "Cirries redefines network defense by moving beyond alerts to deliver certainty. Our DART AI platform provides the ground truth of what is actually happening on your network. By analyzing 100% of packet data in real time, we empower you to detect the subtle, sophisticated threats that other tools miss entirely.",
+    "At the core of our platform is an AI engine that doesn't rely on static signatures or outdated rules. It first learns the unique operational rhythm—the \"heartbeat\"—of your network. It understands which users, devices, and applications should be communicating, when, and how."
+  ],
+  primaryCta = { label: "Get Started", href: "/contact" },
+  secondaryCta = { label: "View All Solutions", href: "/solutions" }
+} = Astro.props;
+---
+
+<section class="meet-anomaly-section" data-theme="light">
+  <!-- Background -->
+  <div class="section-bg">
+    <div class="bg-gradient"></div>
+    <div class="bg-grain"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="meet-anomaly">
+      <!-- Content Column -->
+      <div class="meet-anomaly__content">
+        <span class="meet-anomaly__eyebrow">{eyebrow}</span>
+        <h2 class="meet-anomaly__title">{title} <span>{highlightText}</span></h2>
+        {paragraphs.map((text) => (
+          <p class="meet-anomaly__text" set:html={text} />
+        ))}
+        <div class="meet-anomaly__actions">
+          <Button href={primaryCta.href} variant="primary">
+            {primaryCta.label}
+          </Button>
+          <Button href={secondaryCta.href} variant="outline-dark">
+            {secondaryCta.label}
+          </Button>
+        </div>
+      </div>
+
+      <!-- Heartbeat Visualization -->
+      <div class="heartbeat-viz" id="heartbeat-viz">
+        <!-- Pulse rings (awareness field) -->
+        <div class="pulse-field">
+          <div class="pulse-ring pulse-ring--1"></div>
+          <div class="pulse-ring pulse-ring--2"></div>
+          <div class="pulse-ring pulse-ring--3"></div>
+        </div>
+
+        <!-- Heartbeat line -->
+        <svg class="heartbeat-svg" viewBox="0 0 400 200" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="heartbeat-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="rgba(234, 36, 43, 0)" />
+              <stop offset="50%" stop-color="rgba(234, 36, 43, 0.8)" />
+              <stop offset="100%" stop-color="rgba(234, 36, 43, 0)" />
+            </linearGradient>
+          </defs>
+          <path
+            class="heartbeat-line"
+            d="M0,100 L80,100 L100,100 L120,60 L140,140 L160,80 L180,120 L200,100 L220,100 L240,100 L260,50 L280,150 L300,70 L320,130 L340,100 L400,100"
+            fill="none"
+            stroke="url(#heartbeat-gradient)"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            class="heartbeat-line heartbeat-line--glow"
+            d="M0,100 L80,100 L100,100 L120,60 L140,140 L160,80 L180,120 L200,100 L220,100 L240,100 L260,50 L280,150 L300,70 L320,130 L340,100 L400,100"
+            fill="none"
+            stroke="rgba(234, 36, 43, 0.3)"
+            stroke-width="6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+
+        <!-- Central Logo -->
+        <div class="logo-center">
+          <div class="logo-glow"></div>
+          <div class="logo-circle">
+            <img src={DartLogomark.src} alt="DART" class="dart-logo" />
+          </div>
+        </div>
+
+        <!-- Floating data points -->
+        <div class="data-points" id="data-points"></div>
+
+        <!-- Status indicator -->
+        <div class="status-float">
+          <div class="status-dot"></div>
+          <span class="status-text">Analyzing Network</span>
+        </div>
+
+        <!-- Floating labels -->
+        <div class="float-labels">
+          <span class="float-label float-label--1">normal traffic</span>
+          <span class="float-label float-label--2">baseline learned</span>
+          <span class="float-label float-label--3">real-time</span>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     SECTION BASE - LIGHT THEME
+     ======================================== */
+  .meet-anomaly-section {
+    position: relative;
+    padding: var(--space-24) 0;
+    background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+    overflow: hidden;
+  }
+
+  .section-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .bg-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 100% 80% at 70% 30%, rgba(234, 36, 43, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 60% at 80% 70%, rgba(234, 36, 43, 0.02) 0%, transparent 40%);
+  }
+
+  .bg-grain {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.015;
+  }
+
+  /* ========================================
+     LAYOUT
+     ======================================== */
+  .meet-anomaly {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-16);
+    align-items: center;
+  }
+
+  /* ========================================
+     CONTENT
+     ======================================== */
+  .meet-anomaly__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+  }
+
+  .meet-anomaly__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #0f0f0f;
+    margin-bottom: var(--space-6);
+  }
+
+  .meet-anomaly__title span {
+    color: var(--color-primary);
+  }
+
+  .meet-anomaly__text {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #555;
+    margin-bottom: var(--space-4);
+  }
+
+  .meet-anomaly__text:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .meet-anomaly__text :global(strong) {
+    color: #1a1a1a;
+    font-weight: 600;
+  }
+
+  .meet-anomaly__actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  /* ========================================
+     HEARTBEAT VISUALIZATION
+     ======================================== */
+  .heartbeat-viz {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* Pulse Field */
+  .pulse-field {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pulse-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(234, 36, 43, 0.1);
+    animation: pulse 3s ease-out infinite;
+  }
+
+  .pulse-ring--1 {
+    width: 90%;
+    height: 90%;
+    animation-delay: 0s;
+  }
+
+  .pulse-ring--2 {
+    width: 65%;
+    height: 65%;
+    animation-delay: 1s;
+  }
+
+  .pulse-ring--3 {
+    width: 40%;
+    height: 40%;
+    animation-delay: 2s;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    30% {
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.15);
+      opacity: 0;
+    }
+  }
+
+  /* Heartbeat SVG */
+  .heartbeat-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    height: 40%;
+    overflow: visible;
+  }
+
+  .heartbeat-line {
+    stroke-dasharray: 800;
+    stroke-dashoffset: 800;
+    animation: drawHeartbeat 3s ease-in-out infinite;
+  }
+
+  .heartbeat-line--glow {
+    filter: blur(4px);
+    animation: drawHeartbeat 3s ease-in-out infinite;
+  }
+
+  @keyframes drawHeartbeat {
+    0% {
+      stroke-dashoffset: 800;
+    }
+    50% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: -800;
+    }
+  }
+
+  /* Central Logo */
+  .logo-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+  }
+
+  .logo-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(234, 36, 43, 0.1) 0%, transparent 70%);
+    animation: logoGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes logoGlow {
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  }
+
+  .logo-circle {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffffff 0%, #f8f8f8 100%);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.08),
+      0 2px 8px rgba(0, 0, 0, 0.04),
+      inset 0 2px 4px rgba(255, 255, 255, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(234, 36, 43, 0.1);
+  }
+
+  .dart-logo {
+    width: 50px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Data Points */
+  .data-points {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  :global(.data-point) {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    opacity: 0;
+    box-shadow: 0 0 8px rgba(234, 36, 43, 0.4);
+  }
+
+  :global(.data-point--normal) {
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+  }
+
+  /* Status Indicator */
+  .status-float {
+    position: absolute;
+    top: 8%;
+    right: 8%;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: statusPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .status-text {
+    font-family: var(--font-display);
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #555;
+  }
+
+  /* Floating Labels */
+  .float-labels {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .float-label {
+    position: absolute;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.5625rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #888;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.2em 0.5em;
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    opacity: 0;
+    animation: floatLabel 6s ease-in-out infinite;
+  }
+
+  .float-label--1 { bottom: 15%; left: 8%; animation-delay: 0s; }
+  .float-label--2 { top: 25%; left: 5%; animation-delay: 2s; }
+  .float-label--3 { bottom: 25%; right: 5%; animation-delay: 4s; }
+
+  @keyframes floatLabel {
+    0%, 100% {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    20%, 80% {
+      opacity: 0.7;
+      transform: translateY(0);
+    }
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 1024px) {
+    .meet-anomaly {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .heartbeat-viz {
+      max-width: 380px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .meet-anomaly-section {
+      padding: var(--space-16) 0;
+    }
+
+    .meet-anomaly__title {
+      font-size: clamp(1.75rem, 6vw, 2.25rem);
+    }
+
+    .meet-anomaly__actions {
+      flex-direction: column;
+    }
+
+    .heartbeat-viz {
+      max-width: 320px;
+    }
+
+    .logo-circle {
+      width: 75px;
+      height: 75px;
+    }
+
+    .dart-logo {
+      width: 42px;
+    }
+
+    .logo-glow {
+      width: 120px;
+      height: 120px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .heartbeat-viz {
+      max-width: 280px;
+    }
+
+    .logo-circle {
+      width: 65px;
+      height: 65px;
+    }
+
+    .dart-logo {
+      width: 36px;
+    }
+
+    .logo-glow {
+      width: 100px;
+      height: 100px;
+    }
+
+    .float-label {
+      font-size: 0.5rem;
+    }
+
+    .status-float {
+      padding: 0.4rem 0.6rem;
+    }
+
+    .status-text {
+      font-size: 0.5625rem;
+    }
+  }
+</style>
+
+<script>
+  /**
+   * Heartbeat Visualization Animation
+   * - Data points appear and move toward center
+   * - Represents the AI analyzing network traffic
+   */
+  function initHeartbeatViz() {
+    const dataPointsContainer = document.getElementById('data-points');
+    const heartbeatViz = document.getElementById('heartbeat-viz');
+
+    if (!dataPointsContainer || !heartbeatViz) return;
+
+    const rect = heartbeatViz.getBoundingClientRect();
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    let isAnimating = false;
+
+    // Create a data point that moves toward center
+    function createDataPoint() {
+      const point = document.createElement('div');
+      point.classList.add('data-point');
+
+      // Most points are "normal" (green)
+      if (Math.random() > 0.15) {
+        point.classList.add('data-point--normal');
+      }
+
+      // Start from edges
+      const angle = Math.random() * Math.PI * 2;
+      const startRadius = Math.max(centerX, centerY) * 0.9;
+      const startX = centerX + Math.cos(angle) * startRadius;
+      const startY = centerY + Math.sin(angle) * startRadius;
+
+      // End near center
+      const endRadius = 50 + Math.random() * 20;
+      const endX = centerX + Math.cos(angle) * endRadius;
+      const endY = centerY + Math.sin(angle) * endRadius;
+
+      point.style.left = `${startX}px`;
+      point.style.top = `${startY}px`;
+
+      dataPointsContainer.appendChild(point);
+
+      // Animate inward
+      const duration = 1500 + Math.random() * 1500;
+
+      point.animate([
+        {
+          left: `${startX}px`,
+          top: `${startY}px`,
+          opacity: 0,
+          transform: 'scale(1)'
+        },
+        {
+          left: `${(startX + endX) / 2}px`,
+          top: `${(startY + endY) / 2}px`,
+          opacity: 0.9,
+          transform: 'scale(1)'
+        },
+        {
+          left: `${endX}px`,
+          top: `${endY}px`,
+          opacity: 0,
+          transform: 'scale(0.5)'
+        }
+      ], {
+        duration,
+        easing: 'ease-in'
+      }).onfinish = () => point.remove();
+    }
+
+    // Start animation
+    function startAnimation() {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      // Spawn data points
+      setInterval(createDataPoint, 200);
+    }
+
+    // Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startAnimation();
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+
+    observer.observe(heartbeatViz);
+  }
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeartbeatViz);
+  } else {
+    initHeartbeatViz();
+  }
+</script>
