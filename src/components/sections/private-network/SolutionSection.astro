@@ -1,0 +1,920 @@
+---
+/**
+ * Private Network SolutionSection - "From Data Points to Decisive Action"
+ *
+ * Clean, confident section showing DART-AI bringing intelligence to private networks:
+ * - Before panel mirrors ProblemSection's NOC chaos (siloed tools, alert fatigue)
+ * - After panel highlights 3 key capabilities: SLA Assurance, AI Insights, Automated Forensics
+ */
+import Container from "../../ui/Container.astro";
+
+interface Capability {
+  icon: string;
+  title: string;
+  description: string;
+  metric: string;
+  metricLabel: string;
+}
+
+interface Props {
+  sectionTitle?: string;
+  contextParagraph?: string;
+  capabilities?: Capability[];
+}
+
+const {
+  sectionTitle = "From Data Points to Decisive Action",
+  contextParagraph = "By analyzing 100% of network packets in real time, DART-AI moves beyond surface-level monitoring to provide a complete, multi-layer view of your network's health. Guarantee SLAs. Anticipate issues. Accelerate resolution.",
+  capabilities = [
+    {
+      icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+      title: "Service Level Assurance",
+      description: "Continuously track latency, throughput, and QoS against SLA thresholds",
+      metric: "99.9%",
+      metricLabel: "SLA Compliance"
+    },
+    {
+      icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
+      title: "AI-Powered Insights",
+      description: "Detect anomalies and predict issues before they impact users",
+      metric: "15min",
+      metricLabel: "Predictive Warning"
+    },
+    {
+      icon: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7",
+      title: "Automated Forensics",
+      description: "Auto-investigate anomalies with clear resolution paths",
+      metric: "73%",
+      metricLabel: "MTTR Reduction"
+    }
+  ]
+} = Astro.props;
+---
+
+<section class="solution-section" data-theme="light">
+  <div class="solution-bg">
+    <div class="solution-gradient"></div>
+    <div class="solution-grid"></div>
+    <div class="solution-glow"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="solution-content">
+      <!-- Section Header -->
+      <header class="solution-header">
+        <span class="solution-eyebrow">The Solution</span>
+        <h2 class="solution-title">{sectionTitle}</h2>
+        <p class="solution-context">{contextParagraph}</p>
+      </header>
+
+      <!-- Before/After Comparison -->
+      <div class="comparison-block">
+        <!-- Before Panel - Mirrors ProblemSection NOC Chaos -->
+        <div class="comparison-panel comparison-panel--before">
+          <div class="panel-label">
+            <span class="label-dot label-dot--before"></span>
+            Without DART-AI
+          </div>
+
+          <div class="control-screen control-screen--before">
+            <div class="screen-header">
+              <div class="screen-dots">
+                <span class="dot dot--red"></span>
+                <span class="dot dot--yellow"></span>
+                <span class="dot dot--green"></span>
+              </div>
+              <span class="screen-title">Network Operations</span>
+              <div class="screen-status screen-status--chaos">
+                <span class="status-dot"></span>
+                847 Alerts
+              </div>
+            </div>
+
+            <div class="screen-body screen-body--before">
+              <!-- Siloed Tools - Mirror ProblemSection -->
+              <div class="siloed-tools-mini">
+                <div class="tool-mini tool-mini--critical">
+                  <span class="tool-mini-name">RAN Monitor</span>
+                  <span class="tool-mini-value">??? Mbps</span>
+                  <span class="tool-mini-status">CRITICAL</span>
+                </div>
+                <div class="tool-mini tool-mini--warning">
+                  <span class="tool-mini-name">Core Analytics</span>
+                  <span class="tool-mini-value">12,847</span>
+                  <span class="tool-mini-status">WARNING</span>
+                </div>
+                <div class="tool-mini tool-mini--unknown">
+                  <span class="tool-mini-name">Edge Platform</span>
+                  <span class="tool-mini-value">-- ms</span>
+                  <span class="tool-mini-status">NO DATA</span>
+                </div>
+              </div>
+
+              <div class="chaos-summary">
+                <div class="chaos-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18.364 5.636a9 9 0 11-12.728 0M12 3v9"></path>
+                  </svg>
+                  <span>No cross-domain correlation</span>
+                </div>
+                <div class="chaos-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"></path>
+                    <path d="M12 17h.01"></path>
+                  </svg>
+                  <span>Where is the problem?</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="screen-footer screen-footer--before">
+              <span class="footer-status">Reactive firefighting after SLA breach</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transformation Arrow -->
+        <div class="transformation-arrow">
+          <div class="arrow-line"></div>
+          <div class="arrow-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </div>
+          <div class="arrow-line"></div>
+        </div>
+
+        <!-- After Panel - Highlights 3 Key Capabilities -->
+        <div class="comparison-panel comparison-panel--after">
+          <div class="panel-label">
+            <span class="label-dot label-dot--after"></span>
+            With DART-AI
+          </div>
+
+          <div class="control-screen control-screen--after">
+            <div class="screen-header screen-header--active">
+              <div class="screen-dots">
+                <span class="dot dot--red"></span>
+                <span class="dot dot--yellow"></span>
+                <span class="dot dot--green"></span>
+              </div>
+              <span class="screen-title">DART-AI Platform</span>
+              <div class="screen-status screen-status--online">
+                <span class="status-dot"></span>
+                All Systems Correlated
+              </div>
+            </div>
+
+            <div class="screen-body screen-body--after">
+              <!-- Unified Network View -->
+              <div class="unified-network">
+                <div class="network-unified-bar">
+                  <div class="unified-segment unified-segment--ran">
+                    <span class="segment-label">RAN</span>
+                    <span class="segment-value">99.8%</span>
+                  </div>
+                  <div class="unified-connector">
+                    <span class="connector-dot"></span>
+                  </div>
+                  <div class="unified-segment unified-segment--core">
+                    <span class="segment-label">Core</span>
+                    <span class="segment-value">99.9%</span>
+                  </div>
+                  <div class="unified-connector">
+                    <span class="connector-dot"></span>
+                  </div>
+                  <div class="unified-segment unified-segment--edge">
+                    <span class="segment-label">Edge</span>
+                    <span class="segment-value">99.7%</span>
+                  </div>
+                </div>
+                <div class="traffic-badge">
+                  <span class="traffic-icon">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M8 7h12M8 12h12M8 17h12M4 7h.01M4 12h.01M4 17h.01"></path>
+                    </svg>
+                  </span>
+                  <span>100% N-S & E-W Visibility</span>
+                </div>
+              </div>
+
+              <!-- 3 Key Capabilities -->
+              <div class="capabilities-grid">
+                {capabilities.map((cap, index) => (
+                  <div class="capability-card" style={`--delay: ${index * 0.1}s`}>
+                    <div class="capability-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d={cap.icon}></path>
+                      </svg>
+                    </div>
+                    <div class="capability-content">
+                      <span class="capability-title">{cap.title}</span>
+                      <span class="capability-desc">{cap.description}</span>
+                    </div>
+                    <div class="capability-metric">
+                      <span class="metric-value">{cap.metric}</span>
+                      <span class="metric-label">{cap.metricLabel}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div class="screen-footer screen-footer--after">
+              <div class="result-summary">
+                <span class="result-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"></path>
+                  </svg>
+                </span>
+                <span class="result-text">Single pane of glass for your entire private network</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .solution-section {
+    position: relative;
+    padding: var(--space-16) 0 var(--space-24);
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .solution-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .solution-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 100% 60% at 50% 0%,
+        rgba(34, 197, 94, 0.04) 0%,
+        transparent 50%
+      ),
+      linear-gradient(180deg, #f8f9fa 0%, #ffffff 30%, #ffffff 100%);
+  }
+
+  .solution-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(
+      ellipse 80% 60% at 50% 80%,
+      black 0%,
+      transparent 70%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 60% at 50% 80%,
+      black 0%,
+      transparent 70%
+    );
+  }
+
+  .solution-glow {
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 400px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(34, 197, 94, 0.08) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+  }
+
+  .solution-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Section Header */
+  .solution-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .solution-eyebrow {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: var(--radius-full);
+  }
+
+  .solution-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #111111;
+    margin-bottom: var(--space-5);
+  }
+
+  .solution-context {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: rgba(0, 0, 0, 0.55);
+  }
+
+  /* Comparison Block */
+  .comparison-block {
+    display: flex;
+    align-items: stretch;
+    gap: var(--space-4);
+  }
+
+  .comparison-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #666666;
+  }
+
+  .label-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .label-dot--before { background: #9ca3af; }
+  .label-dot--after {
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+  }
+
+  /* Control Screen */
+  .control-screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+
+  .control-screen--before {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+  }
+
+  .control-screen--after {
+    background: #ffffff;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    box-shadow:
+      0 4px 20px rgba(0, 0, 0, 0.08),
+      0 0 40px rgba(34, 197, 94, 0.1);
+  }
+
+  .screen-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: #e5e7eb;
+    border-bottom: 1px solid #d1d5db;
+  }
+
+  .screen-header--active {
+    background: linear-gradient(90deg, #f0fdf4 0%, #dcfce7 100%);
+    border-bottom-color: rgba(34, 197, 94, 0.2);
+  }
+
+  .screen-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .dot--red { background: #ef4444; }
+  .dot--yellow { background: #f59e0b; }
+  .dot--green { background: #22c55e; }
+
+  .screen-title {
+    flex: 1;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: #6b7280;
+  }
+
+  .screen-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .screen-status--chaos {
+    color: #9ca3af;
+  }
+
+  .screen-status--chaos .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #9ca3af;
+  }
+
+  .screen-status--online {
+    color: #22c55e;
+  }
+
+  .screen-status--online .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: statusPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+    50% { opacity: 0.8; box-shadow: 0 0 0 4px rgba(34, 197, 94, 0); }
+  }
+
+  /* Screen Body */
+  .screen-body {
+    flex: 1;
+    padding: var(--space-4);
+    min-height: 200px;
+  }
+
+  /* Siloed Tools Mini (Before - mirrors ProblemSection) */
+  .siloed-tools-mini {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: var(--space-3);
+  }
+
+  .tool-mini {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+    border: 1px dashed;
+  }
+
+  .tool-mini--critical {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.2);
+  }
+
+  .tool-mini--warning {
+    background: rgba(245, 158, 11, 0.08);
+    border-color: rgba(245, 158, 11, 0.2);
+  }
+
+  .tool-mini--unknown {
+    background: rgba(156, 163, 175, 0.08);
+    border-color: rgba(156, 163, 175, 0.2);
+  }
+
+  .tool-mini-name {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: #6b7280;
+  }
+
+  .tool-mini-value {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: var(--font-bold);
+    color: #9ca3af;
+  }
+
+  .tool-mini--critical .tool-mini-value { color: #ef4444; }
+  .tool-mini--warning .tool-mini-value { color: #f59e0b; }
+
+  .tool-mini-status {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .tool-mini--critical .tool-mini-status { color: #ef4444; }
+  .tool-mini--warning .tool-mini-status { color: #f59e0b; }
+  .tool-mini--unknown .tool-mini-status { color: #9ca3af; }
+
+  .chaos-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: var(--space-2);
+    background: #e5e7eb;
+    border-radius: var(--radius-md);
+  }
+
+  .chaos-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: #9ca3af;
+  }
+
+  .chaos-item svg {
+    opacity: 0.6;
+  }
+
+  /* Unified Network (After) */
+  .unified-network {
+    margin-bottom: var(--space-3);
+  }
+
+  .network-unified-bar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: var(--space-2);
+  }
+
+  .unified-segment {
+    flex: 1;
+    padding: 8px;
+    background: #f0fdf4;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    text-align: center;
+  }
+
+  .unified-segment--ran {
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+  }
+
+  .unified-segment--edge {
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .segment-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    color: #6b7280;
+    margin-bottom: 2px;
+  }
+
+  .segment-value {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: var(--font-bold);
+    color: #22c55e;
+  }
+
+  .unified-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    background: linear-gradient(90deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+  }
+
+  .connector-dot {
+    width: 6px;
+    height: 6px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: connectorPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes connectorPulse {
+    0%, 100% { opacity: 0.5; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  .traffic-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px;
+    background: rgba(34, 197, 94, 0.08);
+    border: 1px solid rgba(34, 197, 94, 0.15);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    color: #22c55e;
+    font-weight: var(--font-medium);
+  }
+
+  .traffic-icon {
+    display: flex;
+    align-items: center;
+    opacity: 0.8;
+  }
+
+  /* Capabilities Grid */
+  .capabilities-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .capability-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #ffffff;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: var(--radius-md);
+    opacity: 0;
+    transform: translateY(6px);
+    animation: capFadeIn 0.4s ease forwards;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes capFadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .capability-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(34, 197, 94, 0.1);
+    border-radius: 6px;
+    color: #22c55e;
+    flex-shrink: 0;
+  }
+
+  .capability-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .capability-title {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: var(--font-semibold);
+    color: #111111;
+    margin-bottom: 1px;
+  }
+
+  .capability-desc {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    color: #6b7280;
+    line-height: 1.3;
+  }
+
+  .capability-metric {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .capability-metric .metric-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: var(--font-bold);
+    color: #22c55e;
+    line-height: 1;
+  }
+
+  .capability-metric .metric-label {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    color: #9ca3af;
+  }
+
+  /* Screen Footer */
+  .screen-footer {
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .screen-footer--before {
+    background: #f3f4f6;
+  }
+
+  .footer-status {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: #9ca3af;
+    font-style: italic;
+  }
+
+  .screen-footer--after {
+    background: #f0fdf4;
+    border-top-color: rgba(34, 197, 94, 0.2);
+  }
+
+  .result-summary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .result-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: #22c55e;
+    border-radius: 50%;
+    color: #ffffff;
+  }
+
+  .result-text {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: var(--font-medium);
+    color: #166534;
+  }
+
+  /* Transformation Arrow */
+  .transformation-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8) var(--space-2);
+    flex-shrink: 0;
+  }
+
+  .arrow-line {
+    flex: 1;
+    width: 2px;
+    background: linear-gradient(180deg,
+      transparent 0%,
+      rgba(34, 197, 94, 0.3) 30%,
+      rgba(34, 197, 94, 0.3) 70%,
+      transparent 100%
+    );
+  }
+
+  .arrow-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin: var(--space-2) 0;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    border-radius: 50%;
+    color: #ffffff;
+    box-shadow:
+      0 4px 12px rgba(34, 197, 94, 0.3),
+      0 0 24px rgba(34, 197, 94, 0.2);
+    animation: arrowPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes arrowPulse {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow:
+        0 4px 12px rgba(34, 197, 94, 0.3),
+        0 0 24px rgba(34, 197, 94, 0.2);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow:
+        0 6px 16px rgba(34, 197, 94, 0.4),
+        0 0 32px rgba(34, 197, 94, 0.3);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .comparison-block {
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .transformation-arrow {
+      flex-direction: row;
+      padding: var(--space-2) var(--space-8);
+    }
+
+    .arrow-line {
+      flex: 1;
+      height: 2px;
+      width: auto;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(34, 197, 94, 0.3) 30%,
+        rgba(34, 197, 94, 0.3) 70%,
+        transparent 100%
+      );
+    }
+
+    .arrow-icon {
+      margin: 0 var(--space-2);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .solution-section {
+      padding: var(--space-12) 0 var(--space-16);
+    }
+
+    .screen-title {
+      display: none;
+    }
+
+    .network-unified-bar {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .unified-segment {
+      border-radius: var(--radius-md);
+    }
+
+    .unified-segment--ran,
+    .unified-segment--edge {
+      border-radius: var(--radius-md);
+    }
+
+    .unified-connector {
+      width: 100%;
+      height: 16px;
+      background: linear-gradient(180deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+    }
+
+    .capability-card {
+      flex-wrap: wrap;
+    }
+
+    .capability-metric {
+      width: 100%;
+      text-align: left;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed rgba(34, 197, 94, 0.2);
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .capability-metric .metric-value {
+      font-size: 0.9rem;
+    }
+
+    .arrow-icon {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>

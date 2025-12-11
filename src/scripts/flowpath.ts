@@ -36,11 +36,11 @@ export function initFlowPath(): void {
   // Only run on desktop
   if (window.innerWidth < 768) return;
 
-  const triggerBanner = flowSystem.querySelector('.trigger-banner');
-  const triggerIcon = triggerBanner?.querySelector('.trigger-icon');
+  const triggerBanner = flowSystem.querySelector('.trigger-window');
+  const triggerIcon = triggerBanner?.querySelector('.alert-indicator');
   const cards = flowSystem.querySelectorAll('.workflow-card');
-  const resultBanner = flowSystem.querySelector('.result-banner');
-  const resultIcon = resultBanner?.querySelector('.result-icon');
+  const resultBanner = flowSystem.querySelector('.result-window');
+  const resultIcon = resultBanner?.querySelector('.alert-indicator');
 
   if (!triggerBanner || !triggerIcon || cards.length === 0 || !resultBanner || !resultIcon) return;
 
@@ -213,28 +213,25 @@ export function initFlowPath(): void {
   }, branchHorizontalEnd)
   .to(pingBranch3, { opacity: 0, duration: 0.1 }, branchVerticalEnd);
 
-  // Cards light up exactly when their ping arrives (fast stagger based on arrival)
+  // Cards light up in sequential order: 1, 2, 3
   const cardElements = Array.from(cards) as HTMLElement[];
-  const cardArrivalTimes = [branchVerticalEnd, branch2ArriveTime, branchVerticalEnd]; // card1, card2, card3
-  const sortedByArrival = [1, 0, 2]; // card2 arrives first, then card1 and card3
+  const cardLightUpStart = branchVerticalEnd - 0.03;
 
-  sortedByArrival.forEach((cardIndex, order) => {
-    const card = cardElements[cardIndex] as HTMLElement;
-    const arriveTime = cardArrivalTimes[cardIndex];
-    const stagger = order * 0.03; // 30ms stagger in arrival order (faster)
+  cardElements.forEach((card, index) => {
+    const stagger = index * 0.12; // 120ms stagger for clear 1, 2, 3 sequence
 
     // Animate the card glow
     tl.to(card, {
       boxShadow: '0 4px 20px rgba(160, 160, 160, 0.2), 0 0 12px rgba(140, 140, 140, 0.15)',
       duration: 0.1,
       ease: 'power2.out'
-    }, arriveTime - 0.03 + stagger)
+    }, cardLightUpStart + stagger)
     // Fade out the glow
     .to(card, {
       boxShadow: '0 4px 15px rgba(0, 0, 0, 0.08)',
       duration: 0.2,
       ease: 'power2.inOut'
-    }, arriveTime + 0.1 + stagger);
+    }, cardLightUpStart + 0.13 + stagger);
   });
 
   // ============================================

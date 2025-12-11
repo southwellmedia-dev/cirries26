@@ -1,0 +1,46 @@
+---
+/**
+ * Private Network Observability Product Page
+ *
+ * DART-AI for Private 5G and Enterprise Networks featuring:
+ * - Meet Private Network section with network topology visualization
+ * - Problem section - data overload and complexity
+ * - Solution section - intelligent observability
+ * - Transform section - 3 pillars benefits
+ */
+import SubpageLayout from "../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetPrivateNetworkSection from "../../../components/sections/private-network/MeetPrivateNetworkSection.astro";
+import ProblemSection from "../../../components/sections/private-network/ProblemSection.astro";
+import SolutionSection from "../../../components/sections/private-network/SolutionSection.astro";
+import TransformSection from "../../../components/sections/private-network/TransformSection.astro";
+---
+
+<SubpageLayout
+  title="Private Network Observability - Beyond Connectivity to Guaranteed Performance"
+  description="Cirries delivers deep, real-time insights and AI-driven automation to ensure your private 5G network exceeds every SLA."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Private Network Observability"
+      subtitle="Beyond Connectivity to Guaranteed Performance"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet Private Network Section -->
+  <MeetPrivateNetworkSection />
+
+  <!-- Problem Section - Data overload, complexity -->
+  <ProblemSection />
+
+  <!-- Solution Section - Intelligent observability -->
+  <SolutionSection />
+
+  <!-- Transform Section - Benefits Bento Grid -->
+  <TransformSection />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>

@@ -1,0 +1,818 @@
+---
+/**
+ * MeetPrivateNetworkSection - "Your Private Network is Connected. Is It Observable?"
+ *
+ * Features a private network topology visualization with:
+ * - Central DART-AI logo hub
+ * - RAN, Core, and Edge network nodes
+ * - Animated connection lines showing data flow
+ */
+import Container from "../../ui/Container.astro";
+import Button from "../../ui/Button.astro";
+import DartLogoLight from "../../../assets/logos/dart-lightmode.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  paragraphs?: string[];
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  eyebrow = "Private Network Observability",
+  title = "Connectivity is just the beginning.",
+  highlightText = "Performance is the promise.",
+  paragraphs = [
+    "In the transformative era of private 5G and dedicated enterprise networks, the true measure of success lies in unwavering performance, ironclad reliability, and seamless compliance. For enterprises that depend on private networks for mission-critical operations, <strong>\"good enough\" isn't good enough</strong>.",
+    "Cirries' Private Network Observability solution delivers certainty. Deep, real-time insights and AI-driven automation ensure your network not only meets but <strong>exceeds every service-level agreement</strong>.",
+  ],
+  primaryCta = {
+    label: "Guarantee Your Network SLAs",
+    href: "/contact",
+  },
+  secondaryCta = { label: "View All Solutions", href: "/solutions" },
+} = Astro.props;
+
+// Private Network nodes - positioned around outer ring
+// Status: "healthy" (green), "warning" (yellow), "critical" (red)
+const networkNodes = [
+  {
+    type: "ran",
+    label: "RAN",
+    angle: -60,
+    distance: 160,
+    status: "healthy",
+  },
+  {
+    type: "core",
+    label: "Core",
+    angle: 0,
+    distance: 160,
+    status: "healthy",
+  },
+  {
+    type: "edge",
+    label: "Edge",
+    angle: 60,
+    distance: 160,
+    status: "warning",
+  },
+  {
+    type: "cloud",
+    label: "Cloud",
+    angle: 120,
+    distance: 160,
+    status: "healthy",
+  },
+  {
+    type: "enterprise",
+    label: "Enterprise",
+    angle: 180,
+    distance: 160,
+    status: "critical",
+  },
+  {
+    type: "iot",
+    label: "IoT Zone",
+    angle: -120,
+    distance: 160,
+    status: "healthy",
+  },
+];
+
+// Node icons
+const nodeIcons: Record<string, string> = {
+  ran: "M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0",
+  core: "M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01",
+  edge: "M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z",
+  cloud: "M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z",
+  enterprise: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4",
+  iot: "M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM12 12a1 1 0 100-2 1 1 0 000 2z",
+};
+---
+
+<section class="meet-private-network-section" data-theme="light">
+  <!-- Ambient background -->
+  <div class="pn-bg">
+    <div class="pn-gradient"></div>
+    <div class="pn-grid"></div>
+    <div class="pn-noise"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="meet-pn">
+      <div class="meet-pn__content">
+        <span class="meet-pn__eyebrow">{eyebrow}</span>
+
+        <h2 class="meet-pn__title">
+          {title}
+          <span>{highlightText}</span>
+        </h2>
+
+        {paragraphs.map((text) => <p class="meet-pn__text" set:html={text} />)}
+
+        <div class="meet-pn__actions">
+          <Button href={primaryCta.href} variant="primary">
+            {primaryCta.label}
+          </Button>
+          <Button href={secondaryCta.href} variant="outline-dark">
+            {secondaryCta.label}
+          </Button>
+        </div>
+      </div>
+
+      <!-- Private Network Visualization -->
+      <div class="pn-network" id="pn-network">
+        <!-- SVG for connection lines -->
+        <svg
+          class="pn-connections"
+          viewBox="0 0 400 400"
+          id="pn-connections-svg"
+        >
+          <defs>
+            <linearGradient
+              id="pn-connection-gradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+              <stop offset="0%" style="stop-color: rgba(234, 36, 43, 0.1)"></stop>
+              <stop offset="50%" style="stop-color: rgba(234, 36, 43, 0.4)"></stop>
+              <stop offset="100%" style="stop-color: rgba(234, 36, 43, 0.1)"></stop>
+            </linearGradient>
+            <filter id="pn-glow">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur"></feGaussianBlur>
+              <feMerge>
+                <feMergeNode in="coloredBlur"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+            </filter>
+          </defs>
+          <g id="pn-mesh-lines"></g>
+          <g id="pn-connection-lines"></g>
+        </svg>
+
+        <!-- Central Hub - DART-AI Logo -->
+        <div class="pn-hub" id="pn-hub">
+          <div class="core-pulse"></div>
+          <div class="core-ring core-ring-1"></div>
+          <div class="core-ring core-ring-2"></div>
+          <div class="core-logo">
+            <img src={DartLogoLight.src} alt="DART-AI" />
+          </div>
+        </div>
+
+        <!-- Network Nodes -->
+        {
+          networkNodes.map((node, index) => (
+            <div
+              class={`pn-node pn-node--${node.type} pn-node--${node.status}`}
+              data-angle={node.angle}
+              data-distance={node.distance}
+              data-index={index}
+              data-status={node.status}
+              style={`--node-delay: ${index * 0.15}s`}
+            >
+              <div class="node-icon">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d={nodeIcons[node.type]} />
+                </svg>
+                <div class="node-status">
+                  <span class="status-ping" />
+                </div>
+              </div>
+              <span class="node-label">{node.label}</span>
+            </div>
+          ))
+        }
+
+        <!-- Data packets container -->
+        <div class="data-packets" id="pn-data-packets"></div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     PRIVATE NETWORK SECTION STYLES
+     ======================================== */
+  .meet-private-network-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .pn-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .pn-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 100% 80% at 75% 40%,
+        rgba(234, 36, 43, 0.04) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 60% 60% at 25% 80%,
+        rgba(59, 130, 246, 0.03) 0%,
+        transparent 40%
+      ),
+      linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #f0f1f3 100%);
+  }
+
+  .pn-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(
+      ellipse 90% 80% at 70% 50%,
+      black 20%,
+      transparent 70%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 90% 80% at 70% 50%,
+      black 20%,
+      transparent 70%
+    );
+  }
+
+  .pn-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.02;
+    mix-blend-mode: multiply;
+  }
+
+  /* Content Layout */
+  .meet-pn {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  .meet-pn__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+    color: var(--color-primary);
+  }
+
+  .meet-pn__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #111111;
+    margin-bottom: var(--space-6);
+  }
+
+  .meet-pn__title span {
+    display: block;
+    color: var(--color-primary);
+  }
+
+  .meet-pn__text {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: #555555;
+    margin-bottom: var(--space-4);
+  }
+
+  .meet-pn__text :global(strong) {
+    color: #111111;
+    font-weight: var(--font-semibold);
+  }
+
+  .meet-pn__actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  /* ========================================
+     PRIVATE NETWORK VISUALIZATION
+     ======================================== */
+  .pn-network {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .pn-connections {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  /* Central Hub */
+  .pn-hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    z-index: 10;
+  }
+
+  .core-pulse {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(220, 38, 38, 0.15) 0%,
+      transparent 70%
+    );
+    animation: corePulse 3s ease-in-out infinite;
+  }
+
+  @keyframes corePulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.15);
+      opacity: 0.8;
+    }
+  }
+
+  .core-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(220, 38, 38, 0.25);
+  }
+
+  .core-ring-1 {
+    inset: -10px;
+    animation: ringRotate 20s linear infinite;
+    border-style: dashed;
+    border-color: rgba(220, 38, 38, 0.2);
+  }
+
+  .core-ring-2 {
+    inset: -25px;
+    animation: ringRotate 30s linear infinite reverse;
+    border-style: dotted;
+    border-color: rgba(220, 38, 38, 0.12);
+  }
+
+  @keyframes ringRotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .core-logo {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.08),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    z-index: 12;
+  }
+
+  .core-logo img {
+    width: 65%;
+    height: auto;
+  }
+
+  /* Network Nodes */
+  .pn-node {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: nodeAppear 0.5s ease forwards;
+    animation-delay: var(--node-delay);
+    z-index: 8;
+  }
+
+  @keyframes nodeAppear {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  .node-icon {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.06),
+      0 4px 16px rgba(0, 0, 0, 0.04);
+    color: #374151;
+    transition: all 0.3s ease;
+  }
+
+  .pn-node:hover .node-icon {
+    border-color: var(--color-primary);
+    box-shadow:
+      0 4px 16px rgba(234, 36, 43, 0.15),
+      0 0 0 3px rgba(234, 36, 43, 0.08);
+    color: var(--color-primary);
+  }
+
+  .node-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #6b7280;
+    white-space: nowrap;
+  }
+
+  /* Status dot */
+  .node-status {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+  }
+
+  .status-ping {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: statusBlink 2s ease-in-out infinite;
+    animation-delay: var(--node-delay);
+  }
+
+  /* Status colors */
+  .pn-node--healthy .status-ping {
+    background: #22c55e;
+  }
+
+  .pn-node--warning .status-ping {
+    background: #f59e0b;
+  }
+
+  .pn-node--critical .status-ping {
+    background: #ef4444;
+  }
+
+  /* Critical nodes - inverted red box */
+  .pn-node--critical .node-icon {
+    background: linear-gradient(145deg, #ef4444 0%, #dc2626 100%);
+    border-color: rgba(239, 68, 68, 0.8);
+    color: #ffffff;
+    box-shadow:
+      0 4px 16px rgba(239, 68, 68, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .pn-node--critical:hover .node-icon {
+    background: linear-gradient(145deg, #f87171 0%, #ef4444 100%);
+    border-color: rgba(239, 68, 68, 1);
+    color: #ffffff;
+    box-shadow:
+      0 8px 24px rgba(239, 68, 68, 0.4),
+      0 0 0 3px rgba(239, 68, 68, 0.2);
+  }
+
+  .pn-node--critical .node-status {
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  @keyframes statusBlink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+
+  /* Data Packets */
+  .data-packets {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 6;
+  }
+
+  :global(.pn-data-packet) {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 9;
+  }
+
+  :global(.pn-data-packet--healthy) {
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+  }
+
+  :global(.pn-data-packet--warning) {
+    background: #f59e0b;
+    box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
+  }
+
+  :global(.pn-data-packet--critical) {
+    background: #ef4444;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.9);
+  }
+
+  /* Connection Lines */
+  :global(.pn-connection-line) {
+    stroke: rgba(234, 36, 43, 0.15);
+    stroke-width: 1;
+    fill: none;
+    stroke-dasharray: 4 4;
+    animation: dashFlow 20s linear infinite;
+  }
+
+  :global(.pn-mesh-line) {
+    stroke: rgba(0, 0, 0, 0.04);
+    stroke-width: 1;
+    fill: none;
+  }
+
+  @keyframes dashFlow {
+    to {
+      stroke-dashoffset: -100;
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .meet-pn {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .pn-network {
+      max-width: 400px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .meet-private-network-section {
+      padding: var(--space-12) 0;
+    }
+
+    .meet-pn__title {
+      font-size: var(--text-2xl);
+    }
+
+    .meet-pn__actions {
+      flex-direction: column;
+    }
+
+    .pn-network {
+      max-width: 320px;
+    }
+
+    .pn-hub {
+      width: 90px;
+      height: 90px;
+    }
+
+    .core-ring-1 {
+      inset: -8px;
+    }
+
+    .core-ring-2 {
+      inset: -18px;
+    }
+
+    .node-icon {
+      width: 36px;
+      height: 36px;
+    }
+
+    .node-label {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function initPrivateNetwork() {
+    const network = document.getElementById("pn-network");
+    const svg = document.getElementById("pn-connections-svg");
+    const connectionLines = document.getElementById("pn-connection-lines");
+    const meshLines = document.getElementById("pn-mesh-lines");
+    const dataPacketsContainer = document.getElementById("pn-data-packets");
+
+    if (
+      !network ||
+      !svg ||
+      !connectionLines ||
+      !meshLines ||
+      !dataPacketsContainer
+    )
+      return;
+
+    const nodes = network.querySelectorAll(
+      ".pn-node"
+    ) as NodeListOf<HTMLElement>;
+    const networkRect = network.getBoundingClientRect();
+    const centerX = networkRect.width / 2;
+    const centerY = networkRect.height / 2;
+    const svgNS = "http://www.w3.org/2000/svg";
+
+    // Position nodes
+    nodes.forEach((node) => {
+      const angle = parseFloat(node.dataset.angle || "0") * (Math.PI / 180);
+      const distance = parseFloat(node.dataset.distance || "150");
+      const scaleFactor = Math.min(networkRect.width, networkRect.height) / 400;
+      const scaledDistance = distance * scaleFactor;
+
+      const x = centerX + Math.cos(angle) * scaledDistance;
+      const y = centerY + Math.sin(angle) * scaledDistance;
+
+      node.style.left = `${x}px`;
+      node.style.top = `${y}px`;
+    });
+
+    // Scale coordinates to SVG viewBox
+    const scaleX = 400 / networkRect.width;
+    const scaleY = 400 / networkRect.height;
+
+    // Draw connection lines from hub to nodes
+    connectionLines.innerHTML = "";
+    nodes.forEach((node, index) => {
+      const nodeStyle = window.getComputedStyle(node);
+      const nodeX = parseFloat(nodeStyle.left) * scaleX;
+      const nodeY = parseFloat(nodeStyle.top) * scaleY;
+
+      const line = document.createElementNS(svgNS, "line");
+      line.setAttribute("x1", "200");
+      line.setAttribute("y1", "200");
+      line.setAttribute("x2", String(nodeX));
+      line.setAttribute("y2", String(nodeY));
+      line.setAttribute("class", "pn-connection-line");
+      line.style.animationDelay = `${index * 0.2}s`;
+      connectionLines.appendChild(line);
+    });
+
+    // Draw mesh connections between nearby nodes
+    meshLines.innerHTML = "";
+    const nodePositions: { x: number; y: number }[] = [];
+    nodes.forEach((node) => {
+      const nodeStyle = window.getComputedStyle(node);
+      nodePositions.push({
+        x: parseFloat(nodeStyle.left) * scaleX,
+        y: parseFloat(nodeStyle.top) * scaleY,
+      });
+    });
+
+    // Connect nodes that are close to each other
+    for (let i = 0; i < nodePositions.length; i++) {
+      for (let j = i + 1; j < nodePositions.length; j++) {
+        const dx = nodePositions[i].x - nodePositions[j].x;
+        const dy = nodePositions[i].y - nodePositions[j].y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 140) {
+          const line = document.createElementNS(svgNS, "line");
+          line.setAttribute("x1", String(nodePositions[i].x));
+          line.setAttribute("y1", String(nodePositions[i].y));
+          line.setAttribute("x2", String(nodePositions[j].x));
+          line.setAttribute("y2", String(nodePositions[j].y));
+          line.setAttribute("class", "pn-mesh-line");
+          meshLines.appendChild(line);
+        }
+      }
+    }
+
+    // Animate data packets - color-coded by node status
+    function createDataPacket(
+      startX: number,
+      startY: number,
+      endX: number,
+      endY: number,
+      delay: number,
+      status: string
+    ) {
+      const packet = document.createElement("div");
+      packet.className = `pn-data-packet pn-data-packet--${status}`;
+      packet.style.left = `${startX}px`;
+      packet.style.top = `${startY}px`;
+      dataPacketsContainer?.appendChild(packet);
+
+      setTimeout(() => {
+        packet.style.transition = "all 1s cubic-bezier(0.4, 0, 0.2, 1)";
+        packet.style.opacity = "1";
+        packet.style.left = `${endX}px`;
+        packet.style.top = `${endY}px`;
+
+        setTimeout(() => {
+          packet.style.opacity = "0";
+          setTimeout(() => packet.remove(), 300);
+        }, 800);
+      }, delay);
+    }
+
+    function animateDataPackets() {
+      nodes.forEach((node, index) => {
+        const nodeStyle = window.getComputedStyle(node);
+        const nodeX = parseFloat(nodeStyle.left);
+        const nodeY = parseFloat(nodeStyle.top);
+        const status = node.dataset.status || "healthy";
+
+        const toHub = Math.random() > 0.5;
+        const startX = toHub ? nodeX : centerX;
+        const startY = toHub ? nodeY : centerY;
+        const endX = toHub ? centerX : nodeX;
+        const endY = toHub ? centerY : nodeY;
+
+        createDataPacket(
+          startX,
+          startY,
+          endX,
+          endY,
+          index * 200 + Math.random() * 400,
+          status
+        );
+      });
+    }
+
+    setTimeout(animateDataPackets, 800);
+    setInterval(animateDataPackets, 4500);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () =>
+      setTimeout(initPrivateNetwork, 200)
+    );
+  } else {
+    setTimeout(initPrivateNetwork, 200);
+  }
+</script>

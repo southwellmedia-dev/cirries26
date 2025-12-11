@@ -1,0 +1,817 @@
+---
+/**
+ * Private Network ProblemSection - "Data Torrent Without Direction"
+ *
+ * Dark, tension-filled section showing the chaos of fragmented network operations:
+ * - NOC Alert Overload interface showing siloed tools and alert fatigue (left)
+ * - Pain point cards showing challenges (right)
+ */
+import Container from "../../ui/Container.astro";
+
+interface SiloedTool {
+  name: string;
+  status: "critical" | "warning" | "unknown";
+  metric: string;
+  value: string;
+}
+
+interface PainPoint {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  sectionTitle?: string;
+  contextParagraph?: string;
+  siloedTools?: SiloedTool[];
+  painPoints?: PainPoint[];
+  bridgeStatement?: string;
+  bridgeEmphasis?: string;
+}
+
+const {
+  sectionTitle = "Data Torrent Without Direction",
+  contextParagraph = "A private network generates a torrent of data. The challenge isn't collecting it—it's translating it into meaningful, actionable intelligence before minor fluctuations become service-disrupting incidents.",
+  siloedTools = [
+    {
+      name: "RAN Monitor",
+      status: "critical",
+      metric: "Cell Throughput",
+      value: "??? Mbps"
+    },
+    {
+      name: "Core Analytics",
+      status: "warning",
+      metric: "Session Count",
+      value: "12,847"
+    },
+    {
+      name: "Edge Platform",
+      status: "unknown",
+      metric: "Latency",
+      value: "-- ms"
+    }
+  ],
+  painPoints = [
+    {
+      icon: "data",
+      title: "Surface-Level Monitoring",
+      description: "Traditional tools only scratch the surface. You need deep, multi-layer visibility across RAN, core, and edge to truly understand network health.",
+    },
+    {
+      icon: "reactive",
+      title: "Reactive Firefighting",
+      description: "By the time alerts fire, users are already impacted. You're always one step behind, scrambling to diagnose issues after damage is done.",
+    },
+    {
+      icon: "blindspots",
+      title: "North-South and East-West Blindspots",
+      description: "Without complete traffic visibility, problems hide in the gaps—undetected until they cascade into major service disruptions.",
+    },
+  ],
+  bridgeStatement = "Stop Managing Data.",
+  bridgeEmphasis = " Start Managing Performance.",
+} = Astro.props;
+
+const icons: Record<string, string> = {
+  data: "M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4",
+  reactive: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
+  blindspots: "M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21",
+};
+
+const statusColors: Record<string, { bg: string; border: string; text: string; label: string }> = {
+  critical: { bg: "rgba(239, 68, 68, 0.12)", border: "rgba(239, 68, 68, 0.25)", text: "#ef4444", label: "CRITICAL" },
+  warning: { bg: "rgba(245, 158, 11, 0.12)", border: "rgba(245, 158, 11, 0.25)", text: "#f59e0b", label: "WARNING" },
+  unknown: { bg: "rgba(107, 114, 128, 0.12)", border: "rgba(107, 114, 128, 0.25)", text: "#6b7280", label: "NO DATA" },
+};
+---
+
+<section class="problem-section" data-theme="dark">
+  <div class="problem-bg">
+    <div class="problem-gradient"></div>
+    <div class="problem-grid"></div>
+    <div class="problem-noise"></div>
+    <div class="threat-glow"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="problem-content">
+      <!-- Header -->
+      <header class="problem-header">
+        <span class="problem-eyebrow">The Challenge</span>
+        <h2 class="problem-title">{sectionTitle}</h2>
+        <p class="problem-context">{contextParagraph}</p>
+      </header>
+
+      <!-- Two Column Grid -->
+      <div class="two-col">
+        <!-- Left: NOC Alert Overload -->
+        <div class="col-noc">
+          <div class="noc-console">
+            <div class="noc-chrome">
+              <div class="chrome-dots">
+                <span class="dot dot--red"></span>
+                <span class="dot dot--yellow"></span>
+                <span class="dot dot--green"></span>
+              </div>
+              <span class="chrome-title">Network Operations Center</span>
+              <span class="chrome-status chrome-status--alert">
+                <span class="status-pulse"></span>
+                847 Alerts
+              </span>
+            </div>
+
+            <!-- Alert Overload Banner -->
+            <div class="alert-overload">
+              <div class="overload-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+              </div>
+              <div class="overload-content">
+                <span class="overload-title">Alert Fatigue Detected</span>
+                <span class="overload-subtitle">847 unacknowledged alerts across 6 tools</span>
+              </div>
+              <button class="overload-btn">Acknowledge All</button>
+            </div>
+
+            <!-- Siloed Tools Grid -->
+            <div class="siloed-tools">
+              <div class="tools-label">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                Disconnected Tool Views
+              </div>
+
+              <div class="tools-grid">
+                {siloedTools.map((tool, index) => (
+                  <div
+                    class="tool-card"
+                    style={`--delay: ${index * 0.1}s; --status-bg: ${statusColors[tool.status].bg}; --status-border: ${statusColors[tool.status].border}; --status-text: ${statusColors[tool.status].text}`}
+                  >
+                    <div class="tool-header">
+                      <span class="tool-name">{tool.name}</span>
+                      <span class="tool-status">{statusColors[tool.status].label}</span>
+                    </div>
+                    <div class="tool-metric">
+                      <span class="metric-label">{tool.metric}</span>
+                      <span class="metric-value">{tool.value}</span>
+                    </div>
+                    <div class="tool-disconnect">
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18.364 5.636a9 9 0 11-12.728 0M12 3v9"></path>
+                      </svg>
+                      <span>Not correlated</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Confusion Footer -->
+            <div class="noc-footer">
+              <div class="confusion-question">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"></path>
+                  <path d="M12 17h.01"></path>
+                </svg>
+                <span>Where is the actual problem?</span>
+              </div>
+              <div class="correlation-status">
+                <span class="correlation-dot"></span>
+                <span>No cross-domain correlation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Pain Cards -->
+        <div class="col-pain">
+          <div class="pain-cards">
+            {painPoints.map((point, index) => (
+              <article class="pain-card" style={`--delay: ${index * 0.1}s`}>
+                <div class="pain-bar"></div>
+                <div class="pain-icon">
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path d={icons[point.icon]}></path>
+                  </svg>
+                </div>
+                <div class="pain-content">
+                  <h3 class="pain-title">{point.title}</h3>
+                  <p class="pain-desc">{point.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Bridge -->
+      <div class="bridge">
+        <p class="bridge-text">
+          {bridgeStatement}
+          <strong class="bridge-emphasis">{bridgeEmphasis}</strong>
+        </p>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .problem-section {
+    position: relative;
+    padding: var(--space-20) 0 var(--space-16);
+    background: #070709;
+    overflow: hidden;
+  }
+
+  .problem-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .problem-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 60% 50% at 25% 20%,
+        rgba(239, 68, 68, 0.08) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 40% 30% at 75% 70%,
+        rgba(234, 36, 43, 0.06) 0%,
+        transparent 50%
+      ),
+      linear-gradient(180deg, #070709 0%, #0a0a0c 100%);
+  }
+
+  .problem-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(
+      ellipse 80% 60% at 50% 40%,
+      black 0%,
+      transparent 70%
+    );
+  }
+
+  .problem-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    mix-blend-mode: overlay;
+  }
+
+  .threat-glow {
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.1) 0%, transparent 60%);
+    animation: threatPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes threatPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+  }
+
+  .problem-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .problem-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .problem-eyebrow {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: var(--radius-full);
+  }
+
+  .problem-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: var(--space-5);
+  }
+
+  .problem-context {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  /* Two Column Grid */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+    align-items: stretch;
+    margin-bottom: var(--space-12);
+  }
+
+  /* NOC Console */
+  .col-noc {
+    display: flex;
+  }
+
+  .noc-console {
+    width: 100%;
+    background: #0b0b0d;
+    border: 1px solid #1c1c20;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.4),
+      0 0 80px rgba(239, 68, 68, 0.06);
+  }
+
+  .noc-chrome {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 8px 12px;
+    background: #131315;
+    border-bottom: 1px solid #1c1c20;
+  }
+
+  .chrome-dots {
+    display: flex;
+    gap: 5px;
+  }
+
+  .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+
+  .dot--red { background: #ff5f57; }
+  .dot--yellow { background: #ffbd2e; }
+  .dot--green { background: #28ca41; }
+
+  .chrome-title {
+    flex: 1;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .chrome-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    color: #ef4444;
+  }
+
+  .chrome-status--alert {
+    animation: alertPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes alertPulse {
+    0%, 100% { background: rgba(239, 68, 68, 0.15); }
+    50% { background: rgba(239, 68, 68, 0.25); }
+  }
+
+  .status-pulse {
+    width: 6px;
+    height: 6px;
+    background: #ef4444;
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* Alert Overload Banner */
+  .alert-overload {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: rgba(239, 68, 68, 0.08);
+    border-bottom: 1px solid rgba(239, 68, 68, 0.15);
+  }
+
+  .overload-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: 6px;
+    color: #ef4444;
+    flex-shrink: 0;
+  }
+
+  .overload-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .overload-title {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #ef4444;
+    margin-bottom: 2px;
+  }
+
+  .overload-subtitle {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .overload-btn {
+    padding: 5px 10px;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #ef4444;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+
+  .overload-btn:hover {
+    background: rgba(239, 68, 68, 0.25);
+  }
+
+  /* Siloed Tools */
+  .siloed-tools {
+    padding: 12px;
+  }
+
+  .tools-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.35);
+    margin-bottom: 10px;
+  }
+
+  .tools-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tool-card {
+    padding: 10px 12px;
+    background: var(--status-bg);
+    border: 1px solid var(--status-border);
+    border-radius: 6px;
+    opacity: 0;
+    transform: translateX(-8px);
+    animation: slideIn 0.4s ease forwards;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes slideIn {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .tool-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .tool-name {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-semibold);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .tool-status {
+    padding: 2px 6px;
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--status-text);
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+  }
+
+  .tool-metric {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+    margin-bottom: 8px;
+  }
+
+  .metric-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .metric-value {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: var(--font-bold);
+    color: var(--status-text);
+  }
+
+  .tool-disconnect {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .tool-disconnect svg {
+    opacity: 0.5;
+  }
+
+  /* NOC Footer */
+  .noc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: #0a0a0c;
+    border-top: 1px solid #18181b;
+  }
+
+  .confusion-question {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .confusion-question svg {
+    color: #f59e0b;
+  }
+
+  .correlation-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .correlation-dot {
+    width: 6px;
+    height: 6px;
+    background: #6b7280;
+    border-radius: 50%;
+  }
+
+  /* Pain Cards */
+  .col-pain {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pain-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .pain-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #0b0b0d;
+    border: 1px solid #1c1c20;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeUp 0.4s ease forwards;
+    animation-delay: var(--delay);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .pain-card:hover {
+    border-color: rgba(239, 68, 68, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .pain-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ef4444, transparent);
+    opacity: 0.4;
+  }
+
+  .pain-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.12);
+    border-radius: 8px;
+    color: #ef4444;
+  }
+
+  .pain-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .pain-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: var(--font-semibold);
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .pain-desc {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+  }
+
+  /* Bridge */
+  .bridge {
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: var(--space-4);
+  }
+
+  .bridge-text {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+  }
+
+  .bridge-emphasis {
+    font-weight: var(--font-bold);
+    color: #fff;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .two-col {
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .problem-section {
+      padding: var(--space-14) 0 var(--space-12);
+    }
+
+    .header-stats {
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      min-width: calc(50% - var(--space-2));
+    }
+
+    .pain-card {
+      padding: 12px 14px;
+    }
+
+    .pain-icon {
+      width: 36px;
+      height: 36px;
+    }
+  }
+</style>
+
+<script>
+  // Animate alert count in header
+  const alertCount = document.querySelector('.chrome-status--alert');
+  if (alertCount) {
+    let count = 0;
+    const targetCount = 847;
+    const duration = 2000;
+    const startTime = performance.now();
+
+    function updateCount(currentTime: number) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease-out curve
+      const eased = 1 - Math.pow(1 - progress, 3);
+      count = Math.floor(eased * targetCount);
+
+      const statusPulse = alertCount?.querySelector('.status-pulse');
+      if (alertCount && statusPulse) {
+        alertCount.innerHTML = '';
+        alertCount.appendChild(statusPulse);
+        alertCount.appendChild(document.createTextNode(` ${count} Alerts`));
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(updateCount);
+      }
+    }
+
+    setTimeout(() => requestAnimationFrame(updateCount), 500);
+  }
+</script>
