@@ -1,0 +1,677 @@
+---
+/**
+ * MeetReportingSection - "Beyond Dashboards"
+ *
+ * Features a "Question Answering Machine" Visualization:
+ * - Simulated dashboard with chaotic metrics at top
+ * - Central DART AI processing hub
+ * - Three stakeholder answer cards that light up with responses
+ * - Clear visual flow: noise → intelligence → answers
+ */
+import Container from "../../ui/Container.astro";
+import Button from "../../ui/Button.astro";
+import DartLogomark from "../../../assets/logos/ai-logomark.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  paragraphs?: string[];
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  eyebrow = "Intelligence Translation",
+  title = "Reporting That Answers",
+  highlightText = "\"So What?\"",
+  paragraphs = [
+    "Your network generates <strong>millions of data points</strong> every minute. You have dashboards filled with charts, graphs, and alerts. But when a critical performance issue arises, can you answer the most important questions?",
+    "If your reporting tools can't answer these questions <strong>instantly</strong>, they are just adding to the noise. DART AI Reporting is fundamentally different.",
+    "It's not a data visualization tool; it's an <strong>intelligence translator</strong>. It transforms raw, complex network events into clear, role-specific narratives that drive decisive action."
+  ],
+  primaryCta = { label: "See It In Action", href: "/contact" },
+  secondaryCta = { label: "Explore Solutions", href: "/solutions" }
+} = Astro.props;
+
+// Stakeholder questions and answers
+const stakeholders = [
+  {
+    role: "CIO",
+    question: "What is the business impact?",
+    answer: "$50k/hr revenue at risk",
+    color: "#3b82f6"
+  },
+  {
+    role: "DevOps",
+    question: "Which microservice is root cause?",
+    answer: "Primary DB server latency",
+    color: "#22c55e"
+  },
+  {
+    role: "Security",
+    question: "Is this anomaly a threat?",
+    answer: "No threat detected",
+    color: "#f59e0b"
+  }
+];
+---
+
+<section class="meet-reporting-section" data-theme="light">
+  <!-- Background -->
+  <div class="section-bg">
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="meet-reporting">
+      <!-- Content Column -->
+      <div class="meet-reporting__content">
+        <span class="meet-reporting__eyebrow">{eyebrow}</span>
+        <h2 class="meet-reporting__title">{title} <span>{highlightText}</span></h2>
+        {paragraphs.map((text) => (
+          <p class="meet-reporting__text" set:html={text} />
+        ))}
+        <div class="meet-reporting__actions">
+          <Button href={primaryCta.href} variant="primary">
+            {primaryCta.label}
+          </Button>
+          <Button href={secondaryCta.href} variant="outline-dark">
+            {secondaryCta.label}
+          </Button>
+        </div>
+      </div>
+
+      <!-- Question Answering Machine Visualization -->
+      <div class="qa-machine" id="qa-machine">
+
+        <!-- Chaotic Dashboard Zone (Top) -->
+        <div class="dashboard-zone">
+          <div class="dashboard-label">Raw Network Data</div>
+          <div class="dashboard-metrics">
+            <div class="metric-bar metric-bar--1"></div>
+            <div class="metric-bar metric-bar--2"></div>
+            <div class="metric-bar metric-bar--3"></div>
+            <div class="metric-bar metric-bar--4"></div>
+            <div class="metric-bar metric-bar--5"></div>
+            <div class="metric-bar metric-bar--6"></div>
+            <div class="metric-bar metric-bar--7"></div>
+            <div class="metric-bar metric-bar--8"></div>
+          </div>
+          <div class="noise-indicators">
+            <span class="noise-dot"></span>
+            <span class="noise-dot"></span>
+            <span class="noise-dot"></span>
+            <span class="noise-text">2.4M events/min</span>
+          </div>
+        </div>
+
+        <!-- Connector Line -->
+        <div class="connector-line"></div>
+
+        <!-- Central DART AI Hub -->
+        <div class="ai-hub">
+          <div class="hub-glow"></div>
+          <div class="hub-ring hub-ring--outer"></div>
+          <div class="hub-ring hub-ring--inner"></div>
+          <div class="hub-core">
+            <img src={DartLogomark.src} alt="DART AI" class="hub-logo" />
+          </div>
+        </div>
+
+        <!-- Connector Line -->
+        <div class="connector-line"></div>
+
+        <!-- Stakeholder Answer Cards -->
+        <div class="answer-zone">
+          {stakeholders.map((s, i) => (
+            <div class={`answer-card answer-card--${i + 1}`} style={`--card-color: ${s.color}; --card-index: ${i}`}>
+              <div class="answer-header">
+                <span class="answer-role" style={`color: ${s.color}`}>{s.role}</span>
+                <span class="answer-status">
+                  <span class="status-dot" style={`background: ${s.color}`}></span>
+                </span>
+              </div>
+              <p class="answer-question">{s.question}</p>
+              <div class="answer-response">
+                <span class="response-text">{s.answer}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     SECTION BASE
+     ======================================== */
+  .meet-reporting-section {
+    position: relative;
+    padding: var(--space-24) 0;
+    background: linear-gradient(180deg, #ffffff 0%, #f8f9fb 100%);
+    overflow: hidden;
+  }
+
+  .section-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .bg-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 75% 40%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 50% at 25% 60%, rgba(234, 36, 43, 0.03) 0%, transparent 40%);
+  }
+
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 80% 70% at 70% 50%, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 70% 50%, black 20%, transparent 70%);
+  }
+
+  /* ========================================
+     LAYOUT
+     ======================================== */
+  .meet-reporting {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  /* ========================================
+     CONTENT
+     ======================================== */
+  .meet-reporting__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+  }
+
+  .meet-reporting__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #0f0f0f;
+    margin-bottom: var(--space-6);
+  }
+
+  .meet-reporting__title span {
+    color: var(--color-primary);
+    font-style: italic;
+  }
+
+  .meet-reporting__text {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #555;
+    margin-bottom: var(--space-4);
+  }
+
+  .meet-reporting__text:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .meet-reporting__text :global(strong) {
+    color: #1a1a1a;
+    font-weight: 600;
+  }
+
+  .meet-reporting__actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  /* ========================================
+     QA MACHINE VISUALIZATION
+     ======================================== */
+  .qa-machine {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-6);
+    min-height: 520px;
+  }
+
+  /* Dashboard Zone (Top) */
+  .dashboard-zone {
+    width: 100%;
+    max-width: 340px;
+    padding: var(--space-4);
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    margin-bottom: 0;
+  }
+
+  .dashboard-label {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.5625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+    margin-bottom: var(--space-3);
+  }
+
+  .dashboard-metrics {
+    display: flex;
+    gap: 6px;
+    height: 40px;
+    align-items: flex-end;
+  }
+
+  .metric-bar {
+    flex: 1;
+    background: linear-gradient(180deg, var(--color-primary) 0%, rgba(234, 36, 43, 0.4) 100%);
+    border-radius: 2px 2px 0 0;
+    animation: metricPulse 1.5s ease-in-out infinite;
+  }
+
+  .metric-bar--1 { height: 60%; animation-delay: 0s; }
+  .metric-bar--2 { height: 85%; animation-delay: 0.1s; }
+  .metric-bar--3 { height: 45%; animation-delay: 0.2s; }
+  .metric-bar--4 { height: 95%; animation-delay: 0.3s; background: linear-gradient(180deg, #ef4444 0%, rgba(239, 68, 68, 0.4) 100%); }
+  .metric-bar--5 { height: 70%; animation-delay: 0.4s; }
+  .metric-bar--6 { height: 55%; animation-delay: 0.5s; }
+  .metric-bar--7 { height: 80%; animation-delay: 0.6s; }
+  .metric-bar--8 { height: 40%; animation-delay: 0.7s; }
+
+  @keyframes metricPulse {
+    0%, 100% { opacity: 0.7; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  .noise-indicators {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: var(--space-3);
+  }
+
+  .noise-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    animation: noiseBlink 0.8s ease-in-out infinite;
+  }
+
+  .noise-dot:nth-child(2) { animation-delay: 0.2s; }
+  .noise-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes noiseBlink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .noise-text {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.625rem;
+    font-weight: 500;
+    color: #666;
+  }
+
+  /* Connector Lines */
+  .connector-line {
+    width: 1px;
+    height: 32px;
+    border-left: 1px dashed rgba(0, 0, 0, 0.15);
+  }
+
+  /* AI Hub (Center) */
+  .ai-hub {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: var(--space-2) 0;
+  }
+
+  .hub-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+      rgba(0, 0, 0, 0.04) 0%,
+      rgba(0, 0, 0, 0.02) 50%,
+      transparent 70%
+    );
+  }
+
+  .hub-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    border: 1px dashed rgba(0, 0, 0, 0.15);
+  }
+
+  .hub-ring--outer {
+    width: 100px;
+    height: 100px;
+    transform: translate(-50%, -50%);
+  }
+
+  .hub-ring--inner {
+    width: 80px;
+    height: 80px;
+    transform: translate(-50%, -50%);
+  }
+
+  .hub-core {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffffff 0%, #f8f8f8 100%);
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.08),
+      0 2px 6px rgba(0, 0, 0, 0.04),
+      inset 0 2px 4px rgba(255, 255, 255, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    z-index: 2;
+  }
+
+  .hub-logo {
+    width: 34px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Answer Zone (Bottom) */
+  .answer-zone {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .answer-card {
+    padding: var(--space-3);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: cardReveal 0.5s ease forwards;
+    animation-delay: calc(1.2s + var(--card-index) * 0.15s);
+    transition: all 0.3s ease;
+  }
+
+  .answer-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    border-color: var(--card-color);
+  }
+
+  @keyframes cardReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .answer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  .answer-role {
+    font-family: var(--font-display);
+    font-size: 0.5625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .answer-status {
+    display: flex;
+    align-items: center;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: statusPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes statusPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; box-shadow: 0 0 8px currentColor; }
+  }
+
+  .answer-question {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    color: #666;
+    margin: 0 0 8px 0;
+  }
+
+  .answer-response {
+    padding: 6px 8px;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 6px;
+    border-left: 2px solid var(--card-color);
+  }
+
+  .response-text {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    display: block;
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 1024px) {
+    .meet-reporting {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .qa-machine {
+      min-height: 480px;
+    }
+
+    .dashboard-zone {
+      max-width: 320px;
+    }
+
+    .flow-lines,
+    .answer-lines {
+      max-width: 320px;
+    }
+
+    .answer-zone {
+      max-width: 360px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .meet-reporting-section {
+      padding: var(--space-16) 0;
+    }
+
+    .meet-reporting__title {
+      font-size: clamp(1.75rem, 6vw, 2.25rem);
+    }
+
+    .meet-reporting__actions {
+      flex-direction: column;
+    }
+
+    .qa-machine {
+      min-height: 440px;
+      padding: var(--space-4);
+    }
+
+    .dashboard-zone {
+      max-width: 280px;
+      padding: var(--space-3);
+    }
+
+    .dashboard-metrics {
+      height: 32px;
+    }
+
+    .flow-lines,
+    .answer-lines {
+      max-width: 280px;
+      height: 40px;
+    }
+
+    .hub-core {
+      width: 56px;
+      height: 56px;
+    }
+
+    .hub-logo {
+      width: 28px;
+    }
+
+    .hub-glow {
+      width: 110px;
+      height: 110px;
+    }
+
+    .hub-ring--outer {
+      width: 85px;
+      height: 85px;
+    }
+
+    .hub-ring--inner {
+      width: 70px;
+      height: 70px;
+    }
+
+    .answer-zone {
+      grid-template-columns: 1fr;
+      max-width: 280px;
+      gap: var(--space-2);
+    }
+
+    .answer-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-template-rows: auto auto;
+      gap: 4px 12px;
+      padding: var(--space-3);
+    }
+
+    .answer-header {
+      grid-column: 1 / -1;
+      margin-bottom: 4px;
+    }
+
+    .answer-question {
+      grid-column: 1 / 2;
+      margin: 0;
+      align-self: center;
+    }
+
+    .answer-response {
+      grid-column: 2 / -1;
+      margin: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .qa-machine {
+      min-height: 400px;
+    }
+
+    .dashboard-zone {
+      max-width: 260px;
+    }
+
+    .flow-lines,
+    .answer-lines {
+      max-width: 260px;
+      height: 35px;
+    }
+
+    .answer-zone {
+      max-width: 260px;
+    }
+  }
+</style>
+
+<script>
+  /**
+   * QA Machine Animation Enhancement
+   * Adds dynamic behavior to the visualization
+   */
+  function initQAMachine() {
+    const qaMachine = document.getElementById('qa-machine');
+    if (!qaMachine) return;
+
+    let isAnimating = false;
+
+    function startAnimation() {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      // Add active class to trigger CSS animations
+      qaMachine.classList.add('is-active');
+    }
+
+    // Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startAnimation();
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(qaMachine);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initQAMachine);
+  } else {
+    initQAMachine();
+  }
+</script>

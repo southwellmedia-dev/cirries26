@@ -1,0 +1,807 @@
+---
+/**
+ * MeetSLASection - "From Reactive Alerts to Proactive Intelligence"
+ *
+ * Features a "Predictive Shield" Visualization representing:
+ * - Transformation from reactive (red alerts) to proactive (green predictions)
+ * - AI heartbeat learning pattern
+ * - Early warning signals catching issues before breach
+ * - Floating, elegant aesthetic
+ */
+import Container from "../../ui/Container.astro";
+import Button from "../../ui/Button.astro";
+import DartLogomark from "../../../assets/logos/ai-logomark.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  paragraphs?: string[];
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  eyebrow = "Beyond Monitoring",
+  title = "From Reactive Alerts to",
+  highlightText = "Proactive Intelligence",
+  paragraphs = [
+    "Your Service Level Agreement is more than a contract; it's the <strong>promise that defines your reputation</strong>. But in today's complex networks, are you truly in control of that promise? Or are you caught in a reactive cycle—waiting for a threshold to be breached, an alarm to ring, and a customer to complain?",
+    "The fatal flaw of traditional monitoring is that it tells you <strong>you've already failed</strong>. DART AI is designed to tell you how to prevent failure.",
+    "Our platform's AI engine learns the <strong>unique operational heartbeat</strong> of your network. It understands what normal performance looks like at the most granular level, allowing it to identify the subtle, leading indicators of a developing problem. Instead of a red alert after a breach, you get a <strong>predictive insight</strong>, giving you the time and the data needed to resolve an issue before it ever impacts a single user."
+  ],
+  primaryCta = { label: "Schedule a Demo", href: "/contact" },
+  secondaryCta = { label: "View All Solutions", href: "/solutions" }
+} = Astro.props;
+---
+
+<section class="meet-sla-section" data-theme="light">
+  <!-- Background -->
+  <div class="section-bg">
+    <div class="bg-gradient"></div>
+    <div class="bg-grain"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="meet-sla">
+      <!-- Content Column -->
+      <div class="meet-sla__content">
+        <span class="meet-sla__eyebrow">{eyebrow}</span>
+        <h2 class="meet-sla__title">{title} <span>{highlightText}</span></h2>
+        {paragraphs.map((text) => (
+          <p class="meet-sla__text" set:html={text} />
+        ))}
+        <div class="meet-sla__actions">
+          <Button href={primaryCta.href} variant="primary">
+            {primaryCta.label}
+          </Button>
+          <Button href={secondaryCta.href} variant="outline-dark">
+            {secondaryCta.label}
+          </Button>
+        </div>
+      </div>
+
+      <!-- Predictive Shield Visualization -->
+      <div class="shield-viz" id="shield-viz">
+        <!-- Heartbeat Waveform Background -->
+        <div class="heartbeat-field" id="heartbeat-field">
+          <svg class="heartbeat-svg" viewBox="0 0 400 200" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="rgba(234, 36, 43, 0.1)" />
+                <stop offset="50%" stop-color="rgba(234, 36, 43, 0.3)" />
+                <stop offset="100%" stop-color="rgba(34, 197, 94, 0.3)" />
+              </linearGradient>
+            </defs>
+            <path class="heartbeat-path" d="M0,100 L50,100 L70,100 L80,60 L90,140 L100,100 L150,100 L170,100 L180,50 L190,150 L200,100 L250,100 L270,100 L280,70 L290,130 L300,100 L400,100" />
+          </svg>
+        </div>
+
+        <!-- Concentric Protection Rings -->
+        <div class="protection-rings">
+          <div class="protect-ring protect-ring--1"></div>
+          <div class="protect-ring protect-ring--2"></div>
+          <div class="protect-ring protect-ring--3"></div>
+        </div>
+
+        <!-- Alert Transformation Zone -->
+        <div class="alert-zone" id="alert-zone">
+          <!-- Reactive alerts (red, fading out) -->
+          <div class="alert-particle alert-reactive" id="reactive-1"></div>
+          <div class="alert-particle alert-reactive" id="reactive-2"></div>
+          <div class="alert-particle alert-reactive" id="reactive-3"></div>
+          <!-- Proactive insights (green, emerging) -->
+          <div class="alert-particle alert-proactive" id="proactive-1"></div>
+          <div class="alert-particle alert-proactive" id="proactive-2"></div>
+          <div class="alert-particle alert-proactive" id="proactive-3"></div>
+        </div>
+
+        <!-- Central AI Core -->
+        <div class="ai-core">
+          <div class="core-glow"></div>
+          <div class="core-ring core-ring--outer"></div>
+          <div class="core-ring core-ring--inner"></div>
+          <div class="core-center">
+            <img src={DartLogomark.src} alt="DART AI" class="dart-logo" />
+          </div>
+        </div>
+
+        <!-- Floating Status Indicators -->
+        <div class="status-indicators">
+          <div class="status-card status-card--reactive">
+            <span class="status-icon status-icon--red"></span>
+            <span class="status-label">Reactive</span>
+            <span class="status-value" id="reactive-count">0</span>
+          </div>
+          <div class="status-card status-card--proactive">
+            <span class="status-icon status-icon--green"></span>
+            <span class="status-label">Predicted</span>
+            <span class="status-value" id="proactive-count">0</span>
+          </div>
+        </div>
+
+        <!-- Prediction Confidence Meter -->
+        <div class="confidence-meter">
+          <div class="confidence-bar">
+            <div class="confidence-fill" id="confidence-fill"></div>
+          </div>
+          <span class="confidence-label">Prediction Confidence</span>
+          <span class="confidence-value" id="confidence-value">0%</span>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     SECTION BASE - LIGHT THEME
+     ======================================== */
+  .meet-sla-section {
+    position: relative;
+    padding: var(--space-24) 0;
+    background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+    overflow: hidden;
+  }
+
+  .section-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .bg-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 90% 70% at 75% 40%, rgba(34, 197, 94, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse 70% 60% at 20% 60%, rgba(234, 36, 43, 0.03) 0%, transparent 40%);
+  }
+
+  .bg-grain {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.012;
+  }
+
+  /* ========================================
+     LAYOUT
+     ======================================== */
+  .meet-sla {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-16);
+    align-items: center;
+  }
+
+  /* ========================================
+     CONTENT
+     ======================================== */
+  .meet-sla__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+  }
+
+  .meet-sla__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #0f0f0f;
+    margin-bottom: var(--space-6);
+  }
+
+  .meet-sla__title span {
+    color: var(--color-primary);
+  }
+
+  .meet-sla__text {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #555;
+    margin-bottom: var(--space-4);
+  }
+
+  .meet-sla__text:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .meet-sla__text :global(strong) {
+    color: #1a1a1a;
+    font-weight: 600;
+  }
+
+  .meet-sla__actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  /* ========================================
+     SHIELD VISUALIZATION
+     ======================================== */
+  .shield-viz {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* Heartbeat Waveform */
+  .heartbeat-field {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    transform: translateY(-50%);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .heartbeat-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .heartbeat-path {
+    fill: none;
+    stroke: url(#waveGradient);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 800;
+    stroke-dashoffset: 800;
+    animation: drawHeartbeat 3s ease-in-out infinite;
+  }
+
+  @keyframes drawHeartbeat {
+    0% { stroke-dashoffset: 800; }
+    50% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -800; }
+  }
+
+  /* Protection Rings */
+  .protection-rings {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .protect-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed rgba(34, 197, 94, 0.2);
+  }
+
+  .protect-ring--1 {
+    width: 90%;
+    height: 90%;
+    animation: protectPulse 4s ease-in-out infinite;
+  }
+
+  .protect-ring--2 {
+    width: 70%;
+    height: 70%;
+    animation: protectPulse 4s ease-in-out infinite;
+    animation-delay: 0.5s;
+    border-color: rgba(34, 197, 94, 0.25);
+  }
+
+  .protect-ring--3 {
+    width: 50%;
+    height: 50%;
+    animation: protectPulse 4s ease-in-out infinite;
+    animation-delay: 1s;
+    border-color: rgba(34, 197, 94, 0.3);
+  }
+
+  @keyframes protectPulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.02); }
+  }
+
+  /* Alert Zone */
+  .alert-zone {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .alert-particle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    opacity: 0;
+  }
+
+  .alert-reactive {
+    background: radial-gradient(circle, #ef4444 0%, rgba(239, 68, 68, 0) 70%);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+  }
+
+  .alert-proactive {
+    background: radial-gradient(circle, #22c55e 0%, rgba(34, 197, 94, 0) 70%);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+  }
+
+  /* AI Core */
+  .ai-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+  }
+
+  .core-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+      rgba(34, 197, 94, 0.15) 0%,
+      rgba(34, 197, 94, 0.05) 40%,
+      transparent 70%
+    );
+    animation: coreGlow 3s ease-in-out infinite;
+  }
+
+  @keyframes coreGlow {
+    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+  }
+
+  .core-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    border: 2px solid;
+  }
+
+  .core-ring--outer {
+    width: 120px;
+    height: 120px;
+    transform: translate(-50%, -50%);
+    border-color: rgba(34, 197, 94, 0.3);
+    animation: ringRotate 8s linear infinite;
+  }
+
+  .core-ring--inner {
+    width: 100px;
+    height: 100px;
+    transform: translate(-50%, -50%);
+    border-color: rgba(34, 197, 94, 0.2);
+    animation: ringRotate 6s linear infinite reverse;
+  }
+
+  @keyframes ringRotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .core-center {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.08),
+      0 2px 8px rgba(0, 0, 0, 0.04),
+      inset 0 2px 4px rgba(255, 255, 255, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(34, 197, 94, 0.15);
+  }
+
+  .dart-logo {
+    width: 44px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Status Indicators */
+  .status-indicators {
+    position: absolute;
+    top: 8%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5%;
+    pointer-events: none;
+  }
+
+  .status-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: var(--space-3) var(--space-4);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    opacity: 0;
+    animation: fadeInCard 0.6s ease forwards;
+  }
+
+  .status-card--reactive {
+    animation-delay: 0.3s;
+  }
+
+  .status-card--proactive {
+    animation-delay: 0.5s;
+  }
+
+  @keyframes fadeInCard {
+    to { opacity: 1; }
+  }
+
+  .status-icon {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .status-icon--red {
+    background: #ef4444;
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+  }
+
+  .status-icon--green {
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+  }
+
+  .status-label {
+    font-family: var(--font-display);
+    font-size: 0.5625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+  }
+
+  .status-value {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1;
+  }
+
+  /* Confidence Meter */
+  .confidence-meter {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: var(--space-3) var(--space-5);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    min-width: 160px;
+  }
+
+  .confidence-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .confidence-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+
+  .confidence-label {
+    font-family: var(--font-display);
+    font-size: 0.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+  }
+
+  .confidence-value {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #22c55e;
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 1024px) {
+    .meet-sla {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .shield-viz {
+      max-width: 400px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .meet-sla-section {
+      padding: var(--space-16) 0;
+    }
+
+    .meet-sla__title {
+      font-size: clamp(1.75rem, 6vw, 2.25rem);
+    }
+
+    .meet-sla__actions {
+      flex-direction: column;
+    }
+
+    .shield-viz {
+      max-width: 340px;
+    }
+
+    .core-center {
+      width: 70px;
+      height: 70px;
+    }
+
+    .dart-logo {
+      width: 38px;
+    }
+
+    .core-glow {
+      width: 150px;
+      height: 150px;
+    }
+
+    .core-ring--outer {
+      width: 100px;
+      height: 100px;
+    }
+
+    .core-ring--inner {
+      width: 85px;
+      height: 85px;
+    }
+
+    .status-indicators {
+      padding: 0 2%;
+    }
+
+    .status-card {
+      padding: var(--space-2) var(--space-3);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .shield-viz {
+      max-width: 300px;
+    }
+
+    .core-center {
+      width: 60px;
+      height: 60px;
+    }
+
+    .dart-logo {
+      width: 32px;
+    }
+
+    .status-value {
+      font-size: 1rem;
+    }
+
+    .confidence-meter {
+      min-width: 140px;
+      padding: var(--space-2) var(--space-4);
+    }
+  }
+</style>
+
+<script>
+  /**
+   * Predictive Shield Visualization
+   * - Shows transformation from reactive alerts to proactive predictions
+   * - Animated counters for reactive vs predicted issues
+   * - Confidence meter building up
+   */
+  function initShieldViz() {
+    const shieldViz = document.getElementById('shield-viz');
+    const reactiveCount = document.getElementById('reactive-count');
+    const proactiveCount = document.getElementById('proactive-count');
+    const confidenceFill = document.getElementById('confidence-fill');
+    const confidenceValue = document.getElementById('confidence-value');
+
+    if (!shieldViz) return;
+
+    let isAnimating = false;
+    let reactive = 0;
+    let proactive = 0;
+    let confidence = 0;
+
+    // Alert positions
+    const reactivePositions = [
+      { top: '25%', left: '15%' },
+      { top: '70%', left: '20%' },
+      { top: '45%', left: '8%' }
+    ];
+
+    const proactivePositions = [
+      { top: '20%', right: '18%' },
+      { top: '65%', right: '15%' },
+      { top: '40%', right: '10%' }
+    ];
+
+    // Position alert particles
+    function positionAlerts() {
+      reactivePositions.forEach((pos, i) => {
+        const el = document.getElementById(`reactive-${i + 1}`);
+        if (el) {
+          el.style.top = pos.top;
+          el.style.left = pos.left;
+        }
+      });
+
+      proactivePositions.forEach((pos, i) => {
+        const el = document.getElementById(`proactive-${i + 1}`);
+        if (el) {
+          el.style.top = pos.top;
+          el.style.right = pos.right;
+        }
+      });
+    }
+
+    // Animate reactive alerts (fading in then out)
+    function animateReactiveAlert(index: number) {
+      const el = document.getElementById(`reactive-${index}`);
+      if (!el) return;
+
+      el.animate([
+        { opacity: 0, transform: 'scale(0.5)' },
+        { opacity: 0.8, transform: 'scale(1.2)' },
+        { opacity: 0.6, transform: 'scale(1)' },
+        { opacity: 0, transform: 'scale(0.8)' }
+      ], {
+        duration: 2000,
+        easing: 'ease-out'
+      });
+
+      // Update counter
+      setTimeout(() => {
+        if (reactive < 3 && reactiveCount) {
+          reactive++;
+          reactiveCount.textContent = reactive.toString();
+        }
+      }, 500);
+    }
+
+    // Animate proactive predictions (emerging smoothly)
+    function animateProactiveAlert(index: number) {
+      const el = document.getElementById(`proactive-${index}`);
+      if (!el) return;
+
+      el.animate([
+        { opacity: 0, transform: 'scale(0)' },
+        { opacity: 1, transform: 'scale(1.1)' },
+        { opacity: 0.9, transform: 'scale(1)' }
+      ], {
+        duration: 1500,
+        easing: 'ease-out',
+        fill: 'forwards'
+      });
+
+      // Update counter
+      setTimeout(() => {
+        if (proactive < 12 && proactiveCount) {
+          proactive++;
+          proactiveCount.textContent = proactive.toString();
+        }
+      }, 300);
+    }
+
+    // Animate confidence meter
+    function animateConfidence() {
+      const targetConfidence = 94;
+      const interval = setInterval(() => {
+        if (confidence < targetConfidence) {
+          confidence += Math.random() * 3;
+          if (confidence > targetConfidence) confidence = targetConfidence;
+
+          if (confidenceFill) {
+            confidenceFill.style.width = `${confidence}%`;
+          }
+          if (confidenceValue) {
+            confidenceValue.textContent = `${Math.floor(confidence)}%`;
+          }
+        } else {
+          clearInterval(interval);
+        }
+      }, 50);
+    }
+
+    // Start animation sequence
+    function startAnimation() {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      positionAlerts();
+
+      // Stagger reactive alerts
+      setTimeout(() => animateReactiveAlert(1), 300);
+      setTimeout(() => animateReactiveAlert(2), 800);
+      setTimeout(() => animateReactiveAlert(3), 1300);
+
+      // Then proactive predictions
+      setTimeout(() => animateProactiveAlert(1), 1800);
+      setTimeout(() => animateProactiveAlert(2), 2200);
+      setTimeout(() => animateProactiveAlert(3), 2600);
+
+      // Continue proactive counting
+      let proactiveInterval: NodeJS.Timeout;
+      setTimeout(() => {
+        proactiveInterval = setInterval(() => {
+          if (proactive < 12 && proactiveCount) {
+            proactive++;
+            proactiveCount.textContent = proactive.toString();
+          } else {
+            clearInterval(proactiveInterval);
+          }
+        }, 400);
+      }, 3000);
+
+      // Start confidence meter
+      setTimeout(animateConfidence, 2000);
+    }
+
+    // Intersection Observer for performance
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startAnimation();
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+
+    observer.observe(shieldViz);
+  }
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initShieldViz);
+  } else {
+    initShieldViz();
+  }
+</script>

@@ -1,0 +1,731 @@
+---
+/**
+ * ContextSection - "Context is Everything: The Story Behind the Data"
+ *
+ * Dark editorial section showcasing AI correlation and narrative generation.
+ * Features a narrative terminal that demonstrates DART transforming raw metrics
+ * into actionable business intelligence with full contextual understanding.
+ */
+import Container from "../../ui/Container.astro";
+
+interface Props {
+  badge?: string;
+  title?: string;
+  titleHighlight?: string;
+  introParagraph?: string;
+}
+
+const {
+  badge = "AI-Powered Context",
+  title = "The Story",
+  titleHighlight = "Behind the Data",
+  introParagraph = "Traditional reports show you that a metric changed. DART tells you <strong>why it matters</strong>. By leveraging a deep, ontological understanding of your entire network, our platform understands the intricate relationships between applications, infrastructure, and users."
+} = Astro.props;
+---
+
+<section class="context-section" data-theme="dark">
+  <!-- Atmospheric Background -->
+  <div class="section-bg">
+    <div class="grid-pattern"></div>
+    <div class="glow-orb glow-orb--primary"></div>
+    <div class="glow-orb glow-orb--secondary"></div>
+  </div>
+
+  <Container size="xl">
+    <!-- Section Header -->
+    <header class="section-header">
+      <span class="section-badge">{badge}</span>
+      <h2 class="section-title">
+        {title} <span class="title-highlight">{titleHighlight}</span>
+      </h2>
+      <p class="section-intro" set:html={introParagraph} />
+    </header>
+
+    <!-- Narrative Terminal -->
+    <div class="terminal-showcase">
+      <div class="terminal">
+        <!-- Terminal Header -->
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="dot dot--red"></span>
+            <span class="dot dot--yellow"></span>
+            <span class="dot dot--green"></span>
+          </div>
+          <span class="terminal-title">DART AI — Narrative Engine</span>
+          <div class="terminal-status">
+            <span class="status-dot"></span>
+            <span class="status-text">Live</span>
+          </div>
+        </div>
+
+        <!-- Terminal Content -->
+        <div class="terminal-body">
+          <!-- Raw Input Section -->
+          <div class="terminal-section">
+            <div class="section-label">
+              <span class="label-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                </svg>
+              </span>
+              <span class="label-text">Raw Signal Detected</span>
+              <span class="label-time">14:32:07</span>
+            </div>
+            <div class="raw-data">
+              <code class="data-line">
+                <span class="data-key">metric:</span>
+                <span class="data-value">latency_ms</span>
+              </code>
+              <code class="data-line">
+                <span class="data-key">value:</span>
+                <span class="data-value data-value--alert">+300ms</span>
+              </code>
+              <code class="data-line">
+                <span class="data-key">source:</span>
+                <span class="data-value">db-primary-01</span>
+              </code>
+            </div>
+          </div>
+
+          <!-- Processing Indicator -->
+          <div class="processing">
+            <div class="processing-line"></div>
+            <div class="processing-badge">
+              <svg class="processing-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 3v3m0 12v3m9-9h-3M6 12H3m15.364-6.364l-2.121 2.121M8.757 15.243l-2.121 2.121m12.728 0l-2.121-2.121M8.757 8.757L6.636 6.636"/>
+              </svg>
+              <span>Correlating Context</span>
+            </div>
+            <div class="processing-line"></div>
+          </div>
+
+          <!-- AI Narrative Output -->
+          <div class="terminal-section terminal-section--output">
+            <div class="section-label section-label--output">
+              <span class="label-icon label-icon--output">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </span>
+              <span class="label-text">AI-Generated Narrative</span>
+              <span class="label-badge">Complete</span>
+            </div>
+
+            <div class="narrative-output">
+              <p class="narrative-text">
+                <span class="narrative-highlight">A 300ms latency increase</span> was detected on the
+                <span class="narrative-entity">primary database server</span>, directly impacting the
+                <span class="narrative-entity">'Add to Cart' API</span> and putting
+                <span class="narrative-risk">$50k in hourly revenue</span> at risk.
+              </p>
+
+              <div class="narrative-context">
+                <div class="context-item">
+                  <span class="context-label">Root Cause</span>
+                  <span class="context-value">Connection pool exhaustion</span>
+                </div>
+                <div class="context-item">
+                  <span class="context-label">Affected Users</span>
+                  <span class="context-value">~12,400 active sessions</span>
+                </div>
+                <div class="context-item">
+                  <span class="context-label">Recommended Action</span>
+                  <span class="context-value">Scale database replicas</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Performance Footer -->
+          <div class="terminal-footer">
+            <div class="footer-stat">
+              <span class="stat-label">Analysis Time</span>
+              <span class="stat-value">&lt; 30 seconds</span>
+            </div>
+            <div class="footer-stat">
+              <span class="stat-label">Data Points Correlated</span>
+              <span class="stat-value">847</span>
+            </div>
+            <div class="footer-stat">
+              <span class="stat-label">Confidence</span>
+              <span class="stat-value">98.4%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Capability Statement -->
+    <footer class="section-footer">
+      <p class="closing-text">
+        This allows our AI engine to automatically correlate events and build a <em>complete story</em> — not just metrics, but meaning.
+      </p>
+    </footer>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     CONTEXT SECTION
+     ======================================== */
+  .context-section {
+    position: relative;
+    padding: var(--space-24) 0;
+    background: var(--color-bg-primary);
+    overflow: hidden;
+  }
+
+  /* Atmospheric Background */
+  .section-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .grid-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 70%);
+  }
+
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+  }
+
+  .glow-orb--primary {
+    top: -100px;
+    right: 15%;
+    width: 400px;
+    height: 400px;
+    background: var(--color-primary);
+    opacity: 0.06;
+  }
+
+  .glow-orb--secondary {
+    bottom: -100px;
+    left: 10%;
+    width: 350px;
+    height: 350px;
+    background: var(--color-primary);
+    opacity: 0.04;
+  }
+
+  /* ========================================
+     HEADER
+     ======================================== */
+  .section-header {
+    text-align: center;
+    max-width: 750px;
+    margin: 0 auto var(--space-16);
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-badge {
+    display: inline-block;
+    padding: var(--space-2) var(--space-5);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+    background: var(--color-primary-muted);
+    border: 1px solid var(--color-primary-subtle);
+    border-radius: 100px;
+    margin-bottom: var(--space-5);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: var(--font-bold);
+    line-height: 1.1;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-6);
+  }
+
+  .title-highlight {
+    color: var(--color-primary);
+  }
+
+  .section-intro {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .section-intro :global(strong) {
+    color: var(--color-text-primary);
+    font-weight: var(--font-semibold);
+  }
+
+  /* ========================================
+     TERMINAL SHOWCASE
+     ======================================== */
+  .terminal-showcase {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto var(--space-12);
+    z-index: 1;
+  }
+
+  .terminal {
+    background: linear-gradient(
+      145deg,
+      rgba(18, 18, 18, 0.98) 0%,
+      rgba(10, 10, 10, 0.99) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    animation: terminalReveal 0.8s ease forwards;
+    opacity: 0;
+  }
+
+  @keyframes terminalReveal {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Terminal Header */
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-6);
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .terminal-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .dot--red { background: #ef4444; }
+  .dot--yellow { background: #f59e0b; }
+  .dot--green { background: #22c55e; }
+
+  .terminal-title {
+    flex: 1;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+  }
+
+  .terminal-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: statusPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .status-text {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #22c55e;
+  }
+
+  /* Terminal Body */
+  .terminal-body {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  /* Terminal Sections */
+  .terminal-section {
+    padding: var(--space-5);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-lg);
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+  }
+
+  .label-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .label-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .label-text {
+    flex: 1;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .label-time {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.625rem;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .label-badge {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.5625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #22c55e;
+    padding: 2px 8px;
+    background: rgba(34, 197, 94, 0.1);
+    border-radius: 4px;
+  }
+
+  /* Raw Data Display */
+  .raw-data {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .data-line {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.8125rem;
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .data-key {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .data-value {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .data-value--alert {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  /* Processing Indicator */
+  .processing {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-2) 0;
+  }
+
+  .processing-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%
+    );
+  }
+
+  .processing-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
+  }
+
+  .processing-icon {
+    width: 14px;
+    height: 14px;
+    color: rgba(255, 255, 255, 0.4);
+    animation: spin 3s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .processing-badge span {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.625rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* Output Section */
+  .terminal-section--output {
+    background: linear-gradient(
+      145deg,
+      rgba(234, 36, 43, 0.03) 0%,
+      rgba(234, 36, 43, 0.01) 100%
+    );
+    border-color: rgba(234, 36, 43, 0.12);
+  }
+
+  .section-label--output {
+    border-bottom-color: rgba(234, 36, 43, 0.15);
+  }
+
+  .label-icon--output {
+    color: var(--color-primary);
+  }
+
+  /* Narrative Output */
+  .narrative-output {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .narrative-text {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+  }
+
+  .narrative-highlight {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  .narrative-entity {
+    color: var(--color-text-primary);
+    font-weight: 500;
+    padding: 1px 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+  }
+
+  .narrative-risk {
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  /* Context Items */
+  .narrative-context {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  }
+
+  .context-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .context-label {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.5625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .context-value {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+  }
+
+  /* Terminal Footer */
+  .terminal-footer {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-8);
+    padding: var(--space-4) var(--space-6);
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .footer-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .stat-label {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.5625rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .stat-value {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #22c55e;
+  }
+
+  /* ========================================
+     FOOTER
+     ======================================== */
+  .section-footer {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .closing-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    font-weight: var(--font-medium);
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .closing-text :global(em) {
+    color: var(--color-text-primary);
+    font-style: normal;
+    font-weight: var(--font-semibold);
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 768px) {
+    .context-section {
+      padding: var(--space-16) 0;
+    }
+
+    .section-title {
+      font-size: var(--text-3xl);
+    }
+
+    .section-intro {
+      font-size: var(--text-base);
+    }
+
+    .terminal-header {
+      padding: var(--space-3) var(--space-4);
+    }
+
+    .terminal-title {
+      display: none;
+    }
+
+    .terminal-body {
+      padding: var(--space-4);
+      gap: var(--space-4);
+    }
+
+    .terminal-section {
+      padding: var(--space-4);
+    }
+
+    .narrative-context {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+
+    .context-item {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .terminal-footer {
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      padding: var(--space-4);
+    }
+
+    .footer-stat {
+      flex: 1 1 auto;
+      min-width: 80px;
+    }
+
+    .closing-text {
+      font-size: var(--text-base);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .terminal-footer {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .footer-stat {
+      flex-direction: row;
+      justify-content: space-between;
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .footer-stat:last-child {
+      border-bottom: none;
+    }
+  }
+</style>

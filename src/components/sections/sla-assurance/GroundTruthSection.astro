@@ -1,0 +1,487 @@
+---
+/**
+ * GroundTruthSection - "The Indisputable Truth of the Packet"
+ *
+ * Dark editorial section showcasing 100% packet analysis capability
+ * with prominent spec highlights for data fidelity and forensic evidence.
+ */
+import Container from "../../ui/Container.astro";
+
+interface Props {
+  badge?: string;
+  title?: string;
+  titleHighlight?: string;
+  introParagraph?: string;
+  specs?: {
+    value: string;
+    label: string;
+    description: string;
+  }[];
+}
+
+const {
+  badge = "Packet-Level Verification",
+  title = "The Indisputable",
+  titleHighlight = "Truth of the Packet",
+  introParagraph = "An SLA is only as reliable as the data used to measure it. While other tools rely on sampled data or high-level flows, DART provides the ultimate ground truth by analyzing 100% of network packets in real time.",
+  specs = [
+    {
+      value: "100%",
+      label: "Complete Packet Analysis",
+      description: "Every single packet captured and analyzed in real time. No sampling, no gaps, no blind spots—just an irrefutable, high-resolution view of actual user experience."
+    },
+    {
+      value: "Instant",
+      label: "Root Cause Analysis",
+      description: "When a problem occurs, the forensic evidence is already captured. From latency and jitter to application response time—instantly trace any issue to its source."
+    }
+  ]
+} = Astro.props;
+---
+
+<section class="ground-truth-section" data-theme="dark">
+  <!-- Atmospheric Background -->
+  <div class="section-bg">
+    <div class="data-grid"></div>
+    <div class="packet-stream" id="packet-stream"></div>
+    <div class="glow-orb glow-orb--primary"></div>
+    <div class="glow-orb glow-orb--secondary"></div>
+  </div>
+
+  <Container size="xl">
+    <!-- Section Header -->
+    <header class="section-header">
+      <span class="section-badge">{badge}</span>
+      <h2 class="section-title">
+        {title} <span class="title-highlight">{titleHighlight}</span>
+      </h2>
+      <p class="section-intro" set:html={introParagraph} />
+    </header>
+
+    <!-- Spec Cards -->
+    <div class="specs-grid">
+      {specs.map((spec, index) => (
+        <article class="spec-card" style={`--card-index: ${index}`}>
+          <div class="spec-value-container">
+            <span class="spec-value">{spec.value}</span>
+            <div class="spec-glow"></div>
+          </div>
+          <div class="spec-content">
+            <h3 class="spec-label">{spec.label}</h3>
+            <p class="spec-description">{spec.description}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Visual Packet Flow Indicator -->
+    <div class="packet-indicator">
+      <div class="packet-flow">
+        <div class="packet-dot"></div>
+        <div class="packet-dot"></div>
+        <div class="packet-dot"></div>
+        <div class="packet-dot"></div>
+        <div class="packet-dot"></div>
+      </div>
+      <span class="packet-label">Real-time packet capture active</span>
+    </div>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     GROUND TRUTH SECTION
+     ======================================== */
+  .ground-truth-section {
+    position: relative;
+    padding: var(--space-24) 0;
+    background: var(--color-bg-primary);
+    overflow: hidden;
+  }
+
+  /* Atmospheric Background */
+  .section-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .data-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, black 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 50%, black 0%, transparent 70%);
+  }
+
+  .packet-stream {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+  }
+
+  .glow-orb--primary {
+    top: -80px;
+    left: 20%;
+    width: 400px;
+    height: 400px;
+    background: var(--color-primary);
+    opacity: 0.06;
+  }
+
+  .glow-orb--secondary {
+    bottom: -100px;
+    right: 15%;
+    width: 350px;
+    height: 350px;
+    background: #22c55e;
+    opacity: 0.04;
+  }
+
+  /* ========================================
+     HEADER
+     ======================================== */
+  .section-header {
+    text-align: center;
+    max-width: 750px;
+    margin: 0 auto var(--space-16);
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-badge {
+    display: inline-block;
+    padding: var(--space-2) var(--space-5);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+    background: var(--color-primary-muted);
+    border: 1px solid var(--color-primary-subtle);
+    border-radius: 100px;
+    margin-bottom: var(--space-5);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: var(--font-bold);
+    line-height: 1.1;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-6);
+  }
+
+  .title-highlight {
+    color: var(--color-primary);
+  }
+
+  .section-intro {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  /* ========================================
+     SPEC CARDS
+     ======================================== */
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+    margin-bottom: var(--space-12);
+    position: relative;
+    z-index: 1;
+  }
+
+  .spec-card {
+    position: relative;
+    padding: var(--space-10);
+    background: linear-gradient(
+      145deg,
+      rgba(20, 20, 20, 0.95) 0%,
+      rgba(12, 12, 12, 0.98) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Staggered animation */
+    animation: specReveal 0.8s ease forwards;
+    animation-delay: calc(var(--card-index) * 0.15s);
+    opacity: 0;
+  }
+
+  @keyframes specReveal {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .spec-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(234, 36, 43, 0.3) 50%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .spec-card:hover {
+    border-color: rgba(234, 36, 43, 0.2);
+    transform: translateY(-4px);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.4),
+      0 0 60px rgba(234, 36, 43, 0.08);
+  }
+
+  .spec-card:hover::before {
+    opacity: 1;
+  }
+
+  .spec-value-container {
+    position: relative;
+    margin-bottom: var(--space-6);
+  }
+
+  .spec-value {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 9vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    background: linear-gradient(
+      135deg,
+      #ffffff 0%,
+      rgba(255, 255, 255, 0.85) 40%,
+      var(--color-primary) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .spec-glow {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 120px;
+    height: 80px;
+    background: radial-gradient(ellipse, rgba(234, 36, 43, 0.15) 0%, transparent 70%);
+    filter: blur(30px);
+    pointer-events: none;
+  }
+
+  .spec-content {
+    position: relative;
+  }
+
+  .spec-label {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    color: var(--color-primary);
+    margin-bottom: var(--space-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .spec-description {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  /* ========================================
+     PACKET INDICATOR
+     ======================================== */
+  .packet-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    position: relative;
+    z-index: 1;
+  }
+
+  .packet-flow {
+    display: flex;
+    gap: 12px;
+    padding: var(--space-3) var(--space-6);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 50px;
+  }
+
+  .packet-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    animation: packetPulse 1.5s ease-in-out infinite;
+  }
+
+  .packet-dot:nth-child(1) { animation-delay: 0s; }
+  .packet-dot:nth-child(2) { animation-delay: 0.15s; }
+  .packet-dot:nth-child(3) { animation-delay: 0.3s; }
+  .packet-dot:nth-child(4) { animation-delay: 0.45s; }
+  .packet-dot:nth-child(5) { animation-delay: 0.6s; }
+
+  @keyframes packetPulse {
+    0%, 100% {
+      opacity: 0.3;
+      transform: scale(0.8);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  }
+
+  .packet-label {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 1024px) {
+    .specs-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    .spec-card {
+      padding: var(--space-8);
+    }
+
+    .spec-value {
+      font-size: clamp(3rem, 14vw, 4.5rem);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .ground-truth-section {
+      padding: var(--space-16) 0;
+    }
+
+    .section-title {
+      font-size: var(--text-3xl);
+    }
+
+    .section-intro {
+      font-size: var(--text-base);
+    }
+
+    .spec-card {
+      padding: var(--space-6);
+    }
+
+    .spec-label {
+      font-size: var(--text-base);
+    }
+
+    .packet-flow {
+      gap: 8px;
+      padding: var(--space-2) var(--space-4);
+    }
+
+    .packet-dot {
+      width: 6px;
+      height: 6px;
+    }
+  }
+</style>
+
+<script>
+  /**
+   * Packet Stream Background Animation
+   * Creates flowing packet visualization in background
+   */
+  function initPacketStream() {
+    const packetStream = document.getElementById('packet-stream');
+    if (!packetStream) return;
+
+    function createPacket() {
+      const packet = document.createElement('div');
+      packet.style.cssText = `
+        position: absolute;
+        width: ${4 + Math.random() * 4}px;
+        height: ${4 + Math.random() * 4}px;
+        background: ${Math.random() > 0.7 ? 'var(--color-primary)' : 'rgba(255, 255, 255, 0.3)'};
+        border-radius: 50%;
+        left: ${Math.random() * 100}%;
+        top: -10px;
+        opacity: 0;
+        pointer-events: none;
+      `;
+
+      packetStream.appendChild(packet);
+
+      const duration = 3000 + Math.random() * 2000;
+
+      packet.animate([
+        { top: '-10px', opacity: 0 },
+        { top: '20%', opacity: 0.6 },
+        { top: '80%', opacity: 0.4 },
+        { top: '110%', opacity: 0 }
+      ], {
+        duration,
+        easing: 'linear'
+      }).onfinish = () => packet.remove();
+    }
+
+    // Spawn packets
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setInterval(createPacket, 200);
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.1 });
+
+    observer.observe(packetStream);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPacketStream);
+  } else {
+    initPacketStream();
+  }
+</script>

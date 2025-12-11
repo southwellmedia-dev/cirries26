@@ -1,0 +1,46 @@
+---
+/**
+ * Reporting Page
+ *
+ * "Beyond Dashboards: Reporting That Answers 'So What?'"
+ *
+ * Transform raw network data into intelligent, role-specific narratives
+ * that drive decisive action. Features:
+ * - Hero section introducing intelligence translation
+ * - Meet section with data-to-insight visualization
+ * - Context section with AI correlation capabilities
+ * - Stakeholder section with role-specific report types
+ * - CTA section (provided by layout via CTABar)
+ */
+import SubpageLayout from "../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetReportingSection from "../../../components/sections/reporting/MeetReportingSection.astro";
+import ContextSection from "../../../components/sections/reporting/ContextSection.astro";
+import StakeholderReportsSection from "../../../components/sections/reporting/StakeholderReportsSection.astro";
+---
+
+<SubpageLayout
+  title="Reporting - Cirries Technologies"
+  description="Transform complex network events into clear, role-specific narratives. DART AI reporting answers 'So What?' with AI-generated insights for every stakeholder."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Intelligent <span>Reporting</span>"
+      subtitle="Beyond Dashboards: Narratives That Drive Action"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet Reporting - Light section with data translation visualization -->
+  <MeetReportingSection />
+
+  <!-- Context is Everything - Dark section with AI correlation -->
+  <ContextSection />
+
+  <!-- Stakeholder Reports - Light section with report types -->
+  <StakeholderReportsSection />
+
+  <!-- CTA Section is provided by the layout via CTABar -->
+</SubpageLayout>

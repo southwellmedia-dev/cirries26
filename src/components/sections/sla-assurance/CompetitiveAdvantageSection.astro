@@ -1,0 +1,386 @@
+---
+/**
+ * CompetitiveAdvantageSection - "Turn Your SLA into a Competitive Advantage"
+ *
+ * Light editorial section showcasing business benefits with
+ * elegant benefit cards and closing CTA message.
+ */
+import Container from "../../ui/Container.astro";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  titleHighlight?: string;
+  introParagraph?: string;
+  benefits?: {
+    icon: string;
+    title: string;
+    description: string;
+  }[];
+  closingStatement?: string;
+}
+
+const {
+  eyebrow = "Strategic Advantage",
+  title = "Turn Your SLA into a",
+  titleHighlight = "Competitive Advantage",
+  introParagraph = "When you can move from reacting to problems to proactively guaranteeing performance, your SLA is no longer a source of risk. It becomes your most powerful differentiator.",
+  benefits = [
+    {
+      icon: "trust",
+      title: "Build Unbreakable Trust",
+      description: "Consistently exceed your customers' expectations and deliver a flawless experience that fosters loyalty and prevents churn."
+    },
+    {
+      icon: "cost",
+      title: "Slash Operational Costs",
+      description: "Eliminate the costly, time-consuming fire drills associated with reactive troubleshooting and reduce the business impact of downtime."
+    },
+    {
+      icon: "confidence",
+      title: "Operate with Total Confidence",
+      description: "Make data-driven decisions to optimize your network, secure in the knowledge that you have complete control over your service delivery."
+    }
+  ],
+  closingStatement = "Stop managing your SLAs from behind. Start mastering them with proactive intelligence."
+} = Astro.props;
+
+// Icon SVGs
+const icons: Record<string, string> = {
+  trust: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    <path d="m9 12 2 2 4-4"/>
+  </svg>`,
+  cost: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+  </svg>`,
+  confidence: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+    <polyline points="22 4 12 14.01 9 11.01"/>
+  </svg>`
+};
+---
+
+<section class="competitive-advantage-section" data-theme="light">
+  <!-- Background -->
+  <div class="section-bg">
+    <div class="bg-gradient"></div>
+    <div class="bg-pattern"></div>
+  </div>
+
+  <Container size="xl">
+    <!-- Section Header -->
+    <header class="section-header">
+      <span class="section-eyebrow">{eyebrow}</span>
+      <h2 class="section-title">
+        {title} <span class="title-highlight">{titleHighlight}</span>
+      </h2>
+      <p class="section-intro">{introParagraph}</p>
+    </header>
+
+    <!-- Benefits Grid -->
+    <div class="benefits-grid">
+      {benefits.map((benefit, index) => (
+        <article class="benefit-card" style={`--card-index: ${index}`}>
+          <div class="benefit-icon">
+            <Fragment set:html={icons[benefit.icon]} />
+          </div>
+          <h3 class="benefit-title">{benefit.title}</h3>
+          <p class="benefit-description">{benefit.description}</p>
+        </article>
+      ))}
+    </div>
+
+    <!-- Closing Statement -->
+    <footer class="section-footer">
+      <p class="closing-text">{closingStatement}</p>
+      <div class="closing-accent"></div>
+    </footer>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     COMPETITIVE ADVANTAGE SECTION
+     ======================================== */
+  .competitive-advantage-section {
+    position: relative;
+    padding: var(--space-24) 0;
+    background: linear-gradient(180deg, #f9fafb 0%, #ffffff 50%, #fafbfc 100%);
+    overflow: hidden;
+  }
+
+  /* Background */
+  .section-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .bg-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 30% 20%, rgba(34, 197, 94, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 50% at 70% 80%, rgba(234, 36, 43, 0.03) 0%, transparent 40%);
+  }
+
+  .bg-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(0, 0, 0, 0.01) 1px, transparent 1px),
+      radial-gradient(circle at 80% 50%, rgba(0, 0, 0, 0.01) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* ========================================
+     HEADER
+     ======================================== */
+  .section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto var(--space-16);
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #22c55e;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #0f0f0f;
+    margin-bottom: var(--space-5);
+  }
+
+  .title-highlight {
+    color: var(--color-primary);
+  }
+
+  .section-intro {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: #555;
+    margin: 0;
+  }
+
+  /* ========================================
+     BENEFITS GRID
+     ======================================== */
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+    margin-bottom: var(--space-16);
+    position: relative;
+    z-index: 1;
+  }
+
+  .benefit-card {
+    position: relative;
+    padding: var(--space-8);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Staggered animation */
+    animation: cardReveal 0.7s ease forwards;
+    animation-delay: calc(var(--card-index) * 0.12s);
+    opacity: 0;
+  }
+
+  @keyframes cardReveal {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .benefit-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #22c55e, transparent);
+    border-radius: 0 0 4px 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease, width 0.3s ease;
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(34, 197, 94, 0.2);
+    box-shadow:
+      0 16px 40px rgba(0, 0, 0, 0.08),
+      0 4px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  .benefit-card:hover::before {
+    opacity: 1;
+    width: 100px;
+  }
+
+  .benefit-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: var(--space-5);
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+    border-radius: 16px;
+    color: #22c55e;
+    transition: all 0.3s ease;
+  }
+
+  .benefit-icon :global(svg) {
+    width: 28px;
+    height: 28px;
+  }
+
+  .benefit-card:hover .benefit-icon {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.08) 100%);
+    transform: scale(1.05);
+  }
+
+  .benefit-title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    color: #1a1a1a;
+    margin-bottom: var(--space-3);
+    letter-spacing: -0.01em;
+  }
+
+  .benefit-description {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: #666;
+    margin: 0;
+  }
+
+  /* ========================================
+     FOOTER
+     ======================================== */
+  .section-footer {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .closing-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: var(--font-semibold);
+    line-height: 1.5;
+    color: #1a1a1a;
+    margin: 0 0 var(--space-6);
+  }
+
+  .closing-accent {
+    width: 60px;
+    height: 4px;
+    margin: 0 auto;
+    background: linear-gradient(90deg, var(--color-primary), #22c55e);
+    border-radius: 2px;
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 1024px) {
+    .benefits-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .benefit-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+      gap: 0 var(--space-5);
+      text-align: left;
+      padding: var(--space-6);
+    }
+
+    .benefit-icon {
+      grid-row: span 2;
+      align-self: center;
+      margin-bottom: 0;
+    }
+
+    .benefit-title {
+      margin-bottom: var(--space-1);
+    }
+
+    .benefit-card::before {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .competitive-advantage-section {
+      padding: var(--space-16) 0;
+    }
+
+    .section-title {
+      font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+
+    .section-intro {
+      font-size: var(--text-base);
+    }
+
+    .benefit-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+    }
+
+    .benefit-icon :global(svg) {
+      width: 24px;
+      height: 24px;
+    }
+
+    .benefit-title {
+      font-size: var(--text-base);
+    }
+
+    .benefit-description {
+      font-size: var(--text-xs);
+    }
+
+    .closing-text {
+      font-size: var(--text-lg);
+    }
+  }
+</style>

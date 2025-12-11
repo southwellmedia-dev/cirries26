@@ -1,0 +1,46 @@
+---
+/**
+ * SLA Assurance Page
+ *
+ * "Beyond Monitoring: Master Your Service Level Agreements"
+ *
+ * Transform SLA management from reactive fire-fighting to proactive
+ * service assurance with DART AI. Features:
+ * - Hero section introducing the SLA mastery concept
+ * - Meet section with predictive visualization
+ * - Ground Truth section with packet verification
+ * - Competitive Advantage section with business benefits
+ * - CTA section (provided by layout via CTABar)
+ */
+import SubpageLayout from "../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetSLASection from "../../../components/sections/sla-assurance/MeetSLASection.astro";
+import GroundTruthSection from "../../../components/sections/sla-assurance/GroundTruthSection.astro";
+import CompetitiveAdvantageSection from "../../../components/sections/sla-assurance/CompetitiveAdvantageSection.astro";
+---
+
+<SubpageLayout
+  title="SLA Assurance - Cirries Technologies"
+  description="Transform SLA management from reactive fire-fighting to proactive service assurance. Master your Service Level Agreements with DART AI's predictive intelligence."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="SLA <span>Assurance</span>"
+      subtitle="Master Your Service Level Agreements with Proactive Intelligence"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet SLA Assurance - Light section with predictive visualization -->
+  <MeetSLASection />
+
+  <!-- Ground Truth - Dark section with packet verification -->
+  <GroundTruthSection />
+
+  <!-- Competitive Advantage - Light section with business benefits -->
+  <CompetitiveAdvantageSection />
+
+  <!-- CTA Section is provided by the layout via CTABar -->
+</SubpageLayout>

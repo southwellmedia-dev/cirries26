@@ -1,0 +1,708 @@
+---
+/**
+ * StakeholderReportsSection - "AI-Generated Narratives for Every Stakeholder"
+ *
+ * Light editorial section showcasing the three report types with
+ * distinct visual personalities for each audience:
+ * - Executive Summaries (strategic, high-level)
+ * - Technical Deep Dives (detailed, data-rich)
+ * - Security & Compliance Audits (structured, authoritative)
+ */
+import Container from "../../ui/Container.astro";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  titleHighlight?: string;
+  introParagraph?: string;
+  proactiveTitle?: string;
+  proactiveText?: string;
+  closingStatement?: string;
+}
+
+const {
+  eyebrow = "Role-Specific Intelligence",
+  title = "AI-Generated Narratives for",
+  titleHighlight = "Every Stakeholder",
+  introParagraph = "Using the power of Generative AI, DART tailors its insights to the audience.",
+  proactiveTitle = "Proactive Insights, Not Just Historical Records",
+  proactiveText = "A good report shouldn't just tell you what happened yesterday. DART's predictive analytics identify emerging trends and highlight future risks before they escalate. This allows you to move from reactive problem-solving to proactive, strategic optimization, fine-tuning resource allocation and preventing outages before they ever occur.",
+  closingStatement = "Stop drowning in data. Start making intelligent, confident decisions."
+} = Astro.props;
+---
+
+<section class="stakeholder-section" data-theme="light">
+  <!-- Background -->
+  <div class="section-bg">
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+  </div>
+
+  <Container size="xl">
+    <!-- Section Header -->
+    <header class="section-header">
+      <span class="section-eyebrow">{eyebrow}</span>
+      <h2 class="section-title">
+        {title} <span class="title-highlight">{titleHighlight}</span>
+      </h2>
+      <p class="section-intro">{introParagraph}</p>
+    </header>
+
+    <!-- Report Types - Bento Grid -->
+    <div class="reports-showcase">
+      <!-- Executive Card -->
+      <article class="report-card report-card--executive">
+        <div class="card-accent"></div>
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 3v18h18"/>
+                <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+              </svg>
+              <span>Executive View</span>
+            </div>
+            <span class="card-audience">C-Suite & Leadership</span>
+          </div>
+
+          <h3 class="card-title">Executive Summaries</h3>
+          <p class="card-description">Receive clear, concise reports that translate technical issues into business impact, risk analysis, and ROI, allowing for strategic, data-driven decision-making.</p>
+
+          <!-- Executive Report Preview -->
+          <div class="card-preview preview--executive">
+            <div class="preview-metrics">
+              <div class="metric">
+                <span class="metric-value">99.7%</span>
+                <span class="metric-label">Uptime</span>
+              </div>
+              <div class="metric metric--alert">
+                <span class="metric-value">$50K</span>
+                <span class="metric-label">At Risk</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Proactive Insights Card -->
+      <article class="report-card report-card--proactive">
+        <div class="card-accent"></div>
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-badge card-badge--green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <span>Predictive</span>
+            </div>
+          </div>
+
+          <h3 class="card-title">Proactive Insights</h3>
+          <p class="card-description">A good report shouldn't just tell you what happened yesterday. DART's predictive analytics identify emerging trends and highlight future risks before they escalate, allowing you to move from reactive problem-solving to proactive, strategic optimization.</p>
+
+          <!-- Proactive Preview -->
+          <div class="card-preview preview--proactive">
+            <div class="trend-indicator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                <polyline points="17 6 23 6 23 12"/>
+              </svg>
+              <span>Trend detected</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Technical Card -->
+      <article class="report-card report-card--technical">
+        <div class="card-accent"></div>
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-badge card-badge--teal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <polyline points="16 18 22 12 16 6"/>
+                <polyline points="8 6 2 12 8 18"/>
+              </svg>
+              <span>Technical View</span>
+            </div>
+            <span class="card-audience">Engineers & DevOps</span>
+          </div>
+
+          <h3 class="card-title">Technical Deep Dives</h3>
+          <p class="card-description">Empower your engineers with rich, contextual reports that include automated root-cause analysis and the specific forensic data needed to resolve issues in record time.</p>
+
+          <!-- Technical Report Preview -->
+          <div class="card-preview preview--technical">
+            <div class="preview-code">
+              <code class="code-line"><span class="code-key">service:</span> db-primary-01</code>
+              <code class="code-line"><span class="code-key">latency:</span> <span class="code-alert">+300ms</span></code>
+              <code class="code-line"><span class="code-key">root_cause:</span> connection_pool</code>
+              <code class="code-line"><span class="code-key">affected:</span> 12,400 sessions</code>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Security Card -->
+      <article class="report-card report-card--security">
+        <div class="card-accent"></div>
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-badge card-badge--amber">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <span>Security View</span>
+            </div>
+            <span class="card-audience">Security & Compliance</span>
+          </div>
+
+          <h3 class="card-title">Security & Compliance Audits</h3>
+          <p class="card-description">Generate detailed, automated reports that provide the complete audit trail needed to satisfy industry regulations and verify your security posture.</p>
+
+          <!-- Security Report Preview -->
+          <div class="card-preview preview--security">
+            <div class="compliance-checks">
+              <div class="check check--pass">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>SOC 2 Compliant</span>
+              </div>
+              <div class="check check--pass">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>No Anomalies</span>
+              </div>
+              <div class="check check--warn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <span>1 Review Needed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Closing Statement -->
+    <footer class="section-footer">
+      <p class="closing-text">{closingStatement}</p>
+    </footer>
+  </Container>
+</section>
+
+<style>
+  /* ========================================
+     STAKEHOLDER SECTION
+     ======================================== */
+  .stakeholder-section {
+    position: relative;
+    padding: var(--space-24) 0;
+    background: linear-gradient(180deg, #fafafa 0%, #ffffff 40%, #fafafa 100%);
+    overflow: hidden;
+  }
+
+  /* Background */
+  .section-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .bg-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 30% 20%, rgba(234, 36, 43, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 50% at 70% 80%, rgba(34, 197, 94, 0.02) 0%, transparent 40%);
+  }
+
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 0%, transparent 70%);
+  }
+
+  /* ========================================
+     HEADER
+     ======================================== */
+  .section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto var(--space-16);
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #0f0f0f;
+    margin-bottom: var(--space-5);
+  }
+
+  .title-highlight {
+    color: var(--color-primary);
+  }
+
+  .section-intro {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: #555;
+    margin: 0;
+  }
+
+  /* ========================================
+     REPORTS SHOWCASE - BENTO GRID
+     ======================================== */
+  .reports-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+    margin-bottom: var(--space-12);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ========================================
+     REPORT CARDS
+     ======================================== */
+  .report-card {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: cardReveal 0.7s ease forwards;
+    opacity: 0;
+  }
+
+  .report-card--executive { animation-delay: 0s; }
+  .report-card--proactive { animation-delay: 0.1s; }
+  .report-card--technical { animation-delay: 0.2s; }
+  .report-card--security { animation-delay: 0.3s; }
+
+  @keyframes cardReveal {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .report-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.06),
+      0 4px 12px rgba(0, 0, 0, 0.03);
+  }
+
+  /* Card Accent Bar */
+  .card-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--color-primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .report-card:hover .card-accent {
+    transform: scaleX(1);
+  }
+
+  .report-card--proactive .card-accent {
+    background: #22c55e;
+  }
+
+  .report-card--technical .card-accent {
+    background: #0ea5e9;
+  }
+
+  .report-card--security .card-accent {
+    background: #f59e0b;
+  }
+
+  .card-inner {
+    padding: var(--space-6);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Card Header */
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-4);
+  }
+
+  .card-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: rgba(234, 36, 43, 0.06);
+    border-radius: 6px;
+    color: var(--color-primary);
+  }
+
+  .card-badge svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .card-badge span {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .card-badge--green {
+    background: rgba(34, 197, 94, 0.08);
+    color: #16a34a;
+  }
+
+  .card-badge--teal {
+    background: rgba(14, 165, 233, 0.08);
+    color: #0284c7;
+  }
+
+  .card-badge--amber {
+    background: rgba(245, 158, 11, 0.08);
+    color: #d97706;
+  }
+
+  .card-audience {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.5625rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #999;
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: #1a1a1a;
+    margin-bottom: var(--space-2);
+    letter-spacing: -0.02em;
+  }
+
+  .card-description {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    color: #666;
+    margin: 0 0 var(--space-5);
+  }
+
+  /* ========================================
+     CARD PREVIEWS - Unique per type
+     ======================================== */
+  .card-preview {
+    margin-top: auto;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  /* Executive Preview - Dashboard metrics */
+  .preview--executive {
+    background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    padding: var(--space-4);
+  }
+
+  .preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.08);
+  }
+
+  .preview-title {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .preview-date {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.5625rem;
+    color: #999;
+  }
+
+  .preview-metrics {
+    display: flex;
+    gap: var(--space-4);
+    margin-bottom: var(--space-3);
+  }
+
+  .metric {
+    flex: 1;
+    text-align: center;
+    padding: var(--space-2);
+    background: white;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .metric-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.2;
+  }
+
+  .metric-label {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #888;
+  }
+
+  .metric--alert .metric-value {
+    color: var(--color-primary);
+  }
+
+  .preview-insight {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: rgba(234, 36, 43, 0.04);
+    border-radius: 4px;
+    border-left: 2px solid var(--color-primary);
+  }
+
+  .insight-icon {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  .insight-text {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    color: #555;
+  }
+
+  /* Technical Preview - Code-like */
+  .preview--technical {
+    background: #1a1a1a;
+    padding: var(--space-3);
+  }
+
+  .preview-code {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .code-line {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.6875rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .code-key {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .code-alert {
+    color: #ef4444;
+    font-weight: 600;
+  }
+
+  /* Security Preview - Compliance checklist */
+  .preview--security {
+    background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    padding: var(--space-3);
+  }
+
+  .compliance-checks {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background: white;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .check svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  .check span {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    color: #555;
+  }
+
+  .check--pass svg {
+    color: #22c55e;
+  }
+
+  .check--warn svg {
+    color: #f59e0b;
+  }
+
+  /* Proactive Preview - Trend indicator */
+  .preview--proactive {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.06) 0%, rgba(34, 197, 94, 0.02) 100%);
+    border: 1px solid rgba(34, 197, 94, 0.12);
+    padding: var(--space-4);
+  }
+
+  .trend-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .trend-indicator svg {
+    width: 32px;
+    height: 32px;
+    color: #22c55e;
+  }
+
+  .trend-indicator span {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #16a34a;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ========================================
+     FOOTER
+     ======================================== */
+  .section-footer {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .closing-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: var(--font-semibold);
+    line-height: 1.5;
+    color: #1a1a1a;
+    margin: 0;
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 768px) {
+    .reports-showcase {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .stakeholder-section {
+      padding: var(--space-16) 0;
+    }
+
+    .section-title {
+      font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+
+    .section-intro {
+      font-size: var(--text-base);
+    }
+
+    .card-inner {
+      padding: var(--space-5);
+    }
+
+    .card-header {
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .card-title {
+      font-size: var(--text-lg);
+    }
+
+    .card-description {
+      font-size: var(--text-xs);
+    }
+
+    .proactive-block {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+      padding: var(--space-6);
+    }
+
+    .proactive-title {
+      font-size: var(--text-lg);
+    }
+
+    .proactive-text {
+      font-size: var(--text-sm);
+    }
+
+    .closing-text {
+      font-size: var(--text-lg);
+    }
+  }
+</style>
