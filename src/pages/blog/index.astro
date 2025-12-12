@@ -1,0 +1,743 @@
+---
+/**
+ * Blog Index Page - Editorial Grid Layout
+ *
+ * Features:
+ * - Large featured post hero
+ * - Asymmetric grid for remaining posts
+ * - Category filtering
+ * - Refined typography and animations
+ */
+import { getCollection } from 'astro:content';
+import SubpageLayout from '../../layouts/SubpageLayout.astro';
+import SubpageHero from '../../components/sections/SubpageHero.astro';
+import Container from '../../components/ui/Container.astro';
+
+const pageTitle = 'Blog - Cirries';
+const pageDescription = 'Insights on network observability, AI-powered analytics, 5G technology, and the future of network performance management.';
+
+// Get all blog posts and sort by date
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort((a, b) =>
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+// Get featured posts and regular posts
+const featuredPosts = sortedPosts.filter(post => post.data.featured);
+const featuredPost = featuredPosts[0] || sortedPosts[0];
+const remainingPosts = sortedPosts.filter(post => post.slug !== featuredPost.slug);
+
+// Get unique categories
+const categories = [...new Set(sortedPosts.map(post => post.data.category))];
+
+// Format date helper
+function formatDate(dateString: string): string {
+  return new Date(dateString).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+}
+
+// Calculate reading time
+function getReadingTime(content: string): number {
+  const wordCount = content.split(/\s+/).length;
+  return Math.ceil(wordCount / 200);
+}
+---
+
+<SubpageLayout title={pageTitle} description={pageDescription}>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Insights & <span>Analysis</span>"
+      subtitle="Expert perspectives on network observability, AI-powered analytics, and the technologies shaping the future of connectivity."
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Blog Content -->
+  <section class="blog-section">
+    <!-- Subtle grid background -->
+    <div class="blog-bg">
+      <div class="blog-bg__gradient"></div>
+      <div class="blog-bg__grid"></div>
+    </div>
+
+    <Container size="xl">
+      <!-- Category Filter -->
+      <div class="category-filter">
+        <button class="filter-btn is-active" data-category="all">All Posts</button>
+        {categories.map((category) => (
+          <button class="filter-btn" data-category={category}>{category}</button>
+        ))}
+      </div>
+
+      <!-- Featured Post -->
+      <a href={`/blog/${featuredPost.slug}`} class="featured-post" data-category={featuredPost.data.category}>
+        <div class="featured-post__content">
+          <div class="featured-post__meta">
+            <span class="featured-badge">Featured</span>
+            <span class="featured-category">{featuredPost.data.category}</span>
+          </div>
+          <h2 class="featured-title">{featuredPost.data.title}</h2>
+          <p class="featured-excerpt">{featuredPost.data.description}</p>
+          <div class="featured-footer">
+            <div class="featured-info">
+              <span class="featured-date">{formatDate(featuredPost.data.date)}</span>
+              <span class="featured-divider">·</span>
+              <span class="featured-author">{featuredPost.data.author}</span>
+            </div>
+            <span class="featured-cta">
+              Read Article
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div class="featured-post__visual">
+          <div class="featured-visual__pattern">
+            <div class="pattern-grid"></div>
+            <div class="pattern-accent"></div>
+          </div>
+          <div class="featured-visual__number" aria-hidden="true">01</div>
+        </div>
+      </a>
+
+      <!-- Posts Grid -->
+      <div class="posts-grid">
+        {remainingPosts.map((post, index) => (
+          <a
+            href={`/blog/${post.slug}`}
+            class="post-card"
+            data-category={post.data.category}
+            style={`--card-delay: ${index * 0.05}s`}
+          >
+            <div class="post-card__inner">
+              <div class="post-card__header">
+                <span class="post-category">{post.data.category}</span>
+                <span class="post-number" aria-hidden="true">{String(index + 2).padStart(2, '0')}</span>
+              </div>
+              <h3 class="post-title">{post.data.title}</h3>
+              <p class="post-excerpt">{post.data.description}</p>
+              <div class="post-footer">
+                <span class="post-date">{formatDate(post.data.date)}</span>
+                <span class="post-cta">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                  </svg>
+                </span>
+              </div>
+              <div class="post-card__shine"></div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="empty-state" style="display: none;">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V9a2 2 0 012-2h2a2 2 0 012 2v9a2 2 0 01-2 2h-2z"></path>
+          </svg>
+        </div>
+        <p class="empty-text">No articles found in this category.</p>
+        <button class="empty-btn" data-category="all">View all posts</button>
+      </div>
+    </Container>
+  </section>
+</SubpageLayout>
+
+<style>
+  /* ============================================
+     BLOG SECTION
+     ============================================ */
+  .blog-section {
+    position: relative;
+    padding: var(--space-16) 0 var(--space-24);
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .blog-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .blog-bg__gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 80% 60% at 80% 80%,
+        rgba(245, 245, 245, 0.8) 0%,
+        transparent 50%
+      );
+  }
+
+  .blog-bg__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 90% 80% at 70% 50%, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 80% at 70% 50%, black 20%, transparent 70%);
+  }
+
+  /* ============================================
+     CATEGORY FILTER
+     ============================================ */
+  .category-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-10);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    position: relative;
+    z-index: 1;
+  }
+
+  .filter-btn {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 10px 18px;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    color: #666666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .filter-btn:hover {
+    border-color: rgba(234, 36, 43, 0.3);
+    color: var(--color-primary);
+  }
+
+  .filter-btn.is-active {
+    background: rgba(234, 36, 43, 0.08);
+    border-color: rgba(234, 36, 43, 0.2);
+    color: var(--color-primary);
+  }
+
+  /* ============================================
+     FEATURED POST
+     ============================================ */
+  .featured-post {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: var(--space-8);
+    padding: var(--space-8);
+    background: #0a0a0a;
+    border-radius: 16px;
+    text-decoration: none;
+    margin-bottom: var(--space-10);
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .featured-post:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
+  }
+
+  .featured-post__content {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4);
+  }
+
+  .featured-post__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+  }
+
+  .featured-badge {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 6px 12px;
+    background: var(--color-primary);
+    color: #ffffff;
+    border-radius: 4px;
+  }
+
+  .featured-category {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .featured-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: var(--font-bold);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin-bottom: var(--space-4);
+  }
+
+  .featured-excerpt {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.65);
+    margin-bottom: auto;
+    flex: 1;
+  }
+
+  .featured-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--space-6);
+    padding-top: var(--space-5);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .featured-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .featured-divider {
+    opacity: 0.3;
+  }
+
+  .featured-cta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary);
+    transition: gap 0.2s ease;
+  }
+
+  .featured-post:hover .featured-cta {
+    gap: var(--space-3);
+  }
+
+  .featured-cta svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Featured Visual */
+  .featured-post__visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #141414 0%, #1a1a1a 100%);
+  }
+
+  .featured-visual__pattern {
+    position: absolute;
+    inset: 0;
+  }
+
+  .pattern-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .pattern-accent {
+    position: absolute;
+    bottom: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(234, 36, 43, 0.15) 0%, transparent 70%);
+  }
+
+  .featured-visual__number {
+    font-family: var(--font-display);
+    font-size: 12rem;
+    font-weight: var(--font-bold);
+    color: rgba(255, 255, 255, 0.04);
+    line-height: 1;
+    user-select: none;
+  }
+
+  /* ============================================
+     POSTS GRID
+     ============================================ */
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ============================================
+     POST CARD
+     ============================================ */
+  .post-card {
+    display: block;
+    text-decoration: none;
+    border-radius: 12px;
+    animation: cardFadeIn 0.5s ease both;
+    animation-delay: var(--card-delay, 0s);
+  }
+
+  @keyframes cardFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .post-card__inner {
+    position: relative;
+    height: 100%;
+    padding: var(--space-6);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .post-card:hover .post-card__inner {
+    border-color: rgba(234, 36, 43, 0.25);
+    box-shadow:
+      0 12px 32px rgba(0, 0, 0, 0.08),
+      0 0 0 1px rgba(234, 36, 43, 0.1);
+    transform: translateY(-4px);
+  }
+
+  .post-card__shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+    pointer-events: none;
+  }
+
+  .post-card:hover .post-card__shine {
+    transform: translateX(100%);
+  }
+
+  .post-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+  }
+
+  .post-category {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary);
+  }
+
+  .post-number {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: var(--font-bold);
+    color: rgba(0, 0, 0, 0.04);
+    line-height: 1;
+  }
+
+  .post-title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: #0a0a0a;
+    margin-bottom: var(--space-3);
+    transition: color 0.2s ease;
+  }
+
+  .post-card:hover .post-title {
+    color: var(--color-primary);
+  }
+
+  .post-excerpt {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: #666666;
+    margin-bottom: var(--space-5);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .post-date {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #888888;
+  }
+
+  .post-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: rgba(234, 36, 43, 0.08);
+    border-radius: 8px;
+    color: var(--color-primary);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.3s ease;
+  }
+
+  .post-card:hover .post-cta {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .post-cta svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Hidden state for filtered posts */
+  .post-card.is-hidden,
+  .featured-post.is-hidden {
+    display: none;
+  }
+
+  /* ============================================
+     EMPTY STATE
+     ============================================ */
+  .empty-state {
+    text-align: center;
+    padding: var(--space-16) 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .empty-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--space-5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 16px;
+    color: #888888;
+  }
+
+  .empty-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .empty-text {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: #666666;
+    margin-bottom: var(--space-5);
+  }
+
+  .empty-btn {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    padding: 12px 24px;
+    background: var(--color-primary);
+    border: none;
+    border-radius: 8px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .empty-btn:hover {
+    background: var(--color-primary-hover);
+    transform: translateY(-2px);
+  }
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+  @media (max-width: 1200px) {
+    .featured-post {
+      grid-template-columns: 1fr 320px;
+    }
+
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .featured-post {
+      grid-template-columns: 1fr;
+    }
+
+    .featured-post__visual {
+      height: 200px;
+      order: -1;
+    }
+
+    .featured-visual__number {
+      font-size: 8rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .blog-section {
+      padding: var(--space-12) 0 var(--space-20);
+    }
+
+    .category-filter {
+      gap: var(--space-2);
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      padding-bottom: var(--space-4);
+      margin-bottom: var(--space-8);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-btn {
+      flex-shrink: 0;
+    }
+
+    .featured-post {
+      padding: var(--space-5);
+      margin-bottom: var(--space-8);
+    }
+
+    .featured-title {
+      font-size: 1.5rem;
+    }
+
+    .posts-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .post-card__inner {
+      padding: var(--space-5);
+    }
+
+    .post-cta {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+</style>
+
+<script>
+  // Category filtering
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const featuredPost = document.querySelector('.featured-post');
+    const postCards = document.querySelectorAll('.post-card');
+    const postsGrid = document.querySelector('.posts-grid');
+    const emptyState = document.getElementById('empty-state');
+
+    const filterPosts = (category: string) => {
+      let visibleCount = 0;
+
+      // Filter featured post
+      if (featuredPost) {
+        const featuredCategory = featuredPost.getAttribute('data-category');
+        if (category === 'all' || featuredCategory === category) {
+          featuredPost.classList.remove('is-hidden');
+          visibleCount++;
+        } else {
+          featuredPost.classList.add('is-hidden');
+        }
+      }
+
+      // Filter post cards
+      postCards.forEach((card) => {
+        const postCategory = card.getAttribute('data-category');
+        if (category === 'all' || postCategory === category) {
+          card.classList.remove('is-hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('is-hidden');
+        }
+      });
+
+      // Show/hide empty state
+      if (emptyState) {
+        if (visibleCount === 0) {
+          emptyState.style.display = 'block';
+          if (postsGrid) postsGrid.style.display = 'none';
+        } else {
+          emptyState.style.display = 'none';
+          if (postsGrid) postsGrid.style.display = 'grid';
+        }
+      }
+    };
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        // Update active state
+        filterButtons.forEach((btn) => btn.classList.remove('is-active'));
+        button.classList.add('is-active');
+
+        // Filter posts
+        const category = button.getAttribute('data-category') || 'all';
+        filterPosts(category);
+      });
+    });
+  });
+</script>

@@ -1,0 +1,686 @@
+---
+/**
+ * Resources Page - Download Center
+ *
+ * Organized collection of data sheets, solution briefs, use cases, and branding assets.
+ * Follows Cirries design system with dark hero and light content sections.
+ */
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import SubpageHero from '../components/sections/SubpageHero.astro';
+import Container from '../components/ui/Container.astro';
+
+const pageTitle = 'Resources - Cirries';
+const pageDescription = 'Download data sheets, solution briefs, use cases, and branding assets for Cirries DART AI network intelligence platform.';
+
+// Resource data organized by category
+const resources = {
+  dataSheets: {
+    title: 'Data Sheets & Use Cases',
+    description: 'Technical specifications and implementation guides',
+    icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+    items: [
+      {
+        title: 'DART Data Sheet',
+        description: 'Complete technical overview of the DART AI platform capabilities and specifications.',
+        type: 'Data Sheet',
+        url: 'https://cirries.com/wp-content/uploads/2023/09/CIRRIES-20011-DART-Data-Sheet.pdf'
+      },
+      {
+        title: 'DART for Fiber Networks',
+        description: 'Specialized deployment guide for fiber network monitoring and optimization.',
+        type: 'Data Sheet',
+        url: 'https://cirries.com/wp-content/uploads/2023/09/CIRRIES-23003-DART-for-Fiber-Networks-Data-Sheet.pdf'
+      },
+      {
+        title: 'SD-WAN Use Case',
+        description: 'How DART enhances SD-WAN visibility and performance management.',
+        type: 'Use Case',
+        url: 'https://cirries.com/wp-content/uploads/2024/02/CIRRIES-23004-SDWAN.pdf'
+      },
+      {
+        title: 'Smart Buildings',
+        description: 'Network intelligence solutions for modern smart building infrastructure.',
+        type: 'Brochure',
+        url: 'https://cirries.com/wp-content/uploads/2025/02/CIRRIES-25000-Smart-Buildings-Brochure-Design_v2-english.pdf'
+      },
+      {
+        title: 'Syslog Analyzer',
+        description: 'Advanced syslog analysis and correlation capabilities.',
+        type: 'Data Sheet',
+        url: 'https://cirries.com/wp-content/uploads/2021/10/CIRRIES-20010-SYSLOG-Data-Sheet_PROOF_1202-1.pdf'
+      }
+    ]
+  },
+  solutionBriefs: {
+    title: 'Solution Briefs',
+    description: 'Industry-specific solutions and deployment scenarios',
+    icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10',
+    items: [
+      {
+        title: '5G for Healthcare',
+        description: 'Network visibility solutions for healthcare and medical device connectivity.',
+        type: 'Solution Brief',
+        url: 'https://cirries.com/wp-content/uploads/2021/11/CIRRIES-21006-5G-for-Healthcare-Solution-Brief-2-1.pdf'
+      },
+      {
+        title: '5G for Manufacturing',
+        description: 'Industrial IoT and smart factory network monitoring solutions.',
+        type: 'Solution Brief',
+        url: 'https://cirries.com/wp-content/uploads/2021/11/CIRRIES-21011-5G-for-Manufacturing-Solution-Brief-2.pdf'
+      },
+      {
+        title: '5G for Smart Cities',
+        description: 'Municipal and smart city infrastructure network intelligence.',
+        type: 'Solution Brief',
+        url: 'https://cirries.com/wp-content/uploads/2022/01/CIRRIES-21007-5G-for-Smart-Cities-Solution-Brief-4.pdf'
+      },
+      {
+        title: '5G for Network Operators',
+        description: 'Comprehensive 5G visibility for telecommunications providers.',
+        type: 'Solution Brief',
+        url: 'https://cirries.com/wp-content/uploads/2021/08/CIRRIES-21000-5G-Network-Operators-1.pdf'
+      },
+      {
+        title: '5G for Enterprises',
+        description: 'Enterprise-grade 5G network monitoring and optimization.',
+        type: 'Solution Brief',
+        url: 'https://cirries.com/wp-content/uploads/2021/10/CIRRIES-5G-for-Enterprises.pdf'
+      },
+      {
+        title: 'Remote Workforce',
+        description: 'Ensuring reliable connectivity for distributed teams.',
+        type: 'Solution Brief',
+        url: 'https://cirries.com/wp-content/uploads/2021/08/CIRRIES-20005-Remote-Workforce-Solution-Brief_FINAL.pdf'
+      },
+      {
+        title: 'Service Assurance',
+        description: 'SLA monitoring and service quality management.',
+        type: 'Solution Brief',
+        url: 'https://cirries.com/wp-content/uploads/2024/05/CIRRIES-24005-SLA-5.13.24.pdf'
+      },
+      {
+        title: 'Network Gaming Experience',
+        description: 'Optimizing network performance for gaming applications.',
+        type: 'Solution Brief',
+        url: 'https://cirries.com/wp-content/uploads/2024/05/CIRRIES-24001-GAMING-SOLUTIONBRIEF.pdf'
+      }
+    ]
+  },
+  branding: {
+    title: 'Branding Assets',
+    description: 'Official logos and brand resources',
+    icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z',
+    items: [
+      {
+        title: 'Cirries Logo Package',
+        description: 'Official Cirries logo in multiple formats.',
+        type: 'Logo',
+        url: 'https://cirries.com/wp-content/uploads/2021/11/Cirries_logo.zip'
+      },
+      {
+        title: 'DART Logo Package',
+        description: 'Official DART AI logo in multiple formats.',
+        type: 'Logo',
+        url: 'https://cirries.com/wp-content/uploads/2021/11/DART_logo.zip'
+      },
+      {
+        title: 'DART Packet Sensor Logo',
+        description: 'DART Packet Sensor product logo.',
+        type: 'Logo',
+        url: 'https://cirries.com/wp-content/uploads/2021/11/DART-Packet-Sensor-Logo-.png'
+      },
+      {
+        title: 'DART Performance Center Logo',
+        description: 'DART Performance Center product logo.',
+        type: 'Logo',
+        url: 'https://cirries.com/wp-content/uploads/2021/11/Dart-Performance-Center.png'
+      }
+    ]
+  }
+};
+---
+
+<SubpageLayout title={pageTitle} description={pageDescription}>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Resources & <span>Downloads</span>"
+      subtitle="Access technical documentation, solution briefs, and branding assets for DART AI and Cirries network intelligence solutions."
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Resources Content Section -->
+  <section class="resources-section">
+    <!-- Subtle grid background -->
+    <div class="resources-bg">
+      <div class="resources-bg__gradient"></div>
+      <div class="resources-bg__grid"></div>
+    </div>
+
+    <Container size="xl">
+      <div class="resources-layout">
+        <!-- Data Sheets & Use Cases -->
+        <div class="resource-category" id="data-sheets">
+          <div class="category-header">
+            <div class="category-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d={resources.dataSheets.icon} />
+              </svg>
+            </div>
+            <div class="category-info">
+              <h2 class="category-title">{resources.dataSheets.title}</h2>
+              <p class="category-description">{resources.dataSheets.description}</p>
+            </div>
+          </div>
+          <div class="resources-grid">
+            {resources.dataSheets.items.map((item, i) => (
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="resource-card"
+                style={`--card-delay: ${i * 0.05}s`}
+              >
+                <div class="resource-card__inner">
+                  <div class="resource-card-header">
+                    <span class="resource-badge">{item.type}</span>
+                    <div class="download-indicator">
+                      <svg class="download-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                      <span class="download-text">PDF</span>
+                    </div>
+                  </div>
+                  <h3 class="resource-title">{item.title}</h3>
+                  <p class="resource-description">{item.description}</p>
+                  <div class="resource-card__shine"></div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Solution Briefs -->
+        <div class="resource-category" id="solution-briefs">
+          <div class="category-header">
+            <div class="category-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d={resources.solutionBriefs.icon} />
+              </svg>
+            </div>
+            <div class="category-info">
+              <h2 class="category-title">{resources.solutionBriefs.title}</h2>
+              <p class="category-description">{resources.solutionBriefs.description}</p>
+            </div>
+          </div>
+          <div class="resources-grid">
+            {resources.solutionBriefs.items.map((item, i) => (
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="resource-card"
+                style={`--card-delay: ${i * 0.05}s`}
+              >
+                <div class="resource-card__inner">
+                  <div class="resource-card-header">
+                    <span class="resource-badge">{item.type}</span>
+                    <div class="download-indicator">
+                      <svg class="download-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                      <span class="download-text">PDF</span>
+                    </div>
+                  </div>
+                  <h3 class="resource-title">{item.title}</h3>
+                  <p class="resource-description">{item.description}</p>
+                  <div class="resource-card__shine"></div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Branding Assets -->
+        <div class="resource-category" id="branding">
+          <div class="category-header">
+            <div class="category-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d={resources.branding.icon} />
+              </svg>
+            </div>
+            <div class="category-info">
+              <h2 class="category-title">{resources.branding.title}</h2>
+              <p class="category-description">{resources.branding.description}</p>
+            </div>
+          </div>
+          <div class="resources-grid resources-grid--assets">
+            {resources.branding.items.map((item, i) => (
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="resource-card resource-card--asset"
+                style={`--card-delay: ${i * 0.05}s`}
+              >
+                <div class="resource-card__inner">
+                  <div class="resource-card-header">
+                    <span class="resource-badge resource-badge--asset">{item.type}</span>
+                    <div class="download-indicator">
+                      <svg class="download-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                    </div>
+                  </div>
+                  <h3 class="resource-title">{item.title}</h3>
+                  <p class="resource-description">{item.description}</p>
+                  <div class="resource-card__shine"></div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+</SubpageLayout>
+
+<style>
+  /* ============================================
+     RESOURCES SECTION
+     ============================================ */
+  .resources-section {
+    position: relative;
+    padding: var(--space-20) 0 var(--space-24);
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  /* Subtle grid background from bottom-right */
+  .resources-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .resources-bg__gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 80% 60% at 80% 80%,
+        rgba(245, 245, 245, 0.8) 0%,
+        transparent 50%
+      );
+  }
+
+  .resources-bg__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 90% 80% at 70% 50%, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 80% at 70% 50%, black 20%, transparent 70%);
+  }
+
+  .resources-layout {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ============================================
+     CATEGORY SECTIONS
+     ============================================ */
+  .resource-category {
+    margin-bottom: var(--space-16);
+  }
+
+  .resource-category:last-child {
+    margin-bottom: 0;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-5);
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .category-icon {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(234, 36, 43, 0.08);
+    border: 1px solid rgba(234, 36, 43, 0.12);
+    border-radius: 12px;
+    color: var(--color-primary, #EA242B);
+    transition: all 0.3s ease;
+  }
+
+  .resource-category:hover .category-icon {
+    background: rgba(234, 36, 43, 0.12);
+    transform: scale(1.02);
+  }
+
+  .category-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .category-info {
+    flex: 1;
+  }
+
+  .category-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 1.75rem);
+    font-weight: var(--font-bold);
+    color: #0a0a0a;
+    letter-spacing: -0.01em;
+    margin-bottom: var(--space-2);
+  }
+
+  .category-description {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: #666666;
+    line-height: 1.5;
+  }
+
+  /* ============================================
+     RESOURCES GRID
+     ============================================ */
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+
+  .resources-grid--assets {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* ============================================
+     RESOURCE CARDS
+     ============================================ */
+  .resource-card {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    border-radius: 12px;
+    animation: cardFadeIn 0.5s ease both;
+    animation-delay: var(--card-delay, 0s);
+  }
+
+  @keyframes cardFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .resource-card__inner {
+    position: relative;
+    height: 100%;
+    padding: var(--space-5);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .resource-card:hover .resource-card__inner {
+    border-color: rgba(234, 36, 43, 0.25);
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.06),
+      0 0 0 1px rgba(234, 36, 43, 0.1);
+    transform: translateY(-3px);
+  }
+
+  .resource-card__shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+    pointer-events: none;
+  }
+
+  .resource-card:hover .resource-card__shine {
+    transform: translateX(100%);
+  }
+
+  /* Card Header */
+  .resource-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+  }
+
+  .resource-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 5px 10px;
+    background: rgba(234, 36, 43, 0.08);
+    color: var(--color-primary, #EA242B);
+    border: 1px solid rgba(234, 36, 43, 0.15);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+
+  .resource-card:hover .resource-badge {
+    background: rgba(234, 36, 43, 0.12);
+    border-color: rgba(234, 36, 43, 0.25);
+  }
+
+  .resource-badge--asset {
+    background: rgba(0, 0, 0, 0.04);
+    color: #555555;
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .resource-card:hover .resource-badge--asset {
+    background: rgba(234, 36, 43, 0.08);
+    color: var(--color-primary, #EA242B);
+    border-color: rgba(234, 36, 43, 0.15);
+  }
+
+  /* Download Indicator */
+  .download-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: all 0.3s ease;
+  }
+
+  .resource-card:hover .download-indicator {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .download-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--color-primary, #EA242B);
+  }
+
+  .download-text {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #888888;
+  }
+
+  /* Card Content */
+  .resource-title {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: #0a0a0a;
+    margin-bottom: var(--space-2);
+    line-height: 1.35;
+    transition: color 0.2s ease;
+  }
+
+  .resource-card:hover .resource-title {
+    color: var(--color-primary, #EA242B);
+  }
+
+  .resource-description {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: #666666;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Asset Cards (smaller) */
+  .resource-card--asset .resource-card__inner {
+    padding: var(--space-4);
+  }
+
+  .resource-card--asset .resource-title {
+    font-size: var(--text-sm);
+  }
+
+  .resource-card--asset .resource-description {
+    font-size: 0.8rem;
+  }
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+  @media (max-width: 1200px) {
+    .resources-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .resources-grid--assets {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .resources-section {
+      padding: var(--space-16) 0 var(--space-20);
+    }
+
+    .category-header {
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .category-icon {
+      width: 44px;
+      height: 44px;
+    }
+
+    .category-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .resources-grid,
+    .resources-grid--assets {
+      grid-template-columns: 1fr;
+    }
+
+    .resource-card__inner {
+      padding: var(--space-5);
+    }
+
+    .resource-card--asset .resource-card__inner {
+      padding: var(--space-5);
+    }
+
+    .download-indicator {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .resource-category {
+      margin-bottom: var(--space-12);
+    }
+
+    .category-title {
+      font-size: 1.25rem;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const categories = document.querySelectorAll('.resource-category');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '-50px 0px'
+      }
+    );
+
+    categories.forEach((category) => observer.observe(category));
+  });
+</script>
+
+<style is:global>
+  /* Category visibility animation */
+  .resource-category {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .resource-category.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .resource-category:nth-child(2) {
+    transition-delay: 0.1s;
+  }
+
+  .resource-category:nth-child(3) {
+    transition-delay: 0.2s;
+  }
+</style>

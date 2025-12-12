@@ -98,6 +98,11 @@ export const mainNavigation: NavItem[] = [
     type: 'dropdown',
     links: [
       {
+        label: 'All Resources',
+        href: '/resources',
+        description: 'Data sheets, briefs & more'
+      },
+      {
         label: 'Industries',
         href: '/industries',
         description: 'Solutions by industry'
@@ -142,6 +147,7 @@ export const footerNavigation = {
     { label: 'Network Operator Experience', href: '/use-cases/network-operator-experience' }
   ],
   resources: [
+    { label: 'All Resources', href: '/resources' },
     { label: 'Industries', href: '/industries' },
     { label: 'Blog', href: '/blog' }
   ],
