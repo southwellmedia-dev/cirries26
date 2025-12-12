@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
-import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
-import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
-import gsap from 'gsap';
+import { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
+import { SVGLoader } from "three/addons/loaders/SVGLoader.js";
+import { MeshSurfaceSampler } from "three/addons/math/MeshSurfaceSampler.js";
+import gsap from "gsap";
 
 interface Props {
   className?: string;
@@ -14,8 +14,8 @@ const CONFIG = {
     count: 15000,
     scale: { x: 1.5, y: 1.5, z: 1.5 },
     scatter: 1.5,
-    color: '#e6e6e6',
-    secondaryColor: '#ff3333',
+    color: "#adadad",
+    secondaryColor: "#8f8f8f",
     roughness: 0.2,
   },
   geometry: {
@@ -25,19 +25,19 @@ const CONFIG = {
     curveSegments: 20,
   },
   interaction: {
-    radius: 50,      // Smaller, more targeted area
-    strength: 60,    // Stronger push in that area
+    radius: 50, // Smaller, more targeted area
+    strength: 60, // Stronger push in that area
     disperseSpeed: 0.1,
     reformSpeed: 0.035,
   },
   shimmer: {
-    color: '#E7001A',
+    color: "#E7001A",
     delay: { min: 4.0, max: 7.0 },
     speed: 0.25,
   },
   autoRotation: {
     maxAngle: Math.PI / 6, // 30 degrees in each direction
-    speed: 0.12,           // Oscillation speed (slower, more gentle)
+    speed: 0.12, // Oscillation speed (slower, more gentle)
   },
 };
 
@@ -197,7 +197,7 @@ const createParticleFragmentShader = () => `
   }
 `;
 
-export default function LogoMeshNetwork({ className = '' }: Props) {
+export default function LogoMeshNetwork({ className = "" }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -245,7 +245,9 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
     const container = containerRef.current;
 
     // Check for reduced motion preference
-    prefersReducedMotion.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    prefersReducedMotion.current = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
     const width = container.clientWidth;
     const height = container.clientHeight;
@@ -259,14 +261,19 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
     const baseFov = isMobile ? 55 : isSmallScreen ? 50 : 45;
     const baseZ = isMobile ? 90 : isSmallScreen ? 75 : 70;
 
-    const camera = new THREE.PerspectiveCamera(baseFov, width / height, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(
+      baseFov,
+      width / height,
+      0.1,
+      1000
+    );
     camera.position.z = baseZ;
     cameraRef.current = camera;
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
-      powerPreference: 'high-performance',
+      powerPreference: "high-performance",
     });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -284,8 +291,11 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
       animate();
     };
 
-    renderer.domElement.addEventListener('webglcontextlost', handleContextLost);
-    renderer.domElement.addEventListener('webglcontextrestored', handleContextRestored);
+    renderer.domElement.addEventListener("webglcontextlost", handleContextLost);
+    renderer.domElement.addEventListener(
+      "webglcontextrestored",
+      handleContextRestored
+    );
 
     const group = new THREE.Group();
     scene.add(group);
@@ -307,7 +317,11 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
 
         if (pathIndex === 1) {
           const sphereGeo = new THREE.SphereGeometry(circleRadius, 32, 32);
-          sphereGeo.translate(circleCenter.x, circleCenter.y, CONFIG.geometry.depth / 2);
+          sphereGeo.translate(
+            circleCenter.x,
+            circleCenter.y,
+            CONFIG.geometry.depth / 2
+          );
           sphereGeo.computeBoundingBox();
           if (sphereGeo.boundingBox) {
             totalBounds.expandByPoint(sphereGeo.boundingBox.min);
@@ -351,10 +365,22 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
         CONFIG.geometry.depth / 2 - center.z
       );
 
-      generateParticles(swooshGeos, contentGroup, center, totalBounds, sphereCenterWorld);
+      generateParticles(
+        swooshGeos,
+        contentGroup,
+        center,
+        totalBounds,
+        sphereCenterWorld
+      );
 
       if (sphereGeo) {
-        generateSphereParticles(sphereGeo, contentGroup, center, totalBounds, circleCenter);
+        generateSphereParticles(
+          sphereGeo,
+          contentGroup,
+          center,
+          totalBounds,
+          circleCenter
+        );
       }
 
       const maxDim = Math.max(size.x, size.y);
@@ -385,140 +411,197 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
       });
 
       // Phase 1: Stream in
-      tl.to(animationState.current, {
-        streamProgress: 1.0,
-        particleOpacity: 1.0,
-        duration: prefersReducedMotion.current ? 0.3 : 1.8,
-        ease: 'power2.out',
-        onUpdate: () => {
-          const progress = animationState.current.streamProgress;
-          const opacity = animationState.current.particleOpacity;
+      tl.to(
+        animationState.current,
+        {
+          streamProgress: 1.0,
+          particleOpacity: 1.0,
+          duration: prefersReducedMotion.current ? 0.3 : 1.8,
+          ease: "power2.out",
+          onUpdate: () => {
+            const progress = animationState.current.streamProgress;
+            const opacity = animationState.current.particleOpacity;
 
-          if (instancedMeshRef.current) {
-            const mat = instancedMeshRef.current.material as THREE.ShaderMaterial;
-            if (mat.uniforms) {
-              mat.uniforms.streamProgress.value = progress;
-              mat.uniforms.uOpacity.value = opacity;
+            if (instancedMeshRef.current) {
+              const mat = instancedMeshRef.current
+                .material as THREE.ShaderMaterial;
+              if (mat.uniforms) {
+                mat.uniforms.streamProgress.value = progress;
+                mat.uniforms.uOpacity.value = opacity;
+              }
             }
-          }
 
-          if (sphereMeshRef.current) {
-            const mat = sphereMeshRef.current.material as THREE.ShaderMaterial;
-            if (mat.uniforms) {
-              mat.uniforms.streamProgress.value = progress;
-              mat.uniforms.uOpacity.value = opacity;
+            if (sphereMeshRef.current) {
+              const mat = sphereMeshRef.current
+                .material as THREE.ShaderMaterial;
+              if (mat.uniforms) {
+                mat.uniforms.streamProgress.value = progress;
+                mat.uniforms.uOpacity.value = opacity;
+              }
             }
-          }
+          },
+          onComplete: () => {
+            window.dispatchEvent(new CustomEvent("logoAnimationComplete"));
+          },
         },
-        onComplete: () => {
-          window.dispatchEvent(new CustomEvent('logoAnimationComplete'));
-        },
-      }, 0);
+        0
+      );
 
       // Phase 1b: Fade back
-      tl.to(animationState.current, {
-        particleOpacity: 0.55,
-        duration: 0.6,
-        ease: 'power2.inOut',
-        onUpdate: () => {
-          const opacity = animationState.current.particleOpacity;
-          if (instancedMeshRef.current) {
-            const mat = instancedMeshRef.current.material as THREE.ShaderMaterial;
-            if (mat.uniforms) mat.uniforms.uOpacity.value = opacity;
-          }
-          if (sphereMeshRef.current) {
-            const mat = sphereMeshRef.current.material as THREE.ShaderMaterial;
-            if (mat.uniforms) mat.uniforms.uOpacity.value = opacity;
-          }
+      tl.to(
+        animationState.current,
+        {
+          particleOpacity: 0.55,
+          duration: 0.6,
+          ease: "power2.inOut",
+          onUpdate: () => {
+            const opacity = animationState.current.particleOpacity;
+            if (instancedMeshRef.current) {
+              const mat = instancedMeshRef.current
+                .material as THREE.ShaderMaterial;
+              if (mat.uniforms) mat.uniforms.uOpacity.value = opacity;
+            }
+            if (sphereMeshRef.current) {
+              const mat = sphereMeshRef.current
+                .material as THREE.ShaderMaterial;
+              if (mat.uniforms) mat.uniforms.uOpacity.value = opacity;
+            }
+          },
         },
-      }, 1.6);
+        1.6
+      );
 
       // Phase 2: Crystallization
       if (!prefersReducedMotion.current) {
-        tl.to(animationState.current, {
-          positionOvershoot: 1.04,
-          duration: 0.15,
-          ease: 'power2.out',
-          onUpdate: () => {
-            const overshoot = animationState.current.positionOvershoot;
-            if (instancedMeshRef.current) {
-              const mat = instancedMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) mat.uniforms.positionOvershoot.value = overshoot;
-            }
-            if (sphereMeshRef.current) {
-              const mat = sphereMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) mat.uniforms.positionOvershoot.value = overshoot;
-            }
+        tl.to(
+          animationState.current,
+          {
+            positionOvershoot: 1.04,
+            duration: 0.15,
+            ease: "power2.out",
+            onUpdate: () => {
+              const overshoot = animationState.current.positionOvershoot;
+              if (instancedMeshRef.current) {
+                const mat = instancedMeshRef.current
+                  .material as THREE.ShaderMaterial;
+                if (mat.uniforms)
+                  mat.uniforms.positionOvershoot.value = overshoot;
+              }
+              if (sphereMeshRef.current) {
+                const mat = sphereMeshRef.current
+                  .material as THREE.ShaderMaterial;
+                if (mat.uniforms)
+                  mat.uniforms.positionOvershoot.value = overshoot;
+              }
+            },
           },
-        }, 1.8);
+          1.8
+        );
 
-        tl.to(animationState.current, {
-          positionOvershoot: 1.0,
-          duration: 0.3,
-          ease: 'back.out(2)',
-          onUpdate: () => {
-            const overshoot = animationState.current.positionOvershoot;
-            if (instancedMeshRef.current) {
-              const mat = instancedMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) mat.uniforms.positionOvershoot.value = overshoot;
-            }
-            if (sphereMeshRef.current) {
-              const mat = sphereMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) mat.uniforms.positionOvershoot.value = overshoot;
-            }
+        tl.to(
+          animationState.current,
+          {
+            positionOvershoot: 1.0,
+            duration: 0.3,
+            ease: "back.out(2)",
+            onUpdate: () => {
+              const overshoot = animationState.current.positionOvershoot;
+              if (instancedMeshRef.current) {
+                const mat = instancedMeshRef.current
+                  .material as THREE.ShaderMaterial;
+                if (mat.uniforms)
+                  mat.uniforms.positionOvershoot.value = overshoot;
+              }
+              if (sphereMeshRef.current) {
+                const mat = sphereMeshRef.current
+                  .material as THREE.ShaderMaterial;
+                if (mat.uniforms)
+                  mat.uniforms.positionOvershoot.value = overshoot;
+              }
+            },
           },
-        }, 2.0);
+          2.0
+        );
 
-        tl.to(animationState.current, {
-          connectionPulse: 1.0,
-          duration: 0.2,
-          ease: 'power2.in',
-          onUpdate: () => {
-            const pulse = animationState.current.connectionPulse;
-            if (instancedMeshRef.current) {
-              const mat = instancedMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) mat.uniforms.shimmerIntensity.value = pulse * 0.7;
-            }
-            if (sphereMeshRef.current) {
-              const mat = sphereMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) mat.uniforms.shimmerIntensity.value = pulse * 0.7;
-            }
+        tl.to(
+          animationState.current,
+          {
+            connectionPulse: 1.0,
+            duration: 0.2,
+            ease: "power2.in",
+            onUpdate: () => {
+              const pulse = animationState.current.connectionPulse;
+              if (instancedMeshRef.current) {
+                const mat = instancedMeshRef.current
+                  .material as THREE.ShaderMaterial;
+                if (mat.uniforms)
+                  mat.uniforms.shimmerIntensity.value = pulse * 0.7;
+              }
+              if (sphereMeshRef.current) {
+                const mat = sphereMeshRef.current
+                  .material as THREE.ShaderMaterial;
+                if (mat.uniforms)
+                  mat.uniforms.shimmerIntensity.value = pulse * 0.7;
+              }
+            },
           },
-        }, 2.2);
+          2.2
+        );
 
-        tl.to(animationState.current, {
-          connectionPulse: 0,
-          duration: 0.4,
-          ease: 'power2.out',
-          onUpdate: () => {
-            const pulse = animationState.current.connectionPulse;
-            if (instancedMeshRef.current) {
-              const mat = instancedMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) mat.uniforms.shimmerIntensity.value = pulse * 0.7;
-            }
-            if (sphereMeshRef.current) {
-              const mat = sphereMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) mat.uniforms.shimmerIntensity.value = pulse * 0.7;
-            }
+        tl.to(
+          animationState.current,
+          {
+            connectionPulse: 0,
+            duration: 0.4,
+            ease: "power2.out",
+            onUpdate: () => {
+              const pulse = animationState.current.connectionPulse;
+              if (instancedMeshRef.current) {
+                const mat = instancedMeshRef.current
+                  .material as THREE.ShaderMaterial;
+                if (mat.uniforms)
+                  mat.uniforms.shimmerIntensity.value = pulse * 0.7;
+              }
+              if (sphereMeshRef.current) {
+                const mat = sphereMeshRef.current
+                  .material as THREE.ShaderMaterial;
+                if (mat.uniforms)
+                  mat.uniforms.shimmerIntensity.value = pulse * 0.7;
+              }
+            },
           },
-        }, 2.4);
+          2.4
+        );
       }
 
-      tl.to(animationState.current, {
-        idleFloat: 1.0,
-        duration: 0.2,
-        ease: 'sine.inOut',
-      }, 2.6);
+      tl.to(
+        animationState.current,
+        {
+          idleFloat: 1.0,
+          duration: 0.2,
+          ease: "sine.inOut",
+        },
+        2.6
+      );
     };
 
     // Create shader material with shared uniforms
-    const createParticleMaterial = (bounds: THREE.Box3, size: THREE.Vector3) => {
+    const createParticleMaterial = (
+      bounds: THREE.Box3,
+      size: THREE.Vector3
+    ) => {
       return new THREE.ShaderMaterial({
         uniforms: {
           color: { value: new THREE.Color(CONFIG.particles.color) },
           colorB: { value: new THREE.Color(CONFIG.particles.secondaryColor) },
           roughness: { value: CONFIG.particles.roughness },
-          uScale: { value: new THREE.Vector3(CONFIG.particles.scale.x, CONFIG.particles.scale.y, CONFIG.particles.scale.z) },
+          uScale: {
+            value: new THREE.Vector3(
+              CONFIG.particles.scale.x,
+              CONFIG.particles.scale.y,
+              CONFIG.particles.scale.z
+            ),
+          },
           time: { value: 0 },
           mousePos: { value: new THREE.Vector3() },
           mouseActive: { value: 0.0 },
@@ -567,7 +650,10 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
           sampler.sample(tempPos, tempNormal);
 
           if (CONFIG.particles.scatter > 0) {
-            tempPos.addScaledVector(tempNormal, (Math.random() - 0.5) * CONFIG.particles.scatter);
+            tempPos.addScaledVector(
+              tempNormal,
+              (Math.random() - 0.5) * CONFIG.particles.scatter
+            );
           }
 
           positions.push(tempPos.clone());
@@ -577,7 +663,11 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
 
       const material = createParticleMaterial(bounds, size);
       const geometry = new THREE.IcosahedronGeometry(0.5, 1);
-      const instancedMesh = new THREE.InstancedMesh(geometry, material, positions.length);
+      const instancedMesh = new THREE.InstancedMesh(
+        geometry,
+        material,
+        positions.length
+      );
 
       const dummy = new THREE.Object3D();
       const aRandom = new Float32Array(positions.length);
@@ -590,7 +680,10 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
         aRandom[i] = randoms[i];
       });
 
-      instancedMesh.geometry.setAttribute('aRandom', new THREE.InstancedBufferAttribute(aRandom, 1));
+      instancedMesh.geometry.setAttribute(
+        "aRandom",
+        new THREE.InstancedBufferAttribute(aRandom, 1)
+      );
       instancedMesh.position.set(-center.x, center.y, -center.z);
       instancedMesh.scale.y = -1;
 
@@ -622,7 +715,10 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
         sampler.sample(tempPos, tempNormal);
 
         if (CONFIG.particles.scatter > 0) {
-          tempPos.addScaledVector(tempNormal, (Math.random() - 0.5) * CONFIG.particles.scatter * 0.5);
+          tempPos.addScaledVector(
+            tempNormal,
+            (Math.random() - 0.5) * CONFIG.particles.scatter * 0.5
+          );
         }
 
         positions.push(tempPos.clone());
@@ -631,7 +727,11 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
 
       const material = createParticleMaterial(bounds, size);
       const geometry = new THREE.IcosahedronGeometry(0.5, 1);
-      const instancedMesh = new THREE.InstancedMesh(geometry, material, positions.length);
+      const instancedMesh = new THREE.InstancedMesh(
+        geometry,
+        material,
+        positions.length
+      );
 
       const dummy = new THREE.Object3D();
       const aRandom = new Float32Array(positions.length);
@@ -644,7 +744,10 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
         aRandom[i] = randoms[i];
       });
 
-      instancedMesh.geometry.setAttribute('aRandom', new THREE.InstancedBufferAttribute(aRandom, 1));
+      instancedMesh.geometry.setAttribute(
+        "aRandom",
+        new THREE.InstancedBufferAttribute(aRandom, 1)
+      );
 
       const spherePivot = new THREE.Group();
       const sphereWorldX = sphereCenter.x - center.x;
@@ -652,7 +755,11 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
       const sphereWorldZ = CONFIG.geometry.depth / 2 - center.z;
 
       spherePivot.position.set(sphereWorldX, sphereWorldY, sphereWorldZ);
-      instancedMesh.position.set(-sphereCenter.x, sphereCenter.y, -CONFIG.geometry.depth / 2);
+      instancedMesh.position.set(
+        -sphereCenter.x,
+        sphereCenter.y,
+        -CONFIG.geometry.depth / 2
+      );
       instancedMesh.scale.y = -1;
 
       spherePivot.add(instancedMesh);
@@ -688,8 +795,10 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
       mouseRef.current.set(x, y);
 
       const isInsideContainer =
-        e.clientX >= rect.left && e.clientX <= rect.right &&
-        e.clientY >= rect.top && e.clientY <= rect.bottom;
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
 
       if (isInsideContainer && !prefersReducedMotion.current) {
         mouseActiveRef.current = true;
@@ -709,7 +818,10 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
         targetRotation.current.x += deltaY * 0.006;
 
         // Allow full rotation on Y, limit X tilt
-        targetRotation.current.x = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, targetRotation.current.x));
+        targetRotation.current.x = Math.max(
+          -Math.PI / 4,
+          Math.min(Math.PI / 4, targetRotation.current.x)
+        );
 
         previousMouseRef.current = { x: e.clientX, y: e.clientY };
       }
@@ -724,7 +836,10 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length === 1) {
         isDraggingRef.current = true;
-        previousMouseRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        previousMouseRef.current = {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY,
+        };
         targetRotation.current.y = actualRotation.current.y;
         targetRotation.current.x = actualRotation.current.x;
       }
@@ -738,9 +853,15 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
         targetRotation.current.y += deltaX * 0.008;
         targetRotation.current.x += deltaY * 0.006;
 
-        targetRotation.current.x = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, targetRotation.current.x));
+        targetRotation.current.x = Math.max(
+          -Math.PI / 4,
+          Math.min(Math.PI / 4, targetRotation.current.x)
+        );
 
-        previousMouseRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        previousMouseRef.current = {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY,
+        };
       }
     };
 
@@ -752,14 +873,20 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
     };
 
     // Add event listeners with passive where possible
-    container.addEventListener('mousedown', handleMouseDown);
-    container.addEventListener('mousemove', handleMouseMove, { passive: true });
-    container.addEventListener('mouseleave', handleMouseLeave);
-    container.addEventListener('touchstart', handleTouchStart, { passive: true });
-    container.addEventListener('touchmove', handleTouchMove, { passive: false });
-    container.addEventListener('touchend', handleTouchEnd);
-    window.addEventListener('mouseup', handleMouseUp);
-    window.addEventListener('mousemove', handleGlobalMouseMove, { passive: true });
+    container.addEventListener("mousedown", handleMouseDown);
+    container.addEventListener("mousemove", handleMouseMove, { passive: true });
+    container.addEventListener("mouseleave", handleMouseLeave);
+    container.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
+    container.addEventListener("touchmove", handleTouchMove, {
+      passive: false,
+    });
+    container.addEventListener("touchend", handleTouchEnd);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("mousemove", handleGlobalMouseMove, {
+      passive: true,
+    });
 
     // Shimmer sweep state
     const shimmerSweep = {
@@ -781,18 +908,24 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
       if (groupRef.current) {
         if (isDraggingRef.current) {
           // When dragging, smoothly follow target rotation (user can drag anywhere)
-          actualRotation.current.x += (targetRotation.current.x - actualRotation.current.x) * 0.15;
-          actualRotation.current.y += (targetRotation.current.y - actualRotation.current.y) * 0.15;
+          actualRotation.current.x +=
+            (targetRotation.current.x - actualRotation.current.x) * 0.15;
+          actualRotation.current.y +=
+            (targetRotation.current.y - actualRotation.current.y) * 0.15;
         } else {
           // Gentle oscillation from wherever user left it
-          const oscillationY = Math.sin(time * CONFIG.autoRotation.speed) * CONFIG.autoRotation.maxAngle;
+          const oscillationY =
+            Math.sin(time * CONFIG.autoRotation.speed) *
+            CONFIG.autoRotation.maxAngle;
           const oscillationX = Math.sin(time * 0.1) * 0.015; // Subtle vertical wobble
 
           const targetY = rotationBaseRef.current.y + oscillationY;
           const targetX = rotationBaseRef.current.x + oscillationX;
 
-          actualRotation.current.y += (targetY - actualRotation.current.y) * 0.02;
-          actualRotation.current.x += (targetX - actualRotation.current.x) * 0.02;
+          actualRotation.current.y +=
+            (targetY - actualRotation.current.y) * 0.02;
+          actualRotation.current.x +=
+            (targetX - actualRotation.current.x) * 0.02;
         }
 
         groupRef.current.rotation.x = actualRotation.current.x;
@@ -805,7 +938,9 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
           shimmerSweep.delay -= 0.016;
         } else {
           shimmerSweep.progress += 0.016 * shimmerSweep.speed;
-          shimmerSweep.posX = shimmerSweep.startX + (shimmerSweep.endX - shimmerSweep.startX) * shimmerSweep.progress;
+          shimmerSweep.posX =
+            shimmerSweep.startX +
+            (shimmerSweep.endX - shimmerSweep.startX) * shimmerSweep.progress;
 
           if (shimmerSweep.progress < 0.1) {
             shimmerSweep.intensity = shimmerSweep.progress / 0.1;
@@ -819,7 +954,10 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
             shimmerSweep.progress = 0;
             shimmerSweep.posX = shimmerSweep.startX;
             shimmerSweep.intensity = 0;
-            shimmerSweep.delay = CONFIG.shimmer.delay.min + Math.random() * (CONFIG.shimmer.delay.max - CONFIG.shimmer.delay.min);
+            shimmerSweep.delay =
+              CONFIG.shimmer.delay.min +
+              Math.random() *
+                (CONFIG.shimmer.delay.max - CONFIG.shimmer.delay.min);
           }
         }
       }
@@ -827,17 +965,22 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
       // Animate disperse (skip if reduced motion)
       if (!prefersReducedMotion.current) {
         if (mouseActiveRef.current && !isDraggingRef.current) {
-          disperseAmount.current += (1.0 - disperseAmount.current) * CONFIG.interaction.disperseSpeed;
+          disperseAmount.current +=
+            (1.0 - disperseAmount.current) * CONFIG.interaction.disperseSpeed;
         } else {
-          disperseAmount.current += (0.0 - disperseAmount.current) * CONFIG.interaction.reformSpeed;
+          disperseAmount.current +=
+            (0.0 - disperseAmount.current) * CONFIG.interaction.reformSpeed;
         }
-        disperseAmount.current = Math.max(0, Math.min(1, disperseAmount.current));
+        disperseAmount.current = Math.max(
+          0,
+          Math.min(1, disperseAmount.current)
+        );
       }
 
       // Calculate mouse position using preallocated objects
       if (cameraRef.current && groupRef.current) {
         const cam = cameraRef.current;
-        const fovRad = cam.fov * Math.PI / 180;
+        const fovRad = (cam.fov * Math.PI) / 180;
         const visibleHeight = 2 * Math.tan(fovRad / 2) * cam.position.z;
         const visibleWidth = visibleHeight * cam.aspect;
 
@@ -864,7 +1007,8 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
 
       // Update swoosh shader uniforms
       if (instancedMeshRef.current) {
-        const material = instancedMeshRef.current.material as THREE.ShaderMaterial;
+        const material = instancedMeshRef.current
+          .material as THREE.ShaderMaterial;
         if (material.uniforms) {
           material.uniforms.time.value = time;
           material.uniforms.mousePos.value.set(
@@ -872,18 +1016,24 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
             mouseWorldRef.current.y,
             mouseWorldRef.current.z
           );
-          material.uniforms.mouseActive.value = mouseActiveRef.current ? 1.0 : 0.0;
+          material.uniforms.mouseActive.value = mouseActiveRef.current
+            ? 1.0
+            : 0.0;
           material.uniforms.disperseAmount.value = disperseAmount.current;
           if (animationState.current.entranceComplete) {
             material.uniforms.shimmerPosX.value = shimmerSweep.posX;
-            material.uniforms.shimmerIntensity.value = shimmerSweep.intensity * 1.8;
+            material.uniforms.shimmerIntensity.value =
+              shimmerSweep.intensity * 1.8;
           }
         }
       }
 
       // Update sphere shader uniforms
       if (spherePivotRef.current && sphereMeshRef.current) {
-        if (animationState.current.entranceComplete && !prefersReducedMotion.current) {
+        if (
+          animationState.current.entranceComplete &&
+          !prefersReducedMotion.current
+        ) {
           spherePivotRef.current.rotation.y = time * 0.15;
           spherePivotRef.current.rotation.z = Math.sin(time * 0.08) * 0.03;
         }
@@ -893,7 +1043,11 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
           material.uniforms.time.value = time;
 
           // Transform mouse to sphere's local space using preallocated vector
-          sphereLocalMouse.current.set(mouseWorldRef.current.x, mouseWorldRef.current.y, 0);
+          sphereLocalMouse.current.set(
+            mouseWorldRef.current.x,
+            mouseWorldRef.current.y,
+            0
+          );
 
           tempQuat.current.setFromEuler(spherePivotRef.current.rotation);
           tempQuat.current.invert();
@@ -905,11 +1059,14 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
           sphereLocalMouse.current.y += 197;
 
           material.uniforms.mousePos.value.copy(sphereLocalMouse.current);
-          material.uniforms.mouseActive.value = mouseActiveRef.current ? 1.0 : 0.0;
+          material.uniforms.mouseActive.value = mouseActiveRef.current
+            ? 1.0
+            : 0.0;
           material.uniforms.disperseAmount.value = disperseAmount.current;
           if (animationState.current.entranceComplete) {
             material.uniforms.shimmerPosX.value = shimmerSweep.posX;
-            material.uniforms.shimmerIntensity.value = shimmerSweep.intensity * 1.8;
+            material.uniforms.shimmerIntensity.value =
+              shimmerSweep.intensity * 1.8;
           }
         }
       }
@@ -952,7 +1109,7 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
         scaleRef.current = scale;
       }
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Cleanup - proper Three.js resource disposal
     return () => {
@@ -960,24 +1117,33 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
       if (mouseTimeoutRef.current) clearTimeout(mouseTimeoutRef.current);
 
       // Remove event listeners
-      container.removeEventListener('mousedown', handleMouseDown);
-      container.removeEventListener('mousemove', handleMouseMove);
-      container.removeEventListener('mouseleave', handleMouseLeave);
-      container.removeEventListener('touchstart', handleTouchStart);
-      container.removeEventListener('touchmove', handleTouchMove);
-      container.removeEventListener('touchend', handleTouchEnd);
-      window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('mousemove', handleGlobalMouseMove);
-      window.removeEventListener('resize', handleResize);
-      renderer.domElement.removeEventListener('webglcontextlost', handleContextLost);
-      renderer.domElement.removeEventListener('webglcontextrestored', handleContextRestored);
+      container.removeEventListener("mousedown", handleMouseDown);
+      container.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mouseleave", handleMouseLeave);
+      container.removeEventListener("touchstart", handleTouchStart);
+      container.removeEventListener("touchmove", handleTouchMove);
+      container.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mousemove", handleGlobalMouseMove);
+      window.removeEventListener("resize", handleResize);
+      renderer.domElement.removeEventListener(
+        "webglcontextlost",
+        handleContextLost
+      );
+      renderer.domElement.removeEventListener(
+        "webglcontextrestored",
+        handleContextRestored
+      );
 
       // Dispose all Three.js resources
       scene.traverse((object) => {
-        if (object instanceof THREE.Mesh || object instanceof THREE.InstancedMesh) {
+        if (
+          object instanceof THREE.Mesh ||
+          object instanceof THREE.InstancedMesh
+        ) {
           object.geometry.dispose();
           if (Array.isArray(object.material)) {
-            object.material.forEach(m => m.dispose());
+            object.material.forEach((m) => m.dispose());
           } else {
             object.material.dispose();
           }
@@ -986,7 +1152,10 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
 
       renderer.dispose();
 
-      if (rendererRef.current && container.contains(rendererRef.current.domElement)) {
+      if (
+        rendererRef.current &&
+        container.contains(rendererRef.current.domElement)
+      ) {
         container.removeChild(rendererRef.current.domElement);
       }
     };
@@ -997,14 +1166,14 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
       ref={containerRef}
       className={className}
       style={{
-        width: '100%',
-        height: '100%',
-        position: 'absolute',
+        width: "100%",
+        height: "100%",
+        position: "absolute",
         inset: 0,
         opacity: isLoaded ? 1 : 0,
-        transition: 'opacity 0.6s ease-out',
-        cursor: 'grab',
-        willChange: 'transform',
+        transition: "opacity 0.6s ease-out",
+        cursor: "grab",
+        willChange: "transform",
       }}
     />
   );
