@@ -12,7 +12,7 @@ interface Props {
 const CONFIG = {
   particles: {
     count: 15000,
-    scale: { x: 1.5, y: 1.5, z: 1.5 }, // Bigger particles
+    scale: { x: 1.5, y: 1.5, z: 1.5 },
     scatter: 1.5,
     color: '#e6e6e6',
     secondaryColor: '#ff3333',
@@ -25,15 +25,19 @@ const CONFIG = {
     curveSegments: 20,
   },
   interaction: {
-    radius: 120,     // Radius in logo coordinate space (logo is ~1200 wide)
-    strength: 35,    // Push strength for scatter (reduced from 80)
-    disperseSpeed: 0.08,  // How fast particles scatter (slower)
-    reformSpeed: 0.03,    // How fast particles reform
+    radius: 50,      // Smaller, more targeted area
+    strength: 60,    // Stronger push in that area
+    disperseSpeed: 0.1,
+    reformSpeed: 0.035,
   },
   shimmer: {
     color: '#E7001A',
     delay: { min: 4.0, max: 7.0 },
     speed: 0.25,
+  },
+  autoRotation: {
+    maxAngle: Math.PI / 6, // 30 degrees in each direction
+    speed: 0.12,           // Oscillation speed (slower, more gentle)
   },
 };
 
@@ -42,49 +46,197 @@ const SVG_CONTENT = `<svg width="1137" height="278" viewBox="0 0 1137 278" fill=
 <path d="M1055.33 115.112C1092.58 114.489 1137.41 144.885 1137 197.431C1136.64 242.594 1100.26 278 1053.63 278C1008.26 278 972.178 241.419 972.178 195.465C972.178 151.022 1009.25 115.184 1055.33 115.112Z" fill="white"/>
 </svg>`;
 
+// Shared particle vertex shader
+const createParticleVertexShader = () => `
+  attribute float aRandom;
+  uniform float time;
+  uniform vec3 mousePos;
+  uniform float mouseActive;
+  uniform float disperseAmount;
+  uniform float interactionRadius;
+  uniform float interactionStrength;
+  uniform vec3 uScale;
+  uniform float minY;
+  uniform float maxY;
+  uniform float maxRadius;
+  uniform vec3 color;
+  uniform vec3 colorB;
+  uniform float shimmerPosX;
+  uniform float shimmerIntensity;
+  uniform vec3 shimmerColor;
+  uniform float streamProgress;
+  uniform float positionOvershoot;
+
+  varying vec3 vColor;
+  varying vec3 vNormal;
+  varying vec3 vViewPosition;
+  varying vec3 vWorldPosition;
+  varying float vShimmer;
+  varying float vTrail;
+  varying float vDisperse;
+
+  void main() {
+    vec4 instanceMatrixCol3 = instanceMatrix[3];
+    vec3 instancePos = instanceMatrixCol3.xyz;
+
+    vec3 endPos = instancePos;
+    vec3 startPos = vec3(
+      instancePos.x + (aRandom - 0.5) * 150.0,
+      800.0,
+      instancePos.z + (aRandom - 0.5) * 30.0
+    );
+
+    float xNormalized = (instancePos.x + 600.0) / 1200.0;
+    float yNormalized = (instancePos.y + 200.0) / 400.0;
+    float staggerDelay = xNormalized * 0.35 + yNormalized * 0.1 + aRandom * 0.15;
+
+    float adjustedProgress = clamp(
+      (streamProgress - staggerDelay) / max(1.0 - staggerDelay, 0.2),
+      0.0, 1.0
+    );
+
+    float easedProgress = 1.0 - pow(1.0 - adjustedProgress, 2.0);
+
+    vec3 controlPoint = mix(startPos, endPos, 0.6);
+    controlPoint.x += (aRandom - 0.5) * 30.0;
+    controlPoint.y = mix(startPos.y, endPos.y, 0.7);
+
+    vec3 p0 = mix(startPos, controlPoint, easedProgress);
+    vec3 p1 = mix(controlPoint, endPos, easedProgress);
+    vec3 curvePos = mix(p0, p1, easedProgress);
+
+    float driftAmount = (1.0 - easedProgress) * (1.0 - easedProgress);
+    curvePos.x += sin(easedProgress * 6.0 + aRandom * 10.0) * 5.0 * driftAmount;
+    curvePos.z += cos(easedProgress * 4.0 + aRandom * 8.0) * 3.0 * driftAmount;
+
+    vec3 animPos = curvePos;
+
+    vec3 overshootDir = vec3(0.0, -1.0, 0.0);
+    float overshootAmount = (positionOvershoot - 1.0) * 12.0;
+    if (easedProgress > 0.95) {
+      animPos += overshootDir * overshootAmount * smoothstep(0.95, 1.0, easedProgress);
+    }
+
+    vec3 prevPos = mix(startPos, endPos, max(easedProgress - 0.08, 0.0));
+    vTrail = length(animPos - prevPos) * 0.05 * (1.0 - easedProgress);
+
+    vDisperse = 0.0;
+    if (streamProgress > 0.85) {
+      float dist = distance(animPos.xy, mousePos.xy);
+      float influence = smoothstep(interactionRadius * 2.5, 0.0, dist);
+      vec3 scatterDir = normalize(animPos - mousePos + vec3((aRandom - 0.5) * 0.5, (aRandom - 0.3) * 0.5, aRandom - 0.5));
+      float scatterDist = interactionStrength * influence * disperseAmount * (0.5 + aRandom * 0.5);
+      float turbulence = sin(time * 3.0 + aRandom * 20.0) * disperseAmount * influence * 2.0;
+
+      animPos += scatterDir * scatterDist;
+      animPos.x += turbulence;
+      animPos.y += cos(time * 2.5 + aRandom * 15.0) * disperseAmount * influence * 1.5;
+      animPos.z += sin(time * 2.0 + aRandom * 12.0) * disperseAmount * influence * 1.0;
+
+      vDisperse = influence * disperseAmount;
+    }
+
+    float mixFactor = smoothstep(minY, maxY, instancePos.y);
+    vColor = mix(color, colorB, clamp(mixFactor, 0.0, 1.0));
+
+    float distFromShimmer = abs(instancePos.x - shimmerPosX);
+    float shimmerWidth = 50.0;
+    vShimmer = (1.0 - smoothstep(0.0, shimmerWidth, distFromShimmer)) * shimmerIntensity;
+
+    vec3 localPos = position * uScale;
+    vec4 worldPos = instanceMatrix * vec4(localPos, 1.0);
+    worldPos.xyz = animPos + (worldPos.xyz - instancePos);
+
+    vWorldPosition = worldPos.xyz;
+    vec4 mvPosition = viewMatrix * modelMatrix * worldPos;
+    vViewPosition = -mvPosition.xyz;
+    vNormal = normalize(normalMatrix * mat3(instanceMatrix) * normal);
+    gl_Position = projectionMatrix * mvPosition;
+  }
+`;
+
+// Shared particle fragment shader
+const createParticleFragmentShader = () => `
+  varying vec3 vColor;
+  varying vec3 vNormal;
+  varying vec3 vViewPosition;
+  varying vec3 vWorldPosition;
+  varying float vShimmer;
+  varying float vDisperse;
+  uniform float roughness;
+  uniform vec3 shimmerColor;
+  uniform float mouseActive;
+  uniform vec3 mousePos;
+  uniform float interactionRadius;
+  uniform float uOpacity;
+
+  void main() {
+    vec3 viewDir = normalize(vViewPosition);
+    vec3 normal = normalize(vNormal);
+    vec3 lightDir = normalize(vec3(0.5, 1.0, 1.0));
+    vec3 halfDir = normalize(lightDir + viewDir);
+
+    float NdotL = max(dot(normal, lightDir), 0.0);
+    vec3 diffuse = vColor * NdotL;
+
+    float specPower = mix(100.0, 1.0, roughness);
+    float NdotH = max(dot(normal, halfDir), 0.0);
+    float specIntensity = pow(NdotH, specPower) * (1.0 - roughness);
+    vec3 specular = vec3(1.0) * specIntensity;
+
+    vec3 ambient = vColor * 0.2;
+    vec3 baseColor = ambient + diffuse + specular;
+
+    vec3 finalColor = mix(baseColor, vec3(1.0), vShimmer * 0.4);
+
+    if (vDisperse > 0.1) {
+      finalColor = mix(finalColor, vec3(1.0, 0.9, 0.9), vDisperse * 0.3);
+    }
+
+    gl_FragColor = vec4(finalColor, uOpacity);
+  }
+`;
+
 export default function LogoMeshNetwork({ className = '' }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
   const frameRef = useRef<number>(0);
   const groupRef = useRef<THREE.Group | null>(null);
   const instancedMeshRef = useRef<THREE.InstancedMesh | null>(null);
   const sphereMeshRef = useRef<THREE.InstancedMesh | null>(null);
-  const spherePivotRef = useRef<THREE.Group | null>(null); // Pivot for sphere to rotate around its center
+  const spherePivotRef = useRef<THREE.Group | null>(null);
 
   const mouseRef = useRef(new THREE.Vector2(0, 0));
-  const mouseWorldRef = useRef(new THREE.Vector3(0, 0, 0)); // Mouse position in logo local coords
+  const mouseWorldRef = useRef(new THREE.Vector3(0, 0, 0));
   const mouseActiveRef = useRef(false);
   const mouseTimeoutRef = useRef<number | null>(null);
   const targetRotation = useRef({ x: 0, y: 0 });
   const actualRotation = useRef({ x: 0, y: 0 });
   const isDraggingRef = useRef(false);
   const previousMouseRef = useRef({ x: 0, y: 0 });
-  const autoRotationOffset = useRef(0); // Track auto-rotation offset
-  const disperseAmount = useRef(0); // For scatter/reform effect
+  const rotationBaseRef = useRef({ x: 0, y: 0 }); // Base position to oscillate from
+  const disperseAmount = useRef(0);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
-  const scaleRef = useRef(1); // Store the logo scale for coordinate conversion
+  const scaleRef = useRef(1);
 
-  // Store original positions for animation
-  const swooshOriginalPositions = useRef<THREE.Vector3[]>([]);
-  const sphereCenter3D = useRef(new THREE.Vector3());
+  // Preallocated objects for animation loop (avoid GC pressure)
+  const tempVec = useRef(new THREE.Vector3());
+  const tempQuat = useRef(new THREE.Quaternion());
+  const sphereLocalMouse = useRef(new THREE.Vector3());
 
-  // Animation state for "Cosmic Genesis" entrance
-  // Both swoosh and sphere stream in from a common origin point
+  // Reduced motion preference
+  const prefersReducedMotion = useRef(false);
+
+  // Animation state
   const animationState = useRef({
-    // Unified streaming animation
-    streamProgress: 0,       // 0 = at origin, 1 = final position
-    particleOpacity: 0,      // Fade in as particles stream
-    // Phase 3: Crystallization
-    positionOvershoot: 1.0,  // For spring settle effect
+    streamProgress: 0,
+    particleOpacity: 0,
+    positionOvershoot: 1.0,
     connectionPulse: 0,
-    // Phase 4: Rest
     idleFloat: 0,
     entranceComplete: false,
   });
-
-  // Store sphere base position for animation
-  const sphereBaseY = useRef(0);
-  const sphereBaseX = useRef(0);
 
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -92,12 +244,16 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
     if (!containerRef.current) return;
     const container = containerRef.current;
 
+    // Check for reduced motion preference
+    prefersReducedMotion.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     const width = container.clientWidth;
     const height = container.clientHeight;
 
     // Scene setup
     const scene = new THREE.Scene();
-    // Responsive camera distance based on screen size
+    sceneRef.current = scene;
+
     const isMobile = width < 768;
     const isSmallScreen = width < 1200;
     const baseFov = isMobile ? 55 : isSmallScreen ? 50 : 45;
@@ -118,39 +274,40 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
     container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
+    // Handle WebGL context loss
+    const handleContextLost = (e: Event) => {
+      e.preventDefault();
+      cancelAnimationFrame(frameRef.current);
+    };
+
+    const handleContextRestored = () => {
+      animate();
+    };
+
+    renderer.domElement.addEventListener('webglcontextlost', handleContextLost);
+    renderer.domElement.addEventListener('webglcontextrestored', handleContextRestored);
+
     const group = new THREE.Group();
     scene.add(group);
     groupRef.current = group;
 
-    // Bounds for shader uniforms
-    let boundsMin = new THREE.Vector3();
-    let boundsMax = new THREE.Vector3();
-    let maxRadius = 1;
-
     // Load and process SVG geometry
     const loadGeometry = () => {
-      console.log('Loading SVG geometry...');
       const loader = new SVGLoader();
       const data = loader.parse(SVG_CONTENT);
       const paths = data.paths;
-      console.log('Paths found:', paths.length);
       const geometries: THREE.BufferGeometry[] = [];
       const totalBounds = new THREE.Box3();
 
-      // Circle center and radius from SVG (second path is the circle)
       const circleCenter = { x: 1055, y: 197 };
       const circleRadius = 82;
 
       paths.forEach((path, pathIndex) => {
         const shapes = SVGLoader.createShapes(path);
 
-        // Second path (index 1) is the circle - create a sphere instead
         if (pathIndex === 1) {
-          // Create sphere geometry for the circle
           const sphereGeo = new THREE.SphereGeometry(circleRadius, 32, 32);
-          // Position the sphere at the circle's center
           sphereGeo.translate(circleCenter.x, circleCenter.y, CONFIG.geometry.depth / 2);
-
           sphereGeo.computeBoundingBox();
           if (sphereGeo.boundingBox) {
             totalBounds.expandByPoint(sphereGeo.boundingBox.min);
@@ -169,7 +326,6 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
             steps: 1,
             curveSegments: CONFIG.geometry.curveSegments,
           });
-
           geo.computeBoundingBox();
           if (geo.boundingBox) {
             totalBounds.expandByPoint(geo.boundingBox.min);
@@ -184,150 +340,94 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
       const size = new THREE.Vector3();
       totalBounds.getSize(size);
 
-      boundsMin = totalBounds.min;
-      boundsMax = totalBounds.max;
-      maxRadius = Math.max(size.x, size.y) / 2;
-
-      console.log('Geometries created:', geometries.length);
-      console.log('Bounds:', totalBounds);
-      console.log('Size:', size);
-
       const contentGroup = new THREE.Group();
 
-      // Separate sphere geometry from the rest
       const sphereGeo = geometries.length > 1 ? geometries[1] : null;
       const swooshGeos = geometries.filter((_, i) => i !== 1);
 
-      // Calculate sphere center in world coordinates (for swoosh streaming origin)
       const sphereCenterWorld = new THREE.Vector3(
         circleCenter.x - center.x,
-        -(circleCenter.y - center.y), // Flip Y
+        -(circleCenter.y - center.y),
         CONFIG.geometry.depth / 2 - center.z
       );
 
-      // Generate particles for swoosh (streams from sphere)
       generateParticles(swooshGeos, contentGroup, center, totalBounds, sphereCenterWorld);
 
-      // Generate particles for sphere separately (so it can rotate)
       if (sphereGeo) {
-        generateSphereParticles(sphereGeo, contentGroup, center, totalBounds, circleCenter, sphereCenterWorld.x);
+        generateSphereParticles(sphereGeo, contentGroup, center, totalBounds, circleCenter);
       }
 
-      // Auto-scale to fit view - responsive sizing
       const maxDim = Math.max(size.x, size.y);
-      console.log('Max dimension:', maxDim);
       if (maxDim > 0) {
-        // Smaller base scale, adjusted for screen size
         const baseScale = isMobile ? 50 : isSmallScreen ? 60 : 65;
         const scale = baseScale / maxDim;
-        console.log('Scale:', scale);
         group.scale.set(scale, scale, scale);
-        scaleRef.current = scale; // Store for mouse coordinate conversion
+        scaleRef.current = scale;
       }
 
       group.add(contentGroup);
-      console.log('Content group children:', contentGroup.children.length);
       setIsLoaded(true);
 
-      // ============================================
-      // GSAP Unified Particle Stream Animation
-      // ============================================
-      // Both swoosh and sphere particles stream in from a common origin
-      // Phase 1: Stream (0-2.5s) - All particles flow from origin to final positions
-      // Phase 2: Crystallization (2.5-3.0s) - Particles settle with spring
-      // Phase 3: Rest (3.0s+) - Idle state begins
-
-      // Store base positions for animation
-      sphereBaseX.current = sphereCenterWorld.x;
-      sphereBaseY.current = sphereCenterWorld.y;
-
+      // GSAP Animation Timeline
       const tl = gsap.timeline({
-        delay: 0,  // Start immediately
+        delay: 0,
         onComplete: () => {
           animationState.current.entranceComplete = true;
         },
       });
 
-      // ============================================
-      // PHASE 1: UNIFIED PARTICLE STREAM (0 - 1.8s)
-      // All particles rise from bottom - staggered formation
-      // ============================================
-      tl.to(
-        animationState.current,
-        {
-          streamProgress: 1.0,
-          particleOpacity: 1.0,
-          duration: 1.8,
-          ease: 'power2.out',
-          onUpdate: () => {
-            const progress = animationState.current.streamProgress;
-            const opacity = animationState.current.particleOpacity;
+      // Phase 1: Stream in
+      tl.to(animationState.current, {
+        streamProgress: 1.0,
+        particleOpacity: 1.0,
+        duration: prefersReducedMotion.current ? 0.3 : 1.8,
+        ease: 'power2.out',
+        onUpdate: () => {
+          const progress = animationState.current.streamProgress;
+          const opacity = animationState.current.particleOpacity;
 
-            // Update swoosh particles
-            if (instancedMeshRef.current) {
-              const mat = instancedMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) {
-                mat.uniforms.streamProgress.value = progress;
-                mat.uniforms.uOpacity.value = opacity;
-              }
+          if (instancedMeshRef.current) {
+            const mat = instancedMeshRef.current.material as THREE.ShaderMaterial;
+            if (mat.uniforms) {
+              mat.uniforms.streamProgress.value = progress;
+              mat.uniforms.uOpacity.value = opacity;
             }
+          }
 
-            // Update sphere particles with same animation
-            if (sphereMeshRef.current) {
-              const mat = sphereMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) {
-                mat.uniforms.streamProgress.value = progress;
-                mat.uniforms.uOpacity.value = opacity;
-              }
+          if (sphereMeshRef.current) {
+            const mat = sphereMeshRef.current.material as THREE.ShaderMaterial;
+            if (mat.uniforms) {
+              mat.uniforms.streamProgress.value = progress;
+              mat.uniforms.uOpacity.value = opacity;
             }
-          },
-          onComplete: () => {
-            // Fire event when particles are in position (end of Phase 1)
-            // This triggers hero content animation immediately when logo is visually formed
-            window.dispatchEvent(new CustomEvent('logoAnimationComplete'));
-          },
+          }
         },
-        0
-      );
-
-      // ============================================
-      // PHASE 1b: FADE BACK (1.6 - 2.2s)
-      // Particles fade to let shimmer shine
-      // ============================================
-      tl.to(
-        animationState.current,
-        {
-          particleOpacity: 0.55,  // Fade to 55% opacity
-          duration: 0.6,
-          ease: 'power2.inOut',
-          onUpdate: () => {
-            const opacity = animationState.current.particleOpacity;
-            if (instancedMeshRef.current) {
-              const mat = instancedMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) {
-                mat.uniforms.uOpacity.value = opacity;
-              }
-            }
-            if (sphereMeshRef.current) {
-              const mat = sphereMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) {
-                mat.uniforms.uOpacity.value = opacity;
-              }
-            }
-          },
+        onComplete: () => {
+          window.dispatchEvent(new CustomEvent('logoAnimationComplete'));
         },
-        1.6
-      );
+      }, 0);
 
-      // ============================================
-      // PHASE 2: CRYSTALLIZATION (1.8 - 2.4s)
-      // Particles overshoot then spring back
-      // ============================================
+      // Phase 1b: Fade back
+      tl.to(animationState.current, {
+        particleOpacity: 0.55,
+        duration: 0.6,
+        ease: 'power2.inOut',
+        onUpdate: () => {
+          const opacity = animationState.current.particleOpacity;
+          if (instancedMeshRef.current) {
+            const mat = instancedMeshRef.current.material as THREE.ShaderMaterial;
+            if (mat.uniforms) mat.uniforms.uOpacity.value = opacity;
+          }
+          if (sphereMeshRef.current) {
+            const mat = sphereMeshRef.current.material as THREE.ShaderMaterial;
+            if (mat.uniforms) mat.uniforms.uOpacity.value = opacity;
+          }
+        },
+      }, 1.6);
 
-      // Phase 2a: Overshoot (1.8 - 2.0s)
-      tl.to(
-        animationState.current,
-        {
+      // Phase 2: Crystallization
+      if (!prefersReducedMotion.current) {
+        tl.to(animationState.current, {
           positionOvershoot: 1.04,
           duration: 0.15,
           ease: 'power2.out',
@@ -335,25 +435,16 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
             const overshoot = animationState.current.positionOvershoot;
             if (instancedMeshRef.current) {
               const mat = instancedMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) {
-                mat.uniforms.positionOvershoot.value = overshoot;
-              }
+              if (mat.uniforms) mat.uniforms.positionOvershoot.value = overshoot;
             }
             if (sphereMeshRef.current) {
               const mat = sphereMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) {
-                mat.uniforms.positionOvershoot.value = overshoot;
-              }
+              if (mat.uniforms) mat.uniforms.positionOvershoot.value = overshoot;
             }
           },
-        },
-        1.8
-      );
+        }, 1.8);
 
-      // Phase 2b: Spring back (2.0 - 2.2s)
-      tl.to(
-        animationState.current,
-        {
+        tl.to(animationState.current, {
           positionOvershoot: 1.0,
           duration: 0.3,
           ease: 'back.out(2)',
@@ -361,25 +452,16 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
             const overshoot = animationState.current.positionOvershoot;
             if (instancedMeshRef.current) {
               const mat = instancedMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) {
-                mat.uniforms.positionOvershoot.value = overshoot;
-              }
+              if (mat.uniforms) mat.uniforms.positionOvershoot.value = overshoot;
             }
             if (sphereMeshRef.current) {
               const mat = sphereMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) {
-                mat.uniforms.positionOvershoot.value = overshoot;
-              }
+              if (mat.uniforms) mat.uniforms.positionOvershoot.value = overshoot;
             }
           },
-        },
-        2.0
-      );
+        }, 2.0);
 
-      // Phase 2c: Connection shimmer pulse (2.2 - 2.4s)
-      tl.to(
-        animationState.current,
-        {
+        tl.to(animationState.current, {
           connectionPulse: 1.0,
           duration: 0.2,
           ease: 'power2.in',
@@ -387,25 +469,16 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
             const pulse = animationState.current.connectionPulse;
             if (instancedMeshRef.current) {
               const mat = instancedMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) {
-                mat.uniforms.shimmerIntensity.value = pulse * 0.7;
-              }
+              if (mat.uniforms) mat.uniforms.shimmerIntensity.value = pulse * 0.7;
             }
             if (sphereMeshRef.current) {
               const mat = sphereMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) {
-                mat.uniforms.shimmerIntensity.value = pulse * 0.7;
-              }
+              if (mat.uniforms) mat.uniforms.shimmerIntensity.value = pulse * 0.7;
             }
           },
-        },
-        2.2
-      );
+        }, 2.2);
 
-      // Phase 2d: Pulse fades (2.4 - 2.6s)
-      tl.to(
-        animationState.current,
-        {
+        tl.to(animationState.current, {
           connectionPulse: 0,
           duration: 0.4,
           ease: 'power2.out',
@@ -413,67 +486,80 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
             const pulse = animationState.current.connectionPulse;
             if (instancedMeshRef.current) {
               const mat = instancedMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) {
-                mat.uniforms.shimmerIntensity.value = pulse * 0.7;
-              }
+              if (mat.uniforms) mat.uniforms.shimmerIntensity.value = pulse * 0.7;
             }
             if (sphereMeshRef.current) {
               const mat = sphereMeshRef.current.material as THREE.ShaderMaterial;
-              if (mat.uniforms) {
-                mat.uniforms.shimmerIntensity.value = pulse * 0.7;
-              }
+              if (mat.uniforms) mat.uniforms.shimmerIntensity.value = pulse * 0.7;
             }
           },
-        },
-        2.4
-      );
+        }, 2.4);
+      }
 
-      // ============================================
-      // PHASE 3: REST (2.6s onwards)
-      // ============================================
-      tl.to(
-        animationState.current,
-        {
-          idleFloat: 1.0,
-          duration: 0.2,
-          ease: 'sine.inOut',
-        },
-        2.6
-      );
+      tl.to(animationState.current, {
+        idleFloat: 1.0,
+        duration: 0.2,
+        ease: 'sine.inOut',
+      }, 2.6);
     };
 
-    // Generate particle system
+    // Create shader material with shared uniforms
+    const createParticleMaterial = (bounds: THREE.Box3, size: THREE.Vector3) => {
+      return new THREE.ShaderMaterial({
+        uniforms: {
+          color: { value: new THREE.Color(CONFIG.particles.color) },
+          colorB: { value: new THREE.Color(CONFIG.particles.secondaryColor) },
+          roughness: { value: CONFIG.particles.roughness },
+          uScale: { value: new THREE.Vector3(CONFIG.particles.scale.x, CONFIG.particles.scale.y, CONFIG.particles.scale.z) },
+          time: { value: 0 },
+          mousePos: { value: new THREE.Vector3() },
+          mouseActive: { value: 0.0 },
+          disperseAmount: { value: 0.0 },
+          interactionRadius: { value: CONFIG.interaction.radius },
+          interactionStrength: { value: CONFIG.interaction.strength },
+          minY: { value: bounds.min.y },
+          maxY: { value: bounds.max.y },
+          maxRadius: { value: Math.max(size.x, size.y) / 2 },
+          shimmerPosX: { value: -600.0 },
+          shimmerIntensity: { value: 0.0 },
+          shimmerColor: { value: new THREE.Color(CONFIG.shimmer.color) },
+          streamProgress: { value: 0.0 },
+          uOpacity: { value: 0.0 },
+          positionOvershoot: { value: 1.0 },
+        },
+        transparent: true,
+        vertexShader: createParticleVertexShader(),
+        fragmentShader: createParticleFragmentShader(),
+        side: THREE.DoubleSide,
+      });
+    };
+
+    // Generate swoosh particles
     const generateParticles = (
       geometries: THREE.BufferGeometry[],
       parent: THREE.Group,
       center: THREE.Vector3,
       bounds: THREE.Box3,
-      sphereCenterWorld: THREE.Vector3
+      _sphereCenterWorld: THREE.Vector3
     ) => {
       const positions: THREE.Vector3[] = [];
       const randoms: number[] = [];
       const size = new THREE.Vector3();
       bounds.getSize(size);
 
-      geometries.forEach((geo, geoIndex) => {
-        console.log(`Processing geometry ${geoIndex}...`);
+      geometries.forEach((geo) => {
         const tempMesh = new THREE.Mesh(geo);
         const sampler = new MeshSurfaceSampler(tempMesh).build();
         const tempPos = new THREE.Vector3();
         const tempNormal = new THREE.Vector3();
 
         const samples = Math.floor(CONFIG.particles.count / geometries.length);
-        console.log(`Sampling ${samples} particles from geometry ${geoIndex}`);
 
         for (let i = 0; i < samples; i++) {
           sampler.sample(tempPos, tempNormal);
 
-          // Add scatter
           if (CONFIG.particles.scatter > 0) {
-            tempPos.addScaledVector(
-              tempNormal,
-              (Math.random() - 0.5) * CONFIG.particles.scatter
-            );
+            tempPos.addScaledVector(tempNormal, (Math.random() - 0.5) * CONFIG.particles.scatter);
           }
 
           positions.push(tempPos.clone());
@@ -481,240 +567,9 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
         }
       });
 
-      // Store original positions for swoosh streaming animation
-      swooshOriginalPositions.current = positions.map(p => p.clone());
-      // Store sphere center for particles to stream from
-      sphereCenter3D.current.copy(sphereCenterWorld);
-
-      console.log('Total positions sampled:', positions.length);
-
-      // Particle shader material with Cosmic Genesis animation
-      const material = new THREE.ShaderMaterial({
-        uniforms: {
-          color: { value: new THREE.Color(CONFIG.particles.color) },
-          colorB: { value: new THREE.Color(CONFIG.particles.secondaryColor) },
-          roughness: { value: CONFIG.particles.roughness },
-          uScale: {
-            value: new THREE.Vector3(
-              CONFIG.particles.scale.x,
-              CONFIG.particles.scale.y,
-              CONFIG.particles.scale.z
-            ),
-          },
-          time: { value: 0 },
-          mousePos: { value: new THREE.Vector3() },
-          mouseActive: { value: 0.0 },
-          disperseAmount: { value: 0.0 },  // 0 = formed, 1 = fully scattered
-          interactionRadius: { value: CONFIG.interaction.radius },
-          interactionStrength: { value: CONFIG.interaction.strength },
-          minY: { value: bounds.min.y },
-          maxY: { value: bounds.max.y },
-          maxRadius: { value: Math.max(size.x, size.y) / 2 },
-          // Shimmer uniforms
-          shimmerPosX: { value: -600.0 },
-          shimmerIntensity: { value: 0.0 },
-          shimmerColor: { value: new THREE.Color(CONFIG.shimmer.color) },
-          // Rising particle animation uniforms
-          streamProgress: { value: 0.0 },
-          uOpacity: { value: 0.0 },
-          positionOvershoot: { value: 1.0 },
-        },
-        transparent: true,
-        vertexShader: `
-          attribute float aRandom;
-          uniform float time;
-          uniform vec3 mousePos;
-          uniform float mouseActive;
-          uniform float disperseAmount;
-          uniform float interactionRadius;
-          uniform float interactionStrength;
-          uniform vec3 uScale;
-          uniform float minY;
-          uniform float maxY;
-          uniform float maxRadius;
-          uniform vec3 color;
-          uniform vec3 colorB;
-          uniform float shimmerPosX;
-          uniform float shimmerIntensity;
-          uniform vec3 shimmerColor;
-          uniform float streamProgress;
-          uniform float positionOvershoot;
-
-          varying vec3 vColor;
-          varying vec3 vNormal;
-          varying vec3 vViewPosition;
-          varying vec3 vWorldPosition;
-          varying float vShimmer;
-          varying float vTrail;
-          varying float vDisperse;
-
-          void main() {
-            vec4 instanceMatrixCol3 = instanceMatrix[3];
-            vec3 instancePos = instanceMatrixCol3.xyz;
-
-            // ========================================
-            // RISING FROM BOTTOM - Particles float up from below
-            // Each particle starts at bottom edge of screen
-            // ========================================
-            vec3 endPos = instancePos;
-
-            // Start position: far below the screen (positive Y = bottom in this coord system)
-            vec3 startPos = vec3(
-              instancePos.x + (aRandom - 0.5) * 150.0,  // Spread horizontally
-              800.0,                                     // Start FAR below viewport
-              instancePos.z + (aRandom - 0.5) * 30.0    // Slight Z variation
-            );
-
-            // Stagger particles for dramatic formation effect
-            // Particles on the left arrive first, right side arrives later
-            float xNormalized = (instancePos.x + 600.0) / 1200.0; // Normalize X to 0-1
-            float yNormalized = (instancePos.y + 200.0) / 400.0;  // Normalize Y
-
-            // Stagger: X position + Y position + randomness (total max ~0.6)
-            float staggerDelay = xNormalized * 0.35 + yNormalized * 0.1 + aRandom * 0.15;
-
-            float adjustedProgress = clamp(
-              (streamProgress - staggerDelay) / max(1.0 - staggerDelay, 0.2),
-              0.0, 1.0
-            );
-
-            // Smooth easing - ease out for gentle landing
-            float easedProgress = 1.0 - pow(1.0 - adjustedProgress, 2.0);
-
-            // ========================================
-            // RISING TRAJECTORY with slight curve
-            // ========================================
-            // Control point creates a gentle S-curve as particles rise
-            vec3 controlPoint = mix(startPos, endPos, 0.6);
-            controlPoint.x += (aRandom - 0.5) * 30.0;  // Gentle horizontal drift
-            controlPoint.y = mix(startPos.y, endPos.y, 0.7);  // Rise faster initially
-
-            // Quadratic Bezier for smooth curved path
-            vec3 p0 = mix(startPos, controlPoint, easedProgress);
-            vec3 p1 = mix(controlPoint, endPos, easedProgress);
-            vec3 curvePos = mix(p0, p1, easedProgress);
-
-            // Subtle float/drift during rise
-            float driftAmount = (1.0 - easedProgress) * (1.0 - easedProgress);
-            curvePos.x += sin(easedProgress * 6.0 + aRandom * 10.0) * 5.0 * driftAmount;
-            curvePos.z += cos(easedProgress * 4.0 + aRandom * 8.0) * 3.0 * driftAmount;
-
-            vec3 animPos = curvePos;
-
-            // ========================================
-            // POSITION OVERSHOOT (Spring settle)
-            // ========================================
-            vec3 overshootDir = vec3(0.0, -1.0, 0.0);  // Overshoot upward (negative Y is up)
-            float overshootAmount = (positionOvershoot - 1.0) * 12.0;
-            if (easedProgress > 0.95) {
-              animPos += overshootDir * overshootAmount * smoothstep(0.95, 1.0, easedProgress);
-            }
-
-            // Trail effect for motion blur look
-            vec3 prevPos = mix(startPos, endPos, max(easedProgress - 0.08, 0.0));
-            vTrail = length(animPos - prevPos) * 0.05 * (1.0 - easedProgress);
-
-            // ========================================
-            // MOUSE SCATTER/DISPERSE EFFECT
-            // Particles explode outward from mouse, reform when mouse leaves
-            // ========================================
-            vDisperse = 0.0;
-            if (streamProgress > 0.85) {
-              // Calculate distance from mouse
-              float dist = distance(animPos.xy, mousePos.xy);
-
-              // Influence falls off with distance
-              float influence = smoothstep(interactionRadius * 2.5, 0.0, dist);
-
-              // Direction away from mouse (with some randomness for organic feel)
-              vec3 scatterDir = normalize(animPos - mousePos + vec3((aRandom - 0.5) * 0.5, (aRandom - 0.3) * 0.5, aRandom - 0.5));
-
-              // Scatter distance varies by particle (randomness) and mouse proximity
-              float scatterDist = interactionStrength * influence * disperseAmount * (0.5 + aRandom * 0.5);
-
-              // Add some turbulence/float while scattered
-              float turbulence = sin(time * 3.0 + aRandom * 20.0) * disperseAmount * influence * 2.0;
-
-              animPos += scatterDir * scatterDist;
-              animPos.x += turbulence;
-              animPos.y += cos(time * 2.5 + aRandom * 15.0) * disperseAmount * influence * 1.5;
-              animPos.z += sin(time * 2.0 + aRandom * 12.0) * disperseAmount * influence * 1.0;
-
-              vDisperse = influence * disperseAmount;
-            }
-
-            // Color gradient based on Y position
-            float mixFactor = smoothstep(minY, maxY, instancePos.y);
-            vColor = mix(color, colorB, clamp(mixFactor, 0.0, 1.0));
-
-            // Calculate shimmer
-            float distFromShimmer = abs(instancePos.x - shimmerPosX);
-            float shimmerWidth = 50.0;
-            vShimmer = (1.0 - smoothstep(0.0, shimmerWidth, distFromShimmer)) * shimmerIntensity;
-
-            vec3 localPos = position * uScale;
-            vec4 worldPos = instanceMatrix * vec4(localPos, 1.0);
-            worldPos.xyz = animPos + (worldPos.xyz - instancePos);
-
-            vWorldPosition = worldPos.xyz;
-            vec4 mvPosition = viewMatrix * modelMatrix * worldPos;
-            vViewPosition = -mvPosition.xyz;
-            vNormal = normalize(normalMatrix * mat3(instanceMatrix) * normal);
-            gl_Position = projectionMatrix * mvPosition;
-          }
-        `,
-        fragmentShader: `
-          varying vec3 vColor;
-          varying vec3 vNormal;
-          varying vec3 vViewPosition;
-          varying vec3 vWorldPosition;
-          varying float vShimmer;
-          varying float vDisperse;
-          uniform float roughness;
-          uniform vec3 shimmerColor;
-          uniform float mouseActive;
-          uniform vec3 mousePos;
-          uniform float interactionRadius;
-          uniform float uOpacity;
-
-          void main() {
-            vec3 viewDir = normalize(vViewPosition);
-            vec3 normal = normalize(vNormal);
-            vec3 lightDir = normalize(vec3(0.5, 1.0, 1.0));
-            vec3 halfDir = normalize(lightDir + viewDir);
-
-            float NdotL = max(dot(normal, lightDir), 0.0);
-            vec3 diffuse = vColor * NdotL;
-
-            float specPower = mix(100.0, 1.0, roughness);
-            float NdotH = max(dot(normal, halfDir), 0.0);
-            float specIntensity = pow(NdotH, specPower) * (1.0 - roughness);
-            vec3 specular = vec3(1.0) * specIntensity;
-
-            vec3 ambient = vColor * 0.2;
-            vec3 baseColor = ambient + diffuse + specular;
-
-            // Apply white shimmer
-            vec3 finalColor = mix(baseColor, vec3(1.0), vShimmer * 0.4);
-
-            // Subtle glow on scattered particles
-            if (vDisperse > 0.1) {
-              // Slight white/red tint on dispersed particles
-              finalColor = mix(finalColor, vec3(1.0, 0.9, 0.9), vDisperse * 0.3);
-            }
-
-            gl_FragColor = vec4(finalColor, uOpacity);
-          }
-        `,
-        side: THREE.DoubleSide,
-      });
-
+      const material = createParticleMaterial(bounds, size);
       const geometry = new THREE.IcosahedronGeometry(0.5, 1);
-      const instancedMesh = new THREE.InstancedMesh(
-        geometry,
-        material,
-        positions.length
-      );
+      const instancedMesh = new THREE.InstancedMesh(geometry, material, positions.length);
 
       const dummy = new THREE.Object3D();
       const aRandom = new Float32Array(positions.length);
@@ -727,10 +582,7 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
         aRandom[i] = randoms[i];
       });
 
-      instancedMesh.geometry.setAttribute(
-        'aRandom',
-        new THREE.InstancedBufferAttribute(aRandom, 1)
-      );
+      instancedMesh.geometry.setAttribute('aRandom', new THREE.InstancedBufferAttribute(aRandom, 1));
       instancedMesh.position.set(-center.x, center.y, -center.z);
       instancedMesh.scale.y = -1;
 
@@ -738,14 +590,13 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
       parent.add(instancedMesh);
     };
 
-    // Generate particles for sphere separately so it can rotate independently
+    // Generate sphere particles
     const generateSphereParticles = (
       sphereGeo: THREE.BufferGeometry,
       parent: THREE.Group,
       center: THREE.Vector3,
       bounds: THREE.Box3,
-      sphereCenter: { x: number; y: number },
-      sphereBaseX: number
+      sphereCenter: { x: number; y: number }
     ) => {
       const positions: THREE.Vector3[] = [];
       const randoms: number[] = [];
@@ -757,225 +608,22 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
       const tempPos = new THREE.Vector3();
       const tempNormal = new THREE.Vector3();
 
-      const samples = Math.floor(CONFIG.particles.count / 3); // More particles for sphere
+      const samples = Math.floor(CONFIG.particles.count / 3);
 
       for (let i = 0; i < samples; i++) {
         sampler.sample(tempPos, tempNormal);
 
         if (CONFIG.particles.scatter > 0) {
-          tempPos.addScaledVector(
-            tempNormal,
-            (Math.random() - 0.5) * CONFIG.particles.scatter * 0.5
-          );
+          tempPos.addScaledVector(tempNormal, (Math.random() - 0.5) * CONFIG.particles.scatter * 0.5);
         }
 
         positions.push(tempPos.clone());
         randoms.push(Math.random());
       }
 
-      const material = new THREE.ShaderMaterial({
-        uniforms: {
-          color: { value: new THREE.Color(CONFIG.particles.color) },
-          colorB: { value: new THREE.Color(CONFIG.particles.secondaryColor) },
-          roughness: { value: CONFIG.particles.roughness },
-          uScale: {
-            value: new THREE.Vector3(
-              CONFIG.particles.scale.x,
-              CONFIG.particles.scale.y,
-              CONFIG.particles.scale.z
-            ),
-          },
-          time: { value: 0 },
-          mousePos: { value: new THREE.Vector3() },
-          mouseActive: { value: 0.0 },
-          disperseAmount: { value: 0.0 },  // 0 = formed, 1 = fully scattered
-          interactionRadius: { value: CONFIG.interaction.radius },
-          interactionStrength: { value: CONFIG.interaction.strength },
-          minY: { value: bounds.min.y },
-          maxY: { value: bounds.max.y },
-          maxRadius: { value: Math.max(size.x, size.y) / 2 },
-          shimmerPosX: { value: -600.0 },
-          shimmerIntensity: { value: 0.0 },
-          shimmerColor: { value: new THREE.Color(CONFIG.shimmer.color) },
-          // Rising particle animation uniforms
-          streamProgress: { value: 0.0 },
-          uOpacity: { value: 0.0 },
-          positionOvershoot: { value: 1.0 },
-        },
-        transparent: true,
-        vertexShader: `
-          attribute float aRandom;
-          uniform float time;
-          uniform vec3 mousePos;
-          uniform float mouseActive;
-          uniform float disperseAmount;
-          uniform float interactionRadius;
-          uniform float interactionStrength;
-          uniform vec3 uScale;
-          uniform float minY;
-          uniform float maxY;
-          uniform float maxRadius;
-          uniform vec3 color;
-          uniform vec3 colorB;
-          uniform float shimmerPosX;
-          uniform float shimmerIntensity;
-          uniform float streamProgress;
-          uniform float positionOvershoot;
-
-          varying vec3 vColor;
-          varying vec3 vNormal;
-          varying vec3 vViewPosition;
-          varying vec3 vWorldPosition;
-          varying float vShimmer;
-          varying float vDisperse;
-
-          void main() {
-            vec4 instanceMatrixCol3 = instanceMatrix[3];
-            vec3 instancePos = instanceMatrixCol3.xyz;
-
-            // ========================================
-            // RISING FROM BOTTOM - Same as swoosh
-            // ========================================
-            vec3 endPos = instancePos;
-
-            // Start position: far below the screen (positive Y = bottom in this coord system)
-            vec3 startPos = vec3(
-              instancePos.x + (aRandom - 0.5) * 120.0,  // Spread horizontally
-              800.0,                                     // Start FAR below viewport
-              instancePos.z + (aRandom - 0.5) * 25.0    // Slight Z variation
-            );
-
-            // Sphere particles - stagger similar to swoosh
-            float xNormalized = (instancePos.x + 600.0) / 1200.0;
-            float yNormalized = (instancePos.y + 200.0) / 400.0;
-
-            // Stagger: X position + Y position + randomness (total max ~0.6)
-            float staggerDelay = xNormalized * 0.35 + yNormalized * 0.1 + aRandom * 0.15;
-
-            float adjustedProgress = clamp(
-              (streamProgress - staggerDelay) / max(1.0 - staggerDelay, 0.2),
-              0.0, 1.0
-            );
-
-            // Smooth easing - ease out for gentle landing
-            float easedProgress = 1.0 - pow(1.0 - adjustedProgress, 2.0);
-
-            // ========================================
-            // RISING TRAJECTORY with slight curve
-            // ========================================
-            vec3 controlPoint = mix(startPos, endPos, 0.6);
-            controlPoint.x += (aRandom - 0.5) * 25.0;
-            controlPoint.y = mix(startPos.y, endPos.y, 0.7);
-
-            // Quadratic Bezier for smooth curved path
-            vec3 p0 = mix(startPos, controlPoint, easedProgress);
-            vec3 p1 = mix(controlPoint, endPos, easedProgress);
-            vec3 curvePos = mix(p0, p1, easedProgress);
-
-            // Subtle float/drift during rise
-            float driftAmount = (1.0 - easedProgress) * (1.0 - easedProgress);
-            curvePos.x += sin(easedProgress * 6.0 + aRandom * 10.0) * 4.0 * driftAmount;
-            curvePos.z += cos(easedProgress * 4.0 + aRandom * 8.0) * 2.5 * driftAmount;
-
-            vec3 animPos = curvePos;
-
-            // ========================================
-            // POSITION OVERSHOOT (Spring settle)
-            // ========================================
-            vec3 overshootDir = vec3(0.0, -1.0, 0.0);  // Overshoot upward (negative Y is up)
-            float overshootAmount = (positionOvershoot - 1.0) * 12.0;
-            if (easedProgress > 0.95) {
-              animPos += overshootDir * overshootAmount * smoothstep(0.95, 1.0, easedProgress);
-            }
-
-            // ========================================
-            // MOUSE SCATTER/DISPERSE EFFECT
-            // ========================================
-            vDisperse = 0.0;
-            if (streamProgress > 0.85) {
-              float dist = distance(animPos.xy, mousePos.xy);
-              float influence = smoothstep(interactionRadius * 2.5, 0.0, dist);
-              vec3 scatterDir = normalize(animPos - mousePos + vec3((aRandom - 0.5) * 0.5, (aRandom - 0.3) * 0.5, aRandom - 0.5));
-              float scatterDist = interactionStrength * influence * disperseAmount * (0.5 + aRandom * 0.5);
-              float turbulence = sin(time * 3.0 + aRandom * 20.0) * disperseAmount * influence * 2.0;
-
-              animPos += scatterDir * scatterDist;
-              animPos.x += turbulence;
-              animPos.y += cos(time * 2.5 + aRandom * 15.0) * disperseAmount * influence * 1.5;
-              animPos.z += sin(time * 2.0 + aRandom * 12.0) * disperseAmount * influence * 1.0;
-
-              vDisperse = influence * disperseAmount;
-            }
-
-            float mixFactor = smoothstep(minY, maxY, instancePos.y);
-            vColor = mix(color, colorB, clamp(mixFactor, 0.0, 1.0));
-
-            float distFromShimmer = abs(instancePos.x - shimmerPosX);
-            float shimmerWidth = 50.0;
-            vShimmer = (1.0 - smoothstep(0.0, shimmerWidth, distFromShimmer)) * shimmerIntensity;
-
-            vec3 localPos = position * uScale;
-            vec4 worldPos = instanceMatrix * vec4(localPos, 1.0);
-            worldPos.xyz = animPos + (worldPos.xyz - instancePos);
-
-            vWorldPosition = worldPos.xyz;
-            vec4 mvPosition = viewMatrix * modelMatrix * worldPos;
-            vViewPosition = -mvPosition.xyz;
-            vNormal = normalize(normalMatrix * mat3(instanceMatrix) * normal);
-            gl_Position = projectionMatrix * mvPosition;
-          }
-        `,
-        fragmentShader: `
-          varying vec3 vColor;
-          varying vec3 vNormal;
-          varying vec3 vViewPosition;
-          varying vec3 vWorldPosition;
-          varying float vShimmer;
-          varying float vDisperse;
-          uniform float roughness;
-          uniform vec3 shimmerColor;
-          uniform float mouseActive;
-          uniform vec3 mousePos;
-          uniform float interactionRadius;
-          uniform float uOpacity;
-
-          void main() {
-            vec3 viewDir = normalize(vViewPosition);
-            vec3 normal = normalize(vNormal);
-            vec3 lightDir = normalize(vec3(0.5, 1.0, 1.0));
-            vec3 halfDir = normalize(lightDir + viewDir);
-
-            float NdotL = max(dot(normal, lightDir), 0.0);
-            vec3 diffuse = vColor * NdotL;
-
-            float specPower = mix(100.0, 1.0, roughness);
-            float NdotH = max(dot(normal, halfDir), 0.0);
-            float specIntensity = pow(NdotH, specPower) * (1.0 - roughness);
-            vec3 specular = vec3(1.0) * specIntensity;
-
-            vec3 ambient = vColor * 0.2;
-            vec3 baseColor = ambient + diffuse + specular;
-
-            // Apply white shimmer
-            vec3 finalColor = mix(baseColor, vec3(1.0), vShimmer * 0.4);
-
-            // Subtle glow on scattered particles
-            if (vDisperse > 0.1) {
-              finalColor = mix(finalColor, vec3(1.0, 0.9, 0.9), vDisperse * 0.3);
-            }
-
-            gl_FragColor = vec4(finalColor, uOpacity);
-          }
-        `,
-        side: THREE.DoubleSide,
-      });
-
+      const material = createParticleMaterial(bounds, size);
       const geometry = new THREE.IcosahedronGeometry(0.5, 1);
-      const instancedMesh = new THREE.InstancedMesh(
-        geometry,
-        material,
-        positions.length
-      );
+      const instancedMesh = new THREE.InstancedMesh(geometry, material, positions.length);
 
       const dummy = new THREE.Object3D();
       const aRandom = new Float32Array(positions.length);
@@ -988,98 +636,72 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
         aRandom[i] = randoms[i];
       });
 
-      instancedMesh.geometry.setAttribute(
-        'aRandom',
-        new THREE.InstancedBufferAttribute(aRandom, 1)
-      );
+      instancedMesh.geometry.setAttribute('aRandom', new THREE.InstancedBufferAttribute(aRandom, 1));
 
-      // Create a pivot group positioned at the sphere's center so it spins in place like a globe
       const spherePivot = new THREE.Group();
-
-      // Position pivot at the sphere's world position (after centering adjustments)
-      // The sphere center in SVG coords, adjusted for the logo centering
       const sphereWorldX = sphereCenter.x - center.x;
-      const sphereWorldY = -(sphereCenter.y - center.y); // Flip Y
+      const sphereWorldY = -(sphereCenter.y - center.y);
       const sphereWorldZ = CONFIG.geometry.depth / 2 - center.z;
 
       spherePivot.position.set(sphereWorldX, sphereWorldY, sphereWorldZ);
-
-      // Position the instanced mesh relative to the pivot (offset so sphere center is at pivot origin)
       instancedMesh.position.set(-sphereCenter.x, sphereCenter.y, -CONFIG.geometry.depth / 2);
       instancedMesh.scale.y = -1;
 
-      // Add mesh to pivot
       spherePivot.add(instancedMesh);
 
-      // Store references
       sphereMeshRef.current = instancedMesh;
       spherePivotRef.current = spherePivot;
-
-      // Sphere now streams in via shader animation - no initial transform needed
       parent.add(spherePivot);
     };
 
-    // Track time since drag ended for smooth transition back to auto-rotation
+    // Track time since drag ended
     const dragEndTime = { current: 0 };
 
     // Event handlers
     const handleMouseDown = (e: MouseEvent) => {
       isDraggingRef.current = true;
       previousMouseRef.current = { x: e.clientX, y: e.clientY };
-      // Capture current auto-rotation into the target so there's no jump
       targetRotation.current.y = actualRotation.current.y;
       targetRotation.current.x = actualRotation.current.x;
     };
 
     const handleMouseUp = () => {
       isDraggingRef.current = false;
-      // Store current rotation as the new base for auto-rotation
-      autoRotationOffset.current = actualRotation.current.y;
-      // Record when drag ended for smooth transition
-      dragEndTime.current = performance.now();
+      // Store current rotation as the new base to oscillate from
+      rotationBaseRef.current.x = actualRotation.current.x;
+      rotationBaseRef.current.y = actualRotation.current.y;
     };
 
-    // Handle mouse move - works both inside container and globally during drag
     const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
-      // Normalize to -1 to 1 for raycaster
       const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       const y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
 
-      // Store normalized coords for raycasting
       mouseRef.current.set(x, y);
 
-      // Track mouse activity only when inside container
       const isInsideContainer =
         e.clientX >= rect.left && e.clientX <= rect.right &&
         e.clientY >= rect.top && e.clientY <= rect.bottom;
 
-      if (isInsideContainer) {
+      if (isInsideContainer && !prefersReducedMotion.current) {
         mouseActiveRef.current = true;
-        if (mouseTimeoutRef.current) {
-          clearTimeout(mouseTimeoutRef.current);
-        }
+        if (mouseTimeoutRef.current) clearTimeout(mouseTimeoutRef.current);
         mouseTimeoutRef.current = window.setTimeout(() => {
           mouseActiveRef.current = false;
         }, 1500);
       }
     };
 
-    // Handle drag movement globally so it works even outside the container
     const handleGlobalMouseMove = (e: MouseEvent) => {
       if (isDraggingRef.current) {
         const deltaX = e.clientX - previousMouseRef.current.x;
         const deltaY = e.clientY - previousMouseRef.current.y;
 
-        // Smoother drag with higher sensitivity
         targetRotation.current.y += deltaX * 0.008;
         targetRotation.current.x += deltaY * 0.006;
 
-        // X rotation limits - allow tilting but not extreme angles
-        targetRotation.current.x = Math.max(
-          -Math.PI / 4,  // ~45° down
-          Math.min(Math.PI / 4, targetRotation.current.x)  // ~45° up
-        );
+        // Allow full rotation on Y, limit X tilt
+        targetRotation.current.x = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, targetRotation.current.x));
 
         previousMouseRef.current = { x: e.clientX, y: e.clientY };
       }
@@ -1087,25 +709,57 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
 
     const handleMouseLeave = () => {
       mouseActiveRef.current = false;
-      if (mouseTimeoutRef.current) {
-        clearTimeout(mouseTimeoutRef.current);
+      if (mouseTimeoutRef.current) clearTimeout(mouseTimeoutRef.current);
+    };
+
+    // Touch handlers for mobile
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        isDraggingRef.current = true;
+        previousMouseRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        targetRotation.current.y = actualRotation.current.y;
+        targetRotation.current.x = actualRotation.current.x;
       }
     };
 
-    container.addEventListener('mousedown', handleMouseDown);
-    container.addEventListener('mousemove', handleMouseMove);
-    container.addEventListener('mouseleave', handleMouseLeave);
-    // Listen on window for mouseup and mousemove to handle dragging outside container
-    window.addEventListener('mouseup', handleMouseUp);
-    window.addEventListener('mousemove', handleGlobalMouseMove);
+    const handleTouchMove = (e: TouchEvent) => {
+      if (isDraggingRef.current && e.touches.length === 1) {
+        const deltaX = e.touches[0].clientX - previousMouseRef.current.x;
+        const deltaY = e.touches[0].clientY - previousMouseRef.current.y;
 
-    // Shimmer sweep state - extended range to cover sphere (which is at ~480 on X axis)
+        targetRotation.current.y += deltaX * 0.008;
+        targetRotation.current.x += deltaY * 0.006;
+
+        targetRotation.current.x = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, targetRotation.current.x));
+
+        previousMouseRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+    };
+
+    const handleTouchEnd = () => {
+      isDraggingRef.current = false;
+      // Store current rotation as the new base to oscillate from
+      rotationBaseRef.current.x = actualRotation.current.x;
+      rotationBaseRef.current.y = actualRotation.current.y;
+    };
+
+    // Add event listeners with passive where possible
+    container.addEventListener('mousedown', handleMouseDown);
+    container.addEventListener('mousemove', handleMouseMove, { passive: true });
+    container.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener('touchstart', handleTouchStart, { passive: true });
+    container.addEventListener('touchmove', handleTouchMove, { passive: false });
+    container.addEventListener('touchend', handleTouchEnd);
+    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mousemove', handleGlobalMouseMove, { passive: true });
+
+    // Shimmer sweep state
     const shimmerSweep = {
       posX: -700,
       startX: -700,
-      endX: 700,  // Extended to ensure shimmer covers entire logo including sphere
+      endX: 700,
       progress: 0,
-      speed: CONFIG.shimmer.speed,
+      speed: prefersReducedMotion.current ? 0 : CONFIG.shimmer.speed,
       intensity: 0,
       delay: 0,
     };
@@ -1118,29 +772,19 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
 
       if (groupRef.current) {
         if (isDraggingRef.current) {
-          // When dragging, smoothly follow target rotation
-          actualRotation.current.x +=
-            (targetRotation.current.x - actualRotation.current.x) * 0.15;
-          actualRotation.current.y +=
-            (targetRotation.current.y - actualRotation.current.y) * 0.15;
+          // When dragging, smoothly follow target rotation (user can drag anywhere)
+          actualRotation.current.x += (targetRotation.current.x - actualRotation.current.x) * 0.15;
+          actualRotation.current.y += (targetRotation.current.y - actualRotation.current.y) * 0.15;
         } else {
-          // Calculate time since drag ended for smooth transition
-          const timeSinceDrag = performance.now() - dragEndTime.current;
-          const transitionDuration = 1500; // 1.5 seconds to fully transition back
-          const transitionProgress = Math.min(timeSinceDrag / transitionDuration, 1);
+          // Gentle oscillation from wherever user left it
+          const oscillationY = Math.sin(time * CONFIG.autoRotation.speed) * CONFIG.autoRotation.maxAngle;
+          const oscillationX = Math.sin(time * 0.1) * 0.015; // Subtle vertical wobble
 
-          // Ease the transition
-          const easedTransition = transitionProgress * transitionProgress * (3 - 2 * transitionProgress);
+          const targetY = rotationBaseRef.current.y + oscillationY;
+          const targetX = rotationBaseRef.current.x + oscillationX;
 
-          // Target auto-rotation values - slow and subtle
-          const autoRotateY = autoRotationOffset.current + time * 0.02;  // Slowed from 0.08 to 0.02
-          const autoRotateX = Math.sin(time * 0.1) * 0.015;  // Slower, subtler wobble
-
-          // Blend between current position and auto-rotation based on transition progress
-          const blendFactor = 0.02 + easedTransition * 0.03; // Starts slow, speeds up
-
-          actualRotation.current.y += (autoRotateY - actualRotation.current.y) * blendFactor;
-          actualRotation.current.x += (autoRotateX - actualRotation.current.x) * blendFactor;
+          actualRotation.current.y += (targetY - actualRotation.current.y) * 0.02;
+          actualRotation.current.x += (targetX - actualRotation.current.x) * 0.02;
         }
 
         groupRef.current.rotation.x = actualRotation.current.x;
@@ -1148,107 +792,71 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
       }
 
       // Update shimmer sweep
-      if (shimmerSweep.delay > 0) {
-        shimmerSweep.delay -= 0.016;
-      } else {
-        shimmerSweep.progress += 0.016 * shimmerSweep.speed;
-        shimmerSweep.posX =
-          shimmerSweep.startX +
-          (shimmerSweep.endX - shimmerSweep.startX) * shimmerSweep.progress;
-
-        if (shimmerSweep.progress < 0.1) {
-          shimmerSweep.intensity = shimmerSweep.progress / 0.1;
-        } else if (shimmerSweep.progress > 0.9) {
-          shimmerSweep.intensity = (1 - shimmerSweep.progress) / 0.1;
+      if (!prefersReducedMotion.current) {
+        if (shimmerSweep.delay > 0) {
+          shimmerSweep.delay -= 0.016;
         } else {
-          shimmerSweep.intensity = 1;
-        }
+          shimmerSweep.progress += 0.016 * shimmerSweep.speed;
+          shimmerSweep.posX = shimmerSweep.startX + (shimmerSweep.endX - shimmerSweep.startX) * shimmerSweep.progress;
 
-        if (shimmerSweep.progress >= 1) {
-          shimmerSweep.progress = 0;
-          shimmerSweep.posX = shimmerSweep.startX;
-          shimmerSweep.intensity = 0;
-          shimmerSweep.delay =
-            CONFIG.shimmer.delay.min +
-            Math.random() * (CONFIG.shimmer.delay.max - CONFIG.shimmer.delay.min);
+          if (shimmerSweep.progress < 0.1) {
+            shimmerSweep.intensity = shimmerSweep.progress / 0.1;
+          } else if (shimmerSweep.progress > 0.9) {
+            shimmerSweep.intensity = (1 - shimmerSweep.progress) / 0.1;
+          } else {
+            shimmerSweep.intensity = 1;
+          }
+
+          if (shimmerSweep.progress >= 1) {
+            shimmerSweep.progress = 0;
+            shimmerSweep.posX = shimmerSweep.startX;
+            shimmerSweep.intensity = 0;
+            shimmerSweep.delay = CONFIG.shimmer.delay.min + Math.random() * (CONFIG.shimmer.delay.max - CONFIG.shimmer.delay.min);
+          }
         }
       }
 
-      // Animate disperse amount based on mouse activity
-      // Scatter quickly when mouse is active, reform slowly when mouse leaves
-      if (mouseActiveRef.current && !isDraggingRef.current) {
-        // Scatter - fast
-        disperseAmount.current += (1.0 - disperseAmount.current) * CONFIG.interaction.disperseSpeed;
-      } else {
-        // Reform - slow and smooth
-        disperseAmount.current += (0.0 - disperseAmount.current) * CONFIG.interaction.reformSpeed;
+      // Animate disperse (skip if reduced motion)
+      if (!prefersReducedMotion.current) {
+        if (mouseActiveRef.current && !isDraggingRef.current) {
+          disperseAmount.current += (1.0 - disperseAmount.current) * CONFIG.interaction.disperseSpeed;
+        } else {
+          disperseAmount.current += (0.0 - disperseAmount.current) * CONFIG.interaction.reformSpeed;
+        }
+        disperseAmount.current = Math.max(0, Math.min(1, disperseAmount.current));
       }
-      // Clamp to valid range
-      disperseAmount.current = Math.max(0, Math.min(1, disperseAmount.current));
 
-      // Calculate mouse position in particle's local coordinate space
-      // The particles exist in a space where the logo is ~1137 wide
-      // After mesh positioning, the logo is centered around (0, 0)
+      // Calculate mouse position using preallocated objects
       if (cameraRef.current && groupRef.current) {
-        // Calculate visible range at z=0 based on camera
         const cam = cameraRef.current;
         const fovRad = cam.fov * Math.PI / 180;
         const visibleHeight = 2 * Math.tan(fovRad / 2) * cam.position.z;
         const visibleWidth = visibleHeight * cam.aspect;
 
-        // Convert mouse NDC to world coords at z=0 plane
         const worldX = mouseRef.current.x * (visibleWidth / 2);
         const worldY = mouseRef.current.y * (visibleHeight / 2);
 
-        // Apply inverse of group rotation first
-        const tempVec = new THREE.Vector3(worldX, worldY, 0);
-        const inverseQuat = new THREE.Quaternion();
-        groupRef.current.getWorldQuaternion(inverseQuat);
-        inverseQuat.invert();
-        tempVec.applyQuaternion(inverseQuat);
+        tempVec.current.set(worldX, worldY, 0);
+        groupRef.current.getWorldQuaternion(tempQuat.current);
+        tempQuat.current.invert();
+        tempVec.current.applyQuaternion(tempQuat.current);
 
-        // Convert world coords to mesh-local coords by dividing by group scale
         const scale = scaleRef.current;
-        let localX = tempVec.x / scale;
-        let localY = tempVec.y / scale;
+        const localX = tempVec.current.x / scale;
+        const localY = tempVec.current.y / scale;
 
-        // The instancedMesh for swoosh has:
-        // - position: (-center.x, center.y, -center.z) where center is ~(568.5, 139, 25)
-        // - scale.y: -1 (flipped)
-        // The particles in the shader use instancePos which is in mesh-local space
-        // The mesh transforms particles from local to world via: worldPos = meshPosition + localPos * meshScale
-        // So to go from world back to local: localPos = (worldPos - meshPosition) / meshScale
-        // But our coords are already in group space, so we need to account for mesh offset
-
-        // The swoosh mesh position is (-568.5, 139, -25) in group space
-        // Particles are sampled from geometry and stored as-is, then the mesh transforms them
-        // In the shader, instancePos is the original sampled position
-        // After mesh transform: finalPos = meshPos + instancePos * meshScale
-
-        // Since mesh scale.y = -1, if instancePos.y = 100, finalPos.y = 139 + 100*(-1) = 39
-        // So a particle at SVG y=100 ends up at group y=39
-
-        // We have mouse in group space (localX, localY)
-        // We need mouse in mesh-local space to match instancePos
-        // meshLocalX = (groupX - meshPosX) / meshScaleX = (groupX - (-568.5)) / 1 = groupX + 568.5
-        // meshLocalY = (groupY - meshPosY) / meshScaleY = (groupY - 139) / (-1) = -(groupY - 139) = 139 - groupY
-
-        // The mesh position uses center values: position.set(-center.x, center.y, -center.z)
-        // center is approximately (568.5, 139, 25) for a 1137x278 SVG
         const centerX = 568.5;
         const centerY = 139;
 
-        // Convert from group space to mesh-local space
-        const meshLocalX = localX + centerX;  // Because meshPos.x = -centerX
-        const meshLocalY = centerY - localY;  // Because meshPos.y = centerY and scale.y = -1
+        const meshLocalX = localX + centerX;
+        const meshLocalY = centerY - localY;
 
         mouseWorldRef.current.set(meshLocalX, meshLocalY, 0);
       }
 
-      // Update shader uniforms for main mesh
+      // Update swoosh shader uniforms
       if (instancedMeshRef.current) {
-        const material = instancedMeshRef.current
-          .material as THREE.ShaderMaterial;
+        const material = instancedMeshRef.current.material as THREE.ShaderMaterial;
         if (material.uniforms) {
           material.uniforms.time.value = time;
           material.uniforms.mousePos.value.set(
@@ -1256,26 +864,19 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
             mouseWorldRef.current.y,
             mouseWorldRef.current.z
           );
-          material.uniforms.mouseActive.value = mouseActiveRef.current
-            ? 1.0
-            : 0.0;
+          material.uniforms.mouseActive.value = mouseActiveRef.current ? 1.0 : 0.0;
           material.uniforms.disperseAmount.value = disperseAmount.current;
-          // Only update shimmer from sweep after entrance animation is complete
           if (animationState.current.entranceComplete) {
             material.uniforms.shimmerPosX.value = shimmerSweep.posX;
-            // Boosted shimmer intensity (1.8x) to pop against faded particles
             material.uniforms.shimmerIntensity.value = shimmerSweep.intensity * 1.8;
           }
         }
       }
 
-      // Update and rotate sphere (spins in place like a globe)
+      // Update sphere shader uniforms
       if (spherePivotRef.current && sphereMeshRef.current) {
-        // Only rotate after entrance animation is complete to avoid interference
-        if (animationState.current.entranceComplete) {
-          // Slow continuous rotation around the pivot's Y axis (globe-like spin)
+        if (animationState.current.entranceComplete && !prefersReducedMotion.current) {
           spherePivotRef.current.rotation.y = time * 0.15;
-          // Very subtle tilt
           spherePivotRef.current.rotation.z = Math.sin(time * 0.08) * 0.03;
         }
 
@@ -1283,52 +884,23 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
         if (material.uniforms) {
           material.uniforms.time.value = time;
 
-          // For sphere, we need mouse in the same coordinate space as sphere particles
-          // Sphere setup:
-          // - sphereCenter = {x: 1055, y: 197} from SVG
-          // - Pivot at (486.5, -58, 0) in group space
-          // - Mesh at (-1055, 197, -25) within pivot
-          // - Mesh scale.y = -1
+          // Transform mouse to sphere's local space using preallocated vector
+          sphereLocalMouse.current.set(mouseWorldRef.current.x, mouseWorldRef.current.y, 0);
 
-          // The mouse is currently in swoosh mesh-local space
-          // We need to convert it to sphere mesh-local space
+          tempQuat.current.setFromEuler(spherePivotRef.current.rotation);
+          tempQuat.current.invert();
 
-          // Since the sphere particles are at SVG coords around (1055, 197),
-          // and swoosh particles are at SVG coords around (0-800, 0-278),
-          // they're in the same SVG coordinate space, just different positions
+          sphereLocalMouse.current.x -= 1055;
+          sphereLocalMouse.current.y -= 197;
+          sphereLocalMouse.current.applyQuaternion(tempQuat.current);
+          sphereLocalMouse.current.x += 1055;
+          sphereLocalMouse.current.y += 197;
 
-          // The mouseWorldRef is already in SVG space (after swoosh transform)
-          // So for sphere, we can use the same coordinates directly
-
-          const sphereLocalMouse = new THREE.Vector3(
-            mouseWorldRef.current.x,
-            mouseWorldRef.current.y,
-            0
-          );
-
-          // Apply inverse of sphere's local rotation (the globe spin)
-          // This rotates the mouse position into the sphere's rotated frame
-          const sphereQuat = new THREE.Quaternion();
-          sphereQuat.setFromEuler(spherePivotRef.current.rotation);
-          sphereQuat.invert();
-
-          // Transform mouse relative to sphere center before rotation
-          // Sphere center in SVG coords is (1055, 197)
-          sphereLocalMouse.x -= 1055;
-          sphereLocalMouse.y -= 197;
-          sphereLocalMouse.applyQuaternion(sphereQuat);
-          sphereLocalMouse.x += 1055;
-          sphereLocalMouse.y += 197;
-
-          material.uniforms.mousePos.value.copy(sphereLocalMouse);
-          material.uniforms.mouseActive.value = mouseActiveRef.current
-            ? 1.0
-            : 0.0;
+          material.uniforms.mousePos.value.copy(sphereLocalMouse.current);
+          material.uniforms.mouseActive.value = mouseActiveRef.current ? 1.0 : 0.0;
           material.uniforms.disperseAmount.value = disperseAmount.current;
-          // Only update shimmer from sweep after entrance animation is complete
           if (animationState.current.entranceComplete) {
             material.uniforms.shimmerPosX.value = shimmerSweep.posX;
-            // Boosted shimmer intensity (1.8x) to pop against faded particles
             material.uniforms.shimmerIntensity.value = shimmerSweep.intensity * 1.8;
           }
         }
@@ -1340,7 +912,7 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
     loadGeometry();
     animate();
 
-    // Resize handler - recalculate responsive values
+    // Resize handler
     const handleResize = () => {
       const w = container.clientWidth;
       const h = container.clientHeight;
@@ -1356,22 +928,40 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
     };
     window.addEventListener('resize', handleResize);
 
-    // Cleanup
+    // Cleanup - proper Three.js resource disposal
     return () => {
       cancelAnimationFrame(frameRef.current);
-      if (mouseTimeoutRef.current) {
-        clearTimeout(mouseTimeoutRef.current);
-      }
+      if (mouseTimeoutRef.current) clearTimeout(mouseTimeoutRef.current);
+
+      // Remove event listeners
       container.removeEventListener('mousedown', handleMouseDown);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('touchstart', handleTouchStart);
+      container.removeEventListener('touchmove', handleTouchMove);
+      container.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('mouseup', handleMouseUp);
       window.removeEventListener('mousemove', handleGlobalMouseMove);
       window.removeEventListener('resize', handleResize);
+      renderer.domElement.removeEventListener('webglcontextlost', handleContextLost);
+      renderer.domElement.removeEventListener('webglcontextrestored', handleContextRestored);
+
+      // Dispose all Three.js resources
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh || object instanceof THREE.InstancedMesh) {
+          object.geometry.dispose();
+          if (Array.isArray(object.material)) {
+            object.material.forEach(m => m.dispose());
+          } else {
+            object.material.dispose();
+          }
+        }
+      });
+
+      renderer.dispose();
 
       if (rendererRef.current && container.contains(rendererRef.current.domElement)) {
         container.removeChild(rendererRef.current.domElement);
-        rendererRef.current.dispose();
       }
     };
   }, []);
@@ -1388,6 +978,7 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
         opacity: isLoaded ? 1 : 0,
         transition: 'opacity 0.6s ease-out',
         cursor: 'grab',
+        willChange: 'transform',
       }}
     />
   );
