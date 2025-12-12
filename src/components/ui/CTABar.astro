@@ -2,24 +2,26 @@
 /**
  * CTABar - Persistent CTA bar above the footer
  *
- * A site-wide call-to-action bar that links to the demo page.
+ * A site-wide call-to-action bar that triggers the demo request overlay.
  * Can be included in layouts to appear on all pages.
  */
+import DemoRequestOverlay from './DemoRequestOverlay.astro';
 
 interface Props {
   headline?: string;
   subtext?: string;
   buttonLabel?: string;
-  buttonHref?: string;
 }
 
 const {
   headline = "Ready to See the Future of Network Intelligence?",
   subtext = "Join industry leaders already transforming their operations with DART AI",
-  buttonLabel = "Get Your Free Demo",
-  buttonHref = "/demo"
+  buttonLabel = "Get Your Free Demo"
 } = Astro.props;
 ---
+
+<!-- Demo Request Overlay -->
+<DemoRequestOverlay />
 
 <div class="cta-bar">
   <div class="cta-bar__content">
@@ -27,7 +29,7 @@ const {
       <span class="cta-bar__headline">{headline}</span>
       <span class="cta-bar__subtext">{subtext}</span>
     </div>
-    <a href={buttonHref} class="cta-bar__button">
+    <button type="button" class="cta-bar__button" id="cta-demo-trigger">
       {buttonLabel}
       <svg
         class="cta-bar__icon"
@@ -41,7 +43,7 @@ const {
       >
         <path d="M5 12h14M12 5l7 7-7 7"></path>
       </svg>
-    </a>
+    </button>
   </div>
 </div>
 
@@ -147,3 +149,19 @@ const {
     }
   }
 </style>
+
+<script>
+  // Trigger demo overlay from CTA button
+  function initCTATrigger() {
+    const triggerBtn = document.getElementById('cta-demo-trigger');
+    if (triggerBtn) {
+      triggerBtn.addEventListener('click', () => {
+        document.dispatchEvent(new CustomEvent('open-demo-overlay'));
+      });
+    }
+  }
+
+  // Initialize on DOM ready and Astro page transitions
+  document.addEventListener('DOMContentLoaded', initCTATrigger);
+  document.addEventListener('astro:page-load', initCTATrigger);
+</script>

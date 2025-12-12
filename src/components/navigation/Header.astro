@@ -173,7 +173,7 @@ function hasActiveChild(item: typeof mainNavigation[0]): boolean {
 
     <!-- Actions -->
     <div class="header__actions">
-      <Button href="/contact" variant="primary" size="sm">
+      <Button variant="primary" size="sm" class="header-demo-trigger">
         Request A Demo
       </Button>
     </div>
@@ -263,7 +263,7 @@ function hasActiveChild(item: typeof mainNavigation[0]): boolean {
         </div>
       )})}
       <div class="header__mobile-cta">
-        <Button href="/contact" variant="primary" fullWidth>
+        <Button variant="primary" fullWidth class="mobile-demo-trigger">
           Request A Demo
         </Button>
       </div>
@@ -350,6 +350,27 @@ function hasActiveChild(item: typeof mainNavigation[0]): boolean {
       accordion.nextElementSibling?.classList.toggle('is-open');
     });
   });
+
+  // Demo overlay triggers
+  const headerDemoTrigger = document.querySelector('.header-demo-trigger');
+  const mobileDemoTrigger = document.querySelector('.mobile-demo-trigger');
+
+  const openDemoOverlay = (e: Event) => {
+    e.preventDefault();
+
+    // Close mobile menu if open
+    mobileToggle?.setAttribute('aria-expanded', 'false');
+    mobileMenu?.setAttribute('aria-hidden', 'true');
+    mobileToggle?.classList.remove('is-open');
+    mobileMenu?.classList.remove('is-open');
+    document.body.classList.remove('menu-open');
+
+    // Dispatch event to open overlay
+    document.dispatchEvent(new CustomEvent('open-demo-overlay'));
+  };
+
+  headerDemoTrigger?.addEventListener('click', openDemoOverlay);
+  mobileDemoTrigger?.addEventListener('click', openDemoOverlay);
 
 </script>
 
