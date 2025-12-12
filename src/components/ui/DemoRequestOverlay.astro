@@ -58,18 +58,18 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
         <!-- Trust Indicators -->
         <div class="demo-overlay__trust">
           <div class="demo-overlay__trust-item">
-            <span class="demo-overlay__trust-number">15min</span>
-            <span class="demo-overlay__trust-label">Setup Time</span>
+            <span class="demo-overlay__trust-number">30min</span>
+            <span class="demo-overlay__trust-label">Demo Duration</span>
           </div>
           <div class="demo-overlay__trust-divider"></div>
           <div class="demo-overlay__trust-item">
-            <span class="demo-overlay__trust-number">99.9%</span>
-            <span class="demo-overlay__trust-label">Uptime SLA</span>
+            <span class="demo-overlay__trust-number">Free</span>
+            <span class="demo-overlay__trust-label">No Obligation</span>
           </div>
           <div class="demo-overlay__trust-divider"></div>
           <div class="demo-overlay__trust-item">
-            <span class="demo-overlay__trust-number">24/7</span>
-            <span class="demo-overlay__trust-label">Expert Support</span>
+            <span class="demo-overlay__trust-number">Live</span>
+            <span class="demo-overlay__trust-label">Platform Walkthrough</span>
           </div>
         </div>
 
@@ -969,6 +969,16 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
 
       // Listen for open events
       document.addEventListener('open-demo-overlay', () => this.open());
+
+      // Handle clicks on any element with data-demo-trigger attribute
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const trigger = target.closest('[data-demo-trigger]');
+        if (trigger) {
+          e.preventDefault();
+          this.open();
+        }
+      });
     }
 
     open() {

@@ -1,0 +1,256 @@
+---
+/**
+ * Industries Page - Network Pulse Design
+ *
+ * Single-page showcase of all industry verticals served by Cirries.
+ * Features:
+ * - Bold hero with animated network visualization
+ * - Alternating left/right industry sections with full-bleed Unsplash images
+ * - Industry-specific DART benefits
+ *
+ * Image sources from Unsplash (free commercial use):
+ * - Healthcare: National Cancer Institute
+ * - Energy: Matthew Henry (power grid)
+ * - Manufacturing: Lenny Kuhne (factory robotics)
+ * - Smart Cities: Denys Nevozhai (aerial city)
+ * - Transportation: Caleb Ruiter (freight truck)
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/navigation/Header.astro';
+import Footer from '../components/navigation/Footer.astro';
+import CTABar from '../components/ui/CTABar.astro';
+import IndustriesHero from '../components/sections/industries/IndustriesHero.astro';
+import IndustrySection from '../components/sections/industries/IndustrySection.astro';
+import IndustriesCTA from '../components/sections/industries/IndustriesCTA.astro';
+
+const pageTitle = 'Industries We Serve - Cirries Network Solutions';
+const pageDescription = 'Cirries delivers 5G network visibility and real-time intelligence across healthcare, energy, manufacturing, smart cities, and transportation industries.';
+
+// Industry data with Unsplash image IDs
+const industries = [
+  {
+    id: "healthcare",
+    industry: "Healthcare",
+    tagline: "DART Keeps 5G Healthcare Networks In Top Shape",
+    intro: "5G's ultra-fast connectivity will only accelerate the profound changes in healthcare already underway with telemedicine and electronic recordkeeping.",
+    content: [
+      "5G networks will support ultra-high resolution diagnostic images and even make remote robotic surgery possible. 5G networks can handle millions more attached devices without degrading network performance or speed. This opens unlimited possibilities for expanded use of wearable and portable devices to provide remote, personalized patient health monitoring.",
+      "5G technologies will make healthcare networks far more reliable, secure, and much easier and quicker to set up, move, or rearrange with shifting needs. And there are almost unlimited and as yet unrealized healthcare uses for 5G enabled artificial reality/augmented reality.",
+      "Comprehensive network performance monitoring is no longer an option or afterthought. No matter where your healthcare organization is in its 5G journey, you need Data Analysis In Real Time (DART)."
+    ],
+    benefits: [
+      "Maximize network uptime for critical care systems",
+      "Optimize telemedicine and remote diagnostics performance",
+      "Ensure secure, reliable patient data transmission",
+      "Future-proof network infrastructure against obsolescence"
+    ],
+    layout: "left",
+    // Unsplash: National Cancer Institute - medical technology
+    imageId: "1579684385127-1ef15d508118",
+    imageAlt: "Modern medical technology and healthcare equipment in a hospital setting"
+  },
+  {
+    id: "energy",
+    industry: "Energy",
+    tagline: "DART Revolutionizes the Energy Sector",
+    intro: "Experience the revolutionary power of 5G technology in the energy sector. With its cutting-edge capabilities, 5G is poised to transform the way energy is produced, transmitted, distributed, and consumed.",
+    content: [
+      "Imagine a future where energy infrastructure operates seamlessly, responding to demand in real-time. Thanks to 5G, this vision becomes a reality. Critical infrastructure, including energy and utilities, can leverage the power of 5G technologies to revolutionize their operations. One notable advancement is the widespread implementation of smart transformers, which intelligently adapt to electrical usage patterns, optimizing energy flow and reducing wastage.",
+      "The impact of 5G extends beyond the traditional energy sector. Even the oil and gas industry recognizes the significance of this transformative technology. In demanding scenarios with extreme weather conditions and environmental challenges, reliable, low-latency network connectivity becomes paramount.",
+      "By harnessing the power of 5G, the energy sector can unlock enhanced operational efficiency. 5G-enabled systems, including drones, robotics, and artificial intelligence, play a pivotal role in streamlining operations and driving adoption within the industry."
+    ],
+    benefits: [
+      "Enable smart grid real-time monitoring and optimization",
+      "Support remote operations in extreme environments",
+      "Integrate AI-powered predictive maintenance",
+      "Secure critical infrastructure communications"
+    ],
+    layout: "right",
+    // Unsplash: Matthew Henry - power transmission lines
+    imageId: "1473341304170-971dccb5ac1e",
+    imageAlt: "High voltage power transmission lines and electrical grid infrastructure"
+  },
+  {
+    id: "manufacturing",
+    industry: "Manufacturing",
+    tagline: "DART Optimizes 5G Manufacturing Networks",
+    intro: "Nowhere is the power of 5G network connectivity likely to be more far reaching than the factory floor. 5G applications will dramatically raise production efficiency across all sectors.",
+    content: [
+      "5G enabled manufacturing makes possible processes that are intelligent, linked at ultra-high speed, and digitized. It will lower downtime associated with traditional asset management and reduce quality errors due to manual inspection and by-hand order collection.",
+      "5G technologies will make wireless factory networks far more reliable, secure, and much easier and quicker to set up, move, or rearrange with shifting needs. 5G can handle far larger amounts of attached devices like sensors or robots without degrading network performance.",
+      "With 5G only just rolling out, enterprises are deciding how to fit it into their factories. Most organizations are likely to operate some blend of 5G and earlier technologies in their manufacturing networks for some time. Due to the complexities of 5G, comprehensive network performance monitoring is no longer an option or afterthought."
+    ],
+    benefits: [
+      "Enable intelligent, high-speed automated processes",
+      "Reduce downtime through predictive maintenance",
+      "Support massive IoT sensor deployments",
+      "Optimize quality control and production efficiency"
+    ],
+    layout: "left",
+    // Unsplash: Lenny Kuhne - factory robotics
+    imageId: "1565043666747-69f6646db940",
+    imageAlt: "Robotic arms and automation systems on a modern factory floor"
+  },
+  {
+    id: "smart-cities",
+    industry: "Smart Cities",
+    tagline: "DART Supports Critical Public Sector 5G Connectivity",
+    intro: "With the arrival of 5G technologies, smart city talk turns into reality. 5G networks and edge computing with analytics have the power to transform public sector infrastructure.",
+    content: [
+      "Functions like street lighting, water and wastewater management, traffic flow, emergency response and public safety measures can all be vastly improved using 5G technologies. As just one example, cities have been replacing incandescent traffic signal and street lights with LED bulbs to save energy costs. But the real change will happen when all those LED lights are linked by high speed 5G networks and equipped with connected sensors.",
+      "Change like real-time and historic traffic pattern analysis, or immediate allocation of emergency personnel and equipment to accidents that are seen and located as they happen. And much more.",
+      "5G will make public sector networks far more reliable, secure, and much easier and quicker to set up, move, or rearrange. 5G can handle far larger amounts of attached devices like sensors or cell phones without degrading network performance."
+    ],
+    benefits: [
+      "Enable real-time traffic and infrastructure monitoring",
+      "Support emergency response optimization",
+      "Integrate millions of IoT sensors city-wide",
+      "Ensure reliable public safety communications"
+    ],
+    layout: "right",
+    // Unsplash: Denys Nevozhai - San Francisco aerial night
+    imageId: "1477959858617-67f85cf4f1df",
+    imageAlt: "Aerial view of a modern city at night with illuminated buildings and infrastructure"
+  },
+  {
+    id: "transportation",
+    industry: "Transportation",
+    tagline: "DART Puts Transportation on 5G Fast-Forward",
+    intro: "With 5G networks, the smart car, truck, plane, or train—any moving vehicle, really—zooms into fast forward. 5G networks and edge computing will transform transportation.",
+    content: [
+      "5G will provide a nonstop flow of huge quantities of information. Data about vehicle speed, condition, and location. Data about weather and traffic conditions down the road. Data about load type, size, and quantity. Data about fuel use.",
+      "Data like this already flows over existing networks, but it is costly and not always available. 5G will make collecting massive amounts of transportation data far more reliable, secure, and cheaper.",
+      "With 5G just rolling out, most transportation and logistics enterprises are deciding how to fit it into their operations and budgets. Most are likely to use earlier technologies with some 5G advancements in their networks for some time. DART will ensure network performance monitoring excellence as they do."
+    ],
+    benefits: [
+      "Enable real-time fleet tracking and optimization",
+      "Support autonomous vehicle communications",
+      "Process massive data streams from moving assets",
+      "Ensure reliable logistics network connectivity"
+    ],
+    layout: "left",
+    // Unsplash: Caleb Ruiter - freight truck at sunset
+    imageId: "1601584115197-04ecc0da31d7",
+    imageAlt: "Semi truck on highway representing modern transportation and logistics"
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header variant="dark" />
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <IndustriesHero />
+
+    <!-- Industry Sections -->
+    <div class="industries-content" data-theme="light">
+      {industries.map((industry, index) => (
+        <IndustrySection
+          id={industry.id}
+          industry={industry.industry}
+          tagline={industry.tagline}
+          intro={industry.intro}
+          content={industry.content}
+          benefits={industry.benefits}
+          layout={industry.layout as "left" | "right"}
+          imageId={industry.imageId}
+          imageAlt={industry.imageAlt}
+          isLast={index === industries.length - 1}
+        />
+      ))}
+    </div>
+
+    <!-- CTA Section -->
+    <IndustriesCTA />
+  </main>
+
+  <CTABar />
+  <Footer />
+</BaseLayout>
+
+<style>
+  .industries-content {
+    position: relative;
+    background: #ffffff;
+  }
+
+  /* Smooth scroll behavior */
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('[data-industry]');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: '-50px 0px'
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+  });
+
+  // Update active pill on scroll
+  document.addEventListener('DOMContentLoaded', () => {
+    const pills = document.querySelectorAll('.industry-pill');
+    const sections = document.querySelectorAll('[data-industry]');
+
+    const updateActivePill = () => {
+      let currentSection = '';
+
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+          currentSection = section.getAttribute('data-industry') || '';
+        }
+      });
+
+      pills.forEach((pill) => {
+        const href = pill.getAttribute('href');
+        if (href === `#${currentSection}`) {
+          pill.classList.add('is-active');
+        } else {
+          pill.classList.remove('is-active');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', updateActivePill, { passive: true });
+    updateActivePill();
+  });
+</script>
+
+<style is:global>
+  /* Active pill state */
+  .industry-pill.is-active {
+    background: rgba(234, 36, 43, 0.15);
+    border-color: rgba(234, 36, 43, 0.4);
+    color: #ffffff;
+  }
+
+  /* Section visibility animation */
+  [data-industry] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  [data-industry].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>

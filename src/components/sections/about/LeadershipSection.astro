@@ -1,18 +1,20 @@
 ---
 /**
- * LeadershipSection - Executive Team Display
+ * LeadershipSection - Split-View Executive Team Display
  *
- * Leadership team showcase featuring:
- * - Team member cards with photos and bios
- * - Consistent styling with established design system
- * - Dark theme matching capabilities sections
+ * Interactive leadership showcase featuring:
+ * - Left panel: Compact leader list with selection
+ * - Right panel: Full biographical detail with rich content
+ * - Smooth transitions between profiles
+ * - Dark theme with editorial styling
  */
 import Container from "../../ui/Container.astro";
 
 interface Leader {
   name: string;
   title: string;
-  bio: string;
+  shortBio: string;
+  fullBio: string[];
   image?: string;
   linkedin?: string;
 }
@@ -34,31 +36,58 @@ const {
     {
       name: "Rick Aguirre",
       title: "President & CEO",
-      bio: "Co-founder with 30+ years in telecommunications. Previously held positions at Northern Telecom, InterDigital, and jNetX Inc.",
+      shortBio: "Co-founder with 30+ years transforming telecom companies with emerging technologies.",
+      fullBio: [
+        "Rick Aguirre is co-founder and president of Cirries. With more than thirty years of experience in the telecommunications industry, Rick has a successful record of developing and advancing companies that have emerging, industry-changing technologies. He also held a number of key positions in large telecommunications equipment manufacturers.",
+        "He began his career at Datapoint Corporation's Integrated Electronic Office Systems Group. Rick joined Northern Telecom (Nortel Networks) in 1983 and spent eight years in engineering, product management and sales and marketing management positions. He served as director of cellular sales and later was named director, strategic marketing in the newly formed Wireless Systems Division.",
+        "Rick was instrumental in forging relationships with Qualcomm and PacTel Cellular, which helped elevate Northern Telecom to one of the premier wireless manufacturers. In 1991, Rick became a partner in SCS Mobilecom, a CDMA research and development company, which was sold to InterDigital, Inc. (\"IDCC\") in 1992.",
+        "He left InterDigital in 1993 and founded a telecommunications consulting company, which represented a consortium of companies in the development of several key wireless standards, including WIMS/W-CDMA and 802.11. More recently and prior to co-founding Cirries, Rick served as vice president, product management and Marketing for jNetX, Inc., and as vice president and general manager of Protek Limited's Americas Group, a Warburg-Pincus company."
+      ],
       linkedin: "#",
     },
     {
       name: "Cody Martinson",
       title: "Chief Operating Officer",
-      bio: "20+ years in software development and sales. Founded DANATEQ (machine learning company) and managed jNetX's Asia operations.",
+      shortBio: "20+ years guiding tech companies from startup to acquisition.",
+      fullBio: [
+        "Cody Martinson brings more than 20 years of experience in software development and sales to his role as Cirries' Chief Operating Officer. Cody has guided multiple tech companies through the transition from start-up to acquisition.",
+        "In 2010, Cody founded DANATEQ and, as CEO, oversaw its development into a machine learning software company. Before starting DANATEQ, Cody managed the Asia regional office for jNetX Inc., a U.S. software company. Cody was instrumental in the acquisition of jNetX by Amdocs Ltd. (Nasdaq: DOX) in 2009.",
+        "Cody holds business degrees from Virginia Military Institute and Northwood University. He also attended executive courses at Stanford University."
+      ],
       linkedin: "#",
     },
     {
       name: "Joe Bacigalupo",
       title: "Chief Revenue Officer",
-      bio: "25+ years leading global sales, business development, and partnerships at Ericsson, Infosys, and i2 Technologies.",
+      shortBio: "25+ years leading global sales and partnerships at Ericsson, Infosys, and i2 Technologies.",
+      fullBio: [
+        "Joe Bacigalupo is the Chief Revenue Officer at Cirries Technologies. He is responsible for global sales and business development, channels and strategic partnerships, marketing, and customer success. Throughout his career, Joe had the opportunity to work for world-class organizations and launch/manage large scale initiatives from ground zero.",
+        "Joe's extensive international experience has taught him the importance of flexibility and adaptability in growing companies around the world. With over 25 years of experience, Joe's leadership roles include managing domestic and international operations in the Enterprise Application Software, IT consulting, Telecommunications Equipment Manufacturers, and Technology companies such as Ericsson, Infosys, and i2 Technologies.",
+        "In addition, Joe has served as a Chair of a CEO Advisory Board at Vistage Worldwide and writes a bi-monthly leadership column (\"Leaders Hub with Joe\") for Latino Leaders Magazine. Joe holds a Bachelor of Science in Electronics Engineering, an M.B.A. in General Management, and a Graduate Marketing Certificate from Southern Methodist University.",
+        "He is an Applied Positive Psychology and Change Management Practitioner, a Certified Talent Optimization Consultant from Predictive Index, and has obtained Graduate and Advanced Certifications in Personal & Executive Coaching and Emotional Intelligence from the College of Executive Coaching."
+      ],
       linkedin: "#",
     },
     {
       name: "Roger Boivin",
       title: "Sr. Vice President",
-      bio: "30+ years in telecom and data management. Previously served as president of COM DEV Wireless and general manager at jNetX Inc.",
+      shortBio: "30+ years in telecom with expertise in nurturing startups to multi-million dollar opportunities.",
+      fullBio: [
+        "Roger Boivin is a qualified executive with more than 30 years' experience in the telecom and data management industries with emphasis on new technology. He has significant experience with emerging businesses focused on maturing innovative ideas into new products. He is particularly effective in building strong, mutually beneficial relationships focused on achieving the organizations' business goals.",
+        "A graduate of SJTI in St. John, New Brunswick, Roger spent more than a decade in operations, engineering and management roles with the New Brunswick Telephone Company before joining Northern Telecom Canada. He then transferred to Richardson, Texas, and was quickly promoted to vice president of cellular sales and marketing for Northern Telecom. He was instrumental in nurturing that business from startup to a multi-million-dollar-a-year opportunity.",
+        "Roger subsequently enjoyed success at Hughes Network, Ericsson, National Telemanagement Corporation and as president of COM DEV Wireless, a Canadian company with its USA headquarters in Richardson Texas. He then accepted a position as president and COO of ISCO International, a company providing interference solutions for the wireless industry using cryogenically cooled filters.",
+        "In his most recent position as general manager for the Americas at jNetX Inc., Roger was responsible for all sales and strategic alliances of next-generation IMS service layer platform for North America, Latin America, and South America. He closed a major partnership agreement with CGI worldwide and assisted in carrier RFI and RF responses with IBM, Sun and Stratus Computing. He authored the complete sales and technical courses on convergent networks and the evolution to IP Multimedia Subsystems (IMS)."
+      ],
       linkedin: "#",
     },
     {
       name: "Vijay Menon",
       title: "VP of Business Development",
-      bio: "30 years in product management and sales across Nortel, Oracle, Sun Microsystems, and Niksun.",
+      shortBio: "30 years driving customer acquisition at Nortel, Oracle, Sun Microsystems, and Niksun.",
+      fullBio: [
+        "Vijay has 30 years of experience in product management, sales, and business development. He has lead teams at Nortel Network, Oracle, Sun Microsystems, and Niksun, having been instrumental in customer acquisition of both telecommunication companies and large enterprise accounts.",
+        "Vijay has a Masters degree in Computer Science from The University of Texas at Arlington."
+      ],
       linkedin: "#",
     },
   ],
@@ -77,39 +106,101 @@ const {
       <p class="leadership-description">{description}</p>
     </div>
 
-    <!-- Leadership Grid -->
-    <div class="leadership-grid">
-      {leaders.map((leader, index) => (
-        <div
-          class="leader-card"
-          style={`--card-index: ${index}`}
-        >
-          <div class="leader-photo">
-            {leader.image ? (
-              <img src={leader.image} alt={leader.name} class="photo-img" />
-            ) : (
-              <div class="photo-placeholder">
-                <i class="fa-solid fa-user placeholder-icon"></i>
-              </div>
-            )}
-            <div class="photo-border"></div>
-          </div>
+    <!-- Split View Container -->
+    <div class="leadership-split">
 
-          <div class="leader-info">
-            <h3 class="leader-name">{leader.name}</h3>
-            <span class="leader-title-text">{leader.title}</span>
-            <p class="leader-bio">{leader.bio}</p>
-
-            {leader.linkedin && (
-              <a href={leader.linkedin} class="leader-linkedin" aria-label={`${leader.name} LinkedIn`}>
-                <i class="fa-brands fa-linkedin-in"></i>
-              </a>
-            )}
-          </div>
-
-          <div class="card-accent-line"></div>
+      <!-- Left Panel: Leader List -->
+      <div class="leader-list">
+        <div class="list-header">
+          <span class="list-count">{leaders.length} Executives</span>
         </div>
-      ))}
+
+        {leaders.map((leader, index) => (
+          <button
+            class={`leader-item ${index === 0 ? 'is-active' : ''}`}
+            data-leader-index={index}
+            type="button"
+            aria-pressed={index === 0 ? 'true' : 'false'}
+          >
+            <div class="leader-item__photo">
+              {leader.image ? (
+                <img src={leader.image} alt={leader.name} />
+              ) : (
+                <div class="photo-placeholder">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </div>
+              )}
+            </div>
+            <div class="leader-item__info">
+              <span class="leader-item__name">{leader.name}</span>
+              <span class="leader-item__title">{leader.title}</span>
+            </div>
+            <div class="leader-item__indicator">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      <!-- Right Panel: Detail View -->
+      <div class="leader-detail">
+        {leaders.map((leader, index) => (
+          <article
+            class={`detail-panel ${index === 0 ? 'is-active' : ''}`}
+            data-panel-index={index}
+            aria-hidden={index !== 0}
+          >
+            <!-- Detail Header -->
+            <div class="detail-header">
+              <div class="detail-photo">
+                {leader.image ? (
+                  <img src={leader.image} alt={leader.name} />
+                ) : (
+                  <div class="detail-photo__placeholder">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                      <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                  </div>
+                )}
+                <div class="detail-photo__ring"></div>
+              </div>
+
+              <div class="detail-meta">
+                <h3 class="detail-name">{leader.name}</h3>
+                <div class="detail-badges">
+                  <span class="detail-title">{leader.title}</span>
+                  {leader.linkedin && (
+                    <a href={leader.linkedin} class="detail-linkedin" target="_blank" rel="noopener noreferrer" aria-label={`${leader.name} on LinkedIn`}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                      </svg>
+                      <span>LinkedIn</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <!-- Detail Bio -->
+            <div class="detail-bio">
+              <div class="bio-intro">{leader.shortBio}</div>
+              <div class="bio-divider"></div>
+              <div class="bio-content">
+                {leader.fullBio.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
     </div>
   </Container>
 </section>
@@ -181,176 +272,343 @@ const {
     color: #888888;
   }
 
-  /* Leadership Grid */
-  .leadership-grid {
+  /* ================================
+     SPLIT VIEW LAYOUT
+     ================================ */
+  .leadership-split {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: var(--space-5);
+    grid-template-columns: 320px 1fr;
+    gap: var(--space-6);
     position: relative;
     z-index: 1;
+    min-height: 600px;
   }
 
-  /* Individual Leader Card */
-  .leader-card {
-    position: relative;
-    padding: var(--space-6);
+  /* ================================
+     LEFT PANEL: LEADER LIST
+     ================================ */
+  .leader-list {
+    display: flex;
+    flex-direction: column;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 16px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
-    text-align: center;
   }
 
-  .leader-card:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(234, 36, 43, 0.25);
-    transform: translateY(-4px);
-    box-shadow:
-      0 16px 40px rgba(0, 0, 0, 0.3),
-      0 0 60px rgba(234, 36, 43, 0.06);
+  .list-header {
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
-  /* Photo */
-  .leader-photo {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto var(--space-5);
+  .list-count {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #666666;
   }
 
-  .photo-img {
+  /* Leader Item Button */
+  .leader-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    width: 100%;
+    padding: var(--space-4) var(--space-5);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.25s ease;
+  }
+
+  .leader-item:last-child {
+    border-bottom: none;
+  }
+
+  .leader-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .leader-item.is-active {
+    background: rgba(234, 36, 43, 0.08);
+    border-left: 3px solid var(--color-primary, #EA242B);
+    padding-left: calc(var(--space-5) - 3px);
+  }
+
+  .leader-item__photo {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid transparent;
+    transition: border-color 0.25s ease;
+  }
+
+  .leader-item.is-active .leader-item__photo {
+    border-color: var(--color-primary, #EA242B);
+  }
+
+  .leader-item__photo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
   }
 
-  .photo-placeholder {
+  .leader-item__photo .photo-placeholder {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(234, 36, 43, 0.1) 0%, rgba(234, 36, 43, 0.05) 100%);
-    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.3);
   }
 
-  .placeholder-icon {
-    font-size: 2.5rem;
-    color: rgba(234, 36, 43, 0.4);
+  .leader-item__info {
+    flex: 1;
+    min-width: 0;
   }
 
-  .photo-border {
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    border: 2px solid rgba(234, 36, 43, 0.15);
-    transition: all 0.3s ease;
-  }
-
-  .leader-card:hover .photo-border {
-    border-color: rgba(234, 36, 43, 0.4);
-    inset: -6px;
-  }
-
-  /* Info */
-  .leader-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-2);
-  }
-
-  .leader-name {
+  .leader-item__name {
+    display: block;
     font-family: var(--font-display);
-    font-size: 1.1rem;
-    font-weight: var(--font-bold);
+    font-size: 0.95rem;
+    font-weight: var(--font-semibold);
     color: #ffffff;
-    margin: 0;
-    transition: color 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.25s ease;
   }
 
-  .leader-card:hover .leader-name {
+  .leader-item.is-active .leader-item__name {
     color: var(--color-primary, #EA242B);
   }
 
-  .leader-title-text {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    font-weight: var(--font-medium);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-primary, #EA242B);
-    margin-bottom: var(--space-2);
-  }
-
-  .leader-bio {
+  .leader-item__title {
+    display: block;
     font-family: var(--font-body);
-    font-size: 0.85rem;
-    line-height: 1.6;
-    color: #777777;
-    margin: 0;
-    transition: color 0.3s ease;
+    font-size: 0.75rem;
+    color: #666666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .leader-card:hover .leader-bio {
-    color: #999999;
+  .leader-item__indicator {
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.2);
+    transition: all 0.25s ease;
+    transform: translateX(0);
   }
 
-  /* LinkedIn */
-  .leader-linkedin {
+  .leader-item.is-active .leader-item__indicator {
+    color: var(--color-primary, #EA242B);
+    transform: translateX(4px);
+  }
+
+  /* ================================
+     RIGHT PANEL: DETAIL VIEW
+     ================================ */
+  .leader-detail {
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  .detail-panel {
+    display: none;
+    padding: var(--space-8);
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+  }
+
+  .detail-panel.is-active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Detail Header */
+  .detail-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    margin-bottom: var(--space-6);
+  }
+
+  .detail-photo {
+    position: relative;
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+  }
+
+  .detail-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .detail-photo__placeholder {
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    margin-top: var(--space-4);
+    background: linear-gradient(135deg, rgba(234, 36, 43, 0.15) 0%, rgba(234, 36, 43, 0.05) 100%);
+    border-radius: 12px;
+    color: rgba(234, 36, 43, 0.5);
+  }
+
+  .detail-photo__ring {
+    position: absolute;
+    inset: -4px;
+    border: 2px solid rgba(234, 36, 43, 0.2);
+    border-radius: 14px;
+    pointer-events: none;
+  }
+
+  .detail-meta {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .detail-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: var(--font-bold);
+    color: #ffffff;
+    margin: 0 0 var(--space-3) 0;
+    letter-spacing: -0.02em;
+  }
+
+  .detail-badges {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .detail-title {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary, #EA242B);
+    padding: 5px 10px;
+    background: rgba(234, 36, 43, 0.1);
+    border-radius: 4px;
+    line-height: 1;
+    height: 24px;
+  }
+
+  .detail-linkedin {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888888;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
-    color: #666666;
+    border-radius: 4px;
     text-decoration: none;
-    transition: all 0.3s ease;
+    line-height: 1;
+    height: 24px;
+    box-sizing: border-box;
+    transition: all 0.25s ease;
   }
 
-  .leader-linkedin:hover {
-    background: var(--color-primary, #EA242B);
-    border-color: var(--color-primary, #EA242B);
+  .detail-linkedin:hover {
     color: #ffffff;
-    transform: translateY(-2px);
+    background: rgba(10, 102, 194, 0.15);
+    border-color: rgba(10, 102, 194, 0.3);
   }
 
-  .leader-linkedin i {
+  .detail-linkedin svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  /* Detail Bio */
+  .detail-bio {
+    padding-top: var(--space-6);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .bio-intro {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--font-medium);
+    line-height: 1.6;
+    color: #cccccc;
+    margin-bottom: var(--space-5);
+    max-width: none;
+  }
+
+  .bio-divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary, #EA242B), transparent);
+    border-radius: 2px;
+    margin-bottom: var(--space-5);
+  }
+
+  .bio-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .bio-content p {
+    font-family: var(--font-body);
     font-size: 0.9rem;
+    line-height: 1.85;
+    color: #999999;
+    margin: 0;
+    max-width: none;
   }
 
-  /* Accent Line */
-  .card-accent-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--color-primary, #EA242B), transparent);
-    transform: scaleX(0);
-    transition: transform 0.4s ease;
+  .bio-content p:first-child {
+    color: #bbbbbb;
   }
 
-  .leader-card:hover .card-accent-line {
-    transform: scaleX(1);
-  }
-
-  /* Responsive */
-  @media (max-width: 1280px) {
-    .leadership-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
+  /* ================================
+     RESPONSIVE
+     ================================ */
   @media (max-width: 1024px) {
-    .leadership-grid {
-      grid-template-columns: repeat(2, 1fr);
+    .leadership-split {
+      grid-template-columns: 280px 1fr;
+      min-height: 550px;
+    }
+
+    .detail-panel {
+      padding: var(--space-6);
+    }
+
+    .detail-photo {
+      width: 64px;
+      height: 64px;
     }
   }
 
@@ -359,22 +617,111 @@ const {
       padding: var(--space-12) 0;
     }
 
-    .leadership-grid {
+    .leadership-split {
       grid-template-columns: 1fr;
+      min-height: auto;
       gap: var(--space-4);
     }
 
-    .leader-card {
-      padding: var(--space-5);
+    .leader-list {
+      order: 2;
     }
 
-    .leader-photo {
-      width: 100px;
-      height: 100px;
+    .leader-detail {
+      order: 1;
+      min-height: 450px;
+    }
+
+    .detail-header {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .detail-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .leader-item {
+      padding: var(--space-3) var(--space-4);
+    }
+
+    .leader-item__photo {
+      width: 40px;
+      height: 40px;
+    }
+
+    .leader-item__indicator {
+      display: none;
+    }
+
+    .bio-intro {
+      font-size: var(--text-lg);
     }
 
     .leadership-title {
       font-size: var(--text-2xl);
     }
   }
+
+  @media (max-width: 480px) {
+    .detail-panel {
+      padding: var(--space-5);
+    }
+
+    .detail-photo {
+      width: 56px;
+      height: 56px;
+    }
+
+    .detail-name {
+      font-size: 1.35rem;
+    }
+
+    .bio-content p {
+      font-size: 0.85rem;
+    }
+  }
 </style>
+
+<script>
+  function initLeadershipSection() {
+    const section = document.getElementById('leadership');
+    if (!section) return;
+
+    const items = section.querySelectorAll('.leader-item');
+    const panels = section.querySelectorAll('.detail-panel');
+
+    items.forEach((item) => {
+      item.addEventListener('click', () => {
+        const index = item.getAttribute('data-leader-index');
+
+        // Update active states
+        items.forEach((i) => {
+          i.classList.remove('is-active');
+          i.setAttribute('aria-pressed', 'false');
+        });
+        panels.forEach((p) => {
+          p.classList.remove('is-active');
+          p.setAttribute('aria-hidden', 'true');
+        });
+
+        // Set new active
+        item.classList.add('is-active');
+        item.setAttribute('aria-pressed', 'true');
+
+        const targetPanel = section.querySelector(`[data-panel-index="${index}"]`);
+        if (targetPanel) {
+          targetPanel.classList.add('is-active');
+          targetPanel.setAttribute('aria-hidden', 'false');
+        }
+      });
+    });
+  }
+
+  // Initialize on DOM ready and Astro page transitions
+  document.addEventListener('DOMContentLoaded', initLeadershipSection);
+  document.addEventListener('astro:page-load', initLeadershipSection);
+</script>
