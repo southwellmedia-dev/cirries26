@@ -1,0 +1,636 @@
+---
+/**
+ * Contact Us Page
+ *
+ * Professional contact page featuring:
+ * - Dark hero with page title
+ * - Split layout: Contact form + Contact information
+ * - Multiple contact methods
+ * - Office location and support channels
+ */
+import SubpageLayout from "../layouts/SubpageLayout.astro";
+import SubpageHero from "../components/sections/SubpageHero.astro";
+import Container from "../components/ui/Container.astro";
+---
+
+<SubpageLayout
+  title="Contact Us - Cirries Network Intelligence"
+  description="Get in touch with Cirries. Contact our team for sales inquiries, technical support, or partnership opportunities."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Get in <span>Touch</span>"
+      subtitle="Have questions about DART or want to see how Cirries can transform your network operations? We'd love to hear from you."
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Main Contact Section -->
+  <section class="contact-section">
+    <!-- Grid Background -->
+    <div class="contact-section__bg">
+      <div class="contact-section__gradient"></div>
+      <div class="contact-section__grid"></div>
+    </div>
+
+    <Container size="xl">
+      <div class="contact-layout">
+        <!-- Contact Form -->
+        <div class="contact-form-wrapper">
+          <div class="form-header">
+            <span class="form-label">Send us a message</span>
+            <h2 class="form-title">Let's Start a Conversation</h2>
+            <p class="form-description">Fill out the form below and our team will get back to you within 24 hours.</p>
+          </div>
+
+          <form class="contact-form" id="contact-form" action="#" method="POST">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName" class="form-group__label">First Name</label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  class="form-group__input"
+                  placeholder="John"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="lastName" class="form-group__label">Last Name</label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  class="form-group__input"
+                  placeholder="Doe"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="form-group__label">Work Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-group__input"
+                placeholder="john@company.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="company" class="form-group__label">Company</label>
+              <input
+                type="text"
+                id="company"
+                name="company"
+                class="form-group__input"
+                placeholder="Your company name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="subject" class="form-group__label">Subject</label>
+              <select id="subject" name="subject" class="form-group__select" required>
+                <option value="" disabled selected>Select a topic</option>
+                <option value="sales">Sales Inquiry</option>
+                <option value="demo">Request a Demo</option>
+                <option value="support">Technical Support</option>
+                <option value="partnership">Partnership Opportunity</option>
+                <option value="other">Other</option>
+              </select>
+              <svg class="select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </div>
+
+            <div class="form-group">
+              <label for="message" class="form-group__label">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                class="form-group__textarea"
+                placeholder="Tell us about your network challenges or how we can help..."
+                rows="5"
+                required
+              ></textarea>
+            </div>
+
+            <button type="submit" class="form-submit">
+              <span>Send Message</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
+              </svg>
+            </button>
+
+            <p class="form-privacy">
+              By submitting this form, you agree to our
+              <a href="/privacy">Privacy Policy</a>.
+            </p>
+          </form>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="contact-info-wrapper">
+          <!-- Support -->
+          <div class="contact-block">
+            <h3 class="contact-block__title">Support</h3>
+            <div class="contact-block__items">
+              <a href="/solutions/intelligent-network-observability/dart-ai" class="contact-item contact-item--link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 16v-4M12 8h.01"></path>
+                </svg>
+                <span>DART Support</span>
+              </a>
+              <a href="/resources" class="contact-item contact-item--link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                <span>Resources</span>
+              </a>
+              <a href="tel:+14693429122" class="contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                <span>+1.469.342.9122</span>
+              </a>
+              <a href="mailto:support@cirries.com" class="contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span>support@cirries.com</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Connect -->
+          <div class="contact-block">
+            <h3 class="contact-block__title">Connect</h3>
+            <div class="contact-block__items">
+              <a href="mailto:sales@cirries.com" class="contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span>sales@cirries.com</span>
+              </a>
+              <a href="mailto:investor@cirries.com" class="contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span>investor@cirries.com</span>
+              </a>
+              <a href="mailto:careers@cirries.com" class="contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span>careers@cirries.com</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Headquarters -->
+          <div class="contact-block contact-block--headquarters">
+            <h3 class="contact-block__title">Headquarters</h3>
+            <div class="contact-block__items">
+              <div class="contact-item contact-item--address">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <div class="address-content">
+                  <span>300 North Coit Road, Suite 700</span>
+                  <span>Richardson, Texas 75080</span>
+                </div>
+              </div>
+              <a href="tel:+19722356100" class="contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                <span>+1.972.235.6100</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+</SubpageLayout>
+
+<style>
+  /* ============================================
+     CONTACT SECTION
+     ============================================ */
+  .contact-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  /* Grid Background */
+  .contact-section__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .contact-section__gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 40% at 20% 0%, rgba(234, 36, 43, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 50% at 80% 100%, rgba(245, 245, 245, 0.8) 0%, transparent 60%);
+  }
+
+  .contact-section__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: linear-gradient(to bottom, black 0%, black 30%, transparent 80%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 30%, transparent 80%);
+  }
+
+  /* ============================================
+     CONTACT LAYOUT
+     ============================================ */
+  .contact-layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--space-16);
+    align-items: start;
+  }
+
+  @media (max-width: 1024px) {
+    .contact-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+  }
+
+  /* ============================================
+     CONTACT FORM
+     ============================================ */
+  .contact-form-wrapper {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 16px;
+    padding: var(--space-10);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.04),
+      0 1px 2px rgba(0, 0, 0, 0.02);
+  }
+
+  .form-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .form-label {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  .form-title {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: #0a0a0a;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-3);
+  }
+
+  .form-description {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: #666666;
+    line-height: 1.6;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 640px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .form-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .form-group__label {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: var(--font-medium);
+    color: #333333;
+  }
+
+  .form-group__input,
+  .form-group__select,
+  .form-group__textarea {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    padding: 14px 16px;
+    background: #fafafa;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    color: #0a0a0a;
+    transition: all 0.2s ease;
+    outline: none;
+  }
+
+  .form-group__input::placeholder,
+  .form-group__textarea::placeholder {
+    color: #aaaaaa;
+  }
+
+  .form-group__input:hover,
+  .form-group__select:hover,
+  .form-group__textarea:hover {
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .form-group__input:focus,
+  .form-group__select:focus,
+  .form-group__textarea:focus {
+    background: #ffffff;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(234, 36, 43, 0.08);
+  }
+
+  .form-group__select {
+    appearance: none;
+    cursor: pointer;
+    padding-right: 44px;
+  }
+
+  .select-chevron {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    width: 18px;
+    height: 18px;
+    color: #888888;
+    pointer-events: none;
+  }
+
+  .form-group__textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .form-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    padding: 16px 32px;
+    background: var(--color-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: var(--space-2);
+  }
+
+  .form-submit:hover {
+    background: var(--color-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(234, 36, 43, 0.25);
+  }
+
+  .form-submit:active {
+    transform: translateY(0);
+  }
+
+  .form-submit svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .form-privacy {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: #888888;
+    text-align: center;
+  }
+
+  .form-privacy a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .form-privacy a:hover {
+    text-decoration: underline;
+  }
+
+  /* ============================================
+     CONTACT INFO
+     ============================================ */
+  .contact-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  /* Contact Block */
+  .contact-block {
+    background: #fafafa;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: 16px;
+    padding: var(--space-6);
+  }
+
+  .contact-block--headquarters {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    border-color: transparent;
+  }
+
+  .contact-block--headquarters .contact-block__title {
+    color: #ffffff;
+  }
+
+  .contact-block--headquarters .contact-item {
+    color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .contact-block--headquarters .contact-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+  }
+
+  .contact-block--headquarters .contact-item svg {
+    color: var(--color-primary);
+  }
+
+  .contact-block__title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #888888;
+    margin-bottom: var(--space-4);
+  }
+
+  .contact-block__items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* Contact Item */
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: #333333;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  a.contact-item:hover {
+    border-color: rgba(234, 36, 43, 0.2);
+    background: rgba(234, 36, 43, 0.02);
+    transform: translateX(4px);
+  }
+
+  .contact-item svg {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    color: var(--color-primary);
+  }
+
+  .contact-item--link {
+    font-weight: var(--font-medium);
+  }
+
+  .contact-item--link span {
+    color: var(--color-primary);
+  }
+
+  .contact-item--address {
+    align-items: flex-start;
+  }
+
+  .contact-item--address svg {
+    margin-top: 2px;
+  }
+
+  .address-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .address-content span {
+    line-height: 1.4;
+  }
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+  @media (max-width: 768px) {
+    .contact-section {
+      padding: var(--space-12) 0;
+    }
+
+    .contact-form-wrapper {
+      padding: var(--space-6);
+    }
+
+    .form-title {
+      font-size: var(--text-2xl);
+    }
+  }
+</style>
+
+<script>
+  // Form submission handling
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Get form data
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        // Here you would typically send to your backend
+        console.log('Form submitted:', data);
+
+        // Show success state (you can customize this)
+        const submitBtn = form.querySelector('.form-submit') as HTMLButtonElement;
+        if (submitBtn) {
+          const originalText = submitBtn.innerHTML;
+          submitBtn.innerHTML = `
+            <span>Message Sent!</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 6L9 17l-5-5"></path>
+            </svg>
+          `;
+          submitBtn.style.background = '#22c55e';
+          submitBtn.disabled = true;
+
+          setTimeout(() => {
+            submitBtn.innerHTML = originalText;
+            submitBtn.style.background = '';
+            submitBtn.disabled = false;
+            form.reset();
+          }, 3000);
+        }
+      });
+    }
+  });
+</script>
