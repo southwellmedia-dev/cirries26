@@ -1,0 +1,46 @@
+---
+/**
+ * SLA Assurance & Reporting - Index/Hub Page
+ *
+ * Category landing page featuring:
+ * - Hero with animated analytics visualization
+ * - Navigation cards to child solutions (SLA Assurance, Reporting)
+ * - Overview of SLA management and intelligent reporting capabilities
+ * - Unified service assurance messaging
+ *
+ * Child pages:
+ * - /sla-assurance: Proactive SLA management with packet-level verification
+ * - /reporting: AI-powered intelligent reporting for all stakeholders
+ */
+import SubpageLayout from "../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetSLARSection from "../../../components/sections/sla-reporting/MeetSLARSection.astro";
+import SLARNavBar from "../../../components/sections/sla-reporting/SLARNavBar.astro";
+import SLARCapabilitiesSection from "../../../components/sections/sla-reporting/SLARCapabilitiesSection.astro";
+---
+
+<SubpageLayout
+  title="SLA Assurance & Reporting - Proactive Service Excellence"
+  description="Transform SLA management from reactive fire-fighting to proactive assurance. Cirries delivers packet-level verification and AI-powered reporting that drives decisive action."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="SLA Assurance & <span>Reporting</span>"
+      subtitle="From Data to Decisive Action"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet Section - Analytics Visualization -->
+  <MeetSLARSection />
+
+  <!-- Navigation to Child Solutions -->
+  <SLARNavBar currentPage="/solutions/sla-assurance-reporting" />
+
+  <!-- Capabilities Overview -->
+  <SLARCapabilitiesSection />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>

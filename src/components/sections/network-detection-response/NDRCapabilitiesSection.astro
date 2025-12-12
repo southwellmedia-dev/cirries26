@@ -1,0 +1,397 @@
+---
+/**
+ * NDRCapabilitiesSection - Capabilities Overview for Network Detection & Response
+ *
+ * Bento-style grid showcasing unified security capabilities:
+ * - Core value propositions across detection and response
+ * - How different security components integrate
+ * - Key differentiators and outcomes
+ */
+import Container from "../../ui/Container.astro";
+
+interface Capability {
+  icon: string;
+  title: string;
+  description: string;
+  accent: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  description?: string;
+  capabilities?: Capability[];
+}
+
+const {
+  eyebrow = "Unified Security Platform",
+  title = "Detect. Respond.",
+  highlightText = "Defend.",
+  description = "From packet capture to threat response, Cirries NDR delivers complete security intelligence. Our AI-powered platform sees what others miss, responds faster than humanly possible, and learns continuously to stay ahead of evolving threats.",
+  capabilities = [
+    {
+      icon: "fa-solid fa-satellite-dish",
+      title: "100 Gbps Capture",
+      description: "Purpose-built DART sensors capture raw packets and metadata at line rates up to 100 Gbps—no sampling, no blind spots.",
+      accent: "#EA242B",
+    },
+    {
+      icon: "fa-solid fa-brain",
+      title: "AI-Powered Detection",
+      description: "Machine learning models analyze 100% of packet data in real-time, detecting sophisticated threats that signature-based systems miss.",
+      accent: "#EA242B",
+    },
+    {
+      icon: "fa-solid fa-bolt",
+      title: "Millisecond Response",
+      description: "Automated threat response kicks in before attackers can pivot. Our agents execute remediation playbooks autonomously.",
+      accent: "#EA242B",
+    },
+    {
+      icon: "fa-solid fa-eye",
+      title: "Complete Visibility",
+      description: "Four layers of AI working together provide 360° observability. See every flow, every anomaly, every potential threat.",
+      accent: "#EA242B",
+    },
+    {
+      icon: "fa-solid fa-shield-halved",
+      title: "Zero Trust Ready",
+      description: "Built for zero trust architectures. Continuous verification, least privilege enforcement, and micro-segmentation support.",
+      accent: "#EA242B",
+    },
+    {
+      icon: "fa-solid fa-chart-line",
+      title: "Predictive Security",
+      description: "Don't just react—anticipate. Our models learn your network's patterns and predict threats before they materialize.",
+      accent: "#EA242B",
+    },
+  ],
+} = Astro.props;
+---
+
+<section class="ndr-capabilities" id="capabilities">
+  <Container size="xl">
+    <!-- Section Header -->
+    <div class="capabilities-header">
+      <span class="capabilities-eyebrow">{eyebrow}</span>
+      <h2 class="capabilities-title">
+        {title}
+        <span>{highlightText}</span>
+      </h2>
+      <p class="capabilities-description">{description}</p>
+    </div>
+
+    <!-- Capabilities Grid -->
+    <div class="capabilities-grid">
+      {capabilities.map((cap, index) => (
+        <div
+          class="capability-card"
+          style={`--cap-accent: ${cap.accent}; --cap-index: ${index}`}
+        >
+          <div class="cap-icon">
+            <i class={`${cap.icon} cap-fa-icon`}></i>
+            <div class="cap-icon-ring"></div>
+          </div>
+          <h3 class="cap-title">{cap.title}</h3>
+          <p class="cap-description">{cap.description}</p>
+          <div class="cap-accent-line"></div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom Stats/Proof Points -->
+    <div class="capabilities-stats">
+      <div class="stat-item">
+        <div class="stat-value">100%</div>
+        <div class="stat-label">Packet Analysis</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">&lt;50ms</div>
+        <div class="stat-label">Detection Time</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">100 Gbps</div>
+        <div class="stat-label">Line Rate</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">24/7</div>
+        <div class="stat-label">Autonomous Defense</div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .ndr-capabilities {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: #0A0A0A;
+    overflow: hidden;
+  }
+
+  /* Subtle grid background */
+  .ndr-capabilities::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+  }
+
+  /* Header */
+  .capabilities-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto var(--space-12);
+    position: relative;
+    z-index: 1;
+  }
+
+  .capabilities-eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary, #EA242B);
+    padding: 6px 14px;
+    background: rgba(234, 36, 43, 0.1);
+    border: 1px solid rgba(234, 36, 43, 0.2);
+    border-radius: 6px;
+  }
+
+  .capabilities-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #ffffff;
+    margin-bottom: var(--space-5);
+  }
+
+  .capabilities-title span {
+    display: block;
+    color: var(--color-primary, #EA242B);
+  }
+
+  .capabilities-description {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: #888888;
+  }
+
+  /* Capabilities Grid */
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Individual Capability Card */
+  .capability-card {
+    position: relative;
+    padding: var(--space-7);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  .capability-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: color-mix(in srgb, var(--cap-accent) 30%, transparent);
+    transform: translateY(-4px);
+    box-shadow:
+      0 16px 40px rgba(0, 0, 0, 0.3),
+      0 0 60px color-mix(in srgb, var(--cap-accent) 8%, transparent);
+  }
+
+  /* Icon */
+  .cap-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    margin-bottom: var(--space-5);
+    background: color-mix(in srgb, var(--cap-accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--cap-accent) 25%, transparent);
+    border-radius: 14px;
+    color: var(--cap-accent);
+    transition: all 0.35s ease;
+  }
+
+  .capability-card:hover .cap-icon {
+    background: var(--cap-accent);
+    color: #ffffff;
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--cap-accent) 40%, transparent);
+  }
+
+  .cap-fa-icon {
+    font-size: 1.35rem;
+    transition: transform 0.3s ease;
+  }
+
+  .capability-card:hover .cap-fa-icon {
+    transform: scale(1.1);
+  }
+
+  .cap-icon-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 18px;
+    border: 1px solid var(--cap-accent);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .capability-card:hover .cap-icon-ring {
+    opacity: 0.3;
+    inset: -8px;
+  }
+
+  /* Title */
+  .cap-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: var(--font-bold);
+    color: #ffffff;
+    margin-bottom: var(--space-3);
+    transition: color 0.3s ease;
+  }
+
+  .capability-card:hover .cap-title {
+    color: var(--cap-accent);
+  }
+
+  /* Description */
+  .cap-description {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #777777;
+    transition: color 0.3s ease;
+  }
+
+  .capability-card:hover .cap-description {
+    color: #999999;
+  }
+
+  /* Accent Line */
+  .cap-accent-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cap-accent), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .capability-card:hover .cap-accent-line {
+    transform: scaleX(1);
+  }
+
+  /* Stats Section */
+  .capabilities-stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-8);
+    margin-top: var(--space-16);
+    padding: var(--space-8) var(--space-10);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 0 var(--space-4);
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: var(--font-bold);
+    color: var(--color-success, #22c55e);
+    line-height: 1;
+    margin-bottom: var(--space-2);
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666666;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .capabilities-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .ndr-capabilities {
+      padding: var(--space-12) 0;
+    }
+
+    .capabilities-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .capability-card {
+      padding: var(--space-5);
+    }
+
+    .capabilities-title {
+      font-size: var(--text-2xl);
+    }
+
+    .capabilities-stats {
+      flex-direction: column;
+      gap: var(--space-6);
+      padding: var(--space-6);
+    }
+
+    .stat-divider {
+      width: 60px;
+      height: 1px;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+    }
+  }
+</style>

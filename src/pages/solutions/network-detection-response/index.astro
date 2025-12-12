@@ -1,0 +1,47 @@
+---
+/**
+ * Network Detection & Response - Index/Hub Page
+ *
+ * Category landing page featuring:
+ * - Hero with animated security shield visualization
+ * - Navigation cards to child solutions (Sensors, Anomaly Detection, Observability)
+ * - Overview of security detection and response capabilities
+ * - Unified threat defense messaging
+ *
+ * Child pages:
+ * - /sensors: DART Sensors for 5G observability
+ * - /anomaly-detection: AI-powered network defense
+ * - /observability: Multi-layered intelligence engine
+ */
+import SubpageLayout from "../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetNDRSection from "../../../components/sections/network-detection-response/MeetNDRSection.astro";
+import NDRNavBar from "../../../components/sections/network-detection-response/NDRNavBar.astro";
+import NDRCapabilitiesSection from "../../../components/sections/network-detection-response/NDRCapabilitiesSection.astro";
+---
+
+<SubpageLayout
+  title="Network Detection & Response - AI-Powered Network Defense"
+  description="Detect sophisticated threats with AI-powered network defense. Cirries NDR analyzes 100% of packet data in real-time, delivering certainty where traditional security tools fail."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Network Detection & <span>Response</span>"
+      subtitle="AI-Powered Defense for Modern Networks"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet Section - Security Shield Visualization -->
+  <MeetNDRSection />
+
+  <!-- Navigation to Child Solutions -->
+  <NDRNavBar currentPage="/solutions/network-detection-response" />
+
+  <!-- Capabilities Overview -->
+  <NDRCapabilitiesSection />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>

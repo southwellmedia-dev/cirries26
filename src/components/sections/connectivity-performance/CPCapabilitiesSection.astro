@@ -1,0 +1,397 @@
+---
+/**
+ * CPCapabilitiesSection - Capabilities Overview for Connectivity & Performance
+ *
+ * Bento-style grid showcasing unified connectivity capabilities:
+ * - Core value propositions across all domains
+ * - How different network types integrate
+ * - Key differentiators and outcomes
+ */
+import Container from "../../ui/Container.astro";
+
+interface Capability {
+  icon: string;
+  title: string;
+  description: string;
+  accent: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  description?: string;
+  capabilities?: Capability[];
+}
+
+const {
+  eyebrow = "Unified Connectivity Platform",
+  title = "Every Network.",
+  highlightText = "One Truth.",
+  description = "From cellular towers to cloud data centers, from IoT sensors to home routers—Cirries delivers consistent visibility and intelligence across every connectivity domain. No silos. No blind spots. Just clarity.",
+  capabilities = [
+    {
+      icon: "fa-solid fa-layer-group",
+      title: "Cross-Domain Visibility",
+      description: "See the complete picture across mobile, cloud, IoT, and enterprise networks. Correlate events that span multiple domains instantly.",
+      accent: "#EA242B",
+    },
+    {
+      icon: "fa-solid fa-gauge-high",
+      title: "Real-Time Performance",
+      description: "Monitor latency, throughput, and quality metrics in real-time. Identify degradation before it impacts users or SLAs.",
+      accent: "#EA242B",
+    },
+    {
+      icon: "fa-solid fa-magnifying-glass-chart",
+      title: "Root Cause Analysis",
+      description: "Stop guessing. Our AI pinpoints the exact cause of issues across complex, multi-vendor environments in seconds.",
+      accent: "#EA242B",
+    },
+    {
+      icon: "fa-solid fa-chart-line",
+      title: "Predictive Intelligence",
+      description: "Machine learning models learn your network's patterns, predicting capacity issues and failures before they occur.",
+      accent: "#EA242B",
+    },
+    {
+      icon: "fa-solid fa-shield-halved",
+      title: "Security Integration",
+      description: "Threat detection built into every layer. Identify anomalous behavior, potential breaches, and compliance violations.",
+      accent: "#EA242B",
+    },
+    {
+      icon: "fa-solid fa-gears",
+      title: "Automated Response",
+      description: "Configure intelligent playbooks that trigger automatically. Remediate issues without human intervention 24/7.",
+      accent: "#EA242B",
+    },
+  ],
+} = Astro.props;
+---
+
+<section class="cp-capabilities" id="capabilities">
+  <Container size="xl">
+    <!-- Section Header -->
+    <div class="capabilities-header">
+      <span class="capabilities-eyebrow">{eyebrow}</span>
+      <h2 class="capabilities-title">
+        {title}
+        <span>{highlightText}</span>
+      </h2>
+      <p class="capabilities-description">{description}</p>
+    </div>
+
+    <!-- Capabilities Grid -->
+    <div class="capabilities-grid">
+      {capabilities.map((cap, index) => (
+        <div
+          class="capability-card"
+          style={`--cap-accent: ${cap.accent}; --cap-index: ${index}`}
+        >
+          <div class="cap-icon">
+            <i class={`${cap.icon} cap-fa-icon`}></i>
+            <div class="cap-icon-ring"></div>
+          </div>
+          <h3 class="cap-title">{cap.title}</h3>
+          <p class="cap-description">{cap.description}</p>
+          <div class="cap-accent-line"></div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom Stats/Proof Points -->
+    <div class="capabilities-stats">
+      <div class="stat-item">
+        <div class="stat-value">6</div>
+        <div class="stat-label">Network Domains</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">100%</div>
+        <div class="stat-label">Packet Visibility</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">&lt;1min</div>
+        <div class="stat-label">Root Cause ID</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value">99.9%</div>
+        <div class="stat-label">Uptime SLA</div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .cp-capabilities {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: #0A0A0A;
+    overflow: hidden;
+  }
+
+  /* Subtle grid background */
+  .cp-capabilities::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+  }
+
+  /* Header */
+  .capabilities-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto var(--space-12);
+    position: relative;
+    z-index: 1;
+  }
+
+  .capabilities-eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary, #EA242B);
+    padding: 6px 14px;
+    background: rgba(234, 36, 43, 0.1);
+    border: 1px solid rgba(234, 36, 43, 0.2);
+    border-radius: 6px;
+  }
+
+  .capabilities-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #ffffff;
+    margin-bottom: var(--space-5);
+  }
+
+  .capabilities-title span {
+    display: block;
+    color: var(--color-primary, #EA242B);
+  }
+
+  .capabilities-description {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: #888888;
+  }
+
+  /* Capabilities Grid */
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Individual Capability Card */
+  .capability-card {
+    position: relative;
+    padding: var(--space-7);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  .capability-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: color-mix(in srgb, var(--cap-accent) 30%, transparent);
+    transform: translateY(-4px);
+    box-shadow:
+      0 16px 40px rgba(0, 0, 0, 0.3),
+      0 0 60px color-mix(in srgb, var(--cap-accent) 8%, transparent);
+  }
+
+  /* Icon */
+  .cap-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    margin-bottom: var(--space-5);
+    background: color-mix(in srgb, var(--cap-accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--cap-accent) 25%, transparent);
+    border-radius: 14px;
+    color: var(--cap-accent);
+    transition: all 0.35s ease;
+  }
+
+  .capability-card:hover .cap-icon {
+    background: var(--cap-accent);
+    color: #ffffff;
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--cap-accent) 40%, transparent);
+  }
+
+  .cap-fa-icon {
+    font-size: 1.35rem;
+    transition: transform 0.3s ease;
+  }
+
+  .capability-card:hover .cap-fa-icon {
+    transform: scale(1.1);
+  }
+
+  .cap-icon-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 18px;
+    border: 1px solid var(--cap-accent);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .capability-card:hover .cap-icon-ring {
+    opacity: 0.3;
+    inset: -8px;
+  }
+
+  /* Title */
+  .cap-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: var(--font-bold);
+    color: #ffffff;
+    margin-bottom: var(--space-3);
+    transition: color 0.3s ease;
+  }
+
+  .capability-card:hover .cap-title {
+    color: var(--cap-accent);
+  }
+
+  /* Description */
+  .cap-description {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #777777;
+    transition: color 0.3s ease;
+  }
+
+  .capability-card:hover .cap-description {
+    color: #999999;
+  }
+
+  /* Accent Line */
+  .cap-accent-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cap-accent), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .capability-card:hover .cap-accent-line {
+    transform: scaleX(1);
+  }
+
+  /* Stats Section */
+  .capabilities-stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-8);
+    margin-top: var(--space-16);
+    padding: var(--space-8) var(--space-10);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 0 var(--space-4);
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: var(--font-bold);
+    color: var(--color-success, #22c55e);
+    line-height: 1;
+    margin-bottom: var(--space-2);
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666666;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .capabilities-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cp-capabilities {
+      padding: var(--space-12) 0;
+    }
+
+    .capabilities-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .capability-card {
+      padding: var(--space-5);
+    }
+
+    .capabilities-title {
+      font-size: var(--text-2xl);
+    }
+
+    .capabilities-stats {
+      flex-direction: column;
+      gap: var(--space-6);
+      padding: var(--space-6);
+    }
+
+    .stat-divider {
+      width: 60px;
+      height: 1px;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+    }
+  }
+</style>

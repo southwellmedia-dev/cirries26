@@ -1,0 +1,48 @@
+---
+/**
+ * Intelligent Network Observability - Index/Hub Page
+ *
+ * Category landing page featuring:
+ * - Hero with animated AI neural visualization
+ * - Navigation cards to child solutions (DART AI, Gen AI, ML Engine, Agentic AI)
+ * - Overview of AI-powered observability capabilities
+ * - Unified intelligence messaging
+ *
+ * Child pages:
+ * - /dart-ai: DART AI engine
+ * - /gen-ai: Generative AI capabilities
+ * - /machine-learning-engine: ML-powered analysis
+ * - /agentic-ai: Autonomous AI agents
+ */
+import SubpageLayout from "../../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetINOSection from "../../../components/sections/intelligent-network/MeetINOSection.astro";
+import INONavBar from "../../../components/sections/intelligent-network/INONavBar.astro";
+import INOCapabilitiesSection from "../../../components/sections/intelligent-network/INOCapabilitiesSection.astro";
+---
+
+<SubpageLayout
+  title="Intelligent Network Observability - AI-Powered Network Intelligence"
+  description="Transform your network operations with AI-powered observability. DART AI, Machine Learning, and Agentic AI work together to deliver unprecedented visibility, automated detection, and intelligent remediation."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Intelligent Network <span>Observability</span>"
+      subtitle="AI-Powered Intelligence for Complete Network Visibility"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Meet Section - AI Brain Visualization -->
+  <MeetINOSection />
+
+  <!-- Navigation to Child Solutions -->
+  <INONavBar currentPage="/solutions/intelligent-network-observability" />
+
+  <!-- Capabilities Overview -->
+  <INOCapabilitiesSection />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>

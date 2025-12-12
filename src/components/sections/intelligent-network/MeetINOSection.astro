@@ -1,0 +1,723 @@
+---
+/**
+ * MeetINOSection - "The AI Brain Behind Network Intelligence"
+ *
+ * Intelligent Network Observability intro section featuring:
+ * - Central AI brain visualization with orbiting capabilities
+ * - Animated neural pathways connecting AI components
+ * - Focus on unified intelligence and autonomous operation
+ */
+import Container from "../../ui/Container.astro";
+import Button from "../../ui/Button.astro";
+import DartLogoLight from "../../../assets/logos/dart-lightmode.svg";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  paragraphs?: string[];
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+
+const {
+  eyebrow = "Intelligent Network Observability",
+  title = "The AI Brain Behind",
+  highlightText = "Network Intelligence.",
+  paragraphs = [
+    "Traditional monitoring tools show you symptoms. Cirries' Intelligent Network Observability shows you <strong>causes, patterns, and solutions</strong>. Our unified AI platform combines machine learning, generative AI, and autonomous agents to transform raw network data into actionable intelligence.",
+    "From anomaly detection to automated remediation, every component of our AI ecosystem works in concert—learning from your network, adapting to your environment, and <strong>evolving to stay ahead of emerging threats</strong>.",
+  ],
+  primaryCta = {
+    label: "Explore AI Capabilities",
+    href: "#capabilities",
+  },
+  secondaryCta = { label: "Request Demo", href: "/contact" },
+} = Astro.props;
+
+// AI capability nodes for visualization
+const aiNodes = [
+  { type: "dart", label: "DART AI", angle: -45, distance: 160, color: "#EA242B", faIcon: "fa-solid fa-bullseye", desc: "Detection Engine" },
+  { type: "genai", label: "Gen AI", angle: 45, distance: 160, color: "#EA242B", faIcon: "fa-solid fa-wand-magic-sparkles", desc: "Natural Language" },
+  { type: "ml", label: "ML Engine", angle: 135, distance: 160, color: "#EA242B", faIcon: "fa-solid fa-brain", desc: "Pattern Learning" },
+  { type: "agentic", label: "Agentic AI", angle: -135, distance: 160, color: "#EA242B", faIcon: "fa-solid fa-robot", desc: "Autonomous Ops" },
+];
+---
+
+<section class="meet-ino-section" data-theme="light">
+  <!-- Atmospheric Background -->
+  <div class="ino-bg">
+    <div class="ino-gradient"></div>
+    <div class="ino-grid"></div>
+    <div class="ino-radial"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="meet-ino">
+      <!-- Left: Content -->
+      <div class="meet-ino__content">
+        <span class="meet-ino__eyebrow">{eyebrow}</span>
+
+        <h2 class="meet-ino__title">
+          {title}
+          <span>{highlightText}</span>
+        </h2>
+
+        {paragraphs.map((text) => <p class="meet-ino__text" set:html={text} />)}
+
+        <div class="meet-ino__actions">
+          <Button href={primaryCta.href} variant="primary">
+            {primaryCta.label}
+          </Button>
+          <Button href={secondaryCta.href} variant="outline-dark">
+            {secondaryCta.label}
+          </Button>
+        </div>
+      </div>
+
+      <!-- Right: AI Brain Visualization -->
+      <div class="ai-brain" id="ai-brain">
+        <!-- SVG for neural connections -->
+        <svg class="ai-connections" viewBox="0 0 400 400" id="ai-connections-svg">
+          <defs>
+            <!-- Animated gradient for neural pathways -->
+            <linearGradient id="neural-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color: rgba(234, 36, 43, 0.1)">
+                <animate attributeName="stop-color" values="rgba(234,36,43,0.1);rgba(234,36,43,0.4);rgba(234,36,43,0.1)" dur="3s" repeatCount="indefinite" />
+              </stop>
+              <stop offset="50%" style="stop-color: rgba(234, 36, 43, 0.4)">
+                <animate attributeName="stop-color" values="rgba(234,36,43,0.4);rgba(234,36,43,0.1);rgba(234,36,43,0.4)" dur="3s" repeatCount="indefinite" />
+              </stop>
+              <stop offset="100%" style="stop-color: rgba(234, 36, 43, 0.1)">
+                <animate attributeName="stop-color" values="rgba(234,36,43,0.1);rgba(234,36,43,0.4);rgba(234,36,43,0.1)" dur="3s" repeatCount="indefinite" />
+              </stop>
+            </linearGradient>
+            <!-- Glow filter -->
+            <filter id="neural-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <g id="ai-neural-lines"></g>
+          <g id="ai-connection-lines"></g>
+        </svg>
+
+        <!-- Central Hub - DART AI Logo -->
+        <div class="ai-hub" id="ai-hub">
+          <div class="hub-energy"></div>
+          <div class="hub-orbit hub-orbit-1"></div>
+          <div class="hub-orbit hub-orbit-2"></div>
+          <div class="hub-orbit hub-orbit-3"></div>
+          <div class="hub-core">
+            <img src={DartLogoLight.src} alt="DART AI" class="hub-logo" />
+            <div class="hub-pulse-ring"></div>
+          </div>
+          <div class="hub-label">Unified Intelligence</div>
+        </div>
+
+        <!-- AI Capability Nodes -->
+        {aiNodes.map((node, index) => (
+          <a
+            href={`/solutions/intelligent-network-observability/${node.type === 'dart' ? 'dart-ai' : node.type === 'genai' ? 'gen-ai' : node.type === 'ml' ? 'machine-learning-engine' : 'agentic-ai'}`}
+            class={`ai-node ai-node--${node.type}`}
+            data-angle={node.angle}
+            data-distance={node.distance}
+            data-index={index}
+            data-color={node.color}
+            style={`--node-delay: ${index * 0.15}s; --node-color: ${node.color}`}
+          >
+            <div class="node-glow"></div>
+            <div class="node-icon-wrapper">
+              <div class="node-icon">
+                <i class={`${node.faIcon} node-fa-icon`}></i>
+              </div>
+              <div class="node-ring"></div>
+            </div>
+            <div class="node-info">
+              <span class="node-label">{node.label}</span>
+              <span class="node-desc">{node.desc}</span>
+            </div>
+          </a>
+        ))}
+
+        <!-- Neural activity particles container -->
+        <div class="neural-particles" id="neural-particles"></div>
+
+        <!-- Outer intelligence rings -->
+        <div class="intel-ring intel-ring-1"></div>
+        <div class="intel-ring intel-ring-2"></div>
+        <div class="intel-ring intel-ring-3"></div>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .meet-ino-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .ino-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .ino-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 90% 70% at 70% 35%, rgba(234, 36, 43, 0.05) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 50% at 25% 75%, rgba(139, 92, 246, 0.03) 0%, transparent 45%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(59, 130, 246, 0.03) 0%, transparent 40%),
+      linear-gradient(180deg, #ffffff 0%, #fafafa 50%, #f5f5f7 100%);
+  }
+
+  .ino-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.012) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(ellipse 80% 70% at 60% 50%, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 60% 50%, black 20%, transparent 70%);
+  }
+
+  .ino-radial {
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translate(0, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(234, 36, 43, 0.03) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Content Layout */
+  .meet-ino {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  .meet-ino__eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+    color: var(--color-primary, #EA242B);
+  }
+
+  .meet-ino__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #111111;
+    margin-bottom: var(--space-6);
+  }
+
+  .meet-ino__title span {
+    display: block;
+    color: var(--color-primary, #EA242B);
+  }
+
+  .meet-ino__text {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: #555555;
+    margin-bottom: var(--space-4);
+  }
+
+  .meet-ino__text :global(strong) {
+    color: #111111;
+    font-weight: var(--font-semibold);
+  }
+
+  .meet-ino__actions {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  /* AI Brain Visualization */
+  .ai-brain {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .ai-connections {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  /* Central Hub */
+  .ai-hub {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px;
+    height: 140px;
+    z-index: 10;
+  }
+
+  .hub-energy {
+    position: absolute;
+    inset: -35px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+      rgba(234, 36, 43, 0.12) 0%,
+      rgba(234, 36, 43, 0.04) 40%,
+      transparent 70%
+    );
+    animation: energyPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes energyPulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.15); opacity: 1; }
+  }
+
+  .hub-orbit {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(234, 36, 43, 0.15);
+  }
+
+  .hub-orbit-1 {
+    inset: -15px;
+    animation: orbitRotate 20s linear infinite;
+    border-style: dashed;
+    border-color: rgba(234, 36, 43, 0.12);
+  }
+
+  .hub-orbit-2 {
+    inset: -35px;
+    animation: orbitRotate 30s linear infinite reverse;
+    border-style: dotted;
+    border-color: rgba(234, 36, 43, 0.08);
+  }
+
+  .hub-orbit-3 {
+    inset: -55px;
+    animation: orbitRotate 45s linear infinite;
+    border-style: dashed;
+    border-width: 1px;
+    border-color: rgba(234, 36, 43, 0.05);
+  }
+
+  @keyframes orbitRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .hub-core {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 50%;
+    border: 2px solid rgba(234, 36, 43, 0.15);
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.9) inset,
+      0 0 80px rgba(234, 36, 43, 0.08);
+    z-index: 12;
+  }
+
+  .hub-logo {
+    width: 65%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .hub-pulse-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid rgba(234, 36, 43, 0.3);
+    animation: hubRingPulse 2s ease-out infinite;
+  }
+
+  @keyframes hubRingPulse {
+    0% { transform: scale(0.9); opacity: 0.8; }
+    100% { transform: scale(1.2); opacity: 0; }
+  }
+
+  .hub-label {
+    position: absolute;
+    bottom: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary, #EA242B);
+    white-space: nowrap;
+    padding: 5px 12px;
+    background: rgba(234, 36, 43, 0.08);
+    border: 1px solid rgba(234, 36, 43, 0.15);
+    border-radius: 6px;
+  }
+
+  /* Intelligence Rings */
+  .intel-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px dashed rgba(234, 36, 43, 0.06);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .intel-ring-1 { width: 70%; height: 70%; }
+  .intel-ring-2 { width: 85%; height: 85%; }
+  .intel-ring-3 { width: 98%; height: 98%; border-style: dotted; }
+
+  /* AI Nodes */
+  .ai-node {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transform: translate(-50%, -50%);
+    text-decoration: none;
+    opacity: 0;
+    animation: nodeAppear 0.6s ease forwards;
+    animation-delay: var(--node-delay);
+    z-index: 8;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-node:hover {
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+
+  @keyframes nodeAppear {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+
+  .node-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, var(--node-color) 0%, transparent 70%);
+    opacity: 0;
+    filter: blur(20px);
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .ai-node:hover .node-glow {
+    opacity: 0.2;
+  }
+
+  .node-icon-wrapper {
+    position: relative;
+  }
+
+  .node-icon {
+    position: relative;
+    width: 62px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 2px solid rgba(0, 0, 0, 0.06);
+    border-radius: 18px;
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.08),
+      0 8px 32px rgba(0, 0, 0, 0.04);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .ai-node:hover .node-icon {
+    border-color: var(--node-color);
+    box-shadow:
+      0 8px 24px color-mix(in srgb, var(--node-color) 30%, transparent),
+      0 12px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .node-fa-icon {
+    font-size: 1.5rem;
+    color: var(--node-color);
+    transition: all 0.3s ease;
+  }
+
+  .ai-node:hover .node-fa-icon {
+    transform: scale(1.1);
+  }
+
+  .node-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 22px;
+    border: 2px solid var(--node-color);
+    opacity: 0;
+    animation: nodeRing 3s ease-out infinite;
+    animation-delay: var(--node-delay);
+  }
+
+  @keyframes nodeRing {
+    0% { transform: scale(0.9); opacity: 0.4; }
+    100% { transform: scale(1.3); opacity: 0; }
+  }
+
+  .node-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .node-label {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: var(--font-bold);
+    color: #111111;
+    transition: color 0.3s ease;
+  }
+
+  .ai-node:hover .node-label {
+    color: var(--node-color);
+  }
+
+  .node-desc {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #888888;
+  }
+
+  /* Neural Particles */
+  .neural-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 6;
+  }
+
+  :global(.neural-particle) {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 9;
+  }
+
+  :global(.ai-connection-line) {
+    stroke: url(#neural-gradient);
+    stroke-width: 2;
+    fill: none;
+    filter: url(#neural-glow);
+    stroke-dasharray: 8 6;
+    animation: neuralFlow 4s linear infinite;
+  }
+
+  @keyframes neuralFlow {
+    to { stroke-dashoffset: -80; }
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .meet-ino {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    .ai-brain {
+      max-width: 450px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .meet-ino-section {
+      padding: var(--space-12) 0;
+    }
+
+    .meet-ino__title {
+      font-size: var(--text-2xl);
+    }
+
+    .meet-ino__actions {
+      flex-direction: column;
+    }
+
+    .ai-brain {
+      max-width: 360px;
+    }
+
+    .ai-hub {
+      width: 110px;
+      height: 110px;
+    }
+
+    .hub-logo {
+      width: 60%;
+    }
+
+    .hub-orbit-1 { inset: -12px; }
+    .hub-orbit-2 { inset: -28px; }
+    .hub-orbit-3 { inset: -44px; }
+
+    .hub-label {
+      font-size: 0.5rem;
+      bottom: -30px;
+    }
+
+    .node-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+    }
+
+    .node-fa-icon {
+      font-size: 1.2rem;
+    }
+
+    .node-desc {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Position AI nodes in orbital layout and create connections
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('ai-brain');
+    const svg = document.getElementById('ai-connections-svg');
+    const connectionGroup = document.getElementById('ai-connection-lines');
+
+    if (!container || !svg || !connectionGroup) return;
+
+    const nodes = container.querySelectorAll('.ai-node');
+    const centerX = 200;
+    const centerY = 200;
+
+    // Position nodes and create connections
+    nodes.forEach((node, index) => {
+      const angle = parseFloat(node.getAttribute('data-angle') || '0');
+      const distance = parseFloat(node.getAttribute('data-distance') || '150');
+      const radian = (angle * Math.PI) / 180;
+
+      const x = centerX + Math.cos(radian) * distance;
+      const y = centerY + Math.sin(radian) * distance;
+
+      // Position node
+      (node as HTMLElement).style.left = `${(x / 400) * 100}%`;
+      (node as HTMLElement).style.top = `${(y / 400) * 100}%`;
+
+      // Create connection line to center
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const color = node.getAttribute('data-color') || '#EA242B';
+
+      // Create curved path
+      const midX = (centerX + x) / 2;
+      const midY = (centerY + y) / 2;
+      const controlOffset = 20;
+      const perpX = -(y - centerY) / distance * controlOffset;
+      const perpY = (x - centerX) / distance * controlOffset;
+
+      const d = `M ${centerX} ${centerY} Q ${midX + perpX} ${midY + perpY} ${x} ${y}`;
+
+      line.setAttribute('d', d);
+      line.setAttribute('class', 'ai-connection-line');
+      line.style.stroke = `url(#neural-gradient)`;
+      line.style.animationDelay = `${index * 0.5}s`;
+
+      connectionGroup.appendChild(line);
+    });
+
+    // Create neural particles that travel along connections
+    const particlesContainer = document.getElementById('neural-particles');
+    if (!particlesContainer) return;
+
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.className = 'neural-particle';
+
+      // Random node to travel to
+      const randomNode = nodes[Math.floor(Math.random() * nodes.length)] as HTMLElement;
+      const color = randomNode.getAttribute('data-color') || '#EA242B';
+
+      particle.style.background = color;
+      particle.style.boxShadow = `0 0 8px ${color}`;
+
+      // Start from center
+      const startX = 50;
+      const startY = 50;
+
+      // End at node position
+      const endX = parseFloat(randomNode.style.left);
+      const endY = parseFloat(randomNode.style.top);
+
+      particle.style.left = `${startX}%`;
+      particle.style.top = `${startY}%`;
+
+      particlesContainer.appendChild(particle);
+
+      // Animate to node
+      const duration = 1500 + Math.random() * 1000;
+
+      particle.animate([
+        { left: `${startX}%`, top: `${startY}%`, opacity: 0 },
+        { left: `${startX}%`, top: `${startY}%`, opacity: 0.8, offset: 0.1 },
+        { left: `${endX}%`, top: `${endY}%`, opacity: 0.8, offset: 0.9 },
+        { left: `${endX}%`, top: `${endY}%`, opacity: 0 }
+      ], {
+        duration,
+        easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+      }).onfinish = () => {
+        particle.remove();
+      };
+    }
+
+    // Spawn particles periodically
+    setInterval(createParticle, 800);
+    // Initial burst
+    for (let i = 0; i < 3; i++) {
+      setTimeout(createParticle, i * 200);
+    }
+  });
+</script>
