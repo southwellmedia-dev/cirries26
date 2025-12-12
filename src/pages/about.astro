@@ -1,0 +1,43 @@
+---
+/**
+ * About Page
+ *
+ * Company information page featuring:
+ * - Hero section with page title
+ * - Company story and mission
+ * - Leadership team
+ * - Company stats and milestones
+ * - CTA section (provided by layout)
+ */
+import SubpageLayout from "../layouts/SubpageLayout.astro";
+import SubpageHero from "../components/sections/SubpageHero.astro";
+
+// Import section components
+import MeetAboutSection from "../components/sections/about/MeetAboutSection.astro";
+import LeadershipSection from "../components/sections/about/LeadershipSection.astro";
+import AboutStatsSection from "../components/sections/about/AboutStatsSection.astro";
+---
+
+<SubpageLayout
+  title="About Cirries - Network Visibility and Control Platform"
+  description="Learn about Cirries, the company revolutionizing network observability with AI-powered intelligence. Meet our team and discover our mission."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="About <span>Cirries</span>"
+      subtitle="Revolutionizing Network Observability with AI"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Company Story & Mission -->
+  <MeetAboutSection />
+
+  <!-- Leadership Team -->
+  <LeadershipSection />
+
+  <!-- Company Stats & Milestones -->
+  <AboutStatsSection />
+
+  <!-- CTA Section provided by layout via CTABar -->
+</SubpageLayout>

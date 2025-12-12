@@ -1,0 +1,380 @@
+---
+/**
+ * LeadershipSection - Executive Team Display
+ *
+ * Leadership team showcase featuring:
+ * - Team member cards with photos and bios
+ * - Consistent styling with established design system
+ * - Dark theme matching capabilities sections
+ */
+import Container from "../../ui/Container.astro";
+
+interface Leader {
+  name: string;
+  title: string;
+  bio: string;
+  image?: string;
+  linkedin?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  description?: string;
+  leaders?: Leader[];
+}
+
+const {
+  eyebrow = "Leadership",
+  title = "Meet the Team",
+  highlightText = "Behind Cirries.",
+  description = "Our leadership team brings decades of experience from telecommunications, software development, and enterprise sales to deliver world-class network visibility solutions.",
+  leaders = [
+    {
+      name: "Rick Aguirre",
+      title: "President & CEO",
+      bio: "Co-founder with 30+ years in telecommunications. Previously held positions at Northern Telecom, InterDigital, and jNetX Inc.",
+      linkedin: "#",
+    },
+    {
+      name: "Cody Martinson",
+      title: "Chief Operating Officer",
+      bio: "20+ years in software development and sales. Founded DANATEQ (machine learning company) and managed jNetX's Asia operations.",
+      linkedin: "#",
+    },
+    {
+      name: "Joe Bacigalupo",
+      title: "Chief Revenue Officer",
+      bio: "25+ years leading global sales, business development, and partnerships at Ericsson, Infosys, and i2 Technologies.",
+      linkedin: "#",
+    },
+    {
+      name: "Roger Boivin",
+      title: "Sr. Vice President",
+      bio: "30+ years in telecom and data management. Previously served as president of COM DEV Wireless and general manager at jNetX Inc.",
+      linkedin: "#",
+    },
+    {
+      name: "Vijay Menon",
+      title: "VP of Business Development",
+      bio: "30 years in product management and sales across Nortel, Oracle, Sun Microsystems, and Niksun.",
+      linkedin: "#",
+    },
+  ],
+} = Astro.props;
+---
+
+<section class="leadership-section" id="leadership">
+  <Container size="xl">
+    <!-- Section Header -->
+    <div class="leadership-header">
+      <span class="leadership-eyebrow">{eyebrow}</span>
+      <h2 class="leadership-title">
+        {title}
+        <span>{highlightText}</span>
+      </h2>
+      <p class="leadership-description">{description}</p>
+    </div>
+
+    <!-- Leadership Grid -->
+    <div class="leadership-grid">
+      {leaders.map((leader, index) => (
+        <div
+          class="leader-card"
+          style={`--card-index: ${index}`}
+        >
+          <div class="leader-photo">
+            {leader.image ? (
+              <img src={leader.image} alt={leader.name} class="photo-img" />
+            ) : (
+              <div class="photo-placeholder">
+                <i class="fa-solid fa-user placeholder-icon"></i>
+              </div>
+            )}
+            <div class="photo-border"></div>
+          </div>
+
+          <div class="leader-info">
+            <h3 class="leader-name">{leader.name}</h3>
+            <span class="leader-title-text">{leader.title}</span>
+            <p class="leader-bio">{leader.bio}</p>
+
+            {leader.linkedin && (
+              <a href={leader.linkedin} class="leader-linkedin" aria-label={`${leader.name} LinkedIn`}>
+                <i class="fa-brands fa-linkedin-in"></i>
+              </a>
+            )}
+          </div>
+
+          <div class="card-accent-line"></div>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .leadership-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: #0A0A0A;
+    overflow: hidden;
+  }
+
+  /* Subtle grid background */
+  .leadership-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+  }
+
+  /* Header */
+  .leadership-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto var(--space-12);
+    position: relative;
+    z-index: 1;
+  }
+
+  .leadership-eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary, #EA242B);
+    padding: 6px 14px;
+    background: rgba(234, 36, 43, 0.1);
+    border: 1px solid rgba(234, 36, 43, 0.2);
+    border-radius: 6px;
+  }
+
+  .leadership-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #ffffff;
+    margin-bottom: var(--space-5);
+  }
+
+  .leadership-title span {
+    display: block;
+    color: var(--color-primary, #EA242B);
+  }
+
+  .leadership-description {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: #888888;
+  }
+
+  /* Leadership Grid */
+  .leadership-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-5);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Individual Leader Card */
+  .leader-card {
+    position: relative;
+    padding: var(--space-6);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .leader-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(234, 36, 43, 0.25);
+    transform: translateY(-4px);
+    box-shadow:
+      0 16px 40px rgba(0, 0, 0, 0.3),
+      0 0 60px rgba(234, 36, 43, 0.06);
+  }
+
+  /* Photo */
+  .leader-photo {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto var(--space-5);
+  }
+
+  .photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(234, 36, 43, 0.1) 0%, rgba(234, 36, 43, 0.05) 100%);
+    border-radius: 50%;
+  }
+
+  .placeholder-icon {
+    font-size: 2.5rem;
+    color: rgba(234, 36, 43, 0.4);
+  }
+
+  .photo-border {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(234, 36, 43, 0.15);
+    transition: all 0.3s ease;
+  }
+
+  .leader-card:hover .photo-border {
+    border-color: rgba(234, 36, 43, 0.4);
+    inset: -6px;
+  }
+
+  /* Info */
+  .leader-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .leader-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: var(--font-bold);
+    color: #ffffff;
+    margin: 0;
+    transition: color 0.3s ease;
+  }
+
+  .leader-card:hover .leader-name {
+    color: var(--color-primary, #EA242B);
+  }
+
+  .leader-title-text {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary, #EA242B);
+    margin-bottom: var(--space-2);
+  }
+
+  .leader-bio {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #777777;
+    margin: 0;
+    transition: color 0.3s ease;
+  }
+
+  .leader-card:hover .leader-bio {
+    color: #999999;
+  }
+
+  /* LinkedIn */
+  .leader-linkedin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    margin-top: var(--space-4);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    color: #666666;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .leader-linkedin:hover {
+    background: var(--color-primary, #EA242B);
+    border-color: var(--color-primary, #EA242B);
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  .leader-linkedin i {
+    font-size: 0.9rem;
+  }
+
+  /* Accent Line */
+  .card-accent-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-primary, #EA242B), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .leader-card:hover .card-accent-line {
+    transform: scaleX(1);
+  }
+
+  /* Responsive */
+  @media (max-width: 1280px) {
+    .leadership-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .leadership-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .leadership-section {
+      padding: var(--space-12) 0;
+    }
+
+    .leadership-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .leader-card {
+      padding: var(--space-5);
+    }
+
+    .leader-photo {
+      width: 100px;
+      height: 100px;
+    }
+
+    .leadership-title {
+      font-size: var(--text-2xl);
+    }
+  }
+</style>

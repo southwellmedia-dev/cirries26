@@ -26,7 +26,8 @@
       "Bash(ls -la \"D:\\cirries26\\claudedocs\"\" && echo \"---\" && ls -la \"D:cirries26srctemplatessubpage\"\")",
       "Bash(ls -la \"D:\\cirries26\\src\\components\\sections\\meet 2>/dev/null || ls -la D:cirries26srccomponentssections\")",
       "WebFetch(domain:unsplash.com)",
-      "mcp__playwright__browser_console_messages"
+      "mcp__playwright__browser_console_messages",
+      "WebFetch(domain:cirries.com)"
     ]
   }
 }

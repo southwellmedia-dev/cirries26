@@ -1,0 +1,365 @@
+---
+/**
+ * MeetAboutSection - Editorial Story Opener
+ *
+ * About page intro with documentary/magazine aesthetic:
+ * - Bold editorial typography
+ * - Narrative-driven layout
+ * - Subtle timeline integration
+ * - Human, warm, sophisticated feel
+ */
+import Container from "../../ui/Container.astro";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  highlightText?: string;
+  foundedYear?: string;
+  location?: string;
+  tagline?: string;
+  story?: string[];
+}
+
+const {
+  eyebrow = "Our Story",
+  title = "Visibility",
+  highlightText = "Reimagined.",
+  foundedYear = "2006",
+  location = "Richardson, Texas",
+  tagline = "Nearly two decades of enabling networks to reach their full potential.",
+  storyLeft = [
+    "Cirries Technologies, Inc., began in 2006 to address the need for disparate networks to communicate, and to allow any network to access any application. Cirries' initial market was primarily voice-multimedia networks operated by telecommunications carriers and service providers. Its product: a powerful real-time communications network engine that made any generation of service or application run over any generation of network.",
+    "The advent of smart phones, other mobile devices, and Internet-connected machines transformed Cirries' market. Cirries responded by expanding capabilities of the high-performance network engine to facilitate collecting and processing network traffic for unprecedented visibility.",
+  ],
+  storyRight = [
+    "Today, Cirries products enable the full value and potential of any kind of network, whether operated by carriers, service providers, or enterprises. Capable of processing extremely high volume, high velocity network data to monitor, report and manage network functions, Cirries platform outperforms the market in performance and price.",
+    "Our suite of products enables a holistic view of the network that provides operators and enterprises with real-time analytics, accurate forensics, and the ability to improve network operation and efficiency. This analysis additionally facilitates the detection of any anomalous behavior, triggering automatic alerts for investigation.",
+  ],
+  stats = [
+    {
+      value: "2006",
+      label: "Established",
+      description: "Richardson, Texas",
+    },
+    {
+      value: "4",
+      label: "Global Offices",
+      description: "Texas, Bolivia, Mexico, India",
+    },
+    {
+      value: "100+",
+      label: "Years Experience",
+      description: "Combined leadership expertise",
+    },
+    {
+      value: "3",
+      label: "Core Products",
+      description: "Packet Sensor, Metadata Sensor, DART",
+    },
+  ],
+} = Astro.props;
+---
+
+<section class="story-section">
+  <!-- Grid background from bottom-right -->
+  <div class="story-bg">
+    <div class="story-bg__gradient"></div>
+    <div class="story-bg__grid"></div>
+  </div>
+
+  <Container size="xl">
+    <div class="story-layout">
+      <!-- Header area -->
+      <div class="story-header">
+        <span class="story-eyebrow">{eyebrow}</span>
+
+        <h2 class="story-headline">
+          <span class="headline-word">{title}</span>
+          <span class="headline-highlight">{highlightText}</span>
+        </h2>
+
+        <p class="story-tagline">{tagline}</p>
+      </div>
+
+      <!-- Large year bleeding from right -->
+      <div class="year-bleed" aria-hidden="true">
+        <span class="year-bleed__number">{foundedYear}</span>
+      </div>
+
+      <!-- Two-column story content -->
+      <div class="story-columns">
+        <div class="story-column">
+          {storyLeft.map((paragraph, i) => (
+            <p class="story-paragraph" style={`--para-delay: ${i * 0.1}s`}>
+              {paragraph}
+            </p>
+          ))}
+        </div>
+        <div class="story-column">
+          {storyRight.map((paragraph, i) => (
+            <p class="story-paragraph" style={`--para-delay: ${(i + 2) * 0.1}s`}>
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="story-stats">
+        {stats.map((stat) => (
+          <div class="story-stat">
+            <span class="story-stat__value">{stat.value}</span>
+            <span class="story-stat__label">{stat.label}</span>
+            <span class="story-stat__desc">{stat.description}</span>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </Container>
+</section>
+
+<style>
+  .story-section {
+    position: relative;
+    padding: var(--space-24) 0 var(--space-20);
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  /* Grid Background from bottom-right */
+  .story-bg {
+    position: absolute;
+    inset: 0;
+    background: #ffffff;
+  }
+
+  .story-bg__gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        ellipse 80% 60% at 80% 80%,
+        rgba(245, 245, 245, 0.8) 0%,
+        transparent 50%
+      );
+  }
+
+  .story-bg__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 90% 80% at 70% 50%, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 80% at 70% 50%, black 20%, transparent 70%);
+  }
+
+  /* Main Layout */
+  .story-layout {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .story-header {
+    margin-bottom: var(--space-12);
+    max-width: 700px;
+  }
+
+  /* Large year bleeding from right edge */
+  .year-bleed {
+    position: absolute;
+    top: 5%;
+    right: 0;
+    transform: translateX(20%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .year-bleed__number {
+    font-family: var(--font-display);
+    font-size: clamp(14rem, 28vw, 26rem);
+    font-weight: var(--font-bold);
+    color: rgba(0, 0, 0, 0.04);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    user-select: none;
+  }
+
+  /* Two-column story content */
+  .story-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-10);
+    margin-bottom: var(--space-10);
+  }
+
+  .story-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .story-eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-primary, #EA242B);
+    padding: 8px 16px;
+    background: rgba(234, 36, 43, 0.08);
+    border: 1px solid rgba(234, 36, 43, 0.12);
+    border-radius: 4px;
+  }
+
+  .story-headline {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: var(--font-bold);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-6);
+  }
+
+  .headline-word {
+    display: block;
+    color: #0a0a0a;
+  }
+
+  .headline-highlight {
+    display: block;
+    color: var(--color-primary, #EA242B);
+  }
+
+  .story-tagline {
+    font-family: var(--font-body);
+    font-size: var(--text-xl);
+    font-weight: var(--font-normal);
+    line-height: 1.5;
+    color: #555555;
+    margin-bottom: var(--space-8);
+  }
+
+  .story-paragraph {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.8;
+    color: #444444;
+    margin: 0;
+  }
+
+  /* Stats row */
+  .story-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+    padding-top: var(--space-10);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    position: relative;
+    z-index: 1;
+  }
+
+  .story-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .story-stat__value {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: var(--font-bold);
+    color: var(--color-primary, #EA242B);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .story-stat__label {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: var(--font-bold);
+    color: #0a0a0a;
+  }
+
+  .story-stat__desc {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-medium);
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .story-headline {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+    }
+
+    .story-columns {
+      gap: var(--space-8);
+    }
+
+    .story-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .story-section {
+      padding: var(--space-16) 0 var(--space-12);
+    }
+
+    .year-bleed {
+      top: 0;
+      transform: translateX(30%);
+    }
+
+    .year-bleed__number {
+      font-size: 10rem;
+    }
+
+    .story-columns {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    .story-headline {
+      font-size: clamp(2rem, 10vw, 3rem);
+    }
+
+    .story-tagline {
+      font-size: var(--text-lg);
+    }
+
+    .story-stats {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+
+    .story-stat {
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .story-stat__value {
+      font-size: 2rem;
+      min-width: 70px;
+    }
+
+    .story-stat__label,
+    .story-stat__desc {
+      display: inline;
+    }
+
+    .story-stat__desc::before {
+      content: "— ";
+    }
+  }
+</style>

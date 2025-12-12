@@ -1,0 +1,283 @@
+---
+/**
+ * AboutStatsSection - Company Journey Timeline
+ *
+ * Company milestones showcase featuring:
+ * - Clean timeline with key milestones
+ * - Consistent styling with established design system
+ */
+import Container from "../../ui/Container.astro";
+
+interface Milestone {
+  year: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  milestones?: Milestone[];
+}
+
+const {
+  eyebrow = "Our Journey",
+  title = "Building Network Excellence",
+  subtitle = "From a vision of seamless network communication to a global platform powering enterprise visibility.",
+  milestones = [
+    {
+      year: "2006",
+      title: "Company Founded",
+      description: "Cirries Technologies established in Richardson, Texas to enable disparate networks to communicate across generations.",
+    },
+    {
+      year: "2012",
+      title: "Market Evolution",
+      description: "Expanded focus to address the visibility needs created by smartphones, mobile devices, and IoT proliferation.",
+    },
+    {
+      year: "2020",
+      title: "DART Platform Launch",
+      description: "Introduced Stream Analytics platform powered by Machine Learning for real-time network insights.",
+    },
+    {
+      year: "Present",
+      title: "Global Reach",
+      description: "Serving carriers, service providers, and enterprises worldwide from four continents.",
+    },
+  ],
+} = Astro.props;
+---
+
+<section class="journey-section" data-theme="light">
+  <!-- Background -->
+  <div class="journey-bg">
+    <div class="journey-gradient"></div>
+  </div>
+
+  <Container size="xl">
+    <!-- Section Header -->
+    <div class="journey-header">
+      <span class="journey-eyebrow">{eyebrow}</span>
+      <h2 class="journey-title">{title}</h2>
+      <p class="journey-subtitle">{subtitle}</p>
+    </div>
+
+    <!-- Timeline -->
+    <div class="journey-timeline">
+      <div class="timeline-track"></div>
+      {milestones.map((milestone, index) => (
+        <div
+          class="timeline-item"
+          style={`--item-index: ${index}`}
+        >
+          <div class="timeline-marker">
+            <div class="marker-dot"></div>
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">{milestone.year}</span>
+            <h3 class="timeline-title">{milestone.title}</h3>
+            <p class="timeline-description">{milestone.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>
+
+<style>
+  .journey-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: #fafafa;
+    overflow: hidden;
+  }
+
+  /* Background */
+  .journey-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .journey-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(234, 36, 43, 0.03) 0%, transparent 50%),
+      linear-gradient(180deg, #ffffff 0%, #fafafa 30%, #f5f5f5 100%);
+  }
+
+  /* Header */
+  .journey-header {
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto var(--space-16);
+    position: relative;
+    z-index: 1;
+  }
+
+  .journey-eyebrow {
+    display: inline-block;
+    margin-bottom: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary, #EA242B);
+    padding: 6px 14px;
+    background: rgba(234, 36, 43, 0.08);
+    border: 1px solid rgba(234, 36, 43, 0.15);
+    border-radius: 6px;
+  }
+
+  .journey-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: var(--font-bold);
+    line-height: 1.15;
+    letter-spacing: var(--tracking-tight);
+    color: #0a0a0a;
+    margin: 0 0 var(--space-4) 0;
+  }
+
+  .journey-subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    color: #666666;
+    margin: 0;
+  }
+
+  /* Timeline */
+  .journey-timeline {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+  }
+
+  .timeline-track {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    right: 7px;
+    height: 2px;
+    background: linear-gradient(90deg,
+      var(--color-primary, #EA242B) 0%,
+      rgba(234, 36, 43, 0.3) 50%,
+      rgba(234, 36, 43, 0.1) 100%
+    );
+    z-index: 0;
+  }
+
+  .timeline-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline-marker {
+    position: relative;
+    z-index: 2;
+    margin-bottom: var(--space-5);
+  }
+
+  .marker-dot {
+    width: 16px;
+    height: 16px;
+    background: var(--color-primary, #EA242B);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 0 0 4px #fafafa, 0 0 0 6px rgba(234, 36, 43, 0.2);
+  }
+
+  .timeline-content {
+    padding-right: var(--space-4);
+  }
+
+  .timeline-year {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary, #EA242B);
+    padding: 5px 12px;
+    background: rgba(234, 36, 43, 0.08);
+    border-radius: 4px;
+    margin-bottom: var(--space-3);
+  }
+
+  .timeline-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: var(--font-bold);
+    color: #0a0a0a;
+    margin: 0 0 var(--space-2) 0;
+  }
+
+  .timeline-description {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #666666;
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .journey-timeline {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-8);
+    }
+
+    .timeline-track {
+      display: none;
+    }
+
+    .marker-dot {
+      box-shadow: 0 0 0 4px #fafafa, 0 0 0 5px rgba(234, 36, 43, 0.15);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .journey-section {
+      padding: var(--space-12) 0;
+    }
+
+    .journey-header {
+      margin-bottom: var(--space-10);
+    }
+
+    .journey-title {
+      font-size: var(--text-2xl);
+    }
+
+    .journey-timeline {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      padding-left: var(--space-6);
+      border-left: 2px solid rgba(234, 36, 43, 0.15);
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: calc(-1 * var(--space-6) - 8px);
+      top: 0;
+    }
+
+    .marker-dot {
+      width: 14px;
+      height: 14px;
+    }
+
+    .timeline-content {
+      padding-right: 0;
+    }
+  }
+</style>
