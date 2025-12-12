@@ -288,40 +288,6 @@ const regularStudies = caseStudies.filter(cs => !cs.featured);
 
 <style>
   /* ============================================
-     EDITORIAL INTRO
-     ============================================ */
-  .editorial-intro {
-    background: #ffffff;
-    padding: var(--space-12) 0 var(--space-8);
-  }
-
-  .editorial-intro__inner {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-6);
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .editorial-intro__accent {
-    flex-shrink: 0;
-    width: 4px;
-    height: 100%;
-    min-height: 60px;
-    background: linear-gradient(180deg, var(--color-primary) 0%, rgba(234, 36, 43, 0.2) 100%);
-    border-radius: 2px;
-  }
-
-  .editorial-intro__text {
-    font-family: var(--font-body);
-    font-size: clamp(1.1rem, 2vw, 1.35rem);
-    line-height: 1.7;
-    color: #444444;
-    font-style: italic;
-    margin: 0;
-  }
-
-  /* ============================================
      SECTION LABELS
      ============================================ */
   .section-label {
@@ -1018,18 +984,6 @@ const regularStudies = caseStudies.filter(cs => !cs.featured);
   }
 
   @media (max-width: 768px) {
-    .editorial-intro {
-      padding: var(--space-8) 0 var(--space-6);
-    }
-
-    .editorial-intro__inner {
-      gap: var(--space-4);
-    }
-
-    .editorial-intro__accent {
-      min-height: 50px;
-    }
-
     .featured-case,
     .case-studies-grid {
       padding: var(--space-12) 0;

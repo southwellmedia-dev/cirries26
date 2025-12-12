@@ -214,11 +214,26 @@ const {
     }
 
     .subpage-hero__title {
-      font-size: clamp(2rem, 8vw, 2.5rem);
+      font-size: clamp(2rem, 8vw, 3rem);
     }
 
     .subpage-hero__subtitle {
       font-size: var(--text-base);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .subpage-hero {
+      padding-top: 110px;
+      padding-bottom: var(--space-10);
+    }
+
+    .subpage-hero__title {
+      font-size: clamp(1.75rem, 7vw, 2.25rem);
+    }
+
+    .subpage-hero__subtitle {
+      font-size: var(--text-sm);
     }
   }
 </style>
