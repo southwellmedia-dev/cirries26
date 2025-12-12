@@ -359,7 +359,10 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
 
       const maxDim = Math.max(size.x, size.y);
       if (maxDim > 0) {
-        const baseScale = isMobile ? 50 : isSmallScreen ? 60 : 65;
+        // Scale based on viewport size to maintain consistent visual presence
+        // Logo should take up ~70% of viewport width on all screens
+        const viewportScale = Math.min(width, height * 1.5) / 1920; // Normalize to 1920px baseline
+        const baseScale = 65 * Math.max(viewportScale, 0.5); // Min 50% scale for very small screens
         const scale = baseScale / maxDim;
         group.scale.set(scale, scale, scale);
         scaleRef.current = scale;
@@ -925,6 +928,16 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+
+      // Recalculate scale to maintain consistent visual presence
+      if (groupRef.current) {
+        const maxDim = 1137; // Logo width from SVG
+        const viewportScale = Math.min(w, h * 1.5) / 1920;
+        const baseScale = 65 * Math.max(viewportScale, 0.5);
+        const scale = baseScale / maxDim;
+        groupRef.current.scale.set(scale, scale, scale);
+        scaleRef.current = scale;
+      }
     };
     window.addEventListener('resize', handleResize);
 
