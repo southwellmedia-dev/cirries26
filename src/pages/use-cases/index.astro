@@ -1,0 +1,1142 @@
+---
+/**
+ * Use Cases - Index/Hub Page
+ *
+ * Editorial-style case study showcase featuring:
+ * - Hero with compelling statistics
+ * - Featured case study spotlight
+ * - Industry-organized case study cards
+ * - Results-focused presentation
+ *
+ * Case Studies:
+ * - Medical Device Network Reliability (Healthcare)
+ * - Hospital Network Enhancement (Healthcare)
+ * - Network Operator Experience (Telecommunications)
+ */
+import SubpageLayout from "../../layouts/SubpageLayout.astro";
+import SubpageHero from "../../components/sections/SubpageHero.astro";
+import Container from "../../components/ui/Container.astro";
+
+// Case studies data
+const caseStudies = [
+  {
+    id: "hospital-network-enhancement",
+    title: "Transforming Digital Health Through Intelligent Network Observability",
+    company: "Leading Hospital",
+    industry: "Healthcare",
+    industryIcon: "fa-solid fa-hospital",
+    description: "How DART AI enhanced network performance for EHR, telemedicine, and IoT medical devices, reducing service interruptions by over 50%.",
+    href: "/use-cases/hospital-network-enhancement",
+    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200&q=85&fit=crop",
+    metrics: [
+      { value: "50%", label: "Service Interruption Reduction" },
+      { value: "30%", label: "Packet Loss Decrease" },
+      { value: "70%", label: "Manual Effort Saved" }
+    ],
+    featured: true,
+    tags: ["EHR", "Telemedicine", "IoT", "Predictive AI"]
+  },
+  {
+    id: "medical-device-network-reliability",
+    title: "Enhancing Network Reliability for Critical Medical Applications",
+    company: "Medical Device Company",
+    industry: "Healthcare",
+    industryIcon: "fa-solid fa-heartbeat",
+    description: "DART AI transformed network operations for remotely controlled operating theater robots on private 5G, ensuring surgical precision.",
+    href: "/use-cases/medical-device-network-reliability",
+    image: "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1200&q=85&fit=crop",
+    metrics: [
+      { value: "50%", label: "Jitter Reduction" },
+      { value: "30%", label: "Packet Loss Decrease" },
+      { value: "70%", label: "Manual Effort Saved" }
+    ],
+    featured: false,
+    tags: ["Private 5G", "Robotic Surgery", "Real-time KPIs"]
+  },
+  {
+    id: "network-operator-experience",
+    title: "Enhancing User Experience Across Millions of Connections",
+    company: "National Network Operator",
+    industry: "Telecommunications",
+    industryIcon: "fa-solid fa-tower-cell",
+    description: "How DART AI transformed network operations for a national hybrid and 5G infrastructure serving millions of users.",
+    href: "/use-cases/network-operator-experience",
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=85&fit=crop",
+    metrics: [
+      { value: "50%", label: "Latency Complaints Reduced" },
+      { value: "30%", label: "Packet Loss Decrease" },
+      { value: "70%", label: "Troubleshooting Automated" }
+    ],
+    featured: false,
+    tags: ["Hybrid Network", "5G", "Cloud-Based", "AI-Predictive"]
+  }
+];
+
+// Get featured and regular case studies
+const featuredStudy = caseStudies.find(cs => cs.featured);
+const regularStudies = caseStudies.filter(cs => !cs.featured);
+
+// Industry stats
+const impactStats = [
+  { value: "50%+", label: "Average Issue Reduction", icon: "fa-solid fa-arrow-trend-down" },
+  { value: "70%", label: "Manual Work Eliminated", icon: "fa-solid fa-robot" },
+  { value: "24/7", label: "Continuous Monitoring", icon: "fa-solid fa-clock" },
+  { value: "3", label: "Industries Transformed", icon: "fa-solid fa-industry" }
+];
+---
+
+<SubpageLayout
+  title="Use Cases - Real-World Results with DART AI"
+  description="Explore how organizations across healthcare and telecommunications have transformed their network operations with DART AI. Real case studies with measurable results."
+>
+  <Fragment slot="hero">
+    <SubpageHero
+      title="Real Results. <span>Proven Impact.</span>"
+      subtitle="Discover how leading organizations transform network operations with AI-powered observability"
+      align="left"
+    />
+  </Fragment>
+
+  <!-- Impact Stats Bar -->
+  <section class="impact-bar">
+    <Container size="xl">
+      <div class="impact-bar__inner">
+        {impactStats.map((stat) => (
+          <div class="impact-stat">
+            <div class="impact-stat__icon">
+              <i class={stat.icon}></i>
+            </div>
+            <div class="impact-stat__content">
+              <span class="impact-stat__value">{stat.value}</span>
+              <span class="impact-stat__label">{stat.label}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Featured Case Study -->
+  {featuredStudy && (
+    <section class="featured-case">
+      <Container size="xl">
+        <div class="featured-header">
+          <span class="section-label">
+            <span class="section-label__line"></span>
+            Featured Case Study
+            <span class="section-label__line"></span>
+          </span>
+        </div>
+
+        <a href={featuredStudy.href} class="featured-card">
+          <!-- Image Side -->
+          <div class="featured-card__image">
+            <img src={featuredStudy.image} alt={featuredStudy.title} loading="eager" />
+            <div class="featured-card__overlay"></div>
+
+            <!-- Industry Badge -->
+            <div class="featured-card__badge">
+              <i class={featuredStudy.industryIcon}></i>
+              <span>{featuredStudy.industry}</span>
+            </div>
+          </div>
+
+          <!-- Content Side -->
+          <div class="featured-card__content">
+            <span class="featured-card__company">{featuredStudy.company}</span>
+            <h2 class="featured-card__title">{featuredStudy.title}</h2>
+            <p class="featured-card__description">{featuredStudy.description}</p>
+
+            <!-- Metrics -->
+            <div class="featured-card__metrics">
+              {featuredStudy.metrics.map((metric) => (
+                <div class="metric">
+                  <span class="metric__value">{metric.value}</span>
+                  <span class="metric__label">{metric.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <!-- Tags -->
+            <div class="featured-card__tags">
+              {featuredStudy.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+
+            <!-- CTA -->
+            <div class="featured-card__cta">
+              <span class="cta-text">Read Case Study</span>
+              <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </div>
+        </a>
+      </Container>
+    </section>
+  )}
+
+  <!-- More Case Studies Grid -->
+  <section class="case-studies-grid">
+    <Container size="xl">
+      <div class="grid-header">
+        <span class="section-label">
+          <span class="section-label__line"></span>
+          More Success Stories
+          <span class="section-label__line"></span>
+        </span>
+      </div>
+
+      <div class="studies-grid">
+        {regularStudies.map((study, index) => (
+          <a href={study.href} class="study-card" style={`--card-index: ${index}`}>
+            <!-- Image -->
+            <div class="study-card__image">
+              <img src={study.image} alt={study.title} loading="lazy" />
+              <div class="study-card__gradient"></div>
+
+              <!-- Industry Badge -->
+              <div class="study-card__badge">
+                <i class={study.industryIcon}></i>
+                <span>{study.industry}</span>
+              </div>
+
+              <!-- Primary Metric Overlay -->
+              <div class="study-card__metric-overlay">
+                <span class="metric-value">{study.metrics[0].value}</span>
+                <span class="metric-label">{study.metrics[0].label}</span>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="study-card__content">
+              <span class="study-card__company">{study.company}</span>
+              <h3 class="study-card__title">{study.title}</h3>
+              <p class="study-card__description">{study.description}</p>
+
+              <!-- Tags -->
+              <div class="study-card__tags">
+                {study.tags.slice(0, 3).map((tag) => (
+                  <span class="tag tag--small">{tag}</span>
+                ))}
+              </div>
+
+              <!-- Read More -->
+              <div class="study-card__footer">
+                <span class="read-more">
+                  Read Case Study
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Industries Section -->
+  <section class="industries-section" data-theme="dark">
+    <div class="industries-bg">
+      <div class="industries-gradient"></div>
+      <div class="industries-pattern"></div>
+    </div>
+
+    <Container size="xl">
+      <div class="industries-content">
+        <span class="industries-eyebrow">Industries We Serve</span>
+        <h2 class="industries-title">Transforming Networks Across Sectors</h2>
+        <p class="industries-text">
+          From critical healthcare systems to nationwide telecommunications infrastructure,
+          DART AI delivers measurable results wherever network reliability matters most.
+        </p>
+
+        <div class="industries-grid">
+          <div class="industry-card">
+            <div class="industry-card__icon">
+              <i class="fa-solid fa-hospital"></i>
+            </div>
+            <h3 class="industry-card__title">Healthcare</h3>
+            <p class="industry-card__text">
+              Mission-critical networks for EHR systems, telemedicine, IoT medical devices,
+              and surgical robotics requiring zero-tolerance reliability.
+            </p>
+            <div class="industry-card__stat">
+              <span class="stat-value">2</span>
+              <span class="stat-label">Case Studies</span>
+            </div>
+          </div>
+
+          <div class="industry-card">
+            <div class="industry-card__icon">
+              <i class="fa-solid fa-tower-cell"></i>
+            </div>
+            <h3 class="industry-card__title">Telecommunications</h3>
+            <p class="industry-card__text">
+              Large-scale hybrid and 5G infrastructure serving millions of users
+              with demanding performance, low-latency, and reliability expectations.
+            </p>
+            <div class="industry-card__stat">
+              <span class="stat-value">1</span>
+              <span class="stat-label">Case Study</span>
+            </div>
+          </div>
+
+          <a href="/contact" class="industry-card industry-card--cta">
+            <div class="industry-card__icon industry-card__icon--cta">
+              <i class="fa-solid fa-comments"></i>
+            </div>
+            <h3 class="industry-card__title">Don't See Your Industry?</h3>
+            <p class="industry-card__text">
+              DART AI adapts to any network environment. Let's discuss how AI-powered
+              observability can transform your specific operations.
+            </p>
+            <div class="industry-card__cta-link">
+              <span>Talk to Us</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </a>
+        </div>
+
+        <div class="industries-cta">
+          <a href="/industries" class="btn btn--outline">
+            Explore All Industries
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+</SubpageLayout>
+
+<style>
+  /* ============================================
+     IMPACT STATS BAR
+     ============================================ */
+  .impact-bar {
+    background: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding: var(--space-8) 0;
+  }
+
+  .impact-bar__inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+  }
+
+  .impact-stat {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: linear-gradient(135deg, rgba(234, 36, 43, 0.03) 0%, transparent 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(234, 36, 43, 0.08);
+  }
+
+  .impact-stat__icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .impact-stat__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .impact-stat__value {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: var(--font-bold);
+    color: #111111;
+    line-height: 1.1;
+  }
+
+  .impact-stat__label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: #666666;
+    margin-top: 2px;
+  }
+
+  /* ============================================
+     SECTION LABELS
+     ============================================ */
+  .section-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #888888;
+  }
+
+  .section-label__line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.15), transparent);
+  }
+
+  /* ============================================
+     FEATURED CASE STUDY
+     ============================================ */
+  .featured-case {
+    padding: var(--space-16) 0;
+    background: #fafafa;
+  }
+
+  .featured-header {
+    margin-bottom: var(--space-10);
+  }
+
+  .featured-card {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 0;
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    text-decoration: none;
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.04),
+      0 12px 48px rgba(0, 0, 0, 0.06);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .featured-card:hover {
+    transform: translateY(-8px);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.08),
+      0 24px 80px rgba(234, 36, 43, 0.1);
+  }
+
+  .featured-card__image {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+
+  .featured-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .featured-card:hover .featured-card__image img {
+    transform: scale(1.05);
+  }
+
+  .featured-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.1) 0%,
+      transparent 50%,
+      rgba(234, 36, 43, 0.15) 100%
+    );
+  }
+
+  .featured-card__badge {
+    position: absolute;
+    top: var(--space-6);
+    left: var(--space-6);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .featured-card__badge i {
+    font-size: 0.9rem;
+  }
+
+  .featured-card__content {
+    padding: var(--space-10);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .featured-card__company {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  .featured-card__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: var(--font-bold);
+    line-height: 1.2;
+    color: #111111;
+    margin-bottom: var(--space-4);
+    transition: color 0.3s ease;
+  }
+
+  .featured-card:hover .featured-card__title {
+    color: var(--color-primary);
+  }
+
+  .featured-card__description {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: #555555;
+    margin-bottom: var(--space-6);
+  }
+
+  .featured-card__metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+    padding: var(--space-5) 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    margin-bottom: var(--space-5);
+  }
+
+  .metric {
+    text-align: center;
+  }
+
+  .metric__value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: var(--font-bold);
+    color: var(--color-primary);
+    line-height: 1;
+  }
+
+  .metric__label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    color: #777777;
+    margin-top: 4px;
+  }
+
+  .featured-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: var(--space-6);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 6px 12px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #666666;
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+
+  .featured-card:hover .tag {
+    color: var(--color-primary);
+    background: rgba(234, 36, 43, 0.06);
+    border-color: rgba(234, 36, 43, 0.15);
+  }
+
+  .featured-card__cta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: var(--space-4);
+  }
+
+  .cta-text {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary);
+  }
+
+  .cta-arrow {
+    width: 20px;
+    height: 20px;
+    color: var(--color-primary);
+    transition: transform 0.3s ease;
+  }
+
+  .featured-card:hover .cta-arrow {
+    transform: translateX(4px);
+  }
+
+  /* ============================================
+     CASE STUDIES GRID
+     ============================================ */
+  .case-studies-grid {
+    padding: var(--space-16) 0;
+    background: #ffffff;
+  }
+
+  .grid-header {
+    margin-bottom: var(--space-10);
+  }
+
+  .studies-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+
+  .study-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  }
+
+  .study-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(234, 36, 43, 0.2);
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.08),
+      0 24px 64px rgba(234, 36, 43, 0.08);
+  }
+
+  .study-card__image {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+  }
+
+  .study-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .study-card:hover .study-card__image img {
+    transform: scale(1.08);
+  }
+
+  .study-card__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 40%,
+      rgba(0, 0, 0, 0.6) 100%
+    );
+  }
+
+  .study-card__badge {
+    position: absolute;
+    top: var(--space-4);
+    left: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .study-card__badge i {
+    font-size: 0.8rem;
+  }
+
+  .study-card__metric-overlay {
+    position: absolute;
+    bottom: var(--space-4);
+    right: var(--space-4);
+    text-align: right;
+  }
+
+  .metric-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: var(--font-bold);
+    color: #ffffff;
+    line-height: 1;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .metric-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 4px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .study-card__content {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .study-card__company {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .study-card__title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    line-height: 1.3;
+    color: #111111;
+    margin-bottom: var(--space-3);
+    transition: color 0.3s ease;
+  }
+
+  .study-card:hover .study-card__title {
+    color: var(--color-primary);
+  }
+
+  .study-card__description {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: #666666;
+    margin-bottom: var(--space-4);
+  }
+
+  .study-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--space-4);
+  }
+
+  .tag--small {
+    padding: 4px 10px;
+    font-size: 0.6rem;
+  }
+
+  .study-card:hover .tag--small {
+    color: var(--color-primary);
+    background: rgba(234, 36, 43, 0.06);
+    border-color: rgba(234, 36, 43, 0.15);
+  }
+
+  .study-card__footer {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary);
+  }
+
+  .read-more svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .study-card:hover .read-more svg {
+    transform: translateX(4px);
+  }
+
+  /* ============================================
+     INDUSTRIES SECTION
+     ============================================ */
+  .industries-section {
+    position: relative;
+    padding: var(--space-20) 0;
+    background: var(--color-bg-primary);
+    overflow: hidden;
+  }
+
+  .industries-bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .industries-gradient {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 80% 60% at 50% 20%,
+      rgba(234, 36, 43, 0.08) 0%,
+      transparent 60%
+    );
+  }
+
+  .industries-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(234, 36, 43, 0.03) 0%, transparent 25%),
+      radial-gradient(circle at 80% 50%, rgba(234, 36, 43, 0.03) 0%, transparent 25%);
+  }
+
+  .industries-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .industries-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .industries-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-4);
+  }
+
+  .industries-text {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto var(--space-12);
+  }
+
+  .industries-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    max-width: 1100px;
+    margin: 0 auto var(--space-10);
+  }
+
+  .industry-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: var(--space-8);
+    text-align: left;
+    transition: all 0.3s ease;
+  }
+
+  .industry-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(234, 36, 43, 0.3);
+    transform: translateY(-4px);
+  }
+
+  .industry-card__icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(234, 36, 43, 0.1);
+    border: 1px solid rgba(234, 36, 43, 0.2);
+    border-radius: 16px;
+    color: var(--color-primary);
+    font-size: 1.5rem;
+    margin-bottom: var(--space-5);
+  }
+
+  .industry-card__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  .industry-card__text {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-5);
+  }
+
+  .industry-card__stat {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: var(--font-bold);
+    color: var(--color-primary);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .industries-cta {
+    margin-top: var(--space-8);
+  }
+
+  /* Industry CTA Card */
+  .industry-card--cta {
+    text-decoration: none;
+    border-style: dashed;
+    border-color: rgba(234, 36, 43, 0.3);
+    background: rgba(234, 36, 43, 0.03);
+  }
+
+  .industry-card--cta:hover {
+    background: rgba(234, 36, 43, 0.08);
+    border-color: var(--color-primary);
+    border-style: solid;
+  }
+
+  .industry-card__icon--cta {
+    background: rgba(234, 36, 43, 0.15);
+    border-color: rgba(234, 36, 43, 0.3);
+  }
+
+  .industry-card--cta:hover .industry-card__icon--cta {
+    background: var(--color-primary);
+    color: #ffffff;
+  }
+
+  .industry-card__cta-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(234, 36, 43, 0.2);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary);
+  }
+
+  .industry-card__cta-link i {
+    transition: transform 0.3s ease;
+  }
+
+  .industry-card--cta:hover .industry-card__cta-link i {
+    transform: translateX(4px);
+  }
+
+  /* ============================================
+     BUTTONS
+     ============================================ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .btn--primary {
+    background: var(--color-primary);
+    color: #ffffff;
+    border: 2px solid var(--color-primary);
+  }
+
+  .btn--primary:hover {
+    background: #c41e24;
+    border-color: #c41e24;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(234, 36, 43, 0.3);
+  }
+
+  .btn--secondary {
+    background: transparent;
+    color: #111111;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .btn--secondary:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .btn--outline {
+    background: transparent;
+    color: var(--color-text-primary);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .btn--outline:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+  @media (max-width: 1024px) {
+    .impact-bar__inner {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .featured-card {
+      grid-template-columns: 1fr;
+    }
+
+    .featured-card__image {
+      aspect-ratio: 16/9;
+    }
+
+    .studies-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .industries-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .impact-bar {
+      padding: var(--space-6) 0;
+    }
+
+    .impact-bar__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+
+    .impact-stat {
+      padding: var(--space-3);
+    }
+
+    .impact-stat__icon {
+      width: 40px;
+      height: 40px;
+      font-size: 0.9rem;
+    }
+
+    .impact-stat__value {
+      font-size: 1.25rem;
+    }
+
+    .featured-case,
+    .case-studies-grid {
+      padding: var(--space-12) 0;
+    }
+
+    .featured-card__content {
+      padding: var(--space-6);
+    }
+
+    .featured-card__metrics {
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+    }
+
+    .metric {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      text-align: left;
+    }
+
+    .metric__value {
+      font-size: 1.25rem;
+    }
+
+    .industries-section {
+      padding: var(--space-12) 0;
+    }
+
+    .industry-card {
+      padding: var(--space-6);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .impact-bar__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .section-label__line {
+      width: 30px;
+    }
+  }
+</style>
