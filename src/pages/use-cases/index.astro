@@ -75,14 +75,6 @@ const caseStudies = [
 // Get featured and regular case studies
 const featuredStudy = caseStudies.find(cs => cs.featured);
 const regularStudies = caseStudies.filter(cs => !cs.featured);
-
-// Industry stats
-const impactStats = [
-  { value: "50%+", label: "Average Issue Reduction", icon: "fa-solid fa-arrow-trend-down" },
-  { value: "70%", label: "Manual Work Eliminated", icon: "fa-solid fa-robot" },
-  { value: "24/7", label: "Continuous Monitoring", icon: "fa-solid fa-clock" },
-  { value: "3", label: "Industries Transformed", icon: "fa-solid fa-industry" }
-];
 ---
 
 <SubpageLayout
@@ -96,25 +88,6 @@ const impactStats = [
       align="left"
     />
   </Fragment>
-
-  <!-- Impact Stats Bar -->
-  <section class="impact-bar">
-    <Container size="xl">
-      <div class="impact-bar__inner">
-        {impactStats.map((stat) => (
-          <div class="impact-stat">
-            <div class="impact-stat__icon">
-              <i class={stat.icon}></i>
-            </div>
-            <div class="impact-stat__content">
-              <span class="impact-stat__value">{stat.value}</span>
-              <span class="impact-stat__label">{stat.label}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </Container>
-  </section>
 
   <!-- Featured Case Study -->
   {featuredStudy && (
@@ -315,61 +288,37 @@ const impactStats = [
 
 <style>
   /* ============================================
-     IMPACT STATS BAR
+     EDITORIAL INTRO
      ============================================ */
-  .impact-bar {
+  .editorial-intro {
     background: #ffffff;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    padding: var(--space-8) 0;
+    padding: var(--space-12) 0 var(--space-8);
   }
 
-  .impact-bar__inner {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+  .editorial-intro__inner {
+    display: flex;
+    align-items: flex-start;
     gap: var(--space-6);
+    max-width: 900px;
+    margin: 0 auto;
   }
 
-  .impact-stat {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-    padding: var(--space-4);
-    background: linear-gradient(135deg, rgba(234, 36, 43, 0.03) 0%, transparent 100%);
-    border-radius: 12px;
-    border: 1px solid rgba(234, 36, 43, 0.08);
-  }
-
-  .impact-stat__icon {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-primary);
-    border-radius: 12px;
-    color: #ffffff;
-    font-size: 1.1rem;
+  .editorial-intro__accent {
     flex-shrink: 0;
+    width: 4px;
+    height: 100%;
+    min-height: 60px;
+    background: linear-gradient(180deg, var(--color-primary) 0%, rgba(234, 36, 43, 0.2) 100%);
+    border-radius: 2px;
   }
 
-  .impact-stat__content {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .impact-stat__value {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: var(--font-bold);
-    color: #111111;
-    line-height: 1.1;
-  }
-
-  .impact-stat__label {
+  .editorial-intro__text {
     font-family: var(--font-body);
-    font-size: 0.75rem;
-    color: #666666;
-    margin-top: 2px;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    line-height: 1.7;
+    color: #444444;
+    font-style: italic;
+    margin: 0;
   }
 
   /* ============================================
@@ -1051,10 +1000,6 @@ const impactStats = [
      RESPONSIVE
      ============================================ */
   @media (max-width: 1024px) {
-    .impact-bar__inner {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
     .featured-card {
       grid-template-columns: 1fr;
     }
@@ -1073,27 +1018,16 @@ const impactStats = [
   }
 
   @media (max-width: 768px) {
-    .impact-bar {
-      padding: var(--space-6) 0;
+    .editorial-intro {
+      padding: var(--space-8) 0 var(--space-6);
     }
 
-    .impact-bar__inner {
-      grid-template-columns: 1fr 1fr;
+    .editorial-intro__inner {
       gap: var(--space-4);
     }
 
-    .impact-stat {
-      padding: var(--space-3);
-    }
-
-    .impact-stat__icon {
-      width: 40px;
-      height: 40px;
-      font-size: 0.9rem;
-    }
-
-    .impact-stat__value {
-      font-size: 1.25rem;
+    .editorial-intro__accent {
+      min-height: 50px;
     }
 
     .featured-case,
@@ -1131,10 +1065,6 @@ const impactStats = [
   }
 
   @media (max-width: 480px) {
-    .impact-bar__inner {
-      grid-template-columns: 1fr;
-    }
-
     .section-label__line {
       width: 30px;
     }
