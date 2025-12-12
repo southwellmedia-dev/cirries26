@@ -30,7 +30,7 @@ const CONFIG = {
     count: 15000,
     scale: { x: 1.5, y: 1.5, z: 1.5 },
     scatter: 1.5,
-    color: "#adadad",
+    color: "#F2f2f2",
     secondaryColor: "#8f8f8f",
     roughness: 0.2,
   },
@@ -714,7 +714,10 @@ export default function LogoMeshNetwork({
               "streamProgress",
               animationState.current.streamProgress
             );
-            updateShaderUniform("uOpacity", animationState.current.particleOpacity);
+            updateShaderUniform(
+              "uOpacity",
+              animationState.current.particleOpacity
+            );
           },
           onComplete: () => {
             onAnimationComplete?.();
@@ -732,7 +735,10 @@ export default function LogoMeshNetwork({
           duration: 0.6,
           ease: "power2.inOut",
           onUpdate: () => {
-            updateShaderUniform("uOpacity", animationState.current.particleOpacity);
+            updateShaderUniform(
+              "uOpacity",
+              animationState.current.particleOpacity
+            );
           },
         },
         1.6
@@ -1011,7 +1017,11 @@ export default function LogoMeshNetwork({
         e.clientY >= rect.top &&
         e.clientY <= rect.bottom;
 
-      if (isInsideContainer && !prefersReducedMotion.current && !disableInteraction) {
+      if (
+        isInsideContainer &&
+        !prefersReducedMotion.current &&
+        !disableInteraction
+      ) {
         mouseActiveRef.current = true;
         if (mouseTimeoutRef.current) clearTimeout(mouseTimeoutRef.current);
         mouseTimeoutRef.current = window.setTimeout(() => {
