@@ -359,10 +359,16 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
 
       const maxDim = Math.max(size.x, size.y);
       if (maxDim > 0) {
-        // Scale to maintain consistent visual presence across all screen sizes
-        // Larger baseScale on smaller screens, smaller baseScale on larger screens
-        const baseScale = isMobile ? 55 : isSmallScreen ? 70 : 65;
-        const scale = baseScale / maxDim;
+        // Scale based on viewport width to always fill container
+        // Calculate visible width at z=0 based on camera FOV and position
+        const fovRad = (baseFov * Math.PI) / 180;
+        const visibleHeight = 2 * Math.tan(fovRad / 2) * baseZ;
+        const visibleWidth = visibleHeight * (width / height);
+
+        // Logo should fill ~85% of visible width on all screen sizes
+        const targetWidth = visibleWidth * 0.85;
+        const scale = targetWidth / size.x;
+
         group.scale.set(scale, scale, scale);
         scaleRef.current = scale;
       }
@@ -922,17 +928,26 @@ export default function LogoMeshNetwork({ className = '' }: Props) {
       const newIsMobile = w < 768;
       const newIsSmallScreen = w < 1200;
 
-      camera.fov = newIsMobile ? 55 : newIsSmallScreen ? 50 : 45;
-      camera.position.z = newIsMobile ? 90 : newIsSmallScreen ? 75 : 70;
+      const newFov = newIsMobile ? 55 : newIsSmallScreen ? 50 : 45;
+      const newZ = newIsMobile ? 90 : newIsSmallScreen ? 75 : 70;
+
+      camera.fov = newFov;
+      camera.position.z = newZ;
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
 
-      // Recalculate scale to maintain consistent visual presence
+      // Recalculate scale based on visible width to always fill container
       if (groupRef.current) {
-        const maxDim = 1137; // Logo width from SVG
-        const baseScale = newIsMobile ? 55 : newIsSmallScreen ? 70 : 65;
-        const scale = baseScale / maxDim;
+        const logoWidth = 1137; // Logo width from SVG
+        const fovRad = (newFov * Math.PI) / 180;
+        const visibleHeight = 2 * Math.tan(fovRad / 2) * newZ;
+        const visibleWidth = visibleHeight * (w / h);
+
+        // Logo should fill ~85% of visible width on all screen sizes
+        const targetWidth = visibleWidth * 0.85;
+        const scale = targetWidth / logoWidth;
+
         groupRef.current.scale.set(scale, scale, scale);
         scaleRef.current = scale;
       }

@@ -39,59 +39,37 @@ const {
     <div class="hero__three-noise"></div>
     <!-- Animated grid lines -->
     <div class="hero__three-grid"></div>
+    <!-- Grid glow segments - horizontal -->
+    <div class="hero__grid-glows" aria-hidden="true">
+      <div class="hero__grid-glow hero__grid-glow--h" style="--glow-row: 3; --glow-col: 5; --glow-delay: 0s; --glow-duration: 4s;"></div>
+      <div class="hero__grid-glow hero__grid-glow--h" style="--glow-row: 5; --glow-col: 12; --glow-delay: 1.2s; --glow-duration: 3.5s;"></div>
+      <div class="hero__grid-glow hero__grid-glow--h" style="--glow-row: 7; --glow-col: 2; --glow-delay: 2.8s; --glow-duration: 4.2s;"></div>
+      <div class="hero__grid-glow hero__grid-glow--h" style="--glow-row: 4; --glow-col: 18; --glow-delay: 0.6s; --glow-duration: 3.8s;"></div>
+      <div class="hero__grid-glow hero__grid-glow--h" style="--glow-row: 8; --glow-col: 8; --glow-delay: 3.5s; --glow-duration: 4.5s;"></div>
+      <div class="hero__grid-glow hero__grid-glow--h" style="--glow-row: 6; --glow-col: 22; --glow-delay: 1.8s; --glow-duration: 3.2s;"></div>
+      <div class="hero__grid-glow hero__grid-glow--h" style="--glow-row: 9; --glow-col: 15; --glow-delay: 4.2s; --glow-duration: 4s;"></div>
+      <div class="hero__grid-glow hero__grid-glow--h" style="--glow-row: 2; --glow-col: 25; --glow-delay: 2.1s; --glow-duration: 3.6s;"></div>
+      <!-- Vertical glow segments -->
+      <div class="hero__grid-glow hero__grid-glow--v" style="--glow-row: 4; --glow-col: 7; --glow-delay: 0.4s; --glow-duration: 3.8s;"></div>
+      <div class="hero__grid-glow hero__grid-glow--v" style="--glow-row: 6; --glow-col: 14; --glow-delay: 2.2s; --glow-duration: 4.1s;"></div>
+      <div class="hero__grid-glow hero__grid-glow--v" style="--glow-row: 3; --glow-col: 20; --glow-delay: 1.5s; --glow-duration: 3.4s;"></div>
+      <div class="hero__grid-glow hero__grid-glow--v" style="--glow-row: 7; --glow-col: 4; --glow-delay: 3.8s; --glow-duration: 4.3s;"></div>
+      <div class="hero__grid-glow hero__grid-glow--v" style="--glow-row: 5; --glow-col: 26; --glow-delay: 0.9s; --glow-duration: 3.9s;"></div>
+      <div class="hero__grid-glow hero__grid-glow--v" style="--glow-row: 8; --glow-col: 11; --glow-delay: 2.7s; --glow-duration: 4.4s;"></div>
+    </div>
     <!-- Network pulse lines - aligned to 60px grid -->
     <div class="hero__pulse-lines" aria-hidden="true">
       <!-- Lines positioned at grid intervals: calc(60px * n) from edges -->
-      <div
-        class="hero__pulse-line"
-        style="--line-col: 3; --line-delay: 0.2s; --line-duration: 3.5s;"
-      >
-      </div>
-      <div
-        class="hero__pulse-line"
-        style="--line-col: 6; --line-delay: 1.8s; --line-duration: 4.2s;"
-      >
-      </div>
-      <div
-        class="hero__pulse-line"
-        style="--line-col: 9; --line-delay: 0.9s; --line-duration: 3.8s;"
-      >
-      </div>
-      <div
-        class="hero__pulse-line"
-        style="--line-col: 12; --line-delay: 2.5s; --line-duration: 4.0s;"
-      >
-      </div>
-      <div
-        class="hero__pulse-line"
-        style="--line-col: 15; --line-delay: 0.4s; --line-duration: 3.6s;"
-      >
-      </div>
-      <div
-        class="hero__pulse-line"
-        style="--line-col: 18; --line-delay: 3.1s; --line-duration: 4.5s;"
-      >
-      </div>
-      <div
-        class="hero__pulse-line"
-        style="--line-col: 21; --line-delay: 1.3s; --line-duration: 3.9s;"
-      >
-      </div>
-      <div
-        class="hero__pulse-line"
-        style="--line-col: 24; --line-delay: 2.2s; --line-duration: 4.1s;"
-      >
-      </div>
-      <div
-        class="hero__pulse-line"
-        style="--line-col: 27; --line-delay: 0.7s; --line-duration: 3.7s;"
-      >
-      </div>
-      <div
-        class="hero__pulse-line"
-        style="--line-col: 30; --line-delay: 2.9s; --line-duration: 4.3s;"
-      >
-      </div>
+      <div class="hero__pulse-line" style="--line-col: 3; --line-delay: 0.2s; --line-duration: 3.5s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 6; --line-delay: 1.8s; --line-duration: 4.2s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 9; --line-delay: 0.9s; --line-duration: 3.8s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 12; --line-delay: 2.5s; --line-duration: 4.0s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 15; --line-delay: 0.4s; --line-duration: 3.6s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 18; --line-delay: 3.1s; --line-duration: 4.5s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 21; --line-delay: 1.3s; --line-duration: 3.9s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 24; --line-delay: 2.2s; --line-duration: 4.1s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 27; --line-delay: 0.7s; --line-duration: 3.7s;"></div>
+      <div class="hero__pulse-line" style="--line-col: 30; --line-delay: 2.9s; --line-duration: 4.3s;"></div>
     </div>
   </div>
 
@@ -165,49 +143,152 @@ const {
     display: none;
   }
 
-  /* Faded grid lines */
+  /* Faded grid lines - more visible */
   .hero__three-grid {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
     background-size: 60px 60px;
     z-index: 0;
     /* Radial fade - visible at bottom/center, fades to edges and top */
     mask-image: radial-gradient(
-      ellipse 80% 70% at 50% 80%,
-      rgba(0, 0, 0, 0.6) 0%,
-      rgba(0, 0, 0, 0.3) 40%,
-      transparent 70%
+      ellipse 90% 80% at 50% 85%,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      transparent 75%
     );
     -webkit-mask-image: radial-gradient(
-      ellipse 80% 70% at 50% 80%,
-      rgba(0, 0, 0, 0.6) 0%,
-      rgba(0, 0, 0, 0.3) 40%,
-      transparent 70%
+      ellipse 90% 80% at 50% 85%,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      transparent 75%
     );
+  }
+
+  /* Grid glow segments container */
+  .hero__grid-glows {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+    mask-image: radial-gradient(
+      ellipse 90% 80% at 50% 85%,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.5) 50%,
+      transparent 75%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 90% 80% at 50% 85%,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.5) 50%,
+      transparent 75%
+    );
+  }
+
+  /* Individual glow segment */
+  .hero__grid-glow {
+    position: absolute;
+    top: calc(var(--glow-row, 5) * 60px);
+    left: calc(var(--glow-col, 10) * 60px);
+    opacity: 0;
+  }
+
+  /* Horizontal glow segment */
+  .hero__grid-glow--h {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.15) 20%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0.15) 80%,
+      transparent 100%
+    );
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    animation: glowPulseH var(--glow-duration, 4s) var(--glow-delay, 0s) infinite ease-in-out;
+  }
+
+  /* Vertical glow segment */
+  .hero__grid-glow--v {
+    width: 1px;
+    height: 120px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.15) 20%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0.15) 80%,
+      transparent 100%
+    );
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    animation: glowPulseV var(--glow-duration, 4s) var(--glow-delay, 0s) infinite ease-in-out;
+  }
+
+  @keyframes glowPulseH {
+    0%, 100% {
+      opacity: 0;
+      transform: scaleX(0.5);
+    }
+    15% {
+      opacity: 0;
+    }
+    30% {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+    70% {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+    85% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes glowPulseV {
+    0%, 100% {
+      opacity: 0;
+      transform: scaleY(0.5);
+    }
+    15% {
+      opacity: 0;
+    }
+    30% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+    70% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+    85% {
+      opacity: 0;
+    }
   }
 
   /* Network pulse lines - shooting upward along grid lines */
   .hero__pulse-lines {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 2;
     pointer-events: none;
     overflow: hidden;
     /* Match grid mask for seamless blend */
     mask-image: radial-gradient(
-      ellipse 80% 70% at 50% 80%,
+      ellipse 90% 80% at 50% 85%,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.5) 40%,
-      transparent 70%
+      rgba(0, 0, 0, 0.5) 50%,
+      transparent 75%
     );
     -webkit-mask-image: radial-gradient(
-      ellipse 80% 70% at 50% 80%,
+      ellipse 90% 80% at 50% 85%,
       rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.5) 40%,
-      transparent 70%
+      rgba(0, 0, 0, 0.5) 50%,
+      transparent 75%
     );
   }
 
@@ -219,20 +300,20 @@ const {
     width: 1px;
     /* Long trailing tail */
     height: 200px;
-    /* Gradient: long fade at bottom, bright tip at top */
+    /* Gradient: brighter with glow effect */
     background: linear-gradient(
       to top,
       transparent 0%,
-      rgba(255, 255, 255, 0.02) 10%,
-      rgba(255, 255, 255, 0.04) 30%,
-      rgba(255, 255, 255, 0.08) 60%,
-      rgba(255, 255, 255, 0.15) 85%,
-      rgba(255, 255, 255, 0.25) 100%
+      rgba(255, 255, 255, 0.05) 10%,
+      rgba(255, 255, 255, 0.1) 30%,
+      rgba(255, 255, 255, 0.2) 60%,
+      rgba(255, 255, 255, 0.35) 85%,
+      rgba(255, 255, 255, 0.5) 100%
     );
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
     opacity: 0;
     transform: translateY(0);
-    animation: pulseUp var(--line-duration, 4s) var(--line-delay, 0s) infinite
-      ease-out;
+    animation: pulseUp var(--line-duration, 4s) var(--line-delay, 0s) infinite ease-out;
   }
 
   @keyframes pulseUp {
@@ -254,7 +335,8 @@ const {
 
   /* Respect reduced motion preferences */
   @media (prefers-reduced-motion: reduce) {
-    .hero__pulse-line {
+    .hero__pulse-line,
+    .hero__grid-glow {
       animation: none;
       opacity: 0;
     }
@@ -403,10 +485,6 @@ const {
       flex-direction: column;
       width: 100%;
       max-width: 300px;
-    }
-
-    .hero__scroll-indicator {
-      display: none;
     }
 
     .hero__three-canvas {
