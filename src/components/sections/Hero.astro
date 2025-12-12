@@ -2,6 +2,7 @@
 import Container from "../ui/Container.astro";
 import Button from "../ui/Button.astro";
 import LogoObsidian from "../three/LogoObsidian";
+import LogoMeshNetwork from "../three/LogoMeshNetwork";
 
 interface Props {
   headlineTop?: string;
@@ -26,12 +27,13 @@ const {
 } = Astro.props;
 ---
 
-<section class="hero">
+<section class="hero" id="hero-section">
   <!-- Three.js Logo Mesh Network Background -->
   <div class="hero__background hero__background--three">
     <div class="hero__three-gradient"></div>
     <div class="hero__three-canvas">
-      <LogoObsidian client:load />
+      <!-- <LogoObsidian client:load /> -->
+      <LogoMeshNetwork client:load />
     </div>
     <div class="hero__three-overlay"></div>
     <div class="hero__three-noise"></div>
@@ -40,16 +42,56 @@ const {
     <!-- Network pulse lines - aligned to 60px grid -->
     <div class="hero__pulse-lines" aria-hidden="true">
       <!-- Lines positioned at grid intervals: calc(60px * n) from edges -->
-      <div class="hero__pulse-line" style="--line-col: 3; --line-delay: 0.2s; --line-duration: 3.5s;"></div>
-      <div class="hero__pulse-line" style="--line-col: 6; --line-delay: 1.8s; --line-duration: 4.2s;"></div>
-      <div class="hero__pulse-line" style="--line-col: 9; --line-delay: 0.9s; --line-duration: 3.8s;"></div>
-      <div class="hero__pulse-line" style="--line-col: 12; --line-delay: 2.5s; --line-duration: 4.0s;"></div>
-      <div class="hero__pulse-line" style="--line-col: 15; --line-delay: 0.4s; --line-duration: 3.6s;"></div>
-      <div class="hero__pulse-line" style="--line-col: 18; --line-delay: 3.1s; --line-duration: 4.5s;"></div>
-      <div class="hero__pulse-line" style="--line-col: 21; --line-delay: 1.3s; --line-duration: 3.9s;"></div>
-      <div class="hero__pulse-line" style="--line-col: 24; --line-delay: 2.2s; --line-duration: 4.1s;"></div>
-      <div class="hero__pulse-line" style="--line-col: 27; --line-delay: 0.7s; --line-duration: 3.7s;"></div>
-      <div class="hero__pulse-line" style="--line-col: 30; --line-delay: 2.9s; --line-duration: 4.3s;"></div>
+      <div
+        class="hero__pulse-line"
+        style="--line-col: 3; --line-delay: 0.2s; --line-duration: 3.5s;"
+      >
+      </div>
+      <div
+        class="hero__pulse-line"
+        style="--line-col: 6; --line-delay: 1.8s; --line-duration: 4.2s;"
+      >
+      </div>
+      <div
+        class="hero__pulse-line"
+        style="--line-col: 9; --line-delay: 0.9s; --line-duration: 3.8s;"
+      >
+      </div>
+      <div
+        class="hero__pulse-line"
+        style="--line-col: 12; --line-delay: 2.5s; --line-duration: 4.0s;"
+      >
+      </div>
+      <div
+        class="hero__pulse-line"
+        style="--line-col: 15; --line-delay: 0.4s; --line-duration: 3.6s;"
+      >
+      </div>
+      <div
+        class="hero__pulse-line"
+        style="--line-col: 18; --line-delay: 3.1s; --line-duration: 4.5s;"
+      >
+      </div>
+      <div
+        class="hero__pulse-line"
+        style="--line-col: 21; --line-delay: 1.3s; --line-duration: 3.9s;"
+      >
+      </div>
+      <div
+        class="hero__pulse-line"
+        style="--line-col: 24; --line-delay: 2.2s; --line-duration: 4.1s;"
+      >
+      </div>
+      <div
+        class="hero__pulse-line"
+        style="--line-col: 27; --line-delay: 0.7s; --line-duration: 3.7s;"
+      >
+      </div>
+      <div
+        class="hero__pulse-line"
+        style="--line-col: 30; --line-delay: 2.9s; --line-duration: 4.3s;"
+      >
+      </div>
     </div>
   </div>
 
@@ -57,13 +99,13 @@ const {
   <Container size="xl" class="hero__container">
     <div class="hero__content">
       <h1 class="hero__headline">
-        <span class="hero__headline-top">{headlineTop}</span>
-        <span class="hero__headline-bottom">{headlineBottom}</span>
+        <span class="hero__headline-top" data-hero-anim>{headlineTop}</span>
+        <span class="hero__headline-bottom" data-hero-anim>{headlineBottom}</span>
       </h1>
 
-      <p class="hero__subtitle">{subtitle}</p>
+      <p class="hero__subtitle" data-hero-anim>{subtitle}</p>
 
-      <div class="hero__actions">
+      <div class="hero__actions" data-hero-anim>
         <Button href={primaryCta.href} variant="primary" size="lg">
           {primaryCta.label}
         </Button>
@@ -74,14 +116,13 @@ const {
     </div>
 
     <!-- Scroll Indicator -->
-    <div class="hero__scroll-indicator" aria-hidden="true">
+    <div class="hero__scroll-indicator" aria-hidden="true" data-hero-anim>
       <div class="hero__scroll-mouse">
         <div class="hero__scroll-wheel"></div>
       </div>
       <span class="hero__scroll-text">Scroll to explore</span>
     </div>
   </Container>
-
 </section>
 
 <style>
@@ -197,7 +238,8 @@ const {
     );
     opacity: 0;
     transform: translateY(0);
-    animation: pulseUp var(--line-duration, 4s) var(--line-delay, 0s) infinite ease-out;
+    animation: pulseUp var(--line-duration, 4s) var(--line-delay, 0s) infinite
+      ease-out;
   }
 
   @keyframes pulseUp {
@@ -295,7 +337,6 @@ const {
   .hero__content {
     text-align: center;
     max-width: 1000px;
-    animation: fadeInUp var(--duration-reveal) var(--ease-out) forwards;
     pointer-events: none;
   }
 
@@ -351,8 +392,6 @@ const {
     flex-direction: column;
     align-items: center;
     gap: var(--space-3);
-    opacity: 0;
-    animation: fadeIn var(--duration-slow) var(--ease-out) 1.5s forwards;
   }
 
   .hero__scroll-mouse {
@@ -445,4 +484,48 @@ const {
       opacity: 0.8;
     }
   }
+  /* Initial state for GSAP animations */
+  [data-hero-anim] {
+    opacity: 0;
+    transform: translateY(30px);
+  }
 </style>
+
+<script>
+  import gsap from 'gsap';
+
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const heroElements = document.querySelectorAll('[data-hero-anim]');
+
+    // Set initial state
+    gsap.set(heroElements, {
+      opacity: 0,
+      y: 30,
+    });
+
+    // Create timeline for hero content - faster animations
+    const contentTl = gsap.timeline({ paused: true });
+
+    contentTl.to(heroElements, {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      stagger: 0.1,
+      ease: 'power2.out',
+    });
+
+    // Listen for logo animation complete event
+    window.addEventListener('logoAnimationComplete', () => {
+      // Start content immediately when logo is done
+      contentTl.play();
+    });
+
+    // Fallback: if logo animation doesn't fire event within 2.5 seconds, show content anyway
+    setTimeout(() => {
+      if (contentTl.progress() === 0) {
+        contentTl.play();
+      }
+    }, 2500);
+  });
+</script>
