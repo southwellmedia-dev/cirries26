@@ -115,13 +115,6 @@ const {
       </div>
     </div>
 
-    <!-- Scroll Indicator -->
-    <div class="hero__scroll-indicator" aria-hidden="true" data-hero-anim>
-      <div class="hero__scroll-mouse">
-        <div class="hero__scroll-wheel"></div>
-      </div>
-      <span class="hero__scroll-text">Scroll to explore</span>
-    </div>
   </Container>
 </section>
 
@@ -382,56 +375,6 @@ const {
     gap: var(--space-4);
   }
 
-  /* Scroll Indicator */
-  .hero__scroll-indicator {
-    position: absolute;
-    bottom: var(--space-8);
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-3);
-  }
-
-  .hero__scroll-mouse {
-    width: 24px;
-    height: 40px;
-    border: 2px solid var(--color-text-muted);
-    border-radius: 12px;
-    position: relative;
-  }
-
-  .hero__scroll-wheel {
-    position: absolute;
-    top: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 4px;
-    height: 8px;
-    background: var(--color-primary);
-    border-radius: var(--radius-full);
-    animation: scrollWheel 2s var(--ease-in-out) infinite;
-  }
-
-  @keyframes scrollWheel {
-    0%,
-    100% {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-    50% {
-      opacity: 0.3;
-      transform: translateX(-50%) translateY(8px);
-    }
-  }
-
-  .hero__scroll-text {
-    font-size: var(--text-xs);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-wider);
-    color: var(--color-text-muted);
-  }
 
   /* Responsive */
   @media (max-width: 1200px) {
