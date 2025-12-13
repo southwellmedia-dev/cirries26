@@ -103,8 +103,8 @@ const {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      linear-gradient(var(--color-white-1) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-white-1) 1px, transparent 1px);
     background-size: 80px 80px;
     mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 0%, transparent 70%);
     -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 0%, transparent 70%);
@@ -199,8 +199,8 @@ const {
     padding: var(--space-10);
     background: linear-gradient(
       135deg,
-      rgba(20, 20, 20, 0.9) 0%,
-      rgba(15, 15, 15, 0.95) 100%
+      var(--color-black-90) 0%,
+      var(--color-black-95) 100%
     );
     border: 1px solid var(--color-border);
     border-radius: var(--radius-2xl);
@@ -228,8 +228,8 @@ const {
     border-color: var(--color-primary-subtle);
     transform: translateY(-4px);
     box-shadow:
-      0 20px 40px rgba(0, 0, 0, 0.3),
-      0 0 60px rgba(220, 38, 38, 0.1);
+      0 20px 40px var(--color-black-30),
+      0 0 60px var(--color-primary-10);
   }
 
   .spec-value-container {
@@ -246,8 +246,8 @@ const {
     color: var(--color-text-primary);
     background: linear-gradient(
       135deg,
-      #ffffff 0%,
-      rgba(255, 255, 255, 0.8) 50%,
+      var(--color-white-100) 0%,
+      var(--color-white-80) 50%,
       var(--color-primary) 100%
     );
     -webkit-background-clip: text;

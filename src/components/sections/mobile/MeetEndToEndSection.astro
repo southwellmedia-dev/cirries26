@@ -114,10 +114,10 @@ const stackLayers = [
         <!-- SVG Connection Lines between hub and layers -->
         <svg class="e2e-connections" viewBox="0 0 120 280" preserveAspectRatio="xMidYMid meet">
           <!-- Gray branch paths from layers to hub center -->
-          <path class="e2e-branch" d="M 0 140 Q 40 140 60 35 L 120 35" stroke="rgba(180, 180, 180, 0.4)" stroke-width="2" fill="none" />
-          <path class="e2e-branch" d="M 0 140 Q 50 140 70 105 L 120 105" stroke="rgba(180, 180, 180, 0.4)" stroke-width="2" fill="none" />
-          <path class="e2e-branch" d="M 0 140 Q 50 140 70 175 L 120 175" stroke="rgba(180, 180, 180, 0.4)" stroke-width="2" fill="none" />
-          <path class="e2e-branch" d="M 0 140 Q 40 140 60 245 L 120 245" stroke="rgba(180, 180, 180, 0.4)" stroke-width="2" fill="none" />
+          <path class="e2e-branch" d="M 0 140 Q 40 140 60 35 L 120 35" stroke="var(--color-white-40)" stroke-width="2" fill="none" />
+          <path class="e2e-branch" d="M 0 140 Q 50 140 70 105 L 120 105" stroke="var(--color-white-40)" stroke-width="2" fill="none" />
+          <path class="e2e-branch" d="M 0 140 Q 50 140 70 175 L 120 175" stroke="var(--color-white-40)" stroke-width="2" fill="none" />
+          <path class="e2e-branch" d="M 0 140 Q 40 140 60 245 L 120 245" stroke="var(--color-white-40)" stroke-width="2" fill="none" />
 
           <!-- Hidden paths for animation (reversed: from layers to hub) -->
           <defs>
@@ -202,7 +202,7 @@ const stackLayers = [
   .meet-e2e-section {
     position: relative;
     padding: var(--space-20) 0;
-    background: #ffffff;
+    background: var(--color-bg-primary);
     overflow: hidden;
   }
 
@@ -218,23 +218,23 @@ const stackLayers = [
     background:
       radial-gradient(
         ellipse 100% 80% at 75% 40%,
-        rgba(234, 36, 43, 0.04) 0%,
+        var(--color-primary-4) 0%,
         transparent 50%
       ),
       radial-gradient(
         ellipse 70% 50% at 20% 70%,
-        rgba(234, 36, 43, 0.02) 0%,
+        var(--color-primary-2) 0%,
         transparent 45%
       ),
-      linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #f5f5f7 100%);
+      linear-gradient(180deg, var(--color-bg-primary) 0%, #f8f9fa 50%, #f5f5f7 100%);
   }
 
   .e2e-grid {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+      linear-gradient(var(--color-black-1) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-black-1) 1px, transparent 1px);
     background-size: 40px 40px;
     mask-image: radial-gradient(
       ellipse 85% 75% at 65% 50%,
@@ -270,7 +270,7 @@ const stackLayers = [
     font-weight: var(--font-bold);
     line-height: 1.15;
     letter-spacing: var(--tracking-tight);
-    color: #111111;
+    color: var(--color-text-primary);
     margin-bottom: var(--space-6);
   }
 
@@ -283,12 +283,12 @@ const stackLayers = [
     font-family: var(--font-body);
     font-size: var(--text-base);
     line-height: var(--leading-relaxed);
-    color: #555555;
+    color: var(--color-text-secondary);
     margin-bottom: var(--space-4);
   }
 
   .meet-e2e__text :global(strong) {
-    color: #111111;
+    color: var(--color-text-primary);
     font-weight: var(--font-semibold);
   }
 
@@ -329,7 +329,7 @@ const stackLayers = [
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      rgba(234, 36, 43, 0.12) 0%,
+      var(--color-primary-12) 0%,
       transparent 70%
     );
     animation: e2e-hub-pulse 3s ease-in-out infinite;
@@ -353,13 +353,13 @@ const stackLayers = [
 
   .e2e-hub-ring-1 {
     inset: -10px;
-    border: 1px dashed rgba(234, 36, 43, 0.25);
+    border: 1px dashed var(--color-primary-25);
     animation: e2e-ring-rotate 25s linear infinite;
   }
 
   .e2e-hub-ring-2 {
     inset: -24px;
-    border: 1px dotted rgba(234, 36, 43, 0.15);
+    border: 1px dotted var(--color-primary-15);
     animation: e2e-ring-rotate 35s linear infinite reverse;
   }
 
@@ -374,13 +374,13 @@ const stackLayers = [
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.98);
+    background: var(--color-white-98);
     backdrop-filter: blur(20px);
     border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--color-border-light);
     box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.1),
-      0 0 60px rgba(234, 36, 43, 0.06);
+      0 12px 40px var(--color-black-10),
+      0 0 60px var(--color-primary-6);
     z-index: 12;
   }
 
@@ -395,15 +395,15 @@ const stackLayers = [
     left: 50%;
     transform: translateX(-50%);
     font-family: var(--font-mono);
-    font-size: 0.6rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-semibold);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--color-primary, #ea242b);
     white-space: nowrap;
-    padding: 5px 12px;
-    background: rgba(234, 36, 43, 0.08);
-    border-radius: 6px;
+    padding: var(--space-1-5) var(--space-3);
+    background: var(--color-primary-8);
+    border-radius: var(--radius-md);
   }
 
   /* ========================================
@@ -449,12 +449,12 @@ const stackLayers = [
     position: relative;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 18px;
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    border-radius: 14px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    gap: var(--space-3);
+    padding: var(--space-3-5) var(--space-4-5);
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 2px 12px var(--color-black-4);
     opacity: 0;
     transform: translateX(20px);
     animation: e2e-layer-slide-in 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
@@ -485,9 +485,9 @@ const stackLayers = [
     align-items: center;
     justify-content: center;
     background: color-mix(in srgb, var(--layer-color) 12%, transparent);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-bold);
     color: var(--layer-color);
     flex-shrink: 0;
@@ -512,16 +512,16 @@ const stackLayers = [
 
   .e2e-layer-label {
     font-family: var(--font-display);
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
     font-weight: var(--font-semibold);
-    color: #111111;
+    color: var(--color-text-primary);
     line-height: 1.2;
   }
 
   .e2e-layer-sublabel {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: #9ca3af;
+    font-size: var(--text-2xs);
+    color: var(--color-text-dim);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -575,7 +575,7 @@ const stackLayers = [
 
     .e2e-hub-label {
       bottom: -24px;
-      font-size: 0.55rem;
+      font-size: var(--text-2xs);
     }
 
     .e2e-connections {
@@ -589,14 +589,14 @@ const stackLayers = [
     }
 
     .e2e-stack-layer {
-      padding: 10px 14px;
-      gap: 10px;
+      padding: var(--space-2-5) var(--space-3-5);
+      gap: var(--space-2-5);
     }
 
     .e2e-layer-badge {
       width: 28px;
       height: 28px;
-      font-size: 0.6rem;
+      font-size: var(--text-2xs);
     }
 
     .e2e-layer-icon {
@@ -606,7 +606,7 @@ const stackLayers = [
     }
 
     .e2e-layer-label {
-      font-size: 0.75rem;
+      font-size: var(--text-xs);
     }
 
     .e2e-layer-sublabel {

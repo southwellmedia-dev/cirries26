@@ -137,8 +137,8 @@ const {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      linear-gradient(var(--color-white-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-white-2) 1px, transparent 1px);
     background-size: 60px 60px;
     mask-image: radial-gradient(ellipse 70% 50% at 50% 30%, black 0%, transparent 70%);
     -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 30%, black 0%, transparent 70%);
@@ -181,9 +181,9 @@ const {
     padding: var(--space-2) var(--space-5);
     font-family: var(--font-display);
     font-size: var(--text-xs);
-    font-weight: 700;
+    font-weight: var(--font-bold);
     text-transform: uppercase;
-    letter-spacing: 0.15em;
+    letter-spacing: var(--tracking-widest);
     color: var(--color-primary);
     background: var(--color-primary-muted);
     border: 1px solid var(--color-primary-subtle);
@@ -243,7 +243,7 @@ const {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--duration-slow) cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .capability-card:hover .card-inner {
@@ -257,11 +257,11 @@ const {
   .card-number {
     font-family: var(--font-display);
     font-size: clamp(4rem, 8vw, 6rem);
-    font-weight: 800;
+    font-weight: var(--font-extrabold);
     line-height: 1;
     color: var(--color-text-primary);
     opacity: 0.08;
-    transition: all 0.4s ease;
+    transition: all var(--duration-slow) ease;
     user-select: none;
   }
 
@@ -308,7 +308,7 @@ const {
     width: 24px;
     height: 2px;
     background: var(--color-text-muted);
-    transition: all 0.3s ease;
+    transition: all var(--duration-normal) ease;
   }
 
   .section-marker--highlight .marker-line {
@@ -318,10 +318,10 @@ const {
 
   .marker-label {
     font-family: var(--font-display);
-    font-size: 0.6875rem;
-    font-weight: 700;
+    font-size: var(--text-2xs);
+    font-weight: var(--font-bold);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: var(--tracking-wider);
     color: var(--color-text-muted);
   }
 

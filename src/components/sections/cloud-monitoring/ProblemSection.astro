@@ -225,7 +225,7 @@ const statusConfig: Record<string, { label: string; color: string }> = {
   .problem-section {
     position: relative;
     padding: var(--space-20) 0 var(--space-16);
-    background: #070709;
+    background: var(--color-bg-primary);
     overflow: hidden;
   }
 
@@ -241,28 +241,28 @@ const statusConfig: Record<string, { label: string; color: string }> = {
     background:
       radial-gradient(
         ellipse 50% 40% at 20% 25%,
-        rgba(255, 153, 0, 0.06) 0%,
+        var(--color-black-6) 0%,
         transparent 50%
       ),
       radial-gradient(
         ellipse 50% 40% at 80% 30%,
-        rgba(0, 120, 212, 0.05) 0%,
+        var(--color-black-5) 0%,
         transparent 50%
       ),
       radial-gradient(
         ellipse 40% 30% at 50% 70%,
-        rgba(239, 68, 68, 0.04) 0%,
+        var(--color-black-4) 0%,
         transparent 50%
       ),
-      linear-gradient(180deg, #070709 0%, #0a0a0c 100%);
+      linear-gradient(180deg, var(--color-bg-primary) 0%, #0a0a0c 100%);
   }
 
   .problem-grid {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+      linear-gradient(var(--color-white-1-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-white-1-2) 1px, transparent 1px);
     background-size: 50px 50px;
     mask-image: radial-gradient(
       ellipse 75% 55% at 50% 40%,
@@ -290,13 +290,13 @@ const statusConfig: Record<string, { label: string; color: string }> = {
   .silo-glow--1 {
     top: 15%;
     left: 10%;
-    background: radial-gradient(circle, rgba(255, 153, 0, 0.08) 0%, transparent 60%);
+    background: radial-gradient(circle, var(--color-black-8) 0%, transparent 60%);
   }
 
   .silo-glow--2 {
     bottom: 20%;
     right: 15%;
-    background: radial-gradient(circle, rgba(0, 120, 212, 0.06) 0%, transparent 60%);
+    background: radial-gradient(circle, var(--color-black-6) 0%, transparent 60%);
     animation-delay: 2.5s;
   }
 
@@ -321,16 +321,16 @@ const statusConfig: Record<string, { label: string; color: string }> = {
 
   .problem-eyebrow {
     display: inline-block;
-    padding: 0.35rem 0.9rem;
+    padding: var(--space-1-5) var(--space-2-5);
     margin-bottom: var(--space-4);
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: var(--text-xs);
     font-weight: var(--font-medium);
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: #f59e0b;
-    background: rgba(245, 158, 11, 0.1);
-    border: 1px solid rgba(245, 158, 11, 0.2);
+    background: var(--color-black-10);
+    border: 1px solid var(--color-black-20);
     border-radius: var(--radius-full);
   }
 
@@ -340,7 +340,7 @@ const statusConfig: Record<string, { label: string; color: string }> = {
     font-weight: var(--font-bold);
     line-height: 1.15;
     letter-spacing: -0.02em;
-    color: #fff;
+    color: var(--color-text-primary);
     margin-bottom: var(--space-5);
   }
 
@@ -348,7 +348,7 @@ const statusConfig: Record<string, { label: string; color: string }> = {
     font-family: var(--font-body);
     font-size: var(--text-base);
     line-height: 1.7;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--color-white-55);
   }
 
   /* Two Column Grid */
@@ -372,15 +372,15 @@ const statusConfig: Record<string, { label: string; color: string }> = {
     border-radius: 12px;
     overflow: hidden;
     box-shadow:
-      0 20px 50px rgba(0, 0, 0, 0.5),
-      0 0 80px rgba(245, 158, 11, 0.03);
+      0 20px 50px var(--color-black-50),
+      0 0 80px var(--color-black-3);
   }
 
   .dashboard-chrome {
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    padding: 10px 14px;
+    padding: var(--space-2-5) var(--space-3-5);
     background: #131315;
     border-bottom: 1px solid #1c1c20;
   }
@@ -404,20 +404,20 @@ const statusConfig: Record<string, { label: string; color: string }> = {
     flex: 1;
     text-align: center;
     font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: rgba(255, 255, 255, 0.35);
+    font-size: var(--text-2xs);
+    color: var(--color-white-35);
   }
 
   .chrome-warning {
     display: flex;
     align-items: center;
     gap: 5px;
-    padding: 3px 8px;
-    background: rgba(245, 158, 11, 0.12);
-    border: 1px solid rgba(245, 158, 11, 0.2);
-    border-radius: 4px;
+    padding: var(--space-1) var(--space-2);
+    background: var(--color-black-12);
+    border: 1px solid var(--color-black-20);
+    border-radius: var(--radius-sm);
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: var(--text-2xs);
     text-transform: uppercase;
     color: #f59e0b;
   }
@@ -479,18 +479,18 @@ const statusConfig: Record<string, { label: string; color: string }> = {
 
   .silo-provider {
     font-family: var(--font-display);
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
     font-weight: var(--font-semibold);
-    color: #fff;
+    color: var(--color-text-primary);
   }
 
   .silo-status {
     font-family: var(--font-mono);
-    font-size: 0.5rem;
+    font-size: var(--text-3xs);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    padding: 2px 6px;
-    border-radius: 3px;
+    padding: var(--space-0-5) var(--space-1-5);
+    border-radius: var(--radius-xs);
     width: fit-content;
   }
 
@@ -505,12 +505,12 @@ const statusConfig: Record<string, { label: string; color: string }> = {
     align-items: center;
     gap: 6px;
     font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: rgba(255, 255, 255, 0.4);
+    font-size: var(--text-2xs);
+    color: var(--color-white-40);
   }
 
   .silo-issue svg {
-    color: rgba(239, 68, 68, 0.6);
+    color: var(--color-black-60);
     flex-shrink: 0;
   }
 
@@ -520,13 +520,13 @@ const statusConfig: Record<string, { label: string; color: string }> = {
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.4), transparent);
+    background: linear-gradient(90deg, transparent, var(--color-black-40), transparent);
     opacity: 0.6;
   }
 
   .silo-card--blind {
-    border-color: rgba(239, 68, 68, 0.2);
-    background: rgba(239, 68, 68, 0.03);
+    border-color: var(--color-black-20);
+    background: var(--color-black-3);
   }
 
   .silo-card--blind .silo-blindspot {
@@ -540,8 +540,8 @@ const statusConfig: Record<string, { label: string; color: string }> = {
     align-items: center;
     gap: 12px;
     padding: 12px 14px;
-    background: rgba(239, 68, 68, 0.05);
-    border: 1px dashed rgba(239, 68, 68, 0.25);
+    background: var(--color-black-5);
+    border: 1px dashed var(--color-black-25);
     border-radius: 8px;
   }
 
@@ -551,7 +551,7 @@ const statusConfig: Record<string, { label: string; color: string }> = {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(239, 68, 68, 0.1);
+    background: var(--color-black-10);
     border-radius: 8px;
     color: #ef4444;
   }
@@ -564,13 +564,13 @@ const statusConfig: Record<string, { label: string; color: string }> = {
 
   .missing-label {
     font-family: var(--font-body);
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.7);
+    font-size: var(--text-sm);
+    color: var(--color-white-70);
   }
 
   .missing-status {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-bold);
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -609,8 +609,8 @@ const statusConfig: Record<string, { label: string; color: string }> = {
   }
 
   .pain-card:hover {
-    border-color: rgba(245, 158, 11, 0.25);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+    border-color: var(--color-black-25);
+    box-shadow: 0 6px 24px var(--color-black-35);
   }
 
   @keyframes fadeUp {
@@ -637,8 +637,8 @@ const statusConfig: Record<string, { label: string; color: string }> = {
     width: 44px;
     height: 44px;
     flex-shrink: 0;
-    background: rgba(245, 158, 11, 0.08);
-    border: 1px solid rgba(245, 158, 11, 0.12);
+    background: var(--color-black-8);
+    border: 1px solid var(--color-black-12);
     border-radius: 10px;
     color: #f59e0b;
     font-size: 1.1rem;
@@ -651,17 +651,17 @@ const statusConfig: Record<string, { label: string; color: string }> = {
 
   .pain-title {
     font-family: var(--font-display);
-    font-size: 1.05rem;
+    font-size: var(--text-lg);
     font-weight: var(--font-semibold);
-    color: #fff;
+    color: var(--color-text-primary);
     margin-bottom: 5px;
   }
 
   .pain-desc {
     font-family: var(--font-body);
-    font-size: 0.9rem;
+    font-size: var(--text-sm);
     line-height: 1.55;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-white-50);
     margin: 0;
   }
 
@@ -677,13 +677,13 @@ const statusConfig: Record<string, { label: string; color: string }> = {
     font-family: var(--font-body);
     font-size: var(--text-lg);
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--color-white-55);
     margin: 0;
   }
 
   .bridge-emphasis {
     font-weight: var(--font-bold);
-    color: #fff;
+    color: var(--color-text-primary);
   }
 
   /* Responsive */

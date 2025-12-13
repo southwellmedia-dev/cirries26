@@ -81,9 +81,9 @@ const icons: Record<string, string> = {
 };
 
 const statusColors: Record<string, { bg: string; border: string; text: string; label: string }> = {
-  critical: { bg: "rgba(239, 68, 68, 0.12)", border: "rgba(239, 68, 68, 0.25)", text: "#ef4444", label: "CRITICAL" },
-  warning: { bg: "rgba(245, 158, 11, 0.12)", border: "rgba(245, 158, 11, 0.25)", text: "#f59e0b", label: "WARNING" },
-  unknown: { bg: "rgba(107, 114, 128, 0.12)", border: "rgba(107, 114, 128, 0.25)", text: "#6b7280", label: "NO DATA" },
+  critical: { bg: "var(--color-black-12)", border: "var(--color-black-25)", text: "#ef4444", label: "CRITICAL" },
+  warning: { bg: "var(--color-black-12)", border: "var(--color-black-25)", text: "#f59e0b", label: "WARNING" },
+  unknown: { bg: "var(--color-black-12)", border: "var(--color-black-25)", text: "#6b7280", label: "NO DATA" },
 };
 ---
 
@@ -231,7 +231,7 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
   .problem-section {
     position: relative;
     padding: var(--space-20) 0 var(--space-16);
-    background: #070709;
+    background: var(--color-bg-primary);
     overflow: hidden;
   }
 
@@ -247,23 +247,23 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
     background:
       radial-gradient(
         ellipse 60% 50% at 25% 20%,
-        rgba(239, 68, 68, 0.08) 0%,
+        var(--color-black-8) 0%,
         transparent 50%
       ),
       radial-gradient(
         ellipse 40% 30% at 75% 70%,
-        rgba(234, 36, 43, 0.06) 0%,
+        var(--color-primary-6) 0%,
         transparent 50%
       ),
-      linear-gradient(180deg, #070709 0%, #0a0a0c 100%);
+      linear-gradient(180deg, var(--color-bg-primary) 0%, #0a0a0c 100%);
   }
 
   .problem-grid {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      linear-gradient(var(--color-white-1-5) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-white-1-5) 1px, transparent 1px);
     background-size: 48px 48px;
     mask-image: radial-gradient(
       ellipse 80% 60% at 50% 40%,
@@ -286,7 +286,7 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
     left: 15%;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(239, 68, 68, 0.1) 0%, transparent 60%);
+    background: radial-gradient(circle, var(--color-black-10) 0%, transparent 60%);
     animation: threatPulse 4s ease-in-out infinite;
   }
 
@@ -311,16 +311,16 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
 
   .problem-eyebrow {
     display: inline-block;
-    padding: 0.35rem 0.9rem;
+    padding: var(--space-1-5) var(--space-3-5);
     margin-bottom: var(--space-4);
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-medium);
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: #ef4444;
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.25);
+    background: var(--color-primary-10);
+    border: 1px solid var(--color-primary-25);
     border-radius: var(--radius-full);
   }
 
@@ -330,7 +330,7 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
     font-weight: var(--font-bold);
     line-height: 1.15;
     letter-spacing: -0.02em;
-    color: #fff;
+    color: var(--color-text-inverse);
     margin-bottom: var(--space-5);
   }
 
@@ -338,7 +338,7 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
     font-family: var(--font-body);
     font-size: var(--text-base);
     line-height: 1.7;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--color-white-55);
   }
 
   /* Two Column Grid */
@@ -359,30 +359,30 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
     width: 100%;
     background: #0b0b0d;
     border: 1px solid #1c1c20;
-    border-radius: 10px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow:
-      0 20px 40px rgba(0, 0, 0, 0.4),
-      0 0 80px rgba(239, 68, 68, 0.06);
+      0 20px 40px var(--color-black-40),
+      0 0 80px var(--color-black-6);
   }
 
   .noc-chrome {
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    padding: 8px 12px;
+    padding: var(--space-2) var(--space-3);
     background: #131315;
     border-bottom: 1px solid #1c1c20;
   }
 
   .chrome-dots {
     display: flex;
-    gap: 5px;
+    gap: var(--space-1-5);
   }
 
   .dot {
-    width: 9px;
-    height: 9px;
+    width: var(--space-2-5);
+    height: var(--space-2-5);
     border-radius: 50%;
   }
 
@@ -394,20 +394,20 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
     flex: 1;
     text-align: center;
     font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: rgba(255, 255, 255, 0.35);
+    font-size: var(--text-2xs);
+    color: var(--color-white-35);
   }
 
   .chrome-status {
     display: flex;
     align-items: center;
-    gap: 5px;
-    padding: 2px 8px;
-    background: rgba(239, 68, 68, 0.15);
-    border: 1px solid rgba(239, 68, 68, 0.25);
-    border-radius: 3px;
+    gap: var(--space-1-5);
+    padding: var(--space-0-5) var(--space-2);
+    background: var(--color-primary-15);
+    border: 1px solid var(--color-primary-25);
+    border-radius: var(--radius-sm);
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: var(--text-2xs);
     text-transform: uppercase;
     color: #ef4444;
   }
@@ -417,8 +417,8 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
   }
 
   @keyframes alertPulse {
-    0%, 100% { background: rgba(239, 68, 68, 0.15); }
-    50% { background: rgba(239, 68, 68, 0.25); }
+    0%, 100% { background: var(--color-primary-15); }
+    50% { background: var(--color-primary-25); }
   }
 
   .status-pulse {
@@ -438,10 +438,10 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
   .alert-overload {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 12px;
-    background: rgba(239, 68, 68, 0.08);
-    border-bottom: 1px solid rgba(239, 68, 68, 0.15);
+    gap: var(--space-2-5);
+    padding: var(--space-2-5) var(--space-3);
+    background: var(--color-primary-8);
+    border-bottom: 1px solid var(--color-primary-15);
   }
 
   .overload-icon {
@@ -450,9 +450,9 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(239, 68, 68, 0.15);
-    border: 1px solid rgba(239, 68, 68, 0.25);
-    border-radius: 6px;
+    background: var(--color-primary-15);
+    border: 1px solid var(--color-primary-25);
+    border-radius: var(--radius-md);
     color: #ef4444;
     flex-shrink: 0;
   }
@@ -465,28 +465,28 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
   .overload-title {
     display: block;
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--text-xs);
     font-weight: var(--font-semibold);
     text-transform: uppercase;
     letter-spacing: 0.03em;
     color: #ef4444;
-    margin-bottom: 2px;
+    margin-bottom: var(--space-0-5);
   }
 
   .overload-subtitle {
     display: block;
     font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: rgba(255, 255, 255, 0.4);
+    font-size: var(--text-2xs);
+    color: var(--color-white-40);
   }
 
   .overload-btn {
-    padding: 5px 10px;
-    background: rgba(239, 68, 68, 0.15);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    border-radius: 4px;
+    padding: var(--space-1-5) var(--space-2-5);
+    background: var(--color-primary-15);
+    border: 1px solid var(--color-primary-30);
+    border-radius: var(--radius-sm);
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-medium);
     text-transform: uppercase;
     letter-spacing: 0.03em;
@@ -497,37 +497,37 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
   }
 
   .overload-btn:hover {
-    background: rgba(239, 68, 68, 0.25);
+    background: var(--color-primary-25);
   }
 
   /* Siloed Tools */
   .siloed-tools {
-    padding: 12px;
+    padding: var(--space-3);
   }
 
   .tools-label {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--space-1-5);
     font-family: var(--font-mono);
-    font-size: 0.6rem;
+    font-size: var(--text-2xs);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: rgba(255, 255, 255, 0.35);
-    margin-bottom: 10px;
+    color: var(--color-white-35);
+    margin-bottom: var(--space-2-5);
   }
 
   .tools-grid {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--space-2);
   }
 
   .tool-card {
-    padding: 10px 12px;
+    padding: var(--space-2-5) var(--space-3);
     background: var(--status-bg);
     border: 1px solid var(--status-border);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     opacity: 0;
     transform: translateX(-8px);
     animation: slideIn 0.4s ease forwards;
@@ -545,41 +545,41 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 8px;
+    margin-bottom: var(--space-2);
   }
 
   .tool-name {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--text-xs);
     font-weight: var(--font-semibold);
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--color-white-80);
   }
 
   .tool-status {
-    padding: 2px 6px;
+    padding: var(--space-0-5) var(--space-1-5);
     font-family: var(--font-mono);
-    font-size: 0.5rem;
+    font-size: var(--text-3xs);
     font-weight: var(--font-medium);
     text-transform: uppercase;
     letter-spacing: 0.02em;
     color: var(--status-text);
-    background: rgba(0, 0, 0, 0.25);
-    border-radius: 3px;
+    background: var(--color-black-25);
+    border-radius: var(--radius-sm);
   }
 
   .tool-metric {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    padding-bottom: 8px;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
-    margin-bottom: 8px;
+    padding-bottom: var(--space-2);
+    border-bottom: 1px dashed var(--color-white-8);
+    margin-bottom: var(--space-2);
   }
 
   .metric-label {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: rgba(255, 255, 255, 0.4);
+    font-size: var(--text-2xs);
+    color: var(--color-white-40);
   }
 
   .metric-value {
@@ -592,10 +592,10 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
   .tool-disconnect {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: var(--space-1-5);
     font-family: var(--font-mono);
-    font-size: 0.55rem;
-    color: rgba(255, 255, 255, 0.3);
+    font-size: var(--text-2xs);
+    color: var(--color-white-30);
   }
 
   .tool-disconnect svg {
@@ -607,19 +607,19 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 12px;
-    background: #0a0a0c;
-    border-top: 1px solid #18181b;
+    padding: var(--space-2-5) var(--space-3);
+    background: #0b0b0d;
+    border-top: 1px solid #1c1c20;
   }
 
   .confusion-question {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--space-1-5);
     font-family: var(--font-body);
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
     font-style: italic;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-white-50);
   }
 
   .confusion-question svg {
@@ -629,18 +629,18 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
   .correlation-status {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: var(--space-1-5);
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: var(--text-2xs);
     text-transform: uppercase;
     letter-spacing: 0.03em;
-    color: rgba(255, 255, 255, 0.35);
+    color: var(--color-white-35);
   }
 
   .correlation-dot {
-    width: 6px;
-    height: 6px;
-    background: #6b7280;
+    width: var(--space-1-5);
+    height: var(--space-1-5);
+    background: var(--color-text-dim);
     border-radius: 50%;
   }
 
@@ -653,18 +653,18 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
   .pain-cards {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--space-2-5);
     flex: 1;
   }
 
   .pain-card {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
+    gap: var(--space-3);
+    padding: var(--space-3-5) var(--space-4);
     background: #0b0b0d;
     border: 1px solid #1c1c20;
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     position: relative;
     overflow: hidden;
     flex: 1;
@@ -676,8 +676,8 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
   }
 
   .pain-card:hover {
-    border-color: rgba(239, 68, 68, 0.25);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-color: var(--color-primary-25);
+    box-shadow: 0 4px 20px var(--color-black-30);
   }
 
   @keyframes fadeUp {
@@ -704,9 +704,9 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
     width: 40px;
     height: 40px;
     flex-shrink: 0;
-    background: rgba(239, 68, 68, 0.08);
-    border: 1px solid rgba(239, 68, 68, 0.12);
-    border-radius: 8px;
+    background: var(--color-primary-8);
+    border: 1px solid var(--color-primary-12);
+    border-radius: var(--radius-lg);
     color: #ef4444;
   }
 
@@ -719,15 +719,15 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
     font-family: var(--font-display);
     font-size: 1.1rem;
     font-weight: var(--font-semibold);
-    color: #fff;
-    margin-bottom: 4px;
+    color: var(--color-text-inverse);
+    margin-bottom: var(--space-1);
   }
 
   .pain-desc {
     font-family: var(--font-body);
-    font-size: 0.95rem;
+    font-size: var(--text-base);
     line-height: 1.55;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-white-50);
     margin: 0;
   }
 
@@ -743,13 +743,13 @@ const statusColors: Record<string, { bg: string; border: string; text: string; l
     font-family: var(--font-body);
     font-size: var(--text-lg);
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--color-white-55);
     margin: 0;
   }
 
   .bridge-emphasis {
     font-weight: var(--font-bold);
-    color: #fff;
+    color: var(--color-text-inverse);
   }
 
   /* Responsive */

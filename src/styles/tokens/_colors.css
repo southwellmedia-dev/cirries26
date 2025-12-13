@@ -17,6 +17,21 @@
   --color-success: #22c55e;
   --color-success-dark: #16a34a;
   --color-success-subtle: rgba(34, 197, 94, 0.12);
+  --color-success-5: rgba(34, 197, 94, 0.05);
+  --color-success-6: rgba(34, 197, 94, 0.06);
+  --color-success-10: rgba(34, 197, 94, 0.1);
+  --color-success-15: rgba(34, 197, 94, 0.15);
+  --color-success-20: rgba(34, 197, 94, 0.2);
+
+  --color-info: #3b82f6;
+  --color-info-3: rgba(59, 130, 246, 0.03);
+  --color-info-5: rgba(59, 130, 246, 0.05);
+  --color-info-10: rgba(59, 130, 246, 0.1);
+  --color-info-15: rgba(59, 130, 246, 0.15);
+  --color-info-20: rgba(59, 130, 246, 0.2);
+  --color-info-30: rgba(59, 130, 246, 0.3);
+  --color-info-40: rgba(59, 130, 246, 0.4);
+  --color-info-50: rgba(59, 130, 246, 0.5);
 
   /* --------------------------------
      BACKGROUND COLORS
@@ -86,6 +101,154 @@
 
   /* Inverse text for overlays */
   --color-text-inverse: #FFFFFF;
+
+  /* --------------------------------
+     WHITE TRANSPARENCY VARIANTS
+     -------------------------------- */
+  --color-white-0: rgba(255, 255, 255, 0);
+  --color-white-1: rgba(255, 255, 255, 0.01);
+  --color-white-2: rgba(255, 255, 255, 0.02);
+  --color-white-3: rgba(255, 255, 255, 0.03);
+  --color-white-4: rgba(255, 255, 255, 0.04);
+  --color-white-5: rgba(255, 255, 255, 0.05);
+  --color-white-6: rgba(255, 255, 255, 0.06);
+  --color-white-8: rgba(255, 255, 255, 0.08);
+  --color-white-10: rgba(255, 255, 255, 0.1);
+  --color-white-12: rgba(255, 255, 255, 0.12);
+  --color-white-15: rgba(255, 255, 255, 0.15);
+  --color-white-20: rgba(255, 255, 255, 0.2);
+  --color-white-25: rgba(255, 255, 255, 0.25);
+  --color-white-30: rgba(255, 255, 255, 0.3);
+  --color-white-35: rgba(255, 255, 255, 0.35);
+  --color-white-40: rgba(255, 255, 255, 0.4);
+  --color-white-45: rgba(255, 255, 255, 0.45);
+  --color-white-50: rgba(255, 255, 255, 0.5);
+  --color-white-55: rgba(255, 255, 255, 0.55);
+  --color-white-60: rgba(255, 255, 255, 0.6);
+  --color-white-70: rgba(255, 255, 255, 0.7);
+  --color-white-75: rgba(255, 255, 255, 0.75);
+  --color-white-80: rgba(255, 255, 255, 0.8);
+  --color-white-85: rgba(255, 255, 255, 0.85);
+  --color-white-90: rgba(255, 255, 255, 0.9);
+  --color-white-95: rgba(255, 255, 255, 0.95);
+  --color-white-98: rgba(255, 255, 255, 0.98);
+  --color-white-100: rgba(255, 255, 255, 1);
+
+  /* --------------------------------
+     BLACK TRANSPARENCY VARIANTS
+     -------------------------------- */
+  --color-black-0: rgba(0, 0, 0, 0);
+  --color-black-1: rgba(0, 0, 0, 0.01);
+  --color-black-2: rgba(0, 0, 0, 0.02);
+  --color-black-3: rgba(0, 0, 0, 0.03);
+  --color-black-4: rgba(0, 0, 0, 0.04);
+  --color-black-5: rgba(0, 0, 0, 0.05);
+  --color-black-6: rgba(0, 0, 0, 0.06);
+  --color-black-8: rgba(0, 0, 0, 0.08);
+  --color-black-10: rgba(0, 0, 0, 0.1);
+  --color-black-12: rgba(0, 0, 0, 0.12);
+  --color-black-15: rgba(0, 0, 0, 0.15);
+  --color-black-20: rgba(0, 0, 0, 0.2);
+  --color-black-25: rgba(0, 0, 0, 0.25);
+  --color-black-30: rgba(0, 0, 0, 0.3);
+  --color-black-35: rgba(0, 0, 0, 0.35);
+  --color-black-40: rgba(0, 0, 0, 0.4);
+  --color-black-50: rgba(0, 0, 0, 0.5);
+  --color-black-55: rgba(0, 0, 0, 0.55);
+  --color-black-60: rgba(0, 0, 0, 0.6);
+  --color-black-70: rgba(0, 0, 0, 0.7);
+  --color-black-80: rgba(0, 0, 0, 0.8);
+  --color-black-85: rgba(0, 0, 0, 0.85);
+  --color-black-90: rgba(0, 0, 0, 0.9);
+  --color-black-92: rgba(0, 0, 0, 0.92);
+  --color-black-95: rgba(0, 0, 0, 0.95);
+  --color-black-98: rgba(0, 0, 0, 0.98);
+  --color-black-99: rgba(0, 0, 0, 0.99);
+  --color-black-100: rgba(0, 0, 0, 1);
+
+  /* --------------------------------
+     PRIMARY TRANSPARENCY VARIANTS
+     -------------------------------- */
+  --color-primary-0: rgba(234, 36, 43, 0);
+  --color-primary-1: rgba(234, 36, 43, 0.01);
+  --color-primary-2: rgba(234, 36, 43, 0.02);
+  --color-primary-3: rgba(234, 36, 43, 0.03);
+  --color-primary-4: rgba(234, 36, 43, 0.04);
+  --color-primary-5: rgba(234, 36, 43, 0.05);
+  --color-primary-6: rgba(234, 36, 43, 0.06);
+  --color-primary-8: rgba(234, 36, 43, 0.08);
+  --color-primary-10: rgba(234, 36, 43, 0.1);
+  --color-primary-12: rgba(234, 36, 43, 0.12);
+  --color-primary-15: rgba(234, 36, 43, 0.15);
+  --color-primary-20: rgba(234, 36, 43, 0.2);
+  --color-primary-25: rgba(234, 36, 43, 0.25);
+  --color-primary-30: rgba(234, 36, 43, 0.3);
+  --color-primary-35: rgba(234, 36, 43, 0.35);
+  --color-primary-40: rgba(234, 36, 43, 0.4);
+  --color-primary-50: rgba(234, 36, 43, 0.5);
+  --color-primary-60: rgba(234, 36, 43, 0.6);
+  --color-primary-70: rgba(234, 36, 43, 0.7);
+  --color-primary-80: rgba(234, 36, 43, 0.8);
+  --color-primary-90: rgba(234, 36, 43, 0.9);
+  --color-primary-100: rgba(234, 36, 43, 1);
+
+  /* --------------------------------
+     SUCCESS (GREEN) TRANSPARENCY VARIANTS
+     -------------------------------- */
+  --color-success-4: rgba(34, 197, 94, 0.04);
+  --color-success-5: rgba(34, 197, 94, 0.05);
+  --color-success-6: rgba(34, 197, 94, 0.06);
+  --color-success-8: rgba(34, 197, 94, 0.08);
+  --color-success-10: rgba(34, 197, 94, 0.1);
+  --color-success-15: rgba(34, 197, 94, 0.15);
+  --color-success-20: rgba(34, 197, 94, 0.2);
+  --color-success-25: rgba(34, 197, 94, 0.25);
+  --color-success-30: rgba(34, 197, 94, 0.3);
+  --color-success-35: rgba(34, 197, 94, 0.35);
+  --color-success-40: rgba(34, 197, 94, 0.4);
+  --color-success-50: rgba(34, 197, 94, 0.5);
+
+  /* --------------------------------
+     ERROR (RED) TRANSPARENCY VARIANTS
+     -------------------------------- */
+  --color-error: #ef4444;
+  --color-error-5: rgba(239, 68, 68, 0.05);
+  --color-error-10: rgba(239, 68, 68, 0.1);
+  --color-error-50: rgba(239, 68, 68, 0.5);
+
+  /* --------------------------------
+     OVERLAY BACKGROUNDS
+     -------------------------------- */
+  --color-bg-overlay-light: rgba(10, 10, 10, 0.6);
+  --color-bg-overlay: rgba(10, 10, 10, 0.85);
+  --color-bg-overlay-heavy: rgba(10, 10, 10, 0.95);
+  --color-bg-overlay-dark: rgba(0, 0, 0, 0.85);
+
+  /* --------------------------------
+     DARK BACKGROUND VARIANTS
+     For card backgrounds in dark sections
+     -------------------------------- */
+  --color-bg-dark: #0a0a0a;
+  --color-bg-dark-90: rgba(10, 10, 10, 0.9);
+  --color-bg-dark-92: rgba(10, 10, 10, 0.92);
+  --color-bg-dark-95: rgba(10, 10, 10, 0.95);
+  --color-bg-dark-98: rgba(10, 10, 10, 0.98);
+
+  /* Error color variants */
+  --color-error-15: rgba(239, 68, 68, 0.15);
+  --color-error-20: rgba(239, 68, 68, 0.2);
+  --color-error-30: rgba(239, 68, 68, 0.3);
+
+  /* Warning color variants */
+  --color-warning: #f59e0b;
+  --color-warning-dark: #b45309;
+  --color-warning-5: rgba(245, 158, 11, 0.05);
+  --color-warning-10: rgba(245, 158, 11, 0.1);
+  --color-warning-15: rgba(245, 158, 11, 0.15);
+  --color-warning-20: rgba(245, 158, 11, 0.2);
+  --color-warning-30: rgba(245, 158, 11, 0.3);
+  --color-warning-40: rgba(245, 158, 11, 0.4);
+  --color-warning-50: rgba(245, 158, 11, 0.5);
 }
 
 /* ==========================================================================
@@ -109,6 +272,7 @@
 
   /* Border Colors */
   --color-border: #E0E0E0;
+  --color-border-lighter: #F5F5F5;
   --color-border-subtle: #EEEEEE;
   --color-border-hover: #CCCCCC;
 

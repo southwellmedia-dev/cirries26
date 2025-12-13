@@ -8,6 +8,7 @@
 import { Image } from "astro:assets";
 import Container from "../../ui/Container.astro";
 import Button from "../../ui/Button.astro";
+import StatCard from "../../ui/StatCard.astro";
 
 // Import images
 import dartLogoLight from "../../../assets/logos/dart-lightmode.svg";
@@ -114,9 +115,9 @@ const {
                 x2="100%"
                 y2="0%"
               >
-                <stop offset="0%" stop-color="rgba(220, 38, 38, 0)"></stop>
-                <stop offset="50%" stop-color="rgba(220, 38, 38, 0.6)"></stop>
-                <stop offset="100%" stop-color="rgba(220, 38, 38, 0)"></stop>
+                <stop offset="0%" stop-color="var(--color-primary-0)"></stop>
+                <stop offset="50%" stop-color="var(--color-primary-60)"></stop>
+                <stop offset="100%" stop-color="var(--color-primary-0)"></stop>
               </linearGradient>
               <filter
                 id="mlNodeGlow"
@@ -145,31 +146,18 @@ const {
           </div>
 
           <!-- Stat Nodes -->
-          {
-            stats.map((stat, index) => (
-              <div class="stat-node" data-node-index={index}>
-                <div class="node-content">
-                  <div class="node-icon">
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path d={stat.icon} />
-                    </svg>
-                  </div>
-                  <div class="node-data">
-                    <span class="node-value">{stat.value}</span>
-                    <span class="node-label">{stat.label}</span>
-                  </div>
-                </div>
-                <div class="node-glow" />
-              </div>
-            ))
-          }
+          {stats.map((stat, index) => (
+            <div class="stat-node-wrapper" data-node-index={index}>
+              <StatCard
+                icon={stat.icon}
+                value={stat.value}
+                label={stat.label}
+                theme="dark"
+                variant="dashed"
+                size="md"
+              />
+            </div>
+          ))}
 
           <!-- Floating data particles -->
           <div class="data-particles" id="ml-data-particles"></div>
@@ -202,30 +190,30 @@ const {
     background:
       radial-gradient(
         ellipse 100% 80% at 80% 40%,
-        rgba(220, 38, 38, 0.06) 0%,
+        var(--color-primary-6) 0%,
         transparent 50%
       ),
       radial-gradient(
         ellipse 60% 60% at 20% 80%,
-        rgba(220, 38, 38, 0.04) 0%,
+        var(--color-primary-4) 0%,
         transparent 40%
       ),
       radial-gradient(
         ellipse 40% 40% at 90% 90%,
-        rgba(220, 38, 38, 0.03) 0%,
+        var(--color-primary-3) 0%,
         transparent 30%
       ),
-      linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #f0f1f3 100%);
+      linear-gradient(180deg, var(--color-bg-card) 0%, var(--color-bg-secondary) 50%, var(--color-bg-tertiary) 100%);
   }
 
   .neural-grid {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-      linear-gradient(rgba(220, 38, 38, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(220, 38, 38, 0.02) 1px, transparent 1px);
+      linear-gradient(var(--color-black-3) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-black-3) 1px, transparent 1px),
+      linear-gradient(var(--color-primary-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-primary-2) 1px, transparent 1px);
     background-size:
       60px 60px,
       60px 60px,
@@ -249,22 +237,22 @@ const {
     background-image:
       radial-gradient(
         circle at 20% 30%,
-        rgba(220, 38, 38, 0.1) 0px,
+        var(--color-primary-10) 0px,
         transparent 3px
       ),
       radial-gradient(
         circle at 80% 70%,
-        rgba(220, 38, 38, 0.08) 0px,
+        var(--color-primary-8) 0px,
         transparent 3px
       ),
       radial-gradient(
         circle at 40% 80%,
-        rgba(0, 0, 0, 0.04) 0px,
+        var(--color-black-4) 0px,
         transparent 2px
       ),
       radial-gradient(
         circle at 60% 20%,
-        rgba(0, 0, 0, 0.03) 0px,
+        var(--color-black-3) 0px,
         transparent 2px
       );
     animation: neuralParticleDrift 20s ease-in-out infinite;
@@ -379,7 +367,7 @@ const {
   }
 
   :global(.ml-connection-line) {
-    stroke: rgba(220, 38, 38, 0.5);
+    stroke: var(--color-primary-50);
     stroke-width: 1.5;
     fill: none;
     stroke-dasharray: 6 4;
@@ -408,7 +396,7 @@ const {
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      rgba(220, 38, 38, 0.15) 0%,
+      var(--color-primary-15) 0%,
       transparent 70%
     );
     animation: neuralCorePulse 3s ease-in-out infinite;
@@ -430,21 +418,21 @@ const {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    border: 1px solid rgba(220, 38, 38, 0.25);
+    border: 1px solid var(--color-primary-25);
   }
 
   .core-ring-1 {
     inset: -10px;
     animation: neuralRingRotate 20s linear infinite;
     border-style: dashed;
-    border-color: rgba(220, 38, 38, 0.2);
+    border-color: var(--color-primary-20);
   }
 
   .core-ring-2 {
     inset: -25px;
     animation: neuralRingRotate 30s linear infinite reverse;
     border-style: dotted;
-    border-color: rgba(220, 38, 38, 0.12);
+    border-color: var(--color-primary-12);
   }
 
   @keyframes neuralRingRotate {
@@ -462,15 +450,15 @@ const {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--color-white-95);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--color-black-8);
     box-shadow:
-      0 4px 30px rgba(0, 0, 0, 0.1),
-      0 0 40px rgba(220, 38, 38, 0.1),
-      inset 0 0 30px rgba(255, 255, 255, 0.5);
+      0 4px 30px var(--color-black-10),
+      0 0 40px var(--color-primary-10),
+      inset 0 0 30px var(--color-white-50);
     overflow: hidden;
   }
 
@@ -479,152 +467,49 @@ const {
     height: auto;
   }
 
-  /* Stat Nodes */
-  .stat-node {
+  /* Stat Node Wrappers - positioning for neural network */
+  .stat-node-wrapper {
     position: absolute;
     transform: translate(-50%, -50%);
     z-index: 5;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .stat-node:hover {
+  .stat-node-wrapper:hover {
     z-index: 20;
-    transform: translate(-50%, -50%) scale(1.08);
-  }
-
-  .node-content {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.875rem 1.25rem;
-    background: rgba(15, 15, 15, 0.92);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1.5px dashed rgba(220, 38, 38, 0.5);
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-  }
-
-  .stat-node:hover .node-content {
-    background: rgba(20, 20, 20, 0.95);
-    border-color: rgba(220, 38, 38, 0.7);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-  }
-
-  .node-icon {
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-primary-subtle);
-    border-radius: var(--radius-md);
-    color: var(--color-primary);
-    transition: all 0.3s ease;
-  }
-
-  .stat-node:hover .node-icon {
-    background: var(--color-primary-glow);
-    transform: scale(1.1);
-  }
-
-  .node-data {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .node-value {
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
-    font-weight: 700;
-    color: var(--color-text-inverse);
-    line-height: 1.1;
-  }
-
-  .node-label {
-    font-size: var(--text-xs);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-text-secondary);
-    margin-top: var(--space-0-5);
-  }
-
-  .node-glow {
-    position: absolute;
-    inset: -4px;
-    background: radial-gradient(
-      circle,
-      rgba(220, 38, 38, 0.1) 0%,
-      transparent 70%
-    );
-    border-radius: 16px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: -1;
-  }
-
-  .stat-node:hover .node-glow {
-    opacity: 1;
   }
 
   /* Stat Node Floating Animations */
-  .stat-node[data-node-index="0"] {
+  .stat-node-wrapper[data-node-index="0"] {
     animation: nodeFloat0 8s ease-in-out infinite;
   }
-  .stat-node[data-node-index="1"] {
+  .stat-node-wrapper[data-node-index="1"] {
     animation: nodeFloat1 9s ease-in-out infinite;
   }
-  .stat-node[data-node-index="2"] {
+  .stat-node-wrapper[data-node-index="2"] {
     animation: nodeFloat2 7s ease-in-out infinite;
   }
-  .stat-node[data-node-index="3"] {
+  .stat-node-wrapper[data-node-index="3"] {
     animation: nodeFloat3 8.5s ease-in-out infinite;
   }
 
   @keyframes nodeFloat0 {
-    0%,
-    100% {
-      transform: translate(-50%, -50%) translateY(0) translateX(0);
-    }
-    50% {
-      transform: translate(-50%, -50%) translateY(-8px) translateX(4px);
-    }
+    0%, 100% { transform: translate(-50%, -50%) translateY(0) translateX(0); }
+    50% { transform: translate(-50%, -50%) translateY(-8px) translateX(4px); }
   }
 
   @keyframes nodeFloat1 {
-    0%,
-    100% {
-      transform: translate(-50%, -50%) translateY(0) translateX(0);
-    }
-    50% {
-      transform: translate(-50%, -50%) translateY(6px) translateX(-6px);
-    }
+    0%, 100% { transform: translate(-50%, -50%) translateY(0) translateX(0); }
+    50% { transform: translate(-50%, -50%) translateY(6px) translateX(-6px); }
   }
 
   @keyframes nodeFloat2 {
-    0%,
-    100% {
-      transform: translate(-50%, -50%) translateY(0) translateX(0);
-    }
-    50% {
-      transform: translate(-50%, -50%) translateY(-10px) translateX(-4px);
-    }
+    0%, 100% { transform: translate(-50%, -50%) translateY(0) translateX(0); }
+    50% { transform: translate(-50%, -50%) translateY(-10px) translateX(-4px); }
   }
 
   @keyframes nodeFloat3 {
-    0%,
-    100% {
-      transform: translate(-50%, -50%) translateY(0) translateX(0);
-    }
-    50% {
-      transform: translate(-50%, -50%) translateY(8px) translateX(5px);
-    }
+    0%, 100% { transform: translate(-50%, -50%) translateY(0) translateX(0); }
+    50% { transform: translate(-50%, -50%) translateY(8px) translateX(5px); }
   }
 
   /* Data Particles Container */
@@ -639,10 +524,10 @@ const {
     position: absolute;
     width: 4px;
     height: 4px;
-    background: rgba(140, 140, 140, 0.7);
+    background: var(--color-text-dim);
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    box-shadow: 0 0 6px rgba(140, 140, 140, 0.5);
+    box-shadow: 0 0 var(--space-1-5) var(--color-text-dim);
     pointer-events: none;
   }
 
@@ -695,24 +580,6 @@ const {
     }
     .core-ring-2 {
       inset: -18px;
-    }
-
-    .node-content {
-      padding: 0.625rem 0.875rem;
-      gap: 0.5rem;
-    }
-
-    .node-icon {
-      width: 28px;
-      height: 28px;
-    }
-
-    .node-value {
-      font-size: 0.95rem;
-    }
-
-    .node-label {
-      font-size: 0.5625rem;
     }
   }
 </style>

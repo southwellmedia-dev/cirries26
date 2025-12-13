@@ -155,11 +155,11 @@ const deviceIcons: Record<string, string> = {
               x2="100%"
               y2="0%"
             >
-              <stop offset="0%" style="stop-color: rgba(234, 36, 43, 0.1)"
+              <stop offset="0%" style="stop-color: var(--color-primary-10)"
               ></stop>
-              <stop offset="50%" style="stop-color: rgba(234, 36, 43, 0.4)"
+              <stop offset="50%" style="stop-color: var(--color-primary-40)"
               ></stop>
-              <stop offset="100%" style="stop-color: rgba(234, 36, 43, 0.1)"
+              <stop offset="100%" style="stop-color: var(--color-primary-10)"
               ></stop>
             </linearGradient>
             <filter id="glow">
@@ -230,7 +230,7 @@ const deviceIcons: Record<string, string> = {
   .meet-iot-section {
     position: relative;
     padding: var(--space-20) 0;
-    background: #ffffff;
+    background: var(--color-bg-primary);
     overflow: hidden;
   }
 
@@ -246,23 +246,23 @@ const deviceIcons: Record<string, string> = {
     background:
       radial-gradient(
         ellipse 100% 80% at 75% 40%,
-        rgba(234, 36, 43, 0.04) 0%,
+        var(--color-primary-4) 0%,
         transparent 50%
       ),
       radial-gradient(
         ellipse 60% 60% at 25% 80%,
-        rgba(59, 130, 246, 0.03) 0%,
+        var(--color-blue-3) 0%,
         transparent 40%
       ),
-      linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #f0f1f3 100%);
+      linear-gradient(180deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 50%, var(--color-bg-tertiary) 100%);
   }
 
   .iot-grid {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+      linear-gradient(var(--color-black-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-black-2) 1px, transparent 1px);
     background-size: 32px 32px;
     mask-image: radial-gradient(
       ellipse 90% 80% at 70% 50%,
@@ -311,7 +311,7 @@ const deviceIcons: Record<string, string> = {
     font-weight: var(--font-bold);
     line-height: 1.15;
     letter-spacing: var(--tracking-tight);
-    color: #111111;
+    color: var(--color-text-primary);
     margin-bottom: var(--space-6);
   }
 
@@ -324,12 +324,12 @@ const deviceIcons: Record<string, string> = {
     font-family: var(--font-body);
     font-size: var(--text-base);
     line-height: var(--leading-relaxed);
-    color: #555555;
+    color: var(--color-text-secondary);
     margin-bottom: var(--space-4);
   }
 
   .meet-iot__text :global(strong) {
-    color: #111111;
+    color: var(--color-text-primary);
     font-weight: var(--font-semibold);
   }
 
@@ -375,7 +375,7 @@ const deviceIcons: Record<string, string> = {
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      rgba(220, 38, 38, 0.15) 0%,
+      var(--color-red-15) 0%,
       transparent 70%
     );
     animation: corePulse 3s ease-in-out infinite;
@@ -397,21 +397,21 @@ const deviceIcons: Record<string, string> = {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    border: 1px solid rgba(220, 38, 38, 0.25);
+    border: 1px solid var(--color-red-25);
   }
 
   .core-ring-1 {
     inset: -10px;
     animation: ringRotate 20s linear infinite;
     border-style: dashed;
-    border-color: rgba(220, 38, 38, 0.2);
+    border-color: var(--color-red-20);
   }
 
   .core-ring-2 {
     inset: -25px;
     animation: ringRotate 30s linear infinite reverse;
     border-style: dotted;
-    border-color: rgba(220, 38, 38, 0.12);
+    border-color: var(--color-red-12);
   }
 
   @keyframes ringRotate {
@@ -429,14 +429,14 @@ const deviceIcons: Record<string, string> = {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--color-white-95);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--color-black-8);
     box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.08),
-      0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+      0 8px 32px var(--color-black-8),
+      0 0 0 1px var(--color-white-50) inset;
     z-index: 12;
   }
 
@@ -477,12 +477,12 @@ const deviceIcons: Record<string, string> = {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 10px;
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-black-8);
+    border-radius: var(--radius-lg);
     box-shadow:
-      0 2px 8px rgba(0, 0, 0, 0.06),
-      0 4px 16px rgba(0, 0, 0, 0.04);
+      0 2px 8px var(--color-black-6),
+      0 4px 16px var(--color-black-4);
     color: #374151;
     transition: all 0.3s ease;
   }
@@ -490,18 +490,18 @@ const deviceIcons: Record<string, string> = {
   .iot-device:hover .device-icon {
     border-color: var(--color-primary);
     box-shadow:
-      0 4px 16px rgba(234, 36, 43, 0.15),
-      0 0 0 3px rgba(234, 36, 43, 0.08);
+      0 4px 16px var(--color-primary-15),
+      0 0 0 3px var(--color-primary-8);
     color: var(--color-primary);
   }
 
   .device-label {
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-medium);
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    color: #6b7280;
+    color: var(--color-text-muted);
     white-space: nowrap;
   }
 
@@ -513,12 +513,12 @@ const deviceIcons: Record<string, string> = {
     transform: translateX(-50%);
     width: 12px;
     height: 12px;
-    background: #ffffff;
+    background: var(--color-bg-primary);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px var(--color-black-15);
     z-index: 2;
   }
 
@@ -546,24 +546,24 @@ const deviceIcons: Record<string, string> = {
   /* Critical devices - inverted red box */
   .iot-device--critical .device-icon {
     background: linear-gradient(145deg, #ef4444 0%, #dc2626 100%);
-    border-color: rgba(239, 68, 68, 0.8);
-    color: #ffffff;
+    border-color: var(--color-red-80);
+    color: var(--color-bg-primary);
     box-shadow:
-      0 4px 16px rgba(239, 68, 68, 0.3),
-      0 2px 8px rgba(0, 0, 0, 0.1);
+      0 4px 16px var(--color-red-30),
+      0 2px 8px var(--color-black-10);
   }
 
   .iot-device--critical:hover .device-icon {
     background: linear-gradient(145deg, #f87171 0%, #ef4444 100%);
-    border-color: rgba(239, 68, 68, 1);
-    color: #ffffff;
+    border-color: var(--color-red-100);
+    color: var(--color-bg-primary);
     box-shadow:
-      0 8px 24px rgba(239, 68, 68, 0.4),
-      0 0 0 3px rgba(239, 68, 68, 0.2);
+      0 8px 24px var(--color-red-40),
+      0 0 0 3px var(--color-red-20);
   }
 
   .iot-device--critical .device-status {
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--color-white-90);
   }
 
   @keyframes statusBlink {
@@ -595,22 +595,22 @@ const deviceIcons: Record<string, string> = {
 
   :global(.iot-data-packet--healthy) {
     background: #22c55e;
-    box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+    box-shadow: 0 0 8px var(--color-green-80);
   }
 
   :global(.iot-data-packet--warning) {
     background: #f59e0b;
-    box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
+    box-shadow: 0 0 8px var(--color-orange-80);
   }
 
   :global(.iot-data-packet--critical) {
     background: #ef4444;
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.9);
+    box-shadow: 0 0 10px var(--color-red-90);
   }
 
   /* Connection Lines */
   :global(.iot-connection-line) {
-    stroke: rgba(234, 36, 43, 0.15);
+    stroke: var(--color-primary-15);
     stroke-width: 1;
     fill: none;
     stroke-dasharray: 4 4;
@@ -618,7 +618,7 @@ const deviceIcons: Record<string, string> = {
   }
 
   :global(.iot-mesh-line) {
-    stroke: rgba(0, 0, 0, 0.04);
+    stroke: var(--color-black-4);
     stroke-width: 1;
     fill: none;
   }

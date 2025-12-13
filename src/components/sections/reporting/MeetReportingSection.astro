@@ -153,7 +153,7 @@ const stakeholders = [
   .meet-reporting-section {
     position: relative;
     padding: var(--space-24) 0;
-    background: linear-gradient(180deg, #ffffff 0%, #f8f9fb 100%);
+    background: linear-gradient(180deg, var(--color-bg-primary) 0%, var(--color-bg-tertiary) 100%);
     overflow: hidden;
   }
 
@@ -167,16 +167,16 @@ const stakeholders = [
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 80% 60% at 75% 40%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
-      radial-gradient(ellipse 50% 50% at 25% 60%, rgba(234, 36, 43, 0.03) 0%, transparent 40%);
+      radial-gradient(ellipse 80% 60% at 75% 40%, var(--color-primary-4) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 50% at 25% 60%, var(--color-primary-3) 0%, transparent 40%);
   }
 
   .bg-grid {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+      linear-gradient(var(--color-black-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-black-2) 1px, transparent 1px);
     background-size: 40px 40px;
     mask-image: radial-gradient(ellipse 80% 70% at 70% 50%, black 20%, transparent 70%);
     -webkit-mask-image: radial-gradient(ellipse 80% 70% at 70% 50%, black 20%, transparent 70%);
@@ -201,7 +201,7 @@ const stakeholders = [
     display: inline-block;
     margin-bottom: var(--space-4);
     font-family: var(--font-display);
-    font-size: 0.6875rem;
+    font-size: var(--text-2xs);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -214,7 +214,7 @@ const stakeholders = [
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.02em;
-    color: #0f0f0f;
+    color: var(--color-text-primary);
     margin-bottom: var(--space-6);
   }
 
@@ -227,7 +227,7 @@ const stakeholders = [
     font-family: var(--font-body);
     font-size: 1rem;
     line-height: 1.75;
-    color: #555;
+    color: var(--color-text-secondary);
     margin-bottom: var(--space-4);
   }
 
@@ -236,7 +236,7 @@ const stakeholders = [
   }
 
   .meet-reporting__text :global(strong) {
-    color: #1a1a1a;
+    color: var(--color-text-primary);
     font-weight: 600;
   }
 
@@ -263,19 +263,19 @@ const stakeholders = [
     width: 100%;
     max-width: 340px;
     padding: var(--space-4);
-    background: rgba(0, 0, 0, 0.03);
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: var(--color-black-3);
+    border: 1px solid var(--color-black-6);
     border-radius: 12px;
     margin-bottom: 0;
   }
 
   .dashboard-label {
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.5625rem;
+    font-size: var(--text-2xs);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #888;
+    color: var(--color-text-muted);
     margin-bottom: var(--space-3);
   }
 
@@ -288,7 +288,7 @@ const stakeholders = [
 
   .metric-bar {
     flex: 1;
-    background: linear-gradient(180deg, var(--color-primary) 0%, rgba(234, 36, 43, 0.4) 100%);
+    background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-40) 100%);
     border-radius: 2px 2px 0 0;
     animation: metricPulse 1.5s ease-in-out infinite;
   }
@@ -296,7 +296,7 @@ const stakeholders = [
   .metric-bar--1 { height: 60%; animation-delay: 0s; }
   .metric-bar--2 { height: 85%; animation-delay: 0.1s; }
   .metric-bar--3 { height: 45%; animation-delay: 0.2s; }
-  .metric-bar--4 { height: 95%; animation-delay: 0.3s; background: linear-gradient(180deg, #ef4444 0%, rgba(239, 68, 68, 0.4) 100%); }
+  .metric-bar--4 { height: 95%; animation-delay: 0.3s; background: linear-gradient(180deg, #ef4444 0%, var(--color-primary-40) 100%); }
   .metric-bar--5 { height: 70%; animation-delay: 0.4s; }
   .metric-bar--6 { height: 55%; animation-delay: 0.5s; }
   .metric-bar--7 { height: 80%; animation-delay: 0.6s; }
@@ -332,16 +332,16 @@ const stakeholders = [
 
   .noise-text {
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.625rem;
+    font-size: var(--text-2xs);
     font-weight: 500;
-    color: #666;
+    color: var(--color-text-dim);
   }
 
   /* Connector Lines */
   .connector-line {
     width: 1px;
     height: 32px;
-    border-left: 1px dashed rgba(0, 0, 0, 0.15);
+    border-left: 1px dashed var(--color-black-15);
   }
 
   /* AI Hub (Center) */
@@ -362,8 +362,8 @@ const stakeholders = [
     height: 140px;
     border-radius: 50%;
     background: radial-gradient(circle,
-      rgba(0, 0, 0, 0.04) 0%,
-      rgba(0, 0, 0, 0.02) 50%,
+      var(--color-black-4) 0%,
+      var(--color-black-2) 50%,
       transparent 70%
     );
   }
@@ -373,7 +373,7 @@ const stakeholders = [
     top: 50%;
     left: 50%;
     border-radius: 50%;
-    border: 1px dashed rgba(0, 0, 0, 0.15);
+    border: 1px dashed var(--color-black-15);
   }
 
   .hub-ring--outer {
@@ -393,15 +393,15 @@ const stakeholders = [
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: linear-gradient(145deg, #ffffff 0%, #f8f8f8 100%);
+    background: linear-gradient(145deg, var(--color-bg-primary) 0%, var(--color-bg-tertiary) 100%);
     box-shadow:
-      0 6px 24px rgba(0, 0, 0, 0.08),
-      0 2px 6px rgba(0, 0, 0, 0.04),
-      inset 0 2px 4px rgba(255, 255, 255, 1);
+      0 6px 24px var(--color-black-8),
+      0 2px 6px var(--color-black-4),
+      inset 0 2px 4px var(--color-white-100);
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--color-black-8);
     z-index: 2;
   }
 
@@ -422,10 +422,10 @@ const stakeholders = [
 
   .answer-card {
     padding: var(--space-3);
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-black-6);
+    border-radius: var(--radius-md);
+    box-shadow: 0 2px 8px var(--color-black-3);
     opacity: 0;
     transform: translateY(10px);
     animation: cardReveal 0.5s ease forwards;
@@ -435,7 +435,7 @@ const stakeholders = [
 
   .answer-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 6px 16px var(--color-black-6);
     border-color: var(--card-color);
   }
 
@@ -455,7 +455,7 @@ const stakeholders = [
 
   .answer-role {
     font-family: var(--font-display);
-    font-size: 0.5625rem;
+    font-size: var(--text-2xs);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -480,24 +480,24 @@ const stakeholders = [
 
   .answer-question {
     font-family: var(--font-body);
-    font-size: 0.6875rem;
+    font-size: var(--text-2xs);
     line-height: 1.4;
-    color: #666;
+    color: var(--color-text-dim);
     margin: 0 0 8px 0;
   }
 
   .answer-response {
-    padding: 6px 8px;
-    background: rgba(0, 0, 0, 0.03);
-    border-radius: 6px;
+    padding: var(--space-1-5) var(--space-2);
+    background: var(--color-black-3);
+    border-radius: var(--radius-md);
     border-left: 2px solid var(--card-color);
   }
 
   .response-text {
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
-    font-size: 0.625rem;
+    font-size: var(--text-2xs);
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-text-primary);
     display: block;
   }
 

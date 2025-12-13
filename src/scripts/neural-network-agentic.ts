@@ -20,7 +20,7 @@ export function initAgenticNeuralNetwork(): void {
   const network = document.getElementById("agentic-neural-network");
   const svg = document.getElementById("agentic-neural-svg") as SVGSVGElement | null;
   const core = document.getElementById("agentic-neural-core");
-  const nodes = document.querySelectorAll("#agentic-neural-network .stat-node");
+  const nodes = document.querySelectorAll("#agentic-neural-network .stat-node-wrapper");
   const particlesContainer = document.getElementById("agentic-data-particles");
 
   if (!network || !svg || !core || nodes.length === 0) {
@@ -29,7 +29,7 @@ export function initAgenticNeuralNetwork(): void {
 
   // Kill any existing animations
   gsap.killTweensOf(
-    "#agentic-neural-network .stat-node, .agentic-data-particle, .agentic-data-pulse"
+    "#agentic-neural-network .stat-node-wrapper, .agentic-data-particle, .agentic-data-pulse"
   );
 
   const networkRect = network.getBoundingClientRect();

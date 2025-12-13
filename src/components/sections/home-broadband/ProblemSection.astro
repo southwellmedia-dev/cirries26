@@ -270,7 +270,7 @@ const icons: Record<string, string> = {
   .problem-section {
     position: relative;
     padding: var(--space-20) 0 var(--space-16);
-    background: #070709;
+    background: var(--color-bg-primary);
     overflow: hidden;
   }
 
@@ -286,23 +286,23 @@ const icons: Record<string, string> = {
     background:
       radial-gradient(
         ellipse 60% 50% at 25% 20%,
-        rgba(234, 36, 43, 0.1) 0%,
+        var(--color-primary-10) 0%,
         transparent 50%
       ),
       radial-gradient(
         ellipse 40% 30% at 75% 70%,
-        rgba(234, 36, 43, 0.06) 0%,
+        var(--color-primary-6) 0%,
         transparent 50%
       ),
-      linear-gradient(180deg, #070709 0%, #0a0a0c 100%);
+      linear-gradient(180deg, var(--color-bg-primary) 0%, #0a0a0c 100%);
   }
 
   .problem-grid {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      linear-gradient(var(--color-white-1-5) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-white-1-5) 1px, transparent 1px);
     background-size: 48px 48px;
     mask-image: radial-gradient(
       ellipse 80% 60% at 50% 40%,
@@ -335,16 +335,16 @@ const icons: Record<string, string> = {
 
   .problem-eyebrow {
     display: inline-block;
-    padding: 0.35rem 0.9rem;
+    padding: var(--space-1-5) var(--space-3-5);
     margin-bottom: var(--space-4);
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-medium);
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--color-primary);
-    background: rgba(234, 36, 43, 0.1);
-    border: 1px solid rgba(234, 36, 43, 0.25);
+    background: var(--color-primary-10);
+    border: 1px solid var(--color-primary-25);
     border-radius: var(--radius-full);
   }
 
@@ -354,7 +354,7 @@ const icons: Record<string, string> = {
     font-weight: var(--font-bold);
     line-height: 1.15;
     letter-spacing: -0.02em;
-    color: #fff;
+    color: var(--color-text-inverse);
     margin-bottom: var(--space-5);
   }
 
@@ -362,7 +362,7 @@ const icons: Record<string, string> = {
     font-family: var(--font-body);
     font-size: var(--text-base);
     line-height: 1.7;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--color-white-55);
   }
 
   /* Two Column Grid - True 50/50 Split */
@@ -383,11 +383,11 @@ const icons: Record<string, string> = {
     width: 100%;
     background: #0b0b0d;
     border: 1px solid #1c1c20;
-    border-radius: 10px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow:
-      0 20px 40px rgba(0, 0, 0, 0.4),
-      0 0 80px rgba(234, 36, 43, 0.06);
+      0 20px 40px var(--color-black-40),
+      0 0 80px var(--color-primary-6);
   }
 
   .ticket-chrome {
@@ -424,20 +424,20 @@ const icons: Record<string, string> = {
     flex: 1;
     text-align: center;
     font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: rgba(255, 255, 255, 0.35);
+    font-size: var(--text-3xs);
+    color: var(--color-white-35);
   }
 
   .chrome-btn {
     padding: 2px 7px;
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: var(--text-2xs);
     text-transform: uppercase;
     letter-spacing: 0.03em;
     color: var(--color-primary);
-    background: rgba(234, 36, 43, 0.1);
-    border: 1px solid rgba(234, 36, 43, 0.2);
-    border-radius: 3px;
+    background: var(--color-primary-10);
+    border: 1px solid var(--color-primary-20);
+    border-radius: var(--radius-sm);
   }
 
   .ticket-header {
@@ -457,28 +457,28 @@ const icons: Record<string, string> = {
 
   .meta-label {
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: var(--text-2xs);
     text-transform: uppercase;
     letter-spacing: 0.03em;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--color-white-30);
   }
 
   .meta-id {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-semibold);
-    color: #fff;
+    color: var(--color-text-inverse);
   }
 
   .ticket-status {
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 2px 6px;
-    background: rgba(234, 36, 43, 0.1);
-    border-radius: 3px;
+    padding: 2px var(--space-1-5);
+    background: var(--color-primary-10);
+    border-radius: var(--radius-sm);
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: var(--text-2xs);
     text-transform: uppercase;
     letter-spacing: 0.02em;
     color: var(--color-primary);
@@ -508,7 +508,7 @@ const icons: Record<string, string> = {
     gap: 3px;
     margin-left: auto;
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: var(--text-2xs);
     text-transform: uppercase;
     color: #f59e0b;
   }
@@ -518,8 +518,8 @@ const icons: Record<string, string> = {
     align-items: center;
     gap: 4px;
     font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: rgba(255, 255, 255, 0.3);
+    font-size: var(--text-2xs);
+    color: var(--color-white-30);
   }
 
   .ticket-body {
@@ -536,7 +536,7 @@ const icons: Record<string, string> = {
     padding: 10px;
     background: #0d0d0f;
     border: 1px solid #18181b;
-    border-radius: 6px;
+    border-radius: var(--radius-md);
   }
 
   .customer-avatar {
@@ -548,7 +548,7 @@ const icons: Record<string, string> = {
     background: #131315;
     border: 1px solid #1f1f23;
     border-radius: 50%;
-    color: rgba(255, 255, 255, 0.35);
+    color: var(--color-white-35);
   }
 
   .customer-info {
@@ -559,27 +559,27 @@ const icons: Record<string, string> = {
 
   .customer-name {
     font-family: var(--font-display);
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     font-weight: var(--font-medium);
-    color: #fff;
+    color: var(--color-text-inverse);
   }
 
   .customer-detail {
     font-family: var(--font-mono);
-    font-size: 0.55rem;
-    color: rgba(255, 255, 255, 0.3);
+    font-size: var(--text-2xs);
+    color: var(--color-white-30);
   }
 
   .sentiment-badge {
-    padding: 2px 6px;
+    padding: 2px var(--space-1-5);
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-medium);
     text-transform: uppercase;
     color: var(--color-primary);
-    background: rgba(234, 36, 43, 0.1);
-    border: 1px solid rgba(234, 36, 43, 0.2);
-    border-radius: 3px;
+    background: var(--color-primary-10);
+    border: 1px solid var(--color-primary-20);
+    border-radius: var(--radius-sm);
   }
 
   .issue-block,
@@ -594,10 +594,10 @@ const icons: Record<string, string> = {
     align-items: center;
     gap: 5px;
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: var(--text-2xs);
     text-transform: uppercase;
     letter-spacing: 0.03em;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--color-white-30);
   }
 
   .block-label svg {
@@ -609,14 +609,14 @@ const icons: Record<string, string> = {
     background: #0d0d0f;
     border: 1px solid #18181b;
     border-left: 2px solid var(--color-primary);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
   }
 
   .issue-quote {
     font-family: var(--font-body);
     font-size: 1rem;
     font-weight: var(--font-medium);
-    color: #fff;
+    color: var(--color-text-inverse);
     margin: 0;
   }
 
@@ -625,18 +625,18 @@ const icons: Record<string, string> = {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: var(--space-1-5);
     padding: 16px;
     background: #09090b;
     border: 1px dashed #1c1c20;
-    border-radius: 6px;
-    color: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-md);
+    color: var(--color-white-20);
   }
 
   .diagnostics-empty span {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: rgba(255, 255, 255, 0.35);
+    font-size: var(--text-2xs);
+    color: var(--color-white-35);
   }
 
   .ticket-footer {
@@ -653,8 +653,8 @@ const icons: Record<string, string> = {
     align-items: center;
     gap: 5px;
     font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: rgba(255, 255, 255, 0.3);
+    font-size: var(--text-3xs);
+    color: var(--color-white-30);
   }
 
   .footer-note svg {
@@ -669,28 +669,28 @@ const icons: Record<string, string> = {
   .btn {
     padding: 5px 8px;
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-medium);
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--duration-normal) ease;
   }
 
   .btn--secondary {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-white-50);
     background: transparent;
     border: 1px solid #252528;
   }
 
   .btn--secondary:hover {
     border-color: #353538;
-    color: #fff;
+    color: var(--color-text-inverse);
   }
 
   .btn--primary {
-    color: #fff;
+    color: var(--color-text-inverse);
     background: var(--color-primary);
     border: 1px solid var(--color-primary);
   }
@@ -720,7 +720,7 @@ const icons: Record<string, string> = {
     padding: 14px 16px;
     background: #0b0b0d;
     border: 1px solid #1c1c20;
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     position: relative;
     overflow: hidden;
     flex: 1;
@@ -729,13 +729,13 @@ const icons: Record<string, string> = {
     animation: fadeUp 0.4s ease forwards;
     animation-delay: var(--delay);
     transition:
-      border-color 0.2s ease,
-      box-shadow 0.2s ease;
+      border-color var(--duration-normal) ease,
+      box-shadow var(--duration-normal) ease;
   }
 
   .pain-card:hover {
-    border-color: rgba(234, 36, 43, 0.25);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-color: var(--color-primary-25);
+    box-shadow: 0 4px 20px var(--color-black-30);
   }
 
   @keyframes fadeUp {
@@ -767,9 +767,9 @@ const icons: Record<string, string> = {
     width: 40px;
     height: 40px;
     flex-shrink: 0;
-    background: rgba(234, 36, 43, 0.08);
-    border: 1px solid rgba(234, 36, 43, 0.12);
-    border-radius: 8px;
+    background: var(--color-primary-8);
+    border: 1px solid var(--color-primary-12);
+    border-radius: var(--radius-lg);
     color: var(--color-primary);
   }
 
@@ -782,7 +782,7 @@ const icons: Record<string, string> = {
     font-family: var(--font-display);
     font-size: 1.1rem;
     font-weight: var(--font-semibold);
-    color: #fff;
+    color: var(--color-text-inverse);
     margin-bottom: 4px;
   }
 
@@ -790,7 +790,7 @@ const icons: Record<string, string> = {
     font-family: var(--font-body);
     font-size: 0.95rem;
     line-height: 1.55;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-white-50);
     margin: 0;
   }
 
@@ -806,13 +806,13 @@ const icons: Record<string, string> = {
     font-family: var(--font-body);
     font-size: var(--text-lg);
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--color-white-55);
     margin: 0;
   }
 
   .bridge-emphasis {
     font-weight: var(--font-bold);
-    color: #fff;
+    color: var(--color-text-inverse);
   }
 
   /* Responsive */

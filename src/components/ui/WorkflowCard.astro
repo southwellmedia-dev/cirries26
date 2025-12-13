@@ -1,0 +1,272 @@
+---
+/**
+ * WorkflowCard - Step-based workflow/process card
+ *
+ * Based on the Proactive Intelligence section design.
+ * Features numbered steps, glass-morphism effects, and hover animations.
+ */
+
+interface Props {
+  number?: string;  // Step number (e.g., "01", "02")
+  title: string;
+  description: string;
+  theme?: 'light' | 'dark';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const {
+  number,
+  title,
+  description,
+  theme = 'dark',
+  size = 'md',
+  class: className = ''
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    'workflow-card',
+    `workflow-card--${theme}`,
+    `workflow-card--${size}`,
+    className
+  ]}
+>
+  <div class="workflow-card__header">
+    {number && (
+      <div class="workflow-card__number">{number}</div>
+    )}
+    <h3 class="workflow-card__title">{title}</h3>
+  </div>
+  <p class="workflow-card__description">{description}</p>
+  <slot />
+</div>
+
+<style>
+  .workflow-card {
+    position: relative;
+    border-radius: var(--radius-lg);
+    transition: all var(--duration-normal) ease;
+  }
+
+  /* ========================================
+     SIZE VARIANTS
+     ======================================== */
+  .workflow-card--sm {
+    padding: 1rem 1.25rem;
+  }
+
+  .workflow-card--md {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .workflow-card--lg {
+    padding: 1.5rem 2rem;
+  }
+
+  /* ========================================
+     DARK THEME
+     ======================================== */
+  .workflow-card--dark {
+    background: var(--color-bg-dark-92, rgba(10, 10, 10, 0.92));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-white-10);
+    box-shadow:
+      0 4px 20px var(--color-black-30),
+      0 1px 3px var(--color-black-20);
+  }
+
+  .workflow-card--dark:hover {
+    background: var(--color-bg-dark-95, rgba(10, 10, 10, 0.95));
+    border-color: var(--color-white-15);
+    transform: translateY(-4px);
+    box-shadow:
+      0 8px 32px var(--color-black-40),
+      0 0 20px var(--color-black-20);
+  }
+
+  .workflow-card--dark .workflow-card__number {
+    background: var(--color-white-8);
+    color: var(--color-white-90);
+  }
+
+  .workflow-card--dark:hover .workflow-card__number {
+    background: var(--color-white-15);
+  }
+
+  .workflow-card--dark .workflow-card__title {
+    color: var(--color-white-90);
+  }
+
+  .workflow-card--dark:hover .workflow-card__title {
+    color: #ffffff;
+  }
+
+  .workflow-card--dark .workflow-card__description {
+    color: var(--color-white-60);
+  }
+
+  .workflow-card--dark .workflow-card__header {
+    border-bottom: 1px solid var(--color-white-8);
+  }
+
+  /* ========================================
+     LIGHT THEME
+     ======================================== */
+  .workflow-card--light {
+    background: #ffffff;
+    border: 1px solid var(--color-black-10);
+    box-shadow:
+      0 4px 20px var(--color-black-5),
+      0 1px 3px var(--color-black-5);
+  }
+
+  .workflow-card--light:hover {
+    border-color: var(--color-black-15);
+    transform: translateY(-4px);
+    box-shadow:
+      0 8px 32px var(--color-black-10),
+      0 0 20px var(--color-black-5);
+  }
+
+  .workflow-card--light .workflow-card__number {
+    background: var(--color-black-5);
+    color: var(--color-text-primary);
+  }
+
+  .workflow-card--light:hover .workflow-card__number {
+    background: var(--color-primary-10);
+    color: var(--color-primary);
+  }
+
+  .workflow-card--light .workflow-card__title {
+    color: var(--color-text-primary);
+  }
+
+  .workflow-card--light:hover .workflow-card__title {
+    color: var(--color-primary);
+  }
+
+  .workflow-card--light .workflow-card__description {
+    color: var(--color-text-secondary);
+  }
+
+  .workflow-card--light .workflow-card__header {
+    border-bottom: 1px solid var(--color-black-8);
+  }
+
+  /* ========================================
+     HEADER STYLES
+     ======================================== */
+  .workflow-card__header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.875rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .workflow-card--sm .workflow-card__header {
+    gap: 0.5rem;
+    margin-bottom: 0.625rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .workflow-card--lg .workflow-card__header {
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  /* ========================================
+     NUMBER STYLES
+     ======================================== */
+  .workflow-card__number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    transition: all var(--duration-normal) ease;
+  }
+
+  .workflow-card--sm .workflow-card__number {
+    width: 28px;
+    height: 28px;
+    font-size: var(--text-3xs);
+  }
+
+  .workflow-card--md .workflow-card__number {
+    width: 36px;
+    height: 36px;
+    font-size: var(--text-xs);
+  }
+
+  .workflow-card--lg .workflow-card__number {
+    width: 44px;
+    height: 44px;
+    font-size: var(--text-sm);
+  }
+
+  /* ========================================
+     TITLE STYLES
+     ======================================== */
+  .workflow-card__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0;
+    flex: 1;
+    transition: color var(--duration-normal) ease;
+  }
+
+  .workflow-card--sm .workflow-card__title {
+    font-size: var(--text-xs);
+  }
+
+  .workflow-card--md .workflow-card__title {
+    font-size: var(--text-sm);
+  }
+
+  .workflow-card--lg .workflow-card__title {
+    font-size: var(--text-base);
+  }
+
+  /* ========================================
+     DESCRIPTION STYLES
+     ======================================== */
+  .workflow-card__description {
+    font-family: var(--font-body);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .workflow-card--sm .workflow-card__description {
+    font-size: var(--text-xs);
+  }
+
+  .workflow-card--md .workflow-card__description {
+    font-size: var(--text-sm);
+  }
+
+  .workflow-card--lg .workflow-card__description {
+    font-size: var(--text-base);
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 768px) {
+    .workflow-card--md {
+      padding: 1rem 1.25rem;
+    }
+
+    .workflow-card--lg {
+      padding: 1.25rem 1.5rem;
+    }
+  }
+</style>

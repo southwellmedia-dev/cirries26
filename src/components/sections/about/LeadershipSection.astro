@@ -112,7 +112,7 @@ const {
       <!-- Left Panel: Leader List -->
       <div class="leader-list">
         <div class="list-header">
-          <span class="list-count">{leaders.length} Executives</span>
+          <span class="list-count">Our Leadership</span>
         </div>
 
         {leaders.map((leader, index) => (
@@ -209,7 +209,7 @@ const {
   .leadership-section {
     position: relative;
     padding: var(--space-20) 0;
-    background: #0A0A0A;
+    background: var(--color-bg-primary);
     overflow: hidden;
   }
 
@@ -219,8 +219,8 @@ const {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      linear-gradient(var(--color-white-3) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-white-3) 1px, transparent 1px);
     background-size: 60px 60px;
     mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
     -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
@@ -239,15 +239,15 @@ const {
     display: inline-block;
     margin-bottom: var(--space-4);
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-semibold);
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: var(--color-primary, #EA242B);
-    padding: 6px 14px;
-    background: rgba(234, 36, 43, 0.1);
-    border: 1px solid rgba(234, 36, 43, 0.2);
-    border-radius: 6px;
+    color: var(--color-primary);
+    padding: var(--space-1-5) var(--space-3-5);
+    background: var(--color-primary-10);
+    border: 1px solid var(--color-primary-20);
+    border-radius: var(--radius-md);
   }
 
   .leadership-title {
@@ -256,20 +256,20 @@ const {
     font-weight: var(--font-bold);
     line-height: 1.15;
     letter-spacing: var(--tracking-tight);
-    color: #ffffff;
+    color: var(--color-text-primary);
     margin-bottom: var(--space-5);
   }
 
   .leadership-title span {
     display: block;
-    color: var(--color-primary, #EA242B);
+    color: var(--color-primary);
   }
 
   .leadership-description {
     font-family: var(--font-body);
     font-size: var(--text-lg);
     line-height: var(--leading-relaxed);
-    color: #888888;
+    color: var(--color-text-muted);
   }
 
   /* ================================
@@ -290,24 +290,24 @@ const {
   .leader-list {
     display: flex;
     flex-direction: column;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
+    background: var(--color-white-3);
+    border: 1px solid var(--color-white-6);
+    border-radius: var(--radius-xl);
     overflow: hidden;
   }
 
   .list-header {
     padding: var(--space-4) var(--space-5);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid var(--color-white-6);
   }
 
   .list-count {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: var(--text-3xs);
     font-weight: var(--font-semibold);
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: #666666;
+    color: var(--color-text-dim);
   }
 
   /* Leader Item Button */
@@ -319,10 +319,10 @@ const {
     padding: var(--space-4) var(--space-5);
     background: transparent;
     border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid var(--color-white-5);
     cursor: pointer;
     text-align: left;
-    transition: all 0.25s ease;
+    transition: all var(--duration-normal) ease;
   }
 
   .leader-item:last-child {
@@ -330,12 +330,12 @@ const {
   }
 
   .leader-item:hover {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--color-white-3);
   }
 
   .leader-item.is-active {
-    background: rgba(234, 36, 43, 0.08);
-    border-left: 3px solid var(--color-primary, #EA242B);
+    background: var(--color-primary-8);
+    border-left: 3px solid var(--color-primary);
     padding-left: calc(var(--space-5) - 3px);
   }
 
@@ -345,13 +345,13 @@ const {
     height: 48px;
     border-radius: 50%;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--color-white-5);
     border: 2px solid transparent;
-    transition: border-color 0.25s ease;
+    transition: border-color var(--duration-normal) ease;
   }
 
   .leader-item.is-active .leader-item__photo {
-    border-color: var(--color-primary, #EA242B);
+    border-color: var(--color-primary);
   }
 
   .leader-item__photo img {
@@ -366,7 +366,7 @@ const {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--color-white-30);
   }
 
   .leader-item__info {
@@ -377,24 +377,24 @@ const {
   .leader-item__name {
     display: block;
     font-family: var(--font-display);
-    font-size: 0.95rem;
+    font-size: var(--text-base);
     font-weight: var(--font-semibold);
-    color: #ffffff;
+    color: var(--color-text-primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: color 0.25s ease;
+    transition: color var(--duration-normal) ease;
   }
 
   .leader-item.is-active .leader-item__name {
-    color: var(--color-primary, #EA242B);
+    color: var(--color-primary);
   }
 
   .leader-item__title {
     display: block;
     font-family: var(--font-body);
-    font-size: 0.75rem;
-    color: #666666;
+    font-size: var(--text-xs);
+    color: var(--color-text-dim);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -402,13 +402,13 @@ const {
 
   .leader-item__indicator {
     flex-shrink: 0;
-    color: rgba(255, 255, 255, 0.2);
-    transition: all 0.25s ease;
+    color: var(--color-white-20);
+    transition: all var(--duration-normal) ease;
     transform: translateX(0);
   }
 
   .leader-item.is-active .leader-item__indicator {
-    color: var(--color-primary, #EA242B);
+    color: var(--color-primary);
     transform: translateX(4px);
   }
 
@@ -417,9 +417,9 @@ const {
      ================================ */
   .leader-detail {
     position: relative;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
+    background: var(--color-white-3);
+    border: 1px solid var(--color-white-6);
+    border-radius: var(--radius-xl);
     overflow: hidden;
     min-width: 0;
   }
@@ -429,7 +429,7 @@ const {
     padding: var(--space-8);
     opacity: 0;
     transform: translateX(20px);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--duration-slow) cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
   }
 
@@ -467,15 +467,15 @@ const {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(234, 36, 43, 0.15) 0%, rgba(234, 36, 43, 0.05) 100%);
-    border-radius: 12px;
-    color: rgba(234, 36, 43, 0.5);
+    background: linear-gradient(135deg, var(--color-primary-15) 0%, var(--color-primary-5) 100%);
+    border-radius: var(--radius-lg);
+    color: var(--color-primary-50);
   }
 
   .detail-photo__ring {
     position: absolute;
     inset: -4px;
-    border: 2px solid rgba(234, 36, 43, 0.2);
+    border: 2px solid var(--color-primary-20);
     border-radius: 14px;
     pointer-events: none;
   }
@@ -489,7 +489,7 @@ const {
     font-family: var(--font-display);
     font-size: clamp(1.75rem, 3vw, 2.25rem);
     font-weight: var(--font-bold);
-    color: #ffffff;
+    color: var(--color-text-primary);
     margin: 0 0 var(--space-3) 0;
     letter-spacing: -0.02em;
   }
@@ -505,14 +505,14 @@ const {
     display: inline-flex;
     align-items: center;
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-semibold);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--color-primary, #EA242B);
-    padding: 5px 10px;
-    background: rgba(234, 36, 43, 0.1);
-    border-radius: 4px;
+    color: var(--color-primary);
+    padding: var(--space-1) var(--space-2-5);
+    background: var(--color-primary-10);
+    border-radius: var(--radius-sm);
     line-height: 1;
     height: 24px;
   }
@@ -520,28 +520,28 @@ const {
   .detail-linkedin {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 5px 10px;
+    gap: var(--space-1-5);
+    padding: var(--space-1) var(--space-2-5);
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-semibold);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #888888;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 4px;
+    color: var(--color-text-muted);
+    background: var(--color-white-5);
+    border: 1px solid var(--color-white-8);
+    border-radius: var(--radius-sm);
     text-decoration: none;
     line-height: 1;
     height: 24px;
     box-sizing: border-box;
-    transition: all 0.25s ease;
+    transition: all var(--duration-normal) ease;
   }
 
   .detail-linkedin:hover {
-    color: #ffffff;
-    background: rgba(10, 102, 194, 0.15);
-    border-color: rgba(10, 102, 194, 0.3);
+    color: var(--color-text-primary);
+    background: var(--color-info-15);
+    border-color: var(--color-info-30);
   }
 
   .detail-linkedin svg {
@@ -553,7 +553,7 @@ const {
   /* Detail Bio */
   .detail-bio {
     padding-top: var(--space-6);
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid var(--color-white-6);
   }
 
   .bio-intro {
@@ -561,7 +561,7 @@ const {
     font-size: var(--text-lg);
     font-weight: var(--font-medium);
     line-height: 1.6;
-    color: #cccccc;
+    color: var(--color-white-80);
     margin-bottom: var(--space-5);
     max-width: none;
   }
@@ -569,8 +569,8 @@ const {
   .bio-divider {
     width: 60px;
     height: 3px;
-    background: linear-gradient(90deg, var(--color-primary, #EA242B), transparent);
-    border-radius: 2px;
+    background: linear-gradient(90deg, var(--color-primary), transparent);
+    border-radius: var(--radius-xs);
     margin-bottom: var(--space-5);
   }
 
@@ -582,15 +582,15 @@ const {
 
   .bio-content p {
     font-family: var(--font-body);
-    font-size: 0.9rem;
-    line-height: 1.85;
-    color: #999999;
+    font-size: var(--text-sm);
+    line-height: var(--leading-loose);
+    color: var(--color-text-secondary);
     margin: 0;
     max-width: none;
   }
 
   .bio-content p:first-child {
-    color: #bbbbbb;
+    color: var(--color-white-70);
   }
 
   /* ================================
@@ -677,11 +677,11 @@ const {
     }
 
     .detail-name {
-      font-size: 1.35rem;
+      font-size: var(--text-xl);
     }
 
     .bio-content p {
-      font-size: 0.85rem;
+      font-size: var(--text-sm);
     }
   }
 </style>

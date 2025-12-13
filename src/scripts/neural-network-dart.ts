@@ -20,7 +20,7 @@ export function initDartNeuralNetwork(): void {
   const network = document.getElementById("dart-neural-network");
   const svg = document.getElementById("dart-neural-svg") as SVGSVGElement | null;
   const core = document.getElementById("dart-neural-core");
-  const nodes = document.querySelectorAll("#dart-neural-network .stat-node");
+  const nodes = document.querySelectorAll("#dart-neural-network .stat-node-wrapper");
   const particlesContainer = document.getElementById("dart-data-particles");
 
   if (!network || !svg || !core || nodes.length === 0) {
@@ -29,7 +29,7 @@ export function initDartNeuralNetwork(): void {
 
   // Kill any existing animations
   gsap.killTweensOf(
-    "#dart-neural-network .stat-node, .data-particle, .data-pulse"
+    "#dart-neural-network .stat-node-wrapper, .data-particle, .data-pulse"
   );
 
   const networkRect = network.getBoundingClientRect();

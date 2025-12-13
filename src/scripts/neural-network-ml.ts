@@ -20,7 +20,7 @@ export function initMLNeuralNetwork(): void {
   const network = document.getElementById("ml-neural-network");
   const svg = document.getElementById("ml-neural-svg") as SVGSVGElement | null;
   const core = document.getElementById("ml-neural-core");
-  const nodes = document.querySelectorAll("#ml-neural-network .stat-node");
+  const nodes = document.querySelectorAll("#ml-neural-network .stat-node-wrapper");
   const particlesContainer = document.getElementById("ml-data-particles");
 
   if (!network || !svg || !core || nodes.length === 0) {
@@ -29,7 +29,7 @@ export function initMLNeuralNetwork(): void {
 
   // Kill any existing animations
   gsap.killTweensOf(
-    "#ml-neural-network .stat-node, .ml-data-particle, .ml-data-pulse"
+    "#ml-neural-network .stat-node-wrapper, .ml-data-particle, .ml-data-pulse"
   );
 
   const networkRect = network.getBoundingClientRect();

@@ -114,7 +114,7 @@ const industries = [
 
   /* Three.js Background */
   .hero__background--three {
-    background: #0a0a0a;
+    background: var(--color-bg-primary);
   }
 
   .hero__three-canvas {
@@ -133,20 +133,20 @@ const industries = [
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      linear-gradient(var(--color-white-6) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-white-6) 1px, transparent 1px);
     background-size: 60px 60px;
     z-index: 0;
     mask-image: radial-gradient(
       ellipse 90% 80% at 50% 85%,
-      rgba(0, 0, 0, 0.8) 0%,
-      rgba(0, 0, 0, 0.4) 50%,
+      var(--color-black-80) 0%,
+      var(--color-black-40) 50%,
       transparent 75%
     );
     -webkit-mask-image: radial-gradient(
       ellipse 90% 80% at 50% 85%,
-      rgba(0, 0, 0, 0.8) 0%,
-      rgba(0, 0, 0, 0.4) 50%,
+      var(--color-black-80) 0%,
+      var(--color-black-40) 50%,
       transparent 75%
     );
   }
@@ -160,14 +160,14 @@ const industries = [
     overflow: hidden;
     mask-image: radial-gradient(
       ellipse 90% 80% at 50% 85%,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.5) 50%,
+      var(--color-black-100) 0%,
+      var(--color-black-50) 50%,
       transparent 75%
     );
     -webkit-mask-image: radial-gradient(
       ellipse 90% 80% at 50% 85%,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.5) 50%,
+      var(--color-black-100) 0%,
+      var(--color-black-50) 50%,
       transparent 75%
     );
   }
@@ -185,12 +185,12 @@ const industries = [
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.15) 20%,
-      rgba(255, 255, 255, 0.4) 50%,
-      rgba(255, 255, 255, 0.15) 80%,
+      var(--color-white-15) 20%,
+      var(--color-white-40) 50%,
+      var(--color-white-15) 80%,
       transparent 100%
     );
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 8px var(--color-white-30);
     animation: glowPulseH var(--glow-duration, 4s) var(--glow-delay, 0s) infinite ease-in-out;
   }
 
@@ -200,12 +200,12 @@ const industries = [
     background: linear-gradient(
       180deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.15) 20%,
-      rgba(255, 255, 255, 0.4) 50%,
-      rgba(255, 255, 255, 0.15) 80%,
+      var(--color-white-15) 20%,
+      var(--color-white-40) 50%,
+      var(--color-white-15) 80%,
       transparent 100%
     );
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 8px var(--color-white-30);
     animation: glowPulseV var(--glow-duration, 4s) var(--glow-delay, 0s) infinite ease-in-out;
   }
 
@@ -234,14 +234,14 @@ const industries = [
     overflow: hidden;
     mask-image: radial-gradient(
       ellipse 90% 80% at 50% 85%,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.5) 50%,
+      var(--color-black-100) 0%,
+      var(--color-black-50) 50%,
       transparent 75%
     );
     -webkit-mask-image: radial-gradient(
       ellipse 90% 80% at 50% 85%,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.5) 50%,
+      var(--color-black-100) 0%,
+      var(--color-black-50) 50%,
       transparent 75%
     );
   }
@@ -255,13 +255,13 @@ const industries = [
     background: linear-gradient(
       to top,
       transparent 0%,
-      rgba(255, 255, 255, 0.05) 10%,
-      rgba(255, 255, 255, 0.1) 30%,
-      rgba(255, 255, 255, 0.2) 60%,
-      rgba(255, 255, 255, 0.35) 85%,
-      rgba(255, 255, 255, 0.5) 100%
+      var(--color-white-5) 10%,
+      var(--color-white-10) 30%,
+      var(--color-white-20) 60%,
+      var(--color-white-35) 85%,
+      var(--color-white-50) 100%
     );
-    box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 6px var(--color-white-20);
     opacity: 0;
     transform: translateY(0);
     animation: pulseUp var(--line-duration, 4s) var(--line-delay, 0s) infinite ease-out;
@@ -306,14 +306,14 @@ const industries = [
   .hero__eyebrow {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-semibold);
     text-transform: uppercase;
     letter-spacing: 0.25em;
     color: var(--color-primary, #EA242B);
     padding: 8px 20px;
-    background: rgba(234, 36, 43, 0.1);
-    border: 1px solid rgba(234, 36, 43, 0.2);
+    background: var(--color-primary-10);
+    border: 1px solid var(--color-primary-20);
     border-radius: 100px;
     margin-bottom: var(--space-6);
   }
@@ -329,7 +329,7 @@ const industries = [
 
   .hero__headline-top {
     display: block;
-    color: #ffffff;
+    color: var(--color-text-primary);
   }
 
   .hero__headline-bottom {
@@ -341,7 +341,7 @@ const industries = [
   .hero__subtitle {
     font-size: var(--text-xl);
     line-height: 1.6;
-    color: #888888;
+    color: var(--color-text-muted);
     max-width: 600px;
     margin: 0 auto var(--space-10);
   }
@@ -359,10 +359,10 @@ const industries = [
     align-items: center;
     gap: var(--space-2);
     padding: 12px 20px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--color-white-3);
+    border: 1px solid var(--color-white-8);
     border-radius: 100px;
-    color: #aaaaaa;
+    color: var(--color-text-secondary);
     font-family: var(--font-body);
     font-size: 0.85rem;
     font-weight: var(--font-medium);
@@ -373,9 +373,9 @@ const industries = [
   }
 
   .industry-pill:hover {
-    background: rgba(234, 36, 43, 0.1);
-    border-color: rgba(234, 36, 43, 0.3);
-    color: #ffffff;
+    background: var(--color-primary-10);
+    border-color: var(--color-primary-30);
+    color: var(--color-text-primary);
     transform: translateY(-2px);
   }
 
@@ -422,16 +422,16 @@ const industries = [
 
   .scroll-text {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: var(--text-2xs);
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: #555555;
+    color: var(--color-text-secondary);
   }
 
   .scroll-line {
     width: 1px;
     height: 60px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);
+    background: linear-gradient(to bottom, var(--color-white-20), transparent);
     position: relative;
     overflow: hidden;
   }

@@ -85,4 +85,14 @@
   --z-tooltip: 1100;
   --z-notification: 1200;
   --z-maximum: 9999;
+
+  /* --------------------------------
+     BREAKPOINTS
+     For reference in media queries
+     -------------------------------- */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1440px;
 }

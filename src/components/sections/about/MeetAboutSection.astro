@@ -123,7 +123,7 @@ const {
   .story-section {
     position: relative;
     padding: var(--space-24) 0 var(--space-20);
-    background: #ffffff;
+    background: var(--color-bg-card);
     overflow: hidden;
   }
 
@@ -131,7 +131,7 @@ const {
   .story-bg {
     position: absolute;
     inset: 0;
-    background: #ffffff;
+    background: var(--color-bg-card);
   }
 
   .story-bg__gradient {
@@ -140,7 +140,7 @@ const {
     background:
       radial-gradient(
         ellipse 80% 60% at 80% 80%,
-        rgba(245, 245, 245, 0.8) 0%,
+        var(--color-black-5) 0%,
         transparent 50%
       );
   }
@@ -149,8 +149,8 @@ const {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+      linear-gradient(var(--color-black-5) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-black-5) 1px, transparent 1px);
     background-size: 60px 60px;
     mask-image: radial-gradient(ellipse 90% 80% at 70% 50%, black 20%, transparent 70%);
     -webkit-mask-image: radial-gradient(ellipse 90% 80% at 70% 50%, black 20%, transparent 70%);
@@ -182,7 +182,7 @@ const {
     font-family: var(--font-display);
     font-size: clamp(14rem, 28vw, 26rem);
     font-weight: var(--font-bold);
-    color: rgba(0, 0, 0, 0.04);
+    color: var(--color-black-5);
     line-height: 0.85;
     letter-spacing: -0.04em;
     user-select: none;
@@ -206,15 +206,15 @@ const {
     display: inline-block;
     margin-bottom: var(--space-5);
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-semibold);
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    color: var(--color-primary, #EA242B);
-    padding: 8px 16px;
-    background: rgba(234, 36, 43, 0.08);
-    border: 1px solid rgba(234, 36, 43, 0.12);
-    border-radius: 4px;
+    color: var(--color-primary);
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-primary-10);
+    border: 1px solid var(--color-primary-15);
+    border-radius: var(--radius-sm);
   }
 
   .story-headline {
@@ -228,28 +228,28 @@ const {
 
   .headline-word {
     display: block;
-    color: #0a0a0a;
+    color: var(--color-bg-primary);
   }
 
   .headline-highlight {
     display: block;
-    color: var(--color-primary, #EA242B);
+    color: var(--color-primary);
   }
 
   .story-tagline {
     font-family: var(--font-body);
     font-size: var(--text-xl);
     font-weight: var(--font-normal);
-    line-height: 1.5;
-    color: #555555;
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
     margin-bottom: var(--space-8);
   }
 
   .story-paragraph {
     font-family: var(--font-body);
     font-size: var(--text-base);
-    line-height: 1.8;
-    color: #444444;
+    line-height: var(--leading-loose);
+    color: var(--color-text-secondary);
     margin: 0;
   }
 
@@ -259,7 +259,7 @@ const {
     grid-template-columns: repeat(4, 1fr);
     gap: var(--space-6);
     padding-top: var(--space-10);
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-top: 1px solid var(--color-black-5);
     position: relative;
     z-index: 1;
   }
@@ -267,30 +267,30 @@ const {
   .story-stat {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--space-1);
   }
 
   .story-stat__value {
     font-family: var(--font-display);
-    font-size: 2.5rem;
+    font-size: var(--text-4xl);
     font-weight: var(--font-bold);
-    color: var(--color-primary, #EA242B);
+    color: var(--color-primary);
     line-height: 1;
     letter-spacing: -0.02em;
   }
 
   .story-stat__label {
     font-family: var(--font-display);
-    font-size: 1rem;
+    font-size: var(--text-base);
     font-weight: var(--font-bold);
-    color: #0a0a0a;
+    color: var(--color-bg-primary);
   }
 
   .story-stat__desc {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-medium);
-    color: #888888;
+    color: var(--color-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.02em;
   }

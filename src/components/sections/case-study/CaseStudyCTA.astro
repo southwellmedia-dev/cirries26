@@ -137,13 +137,13 @@ const {
     background:
       radial-gradient(
         ellipse 80% 80% at 80% 50%,
-        rgba(234, 36, 43, 0.15) 0%,
+        var(--color-primary-15) 0%,
         transparent 50%
       ),
       linear-gradient(
         180deg,
-        #0a0a0a 0%,
-        #0f0f0f 100%
+        var(--color-bg-primary) 0%,
+        var(--color-bg-secondary) 100%
       );
   }
 
@@ -151,8 +151,8 @@ const {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      linear-gradient(var(--color-white-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-white-2) 1px, transparent 1px);
     background-size: 60px 60px;
     mask-image: radial-gradient(ellipse at 70% 50%, black 20%, transparent 60%);
   }
@@ -164,7 +164,7 @@ const {
     transform: translateY(-50%);
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(234, 36, 43, 0.2) 0%, transparent 60%);
+    background: radial-gradient(circle, var(--color-primary-20) 0%, transparent 60%);
     filter: blur(60px);
     pointer-events: none;
   }
@@ -182,7 +182,7 @@ const {
   /* Why Section */
   .case-cta__why {
     padding-right: var(--space-8);
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    border-right: 1px solid var(--color-white-8);
   }
 
   .case-cta__why-title {
@@ -205,15 +205,15 @@ const {
     display: flex;
     gap: var(--space-4);
     padding: var(--space-4);
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--color-white-2);
+    border: 1px solid var(--color-white-5);
     border-radius: var(--radius-lg);
     transition: all 0.3s ease;
   }
 
   .case-cta__why-point:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(234, 36, 43, 0.2);
+    background: var(--color-white-4);
+    border-color: var(--color-primary-20);
   }
 
   .case-cta__why-icon {
@@ -222,7 +222,7 @@ const {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(234, 36, 43, 0.1);
+    background: var(--color-primary-10);
     border-radius: var(--radius-md);
     color: var(--color-primary);
     flex-shrink: 0;
@@ -315,7 +315,7 @@ const {
   .case-cta__ring {
     position: absolute;
     border-radius: 50%;
-    border: 1px dashed rgba(234, 36, 43, 0.2);
+    border: 1px dashed var(--color-primary-20);
   }
 
   .case-cta__ring--1 {
@@ -327,7 +327,7 @@ const {
     inset: 30px;
     animation: ringRotate 15s linear infinite reverse;
     border-style: dotted;
-    border-color: rgba(234, 36, 43, 0.15);
+    border-color: var(--color-primary-15);
   }
 
   @keyframes ringRotate {
@@ -374,7 +374,7 @@ const {
     .case-cta__why {
       padding-right: 0;
       border-right: none;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid var(--color-white-8);
       padding-bottom: var(--space-8);
     }
 

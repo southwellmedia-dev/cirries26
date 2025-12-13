@@ -1,0 +1,529 @@
+---
+/**
+ * CapabilityCard - Feature/capability card with icon, accent color, and hover effects
+ *
+ * Based on the INO Capabilities section design. Supports light/dark themes
+ * with customizable accent colors and animated hover states.
+ */
+
+interface Props {
+  icon?: string; // FontAwesome class or SVG path
+  iconType?: "fa" | "svg";
+  title: string;
+  description: string;
+  badges?: string[]; // Optional array of badge labels
+  accent?: string; // CSS color value
+  theme?: "light" | "dark";
+  size?: "sm" | "md" | "lg";
+  href?: string; // Optional link
+  showArrow?: boolean; // Show navigation arrow
+  accentPosition?: "top" | "bottom"; // Position of accent line
+  class?: string;
+}
+
+const {
+  icon,
+  iconType = "fa",
+  title,
+  description,
+  badges,
+  accent = "var(--color-primary)",
+  theme = "dark",
+  size = "md",
+  href,
+  showArrow = false,
+  accentPosition = "bottom",
+  class: className = "",
+} = Astro.props;
+
+const Tag = href ? "a" : "div";
+const linkProps = href ? { href } : {};
+---
+
+<Tag
+  class:list={[
+    "capability-card",
+    `capability-card--${theme}`,
+    `capability-card--${size}`,
+    `capability-card--accent-${accentPosition}`,
+    { "capability-card--link": !!href },
+    { "capability-card--has-arrow": showArrow },
+    className,
+  ]}
+  style={`--card-accent: ${accent}`}
+  {...linkProps}
+>
+  {
+    icon && (
+      <div class="capability-card__icon">
+        {iconType === "fa" ? (
+          <i class={`${icon} capability-card__fa-icon`} />
+        ) : (
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d={icon} />
+          </svg>
+        )}
+        <div class="capability-card__icon-ring" />
+      </div>
+    )
+  }
+
+  <h3 class="capability-card__title">{title}</h3>
+  <p class="capability-card__description">{description}</p>
+
+  {
+    badges && badges.length > 0 && (
+      <div class="capability-card__badges">
+        {badges.map((badge) => (
+          <span class="capability-card__badge">{badge}</span>
+        ))}
+      </div>
+    )
+  }
+
+  <slot />
+
+  {
+    showArrow && (
+      <div class="capability-card__arrow">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </div>
+    )
+  }
+
+  <div class="capability-card__accent-line" aria-hidden="true"></div>
+  <div class="capability-card__gradient" aria-hidden="true"></div>
+</Tag>
+
+<style>
+  .capability-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-xl);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  /* ========================================
+     SIZE VARIANTS
+     ======================================== */
+  .capability-card--sm {
+    padding: var(--space-5);
+  }
+
+  .capability-card--md {
+    padding: var(--space-7);
+  }
+
+  .capability-card--lg {
+    padding: var(--space-8);
+  }
+
+  /* ========================================
+     DARK THEME (Default)
+     ======================================== */
+  .capability-card--dark {
+    background: var(--color-white-3);
+    border: 1px solid var(--color-white-5);
+  }
+
+  .capability-card--dark:hover {
+    background: var(--color-white-5);
+    border-color: color-mix(in srgb, var(--card-accent) 30%, transparent);
+    transform: translateY(-4px);
+    box-shadow:
+      0 16px 40px var(--color-black-30),
+      0 0 60px color-mix(in srgb, var(--card-accent) 8%, transparent);
+  }
+
+  .capability-card--dark .capability-card__icon {
+    background: color-mix(in srgb, var(--card-accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--card-accent) 25%, transparent);
+    color: var(--card-accent);
+  }
+
+  .capability-card--dark:hover .capability-card__icon {
+    background: var(--card-accent);
+    color: #ffffff;
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px
+      color-mix(in srgb, var(--card-accent) 40%, transparent);
+  }
+
+  .capability-card--dark .capability-card__title {
+    color: var(--color-text-primary);
+  }
+
+  .capability-card--dark:hover .capability-card__title {
+    color: var(--card-accent);
+  }
+
+  .capability-card--dark .capability-card__description {
+    color: var(--color-text-dim);
+  }
+
+  .capability-card--dark:hover .capability-card__description {
+    color: var(--color-text-muted);
+  }
+
+  /* ========================================
+     LIGHT THEME
+     ======================================== */
+  .capability-card--light {
+    background: #ffffff;
+    border: 1px solid var(--color-black-10);
+  }
+
+  .capability-card--light:hover {
+    border-color: color-mix(in srgb, var(--card-accent) 30%, transparent);
+    transform: translateY(-4px);
+    box-shadow:
+      0 8px 32px var(--color-black-10),
+      0 0 40px color-mix(in srgb, var(--card-accent) 6%, transparent);
+  }
+
+  .capability-card--light .capability-card__icon {
+    background: color-mix(in srgb, var(--card-accent) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--card-accent) 20%, transparent);
+    color: var(--card-accent);
+  }
+
+  .capability-card--light:hover .capability-card__icon {
+    background: var(--card-accent);
+    color: #ffffff;
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px
+      color-mix(in srgb, var(--card-accent) 30%, transparent);
+  }
+
+  .capability-card--light .capability-card__title {
+    color: var(--color-text-primary);
+  }
+
+  .capability-card--light:hover .capability-card__title {
+    color: var(--card-accent);
+  }
+
+  .capability-card--light .capability-card__description {
+    color: var(--color-text-secondary);
+  }
+
+  /* ========================================
+     ICON STYLES
+     ======================================== */
+  .capability-card__icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    margin-bottom: var(--space-5);
+    border-radius: 14px;
+    transition: all 0.35s ease;
+  }
+
+  .capability-card--sm .capability-card__icon {
+    width: 44px;
+    height: 44px;
+    margin-bottom: var(--space-4);
+    border-radius: 10px;
+  }
+
+  .capability-card--lg .capability-card__icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: var(--space-6);
+    border-radius: 16px;
+  }
+
+  .capability-card__fa-icon {
+    font-size: 1.35rem;
+    transition: transform 0.3s ease;
+  }
+
+  .capability-card--sm .capability-card__fa-icon {
+    font-size: 1.1rem;
+  }
+
+  .capability-card--lg .capability-card__fa-icon {
+    font-size: 1.5rem;
+  }
+
+  .capability-card:hover .capability-card__fa-icon {
+    transform: scale(1.1);
+  }
+
+  .capability-card__icon svg {
+    width: 28px;
+    height: 28px;
+    transition: transform 0.3s ease;
+  }
+
+  .capability-card--sm .capability-card__icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .capability-card--lg .capability-card__icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .capability-card:hover .capability-card__icon svg {
+    transform: scale(1.1);
+  }
+
+  /* Icon Ring */
+  .capability-card__icon-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 18px;
+    border: 1px solid var(--card-accent);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .capability-card:hover .capability-card__icon-ring {
+    opacity: 0.3;
+    inset: -8px;
+  }
+
+  /* ========================================
+     CONTENT STYLES
+     ======================================== */
+  .capability-card__title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: var(--font-bold);
+    margin-bottom: var(--space-3);
+    line-height: 1.3;
+    transition: color 0.3s ease;
+  }
+
+  .capability-card--sm .capability-card__title {
+    font-size: 1rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .capability-card--lg .capability-card__title {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .capability-card__description {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    margin: 0;
+    transition: color 0.3s ease;
+  }
+
+  .capability-card--lg .capability-card__description {
+    font-size: var(--text-base);
+  }
+
+  /* ========================================
+     BADGES
+     ======================================== */
+  .capability-card__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1-5);
+    margin-top: var(--space-4);
+  }
+
+  .capability-card__badge {
+    display: inline-block;
+    padding: var(--space-1) var(--space-2-5);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-radius: var(--radius-sm);
+    transition: all var(--duration-fast) var(--ease-out);
+  }
+
+  /* Dark theme badges */
+  .capability-card--dark .capability-card__badge {
+    color: var(--color-text-muted);
+    background: var(--color-white-5);
+    border: 1px solid var(--color-white-8);
+  }
+
+  .capability-card--dark:hover .capability-card__badge {
+    color: var(--card-accent);
+    background: color-mix(in srgb, var(--card-accent) 12%, transparent);
+    border-color: color-mix(in srgb, var(--card-accent) 25%, transparent);
+  }
+
+  /* Light theme badges */
+  .capability-card--light .capability-card__badge {
+    color: var(--color-text-muted);
+    background: var(--color-black-5);
+    border: 1px solid var(--color-black-5);
+  }
+
+  .capability-card--light:hover .capability-card__badge {
+    color: var(--card-accent);
+    background: color-mix(in srgb, var(--card-accent) 8%, transparent);
+    border-color: color-mix(in srgb, var(--card-accent) 20%, transparent);
+  }
+
+  /* ========================================
+     LINK STYLES
+     ======================================== */
+  .capability-card--link {
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .capability-card--link:focus-visible {
+    outline: 2px solid var(--card-accent);
+    outline-offset: 4px;
+  }
+
+  /* ========================================
+     ACCENT LINE
+     ======================================== */
+  .capability-card__accent-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  /* Bottom accent (default) */
+  .capability-card--accent-bottom .capability-card__accent-line {
+    bottom: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--card-accent),
+      transparent
+    );
+  }
+
+  /* Top accent */
+  .capability-card--accent-top .capability-card__accent-line {
+    top: 0;
+    height: 3px;
+    background: var(--card-accent);
+    transform-origin: left;
+  }
+
+  .capability-card:hover .capability-card__accent-line {
+    transform: scaleX(1);
+  }
+
+  /* ========================================
+     ARROW (for navigation cards)
+     ======================================== */
+  .capability-card__arrow {
+    position: absolute;
+    bottom: var(--space-5);
+    right: var(--space-5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--space-10);
+    height: var(--space-10);
+    border-radius: var(--radius-md);
+    transition: all var(--duration-normal) var(--ease-out);
+  }
+
+  .capability-card--dark .capability-card__arrow {
+    background: var(--color-white-5);
+    color: var(--color-text-dim);
+  }
+
+  .capability-card--dark:hover .capability-card__arrow {
+    background: var(--card-accent);
+    color: #ffffff;
+    transform: translateX(4px);
+  }
+
+  .capability-card--light .capability-card__arrow {
+    background: var(--color-black-5);
+    color: var(--color-text-dim);
+  }
+
+  .capability-card--light:hover .capability-card__arrow {
+    background: var(--card-accent);
+    color: #ffffff;
+    transform: translateX(4px);
+  }
+
+  /* Cards with arrow need extra padding */
+  .capability-card--has-arrow {
+    padding-right: calc(var(--space-10) + var(--space-8));
+  }
+
+  /* ========================================
+     GRADIENT OVERLAY
+     ======================================== */
+  .capability-card__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--card-accent) 2%, transparent) 0%,
+      transparent 50%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .capability-card:hover .capability-card__gradient {
+    opacity: 1;
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 768px) {
+    .capability-card--md {
+      padding: var(--space-5);
+    }
+
+    .capability-card--lg {
+      padding: var(--space-6);
+    }
+
+    .capability-card__icon {
+      width: 48px;
+      height: 48px;
+    }
+
+    .capability-card__icon svg,
+    .capability-card__fa-icon {
+      font-size: 1.2rem;
+    }
+
+    .capability-card__icon svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+</style>

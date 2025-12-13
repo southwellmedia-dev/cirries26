@@ -256,10 +256,10 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
   .demo-overlay {
     position: fixed;
     inset: 0;
-    z-index: 9999;
+    z-index: var(--z-maximum);
     display: flex;
     align-items: stretch;
-    background: rgba(0, 0, 0, 0.85);
+    background: var(--color-bg-overlay-dark);
     backdrop-filter: blur(8px);
     opacity: 0;
     visibility: hidden;
@@ -306,21 +306,21 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     position: absolute;
     top: var(--space-6);
     right: var(--space-6);
-    z-index: 100;
+    z-index: var(--z-dropdown);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
-    background: #111111;
-    border: 1px solid #333333;
+    width: var(--space-12);
+    height: var(--space-12);
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border-hover);
     border-radius: var(--radius-full);
-    color: white;
+    color: var(--color-text-primary);
     cursor: pointer;
     transition:
-      background 0.2s ease,
-      border-color 0.2s ease,
-      transform 0.2s ease;
+      background var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
   }
 
   .demo-overlay__close:hover {
@@ -336,7 +336,7 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     position: relative;
     flex: 0 0 66.666%;
     max-width: 66.666%;
-    background: #000;
+    background: var(--color-bg-primary);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -363,10 +363,10 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     position: absolute;
     inset: 0;
     background: linear-gradient(90deg,
-      rgba(0,0,0,0.95) 0%,
-      rgba(0,0,0,0.7) 30%,
-      rgba(0,0,0,0.6) 60%,
-      rgba(0,0,0,0.9) 100%
+      var(--color-black-90) 0%,
+      var(--color-black-70) 30%,
+      var(--color-black-60) 60%,
+      var(--color-black-90) 100%
     );
   }
 
@@ -406,7 +406,7 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     font-weight: var(--font-extrabold);
     line-height: var(--leading-none);
     letter-spacing: var(--tracking-tight);
-    color: white;
+    color: var(--color-text-primary);
     margin-bottom: var(--space-6);
     animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
   }
@@ -422,7 +422,7 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     font-family: var(--font-body);
     font-size: var(--text-xl);
     line-height: var(--leading-relaxed);
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--color-white-70);
     max-width: 480px;
     margin-bottom: var(--space-10);
     animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
@@ -447,22 +447,22 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     font-family: var(--font-display);
     font-size: var(--text-3xl);
     font-weight: var(--font-bold);
-    color: white;
-    line-height: 1;
+    color: var(--color-text-primary);
+    line-height: var(--leading-none);
   }
 
   .demo-overlay__trust-label {
     font-family: var(--font-body);
     font-size: var(--text-xs);
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-white-50);
     text-transform: uppercase;
     letter-spacing: var(--tracking-wider);
   }
 
   .demo-overlay__trust-divider {
     width: 1px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.2);
+    height: var(--space-10);
+    background: var(--color-white-20);
   }
 
   /* Quote */
@@ -478,7 +478,7 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     font-size: var(--text-lg);
     font-style: italic;
     line-height: var(--leading-relaxed);
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--color-white-80);
     margin-bottom: var(--space-2);
   }
 
@@ -486,7 +486,7 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     font-family: var(--font-body);
     font-size: var(--text-sm);
     font-style: normal;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-white-50);
   }
 
   /* --------------------------------
@@ -496,8 +496,8 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     position: relative;
     flex: 0 0 33.333%;
     max-width: 33.333%;
-    background: #FFFFFF;
-    border-left: 1px solid #E5E5E5;
+    background: var(--color-text-primary);
+    border-left: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -510,10 +510,10 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-      linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+      linear-gradient(var(--color-black-5) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-black-5) 1px, transparent 1px),
+      linear-gradient(var(--color-black-5) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-black-5) 1px, transparent 1px);
     background-size:
       60px 60px,
       60px 60px,
@@ -522,13 +522,13 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     mask-image: radial-gradient(
       ellipse 150% 100% at 50% 0%,
       black 0%,
-      rgba(0,0,0,0.4) 30%,
+      var(--color-black-40) 30%,
       transparent 60%
     );
     -webkit-mask-image: radial-gradient(
       ellipse 150% 100% at 50% 0%,
       black 0%,
-      rgba(0,0,0,0.4) 30%,
+      var(--color-black-40) 30%,
       transparent 60%
     );
     pointer-events: none;
@@ -541,7 +541,7 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     inset: 0;
     background: radial-gradient(
       ellipse 120% 80% at 50% 0%,
-      rgba(0, 0, 0, 0.03) 0%,
+      var(--color-black-5) 0%,
       transparent 60%
     );
     pointer-events: none;
@@ -563,14 +563,14 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     font-family: var(--font-display);
     font-size: var(--text-2xl);
     font-weight: var(--font-bold);
-    color: #111111;
+    color: var(--color-bg-primary);
     margin-bottom: var(--space-2);
   }
 
   .demo-overlay__form-subtitle {
     font-family: var(--font-body);
     font-size: var(--text-sm);
-    color: #666666;
+    color: var(--color-text-muted);
   }
 
   /* Form Styles */
@@ -603,7 +603,7 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     font-family: var(--font-body);
     font-size: var(--text-xs);
     font-weight: var(--font-medium);
-    color: #555555;
+    color: var(--color-text-secondary);
     margin-bottom: var(--space-2);
     text-transform: uppercase;
     letter-spacing: var(--tracking-wide);
@@ -616,19 +616,19 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     padding: var(--space-3) var(--space-4);
     font-family: var(--font-body);
     font-size: var(--text-base);
-    color: #111111;
-    background: #FFFFFF;
-    border: 1px solid #E0E0E0;
+    color: var(--color-bg-primary);
+    background: var(--color-text-primary);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     transition:
-      border-color 0.2s ease,
-      background 0.2s ease,
-      box-shadow 0.2s ease;
+      border-color var(--duration-fast) var(--ease-out),
+      background var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out);
   }
 
   .demo-overlay__input::placeholder,
   .demo-overlay__textarea::placeholder {
-    color: #AAAAAA;
+    color: var(--color-text-dim);
   }
 
   .demo-overlay__input:focus,
@@ -636,8 +636,8 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
   .demo-overlay__textarea:focus {
     outline: none;
     border-color: var(--color-primary);
-    background: #FFFFFF;
-    box-shadow: 0 0 0 3px rgba(234, 36, 43, 0.1);
+    background: var(--color-text-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-10);
   }
 
   /* Select Wrapper */
@@ -656,14 +656,14 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     right: var(--space-3);
     top: 50%;
     transform: translateY(-50%);
-    color: #888888;
+    color: var(--color-text-muted);
     pointer-events: none;
   }
 
   /* Textarea */
   .demo-overlay__textarea {
     resize: none;
-    min-height: 80px;
+    min-height: var(--space-20);
   }
 
   /* Submit Button */
@@ -679,23 +679,23 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     font-family: var(--font-display);
     font-size: var(--text-base);
     font-weight: var(--font-semibold);
-    color: white;
+    color: var(--color-text-primary);
     background: var(--color-primary);
     border: none;
     border-radius: var(--radius-full);
     cursor: pointer;
     overflow: hidden;
     transition:
-      background 0.2s ease,
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
+      background var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out),
+      box-shadow var(--duration-fast) var(--ease-out);
     animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
   }
 
   .demo-overlay__submit:hover {
     background: var(--color-primary-hover);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(234, 36, 43, 0.4);
+    box-shadow: 0 8px 24px var(--color-primary-40);
   }
 
   .demo-overlay__submit:active {
@@ -717,11 +717,11 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     background: linear-gradient(
       120deg,
       transparent 30%,
-      rgba(255, 255, 255, 0.2) 50%,
+      var(--color-white-20) 50%,
       transparent 70%
     );
     transform: translateX(-100%);
-    transition: transform 0.6s ease;
+    transition: transform var(--duration-slow) var(--ease-out);
   }
 
   .demo-overlay__submit:hover .demo-overlay__submit-shine {
@@ -732,17 +732,17 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
   .demo-overlay__privacy {
     font-family: var(--font-body);
     font-size: var(--text-xs);
-    color: #999999;
+    color: var(--color-text-muted);
     text-align: center;
     margin-top: var(--space-4);
     animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
   }
 
   .demo-overlay__privacy a {
-    color: #666666;
+    color: var(--color-text-muted);
     text-decoration: underline;
     text-underline-offset: 2px;
-    transition: color 0.2s ease;
+    transition: color var(--duration-fast) var(--ease-out);
   }
 
   .demo-overlay__privacy a:hover {
@@ -770,10 +770,10 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 80px;
-    height: 80px;
+    width: var(--space-20);
+    height: var(--space-20);
     margin-bottom: var(--space-6);
-    background: rgba(34, 197, 94, 0.1);
+    background: var(--color-success-subtle);
     border: 2px solid var(--color-success);
     border-radius: var(--radius-full);
     color: var(--color-success);
@@ -783,14 +783,14 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     font-family: var(--font-display);
     font-size: var(--text-2xl);
     font-weight: var(--font-bold);
-    color: #111111;
+    color: var(--color-bg-primary);
     margin-bottom: var(--space-3);
   }
 
   .demo-overlay__success-text {
     font-family: var(--font-body);
     font-size: var(--text-base);
-    color: #666666;
+    color: var(--color-text-muted);
     margin-bottom: var(--space-8);
     max-width: 280px;
   }
@@ -800,19 +800,19 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     font-family: var(--font-display);
     font-size: var(--text-sm);
     font-weight: var(--font-semibold);
-    color: #111111;
+    color: var(--color-bg-primary);
     background: transparent;
-    border: 1px solid #E0E0E0;
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-full);
     cursor: pointer;
     transition:
-      background 0.2s ease,
-      border-color 0.2s ease;
+      background var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
   }
 
   .demo-overlay__success-close:hover {
-    background: #F5F5F5;
-    border-color: #CCCCCC;
+    background: var(--color-bg-tertiary);
+    border-color: var(--color-border-hover);
   }
 
   /* --------------------------------
@@ -879,7 +879,7 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
       flex: 1;
       max-width: 100%;
       border-left: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid var(--color-white-8);
     }
 
     .demo-overlay__content {
@@ -902,8 +902,8 @@ import hyperscalersBg from '../../assets/hyperscalers.jpg';
     .demo-overlay__close {
       top: var(--space-4);
       right: var(--space-4);
-      width: 40px;
-      height: 40px;
+      width: var(--space-10);
+      height: var(--space-10);
     }
   }
 

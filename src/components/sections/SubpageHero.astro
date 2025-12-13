@@ -97,7 +97,7 @@ const {
     background:
       radial-gradient(
         ellipse 80% 60% at 20% 20%,
-        rgba(30, 30, 30, 0.5) 0%,
+        var(--color-black-50) 0%,
         transparent 50%
       );
   }
@@ -106,8 +106,8 @@ const {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      linear-gradient(var(--color-white-3) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-white-3) 1px, transparent 1px);
     background-size: 60px 60px, 60px 60px;
     mask-image: radial-gradient(ellipse 90% 80% at 30% 50%, black 20%, transparent 70%);
     -webkit-mask-image: radial-gradient(ellipse 90% 80% at 30% 50%, black 20%, transparent 70%);
@@ -145,25 +145,25 @@ const {
   .breadcrumb-link {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--space-1-5);
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     font-weight: var(--font-medium);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--color-white-60);
     text-decoration: none;
-    padding: 6px 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    transition: all 0.2s ease;
+    padding: var(--space-1-5) var(--space-3);
+    background: var(--color-white-5);
+    border: 1px solid var(--color-white-10);
+    border-radius: var(--radius-md);
+    transition: all var(--duration-fast) var(--ease-out);
   }
 
   .breadcrumb-link:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--color-text-primary);
+    background: var(--color-white-10);
+    border-color: var(--color-white-20);
   }
 
   .breadcrumb-link svg {
@@ -171,8 +171,8 @@ const {
   }
 
   .breadcrumb-separator {
-    color: rgba(255, 255, 255, 0.3);
-    font-size: 0.7rem;
+    color: var(--color-white-30);
+    font-size: var(--text-2xs);
   }
 
   .subpage-hero__badge {

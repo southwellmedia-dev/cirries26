@@ -116,7 +116,7 @@ const {
 
   /* Three.js Background - Clean solid dark */
   .hero__background--three {
-    background: #0a0a0a;
+    background: var(--color-bg-primary);
   }
 
   .hero__three-gradient {
@@ -148,21 +148,21 @@ const {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      linear-gradient(var(--color-white-5) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-white-5) 1px, transparent 1px);
     background-size: 60px 60px;
     z-index: 0;
     /* Radial fade - visible at bottom/center, fades to edges and top */
     mask-image: radial-gradient(
       ellipse 90% 80% at 50% 85%,
-      rgba(0, 0, 0, 0.8) 0%,
-      rgba(0, 0, 0, 0.4) 50%,
+      var(--color-black-80) 0%,
+      var(--color-black-40) 50%,
       transparent 75%
     );
     -webkit-mask-image: radial-gradient(
       ellipse 90% 80% at 50% 85%,
-      rgba(0, 0, 0, 0.8) 0%,
-      rgba(0, 0, 0, 0.4) 50%,
+      var(--color-black-80) 0%,
+      var(--color-black-40) 50%,
       transparent 75%
     );
   }
@@ -176,14 +176,14 @@ const {
     overflow: hidden;
     mask-image: radial-gradient(
       ellipse 90% 80% at 50% 85%,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.5) 50%,
+      var(--color-black-100) 0%,
+      var(--color-black-50) 50%,
       transparent 75%
     );
     -webkit-mask-image: radial-gradient(
       ellipse 90% 80% at 50% 85%,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.5) 50%,
+      var(--color-black-100) 0%,
+      var(--color-black-50) 50%,
       transparent 75%
     );
   }
@@ -203,12 +203,12 @@ const {
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.15) 20%,
-      rgba(255, 255, 255, 0.4) 50%,
-      rgba(255, 255, 255, 0.15) 80%,
+      var(--color-white-15) 20%,
+      var(--color-white-40) 50%,
+      var(--color-white-15) 80%,
       transparent 100%
     );
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 8px var(--color-white-30);
     animation: glowPulseH var(--glow-duration, 4s) var(--glow-delay, 0s) infinite ease-in-out;
   }
 
@@ -219,12 +219,12 @@ const {
     background: linear-gradient(
       180deg,
       transparent 0%,
-      rgba(255, 255, 255, 0.15) 20%,
-      rgba(255, 255, 255, 0.4) 50%,
-      rgba(255, 255, 255, 0.15) 80%,
+      var(--color-white-15) 20%,
+      var(--color-white-40) 50%,
+      var(--color-white-15) 80%,
       transparent 100%
     );
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 8px var(--color-white-30);
     animation: glowPulseV var(--glow-duration, 4s) var(--glow-delay, 0s) infinite ease-in-out;
   }
 
@@ -280,14 +280,14 @@ const {
     /* Match grid mask for seamless blend */
     mask-image: radial-gradient(
       ellipse 90% 80% at 50% 85%,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.5) 50%,
+      var(--color-black-100) 0%,
+      var(--color-black-50) 50%,
       transparent 75%
     );
     -webkit-mask-image: radial-gradient(
       ellipse 90% 80% at 50% 85%,
-      rgba(0, 0, 0, 1) 0%,
-      rgba(0, 0, 0, 0.5) 50%,
+      var(--color-black-100) 0%,
+      var(--color-black-50) 50%,
       transparent 75%
     );
   }
@@ -304,13 +304,13 @@ const {
     background: linear-gradient(
       to top,
       transparent 0%,
-      rgba(255, 255, 255, 0.05) 10%,
-      rgba(255, 255, 255, 0.1) 30%,
-      rgba(255, 255, 255, 0.2) 60%,
-      rgba(255, 255, 255, 0.35) 85%,
-      rgba(255, 255, 255, 0.5) 100%
+      var(--color-white-5) 10%,
+      var(--color-white-10) 30%,
+      var(--color-white-20) 60%,
+      var(--color-white-30) 85%,
+      var(--color-white-50) 100%
     );
-    box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 6px var(--color-white-20);
     opacity: 0;
     transform: translateY(0);
     animation: pulseUp var(--line-duration, 4s) var(--line-delay, 0s) infinite ease-out;
@@ -377,16 +377,16 @@ const {
   .hero__overlay--gradient {
     background: linear-gradient(
       180deg,
-      rgba(10, 10, 10, 0.3) 0%,
-      rgba(10, 10, 10, 0.5) 40%,
-      rgba(10, 10, 10, 0.85) 100%
+      var(--color-black-30) 0%,
+      var(--color-black-50) 40%,
+      var(--color-bg-overlay) 100%
     );
   }
 
   .hero__overlay--radial {
     background: radial-gradient(
       ellipse 100% 60% at 50% 120%,
-      rgba(229, 57, 53, 0.25) 0%,
+      var(--color-primary-20) 0%,
       transparent 60%
     );
   }
@@ -395,7 +395,7 @@ const {
     background: radial-gradient(
       ellipse 80% 80% at 50% 50%,
       transparent 0%,
-      rgba(10, 10, 10, 0.4) 100%
+      var(--color-black-40) 100%
     );
   }
 

@@ -85,7 +85,7 @@ const {
   .industries-cta {
     position: relative;
     padding: var(--space-24) 0;
-    background: #0a0a0a;
+    background: var(--color-bg-primary);
     overflow: hidden;
   }
 
@@ -100,8 +100,8 @@ const {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      linear-gradient(var(--color-white-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-white-2) 1px, transparent 1px);
     background-size: 60px 60px;
     mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
     -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
@@ -112,7 +112,7 @@ const {
     inset: 0;
     background: radial-gradient(
       ellipse 50% 40% at 50% 50%,
-      rgba(234, 36, 43, 0.12) 0%,
+      var(--color-primary-12) 0%,
       transparent 60%
     );
   }
@@ -128,7 +128,7 @@ const {
     position: absolute;
     width: 4px;
     height: 4px;
-    background: rgba(234, 36, 43, 0.6);
+    background: var(--color-primary-60);
     border-radius: 50%;
     animation: floatNode 8s ease-in-out infinite;
     animation-delay: calc(var(--node-index) * -1s);
@@ -166,8 +166,8 @@ const {
     align-items: center;
     gap: 10px;
     padding: 8px 18px;
-    background: rgba(234, 36, 43, 0.1);
-    border: 1px solid rgba(234, 36, 43, 0.25);
+    background: var(--color-primary-10);
+    border: 1px solid var(--color-primary-25);
     border-radius: 100px;
     margin-bottom: var(--space-6);
   }
@@ -187,7 +187,7 @@ const {
 
   .badge-text {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-bold);
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -200,7 +200,7 @@ const {
     font-weight: var(--font-bold);
     line-height: 1.1;
     letter-spacing: -0.02em;
-    color: #ffffff;
+    color: var(--color-text-primary);
     margin-bottom: var(--space-4);
   }
 
@@ -208,7 +208,7 @@ const {
     font-family: var(--font-body);
     font-size: var(--text-lg);
     line-height: 1.6;
-    color: #888888;
+    color: var(--color-text-muted);
     max-width: 500px;
     margin: 0 auto var(--space-8);
   }
@@ -228,7 +228,7 @@ const {
     align-items: center;
     gap: var(--space-8);
     padding-top: var(--space-8);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--color-white-8);
   }
 
   .stat-item {
@@ -248,17 +248,17 @@ const {
 
   .stat-label {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-medium);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #666666;
+    color: var(--color-text-muted);
   }
 
   .stat-divider {
     width: 1px;
     height: 40px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--color-white-10);
   }
 
   /* Responsive */

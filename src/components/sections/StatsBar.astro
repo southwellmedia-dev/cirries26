@@ -215,9 +215,9 @@ const { stats = [
   }
 
   .stats-bar__value :global(.stats-bar__suffix) {
-    font-size: 0.65em;
+    font-size: var(--text-xl);
     color: inherit;
-    margin-left: 2px;
+    margin-left: var(--space-0-5);
   }
 
   .stats-bar__badge {
@@ -226,7 +226,7 @@ const { stats = [
     font-family: var(--font-display);
     font-size: var(--text-xs);
     font-weight: var(--font-medium);
-    color: white;
+    color: var(--color-text-primary);
     background-color: var(--color-primary);
     border-radius: var(--radius-full);
     margin-bottom: var(--space-4);

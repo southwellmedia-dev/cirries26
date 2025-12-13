@@ -82,9 +82,9 @@ const ranComponents = [
         <svg class="ran-connections" viewBox="0 0 400 400" id="ran-connections-svg">
           <defs>
             <linearGradient id="ran-flow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color: rgba(234, 36, 43, 0.1)"></stop>
-              <stop offset="50%" style="stop-color: rgba(234, 36, 43, 0.5)"></stop>
-              <stop offset="100%" style="stop-color: rgba(234, 36, 43, 0.1)"></stop>
+              <stop offset="0%" style="stop-color: var(--color-primary-10)"></stop>
+              <stop offset="50%" style="stop-color: var(--color-primary-50)"></stop>
+              <stop offset="100%" style="stop-color: var(--color-primary-10)"></stop>
             </linearGradient>
           </defs>
           <g id="ran-mesh-lines"></g>
@@ -136,7 +136,7 @@ const ranComponents = [
   .meet-openran-section {
     position: relative;
     padding: var(--space-20) 0;
-    background: #ffffff;
+    background: var(--color-bg-primary);
     overflow: hidden;
   }
 
@@ -150,17 +150,17 @@ const ranComponents = [
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 100% 80% at 75% 40%, rgba(234, 36, 43, 0.04) 0%, transparent 50%),
-      radial-gradient(ellipse 70% 50% at 20% 70%, rgba(234, 36, 43, 0.02) 0%, transparent 45%),
-      linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #f5f5f7 100%);
+      radial-gradient(ellipse 100% 80% at 75% 40%, var(--color-primary-4) 0%, transparent 50%),
+      radial-gradient(ellipse 70% 50% at 20% 70%, var(--color-primary-2) 0%, transparent 45%),
+      linear-gradient(180deg, var(--color-bg-primary) 0%, #f8f9fa 50%, #f5f5f7 100%);
   }
 
   .ran-grid {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+      linear-gradient(var(--color-black-1) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-black-1) 1px, transparent 1px);
     background-size: 40px 40px;
     mask-image: radial-gradient(ellipse 85% 75% at 65% 50%, black 15%, transparent 70%);
   }
@@ -192,7 +192,7 @@ const ranComponents = [
     font-weight: var(--font-bold);
     line-height: 1.15;
     letter-spacing: var(--tracking-tight);
-    color: #111111;
+    color: var(--color-text-primary);
     margin-bottom: var(--space-6);
   }
 
@@ -205,12 +205,12 @@ const ranComponents = [
     font-family: var(--font-body);
     font-size: var(--text-base);
     line-height: var(--leading-relaxed);
-    color: #555555;
+    color: var(--color-text-secondary);
     margin-bottom: var(--space-4);
   }
 
   .meet-ran__text :global(strong) {
-    color: #111111;
+    color: var(--color-text-primary);
     font-weight: var(--font-semibold);
   }
 
@@ -252,7 +252,7 @@ const ranComponents = [
     position: absolute;
     inset: -20px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(234, 36, 43, 0.12) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--color-primary-12) 0%, transparent 70%);
     animation: hubPulse 3s ease-in-out infinite;
   }
 
@@ -268,13 +268,13 @@ const ranComponents = [
 
   .hub-ring-1 {
     inset: -10px;
-    border: 1px dashed rgba(234, 36, 43, 0.15);
+    border: 1px dashed var(--color-primary-15);
     animation: ringRotate 25s linear infinite;
   }
 
   .hub-ring-2 {
     inset: -24px;
-    border: 1px dotted rgba(234, 36, 43, 0.1);
+    border: 1px dotted var(--color-primary-10);
     animation: ringRotate 35s linear infinite reverse;
   }
 
@@ -289,13 +289,13 @@ const ranComponents = [
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.98);
+    background: var(--color-white-98);
     backdrop-filter: blur(20px);
     border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--color-border-light);
     box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.1),
-      0 0 60px rgba(234, 36, 43, 0.05);
+      0 12px 40px var(--color-black-10),
+      0 0 60px var(--color-primary-5);
     z-index: 12;
   }
 
@@ -310,15 +310,15 @@ const ranComponents = [
     left: 50%;
     transform: translateX(-50%);
     font-family: var(--font-mono);
-    font-size: 0.5rem;
+    font-size: var(--text-3xs);
     font-weight: var(--font-medium);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--color-primary, #EA242B);
     white-space: nowrap;
-    padding: 4px 10px;
-    background: rgba(234, 36, 43, 0.08);
-    border-radius: 4px;
+    padding: var(--space-1) var(--space-2-5);
+    background: var(--color-primary-8);
+    border-radius: var(--radius-sm);
   }
 
   /* Disaggregated Ring */
@@ -329,7 +329,7 @@ const ranComponents = [
     width: 88%;
     height: 88%;
     transform: translate(-50%, -50%);
-    border: 1px dashed rgba(234, 36, 43, 0.1);
+    border: 1px dashed var(--color-primary-10);
     border-radius: 50%;
     pointer-events: none;
     z-index: 0;
@@ -353,12 +353,12 @@ const ranComponents = [
   .node-box {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    gap: var(--space-2-5);
+    padding: var(--space-2-5) var(--space-3-5);
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 2px 10px var(--color-black-5);
     transition: all 0.3s ease;
   }
 
@@ -391,16 +391,16 @@ const ranComponents = [
 
   .node-label {
     font-family: var(--font-display);
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     font-weight: var(--font-semibold);
-    color: #111111;
+    color: var(--color-text-primary);
     line-height: 1.2;
   }
 
   .node-vendor {
     font-family: var(--font-mono);
-    font-size: 0.55rem;
-    color: #9ca3af;
+    font-size: var(--text-2xs);
+    color: var(--color-text-dim);
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
@@ -414,7 +414,7 @@ const ranComponents = [
   }
 
   :global(.ran-connection-line) {
-    stroke: rgba(234, 36, 43, 0.12);
+    stroke: var(--color-primary-12);
     stroke-width: 1.5;
     fill: none;
     stroke-dasharray: 6 4;
@@ -422,7 +422,7 @@ const ranComponents = [
   }
 
   :global(.ran-mesh-line) {
-    stroke: rgba(0, 0, 0, 0.03);
+    stroke: var(--color-black-3);
     stroke-width: 1;
     fill: none;
   }
@@ -466,7 +466,7 @@ const ranComponents = [
     }
 
     .node-box {
-      padding: 8px 10px;
+      padding: var(--space-2) var(--space-2-5);
     }
 
     .node-icon {
@@ -479,7 +479,7 @@ const ranComponents = [
     }
 
     .node-label {
-      font-size: 0.65rem;
+      font-size: var(--text-2xs);
     }
 
     .node-vendor {

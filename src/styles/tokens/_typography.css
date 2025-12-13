@@ -16,6 +16,8 @@
      FONT SIZES - Fluid Type Scale
      Using clamp() for responsive sizing
      -------------------------------- */
+  --text-3xs: clamp(0.4rem, 0.35rem + 0.2vw, 0.5rem);       /* 6-8px */
+  --text-2xs: clamp(0.5rem, 0.45rem + 0.25vw, 0.625rem);    /* 8-10px */
   --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.75rem);      /* 11-12px */
   --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);     /* 13-14px */
   --text-base: clamp(0.9rem, 0.85rem + 0.25vw, 1rem);       /* 14-16px */

@@ -84,9 +84,9 @@ const cloudNodes = [
         <svg class="cloud-connections" viewBox="0 0 400 400" id="cloud-connections-svg">
           <defs>
             <linearGradient id="cloud-flow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color: rgba(234, 36, 43, 0.1)"></stop>
-              <stop offset="50%" style="stop-color: rgba(234, 36, 43, 0.5)"></stop>
-              <stop offset="100%" style="stop-color: rgba(234, 36, 43, 0.1)"></stop>
+              <stop offset="0%" style="stop-color: var(--color-primary-10)"></stop>
+              <stop offset="50%" style="stop-color: var(--color-primary-50)"></stop>
+              <stop offset="100%" style="stop-color: var(--color-primary-10)"></stop>
             </linearGradient>
           </defs>
           <g id="cloud-mesh-lines"></g>
@@ -141,7 +141,7 @@ const cloudNodes = [
   .meet-cloud-section {
     position: relative;
     padding: var(--space-20) 0;
-    background: #ffffff;
+    background: var(--color-bg-card);
     overflow: hidden;
   }
 
@@ -155,18 +155,18 @@ const cloudNodes = [
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 100% 80% at 75% 40%, rgba(234, 36, 43, 0.03) 0%, transparent 50%),
-      radial-gradient(ellipse 70% 50% at 20% 70%, rgba(0, 120, 212, 0.03) 0%, transparent 45%),
-      radial-gradient(ellipse 50% 40% at 85% 85%, rgba(66, 133, 244, 0.02) 0%, transparent 40%),
-      linear-gradient(180deg, #ffffff 0%, #f8f9fa 50%, #f5f5f7 100%);
+      radial-gradient(ellipse 100% 80% at 75% 40%, var(--color-primary-3) 0%, transparent 50%),
+      radial-gradient(ellipse 70% 50% at 20% 70%, var(--color-black-3) 0%, transparent 45%),
+      radial-gradient(ellipse 50% 40% at 85% 85%, var(--color-black-2) 0%, transparent 40%),
+      linear-gradient(180deg, var(--color-bg-card) 0%, var(--color-bg-secondary) 50%, var(--color-bg-tertiary) 100%);
   }
 
   .cloud-grid {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px);
+      linear-gradient(var(--color-black-1-5) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-black-1-5) 1px, transparent 1px);
     background-size: 40px 40px;
     mask-image: radial-gradient(ellipse 85% 75% at 65% 50%, black 15%, transparent 70%);
     -webkit-mask-image: radial-gradient(ellipse 85% 75% at 65% 50%, black 15%, transparent 70%);
@@ -207,7 +207,7 @@ const cloudNodes = [
     font-weight: var(--font-bold);
     line-height: 1.15;
     letter-spacing: var(--tracking-tight);
-    color: #111111;
+    color: var(--color-text-primary);
     margin-bottom: var(--space-6);
   }
 
@@ -220,12 +220,12 @@ const cloudNodes = [
     font-family: var(--font-body);
     font-size: var(--text-base);
     line-height: var(--leading-relaxed);
-    color: #555555;
+    color: var(--color-text-secondary);
     margin-bottom: var(--space-4);
   }
 
   .meet-cloud__text :global(strong) {
-    color: #111111;
+    color: var(--color-text-primary);
     font-weight: var(--font-semibold);
   }
 
@@ -267,7 +267,7 @@ const cloudNodes = [
     position: absolute;
     inset: -25px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(234, 36, 43, 0.12) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--color-primary-12) 0%, transparent 70%);
     animation: hubPulse 3s ease-in-out infinite;
   }
 
@@ -279,21 +279,21 @@ const cloudNodes = [
   .hub-ring {
     position: absolute;
     border-radius: 50%;
-    border: 1px solid rgba(234, 36, 43, 0.2);
+    border: 1px solid var(--color-primary-20);
   }
 
   .hub-ring-1 {
     inset: -12px;
     animation: ringRotate 25s linear infinite;
     border-style: dashed;
-    border-color: rgba(234, 36, 43, 0.15);
+    border-color: var(--color-primary-15);
   }
 
   .hub-ring-2 {
     inset: -28px;
     animation: ringRotate 35s linear infinite reverse;
     border-style: dotted;
-    border-color: rgba(234, 36, 43, 0.1);
+    border-color: var(--color-primary-10);
   }
 
   .hub-ring-3 {
@@ -301,7 +301,7 @@ const cloudNodes = [
     animation: ringRotate 50s linear infinite;
     border-style: dashed;
     border-width: 1px;
-    border-color: rgba(234, 36, 43, 0.06);
+    border-color: var(--color-primary-6);
   }
 
   @keyframes ringRotate {
@@ -315,15 +315,15 @@ const cloudNodes = [
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.98);
+    background: var(--color-white-98);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--color-black-6);
     box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.1),
-      0 0 0 1px rgba(255, 255, 255, 0.8) inset,
-      0 0 60px rgba(234, 36, 43, 0.05);
+      0 12px 40px var(--color-black-10),
+      0 0 0 1px var(--color-white-80) inset,
+      0 0 60px var(--color-primary-5);
     z-index: 12;
   }
 
@@ -338,15 +338,15 @@ const cloudNodes = [
     left: 50%;
     transform: translateX(-50%);
     font-family: var(--font-mono);
-    font-size: 0.55rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-medium);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--color-primary);
     white-space: nowrap;
-    padding: 4px 10px;
-    background: rgba(234, 36, 43, 0.06);
-    border-radius: 4px;
+    padding: var(--space-1) var(--space-2-5);
+    background: var(--color-primary-6);
+    border-radius: var(--radius-sm);
   }
 
   /* Visibility Ring */
@@ -357,8 +357,9 @@ const cloudNodes = [
     width: 85%;
     height: 85%;
     transform: translate(-50%, -50%);
-    border: 1px dashed rgba(234, 36, 43, 0.1);
+    border: 1px dashed var(--color-primary-10);
     border-radius: 50%;
+    border: 1px dashed var(--color-primary-10);
     pointer-events: none;
     z-index: 0;
   }
@@ -398,14 +399,14 @@ const cloudNodes = [
     inset: 0;
     width: 100%;
     height: 100%;
-    color: #ffffff;
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08)) drop-shadow(0 4px 16px rgba(0, 0, 0, 0.04));
+    color: var(--color-bg-card);
+    filter: drop-shadow(0 2px 8px var(--color-black-8)) drop-shadow(0 4px 16px var(--color-black-4));
     transition: all 0.3s ease;
   }
 
   /* Subtle border effect via stroke */
   .cloud-shape path {
-    stroke: rgba(0, 0, 0, 0.06);
+    stroke: var(--color-black-6);
     stroke-width: 1;
   }
 
@@ -427,7 +428,7 @@ const cloudNodes = [
 
   .cloud-node:hover .cloud-shape {
     filter: drop-shadow(0 4px 16px color-mix(in srgb, var(--node-color) 25%, transparent))
-            drop-shadow(0 8px 24px rgba(0, 0, 0, 0.08));
+            drop-shadow(0 8px 24px var(--color-black-8));
   }
 
   .cloud-node:hover .cloud-shape path {
@@ -441,11 +442,11 @@ const cloudNodes = [
 
   .node-label {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
+    font-size: var(--text-2xs);
     font-weight: var(--font-medium);
     text-transform: uppercase;
     letter-spacing: 0.03em;
-    color: #6b7280;
+    color: var(--color-text-muted);
     white-space: nowrap;
   }
 
@@ -469,21 +470,21 @@ const cloudNodes = [
 
   :global(.cloud-data-flow--healthy) {
     background: #22c55e;
-    box-shadow: 0 0 12px rgba(34, 197, 94, 0.7);
+    box-shadow: 0 0 12px var(--color-black-70);
   }
 
   :global(.cloud-data-flow--warning) {
     background: #f59e0b;
-    box-shadow: 0 0 12px rgba(245, 158, 11, 0.7);
+    box-shadow: 0 0 12px var(--color-black-70);
   }
 
   :global(.cloud-data-flow--critical) {
     background: #ef4444;
-    box-shadow: 0 0 14px rgba(239, 68, 68, 0.8);
+    box-shadow: 0 0 14px var(--color-black-80);
   }
 
   :global(.cloud-connection-line) {
-    stroke: rgba(234, 36, 43, 0.12);
+    stroke: var(--color-primary-12);
     stroke-width: 1.5;
     fill: none;
     stroke-dasharray: 6 4;
@@ -491,7 +492,7 @@ const cloudNodes = [
   }
 
   :global(.cloud-mesh-line) {
-    stroke: rgba(0, 0, 0, 0.03);
+    stroke: var(--color-black-3);
     stroke-width: 1;
     fill: none;
   }
@@ -539,7 +540,7 @@ const cloudNodes = [
     .hub-ring-3 { inset: -38px; }
 
     .hub-label {
-      font-size: 0.5rem;
+      font-size: var(--text-3xs);
       bottom: -28px;
     }
 

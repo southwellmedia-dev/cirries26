@@ -58,18 +58,18 @@ const {
   }
 
   .feature-card--light.feature-card--bordered {
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--color-text-primary);
+    border: 1px solid var(--color-black-10);
   }
 
   .feature-card--light.feature-card--elevated {
-    background: #ffffff;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    background: var(--color-text-primary);
+    box-shadow: 0 4px 20px var(--color-black-5);
   }
 
   .feature-card--light.feature-card--bordered:hover,
   .feature-card--light.feature-card--elevated:hover {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px var(--color-black-10);
     transform: translateY(-2px);
   }
 
@@ -79,13 +79,13 @@ const {
   }
 
   .feature-card--dark.feature-card--bordered {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: var(--color-white-5);
+    border: 1px solid var(--color-white-5);
   }
 
   .feature-card--dark.feature-card--elevated {
-    background: rgba(255, 255, 255, 0.03);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background: var(--color-white-5);
+    box-shadow: 0 4px 20px var(--color-black-30);
   }
 
   /* Icon */
@@ -94,8 +94,8 @@ const {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    width: var(--space-12);
+    height: var(--space-12);
     border-radius: var(--radius-md);
   }
 
@@ -104,16 +104,16 @@ const {
   }
 
   .feature-card__icon--dark {
-    background: #1a1a1a;
+    background: var(--color-bg-card-hover);
   }
 
   .feature-card__icon--light {
-    background: #f5f5f5;
+    background: var(--color-bg-tertiary);
   }
 
   .feature-card__icon img {
-    width: 24px;
-    height: 24px;
+    width: var(--space-6);
+    height: var(--space-6);
     object-fit: contain;
   }
 
@@ -130,11 +130,11 @@ const {
   }
 
   .feature-card--light .feature-card__title {
-    color: #111111;
+    color: var(--color-bg-primary);
   }
 
   .feature-card--dark .feature-card__title {
-    color: #ffffff;
+    color: var(--color-text-primary);
   }
 
   .feature-card__description {
@@ -143,11 +143,11 @@ const {
   }
 
   .feature-card--light .feature-card__description {
-    color: #555555;
+    color: var(--color-text-secondary);
   }
 
   .feature-card--dark .feature-card__description {
-    color: #a0a0a0;
+    color: var(--color-text-secondary);
   }
 
   /* Responsive */
@@ -157,13 +157,13 @@ const {
     }
 
     .feature-card__icon {
-      width: 40px;
-      height: 40px;
+      width: var(--space-10);
+      height: var(--space-10);
     }
 
     .feature-card__icon img {
-      width: 20px;
-      height: 20px;
+      width: var(--space-5);
+      height: var(--space-5);
     }
   }
 </style>
